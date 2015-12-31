@@ -27,11 +27,11 @@
 		<div class="row" style="width:99%; margin: 0 auto;"><h2>Control Panel</h2></div>
 		<div class="row" style="width:99%; margin: 0 auto;">
 			<div class="col-md-2 board" onclick="redirectPage('orders/index')"><img src="{{ URL::asset('img/house_sale_b.png') }}" /><br/>Sales</div>
-			<div class="col-md-2 board" onclick="redirectPage('products/index')"><img src="{{ URL::asset('img/product_b.png') }}" /><br/>Products</div>
+			<div class="col-md-2 board" onclick="redirectPage('{{ URL::asset('products/index') }}')"><img src="{{ URL::asset('img/product_b.png') }}" /><br/>Products</div>
 			<div class="col-md-2 board" onclick="redirectPage('tables/index')"><img src="{{ URL::asset('img/furoisu_bath_chair_b.png') }}" /><br/>Tables</div>
 			<div class="col-md-2 board" onclick="redirectPage('currencies/index')"><img src="{{ URL::asset('img/emblem_money_b.png') }}" /><br/>Currencies</div>
 			<div class="col-md-2 board" onclick="redirectPage('discounts/index')"><img src="{{ URL::asset('img/discount_b.png') }}" /><br/>Discounts</div>
-			<div class="col-md-2 board" onclick="redirectPage('users/index')"><img src="{{ URL::asset('img/users_2_b.png') }}" /><br/>Users</div>
+			<div class="col-md-2 board" onclick="redirectPage('{{ URL::asset('users/index') }}')"><img src="{{ URL::asset('img/users_2_b.png') }}" /><br/>Users</div>
 			<div class="col-md-2 board" onclick="redirectPage('reports/index')"><img src="{{ URL::asset('img/report_b.png') }}" /><br/>Reports</div>
 			<div class="col-md-2 board" onclick="redirectPage('settings/index')"><img src="{{ URL::asset('img/settings_b.png') }}" /><br/>Settings</div>
 			<div class="col-md-2 board" onclick="redirectPage('backup/index')"><img src="{{ URL::asset('img/blue_external_drive_backup.png') }}" /><br/>Backup Database</div>

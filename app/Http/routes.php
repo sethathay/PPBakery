@@ -18,3 +18,6 @@ Route::get('/', function(){
 Route::get('users/index', 'UsersController@index');
 Route::get('users/create', 'UsersController@create');
 Route::get('users/store', 'UsersController@store');
+
+Route::get('products/index', 'ProductsController@index');
+Route::get('products/create', 'ProductsController@create');
