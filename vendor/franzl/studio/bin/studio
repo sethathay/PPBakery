@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__.'/../../../autoload.php';
+
+use Studio\Config\Config;
+use Studio\Config\FileStorage;
+use Studio\Console\CreateCommand;
+use Studio\Console\LoadCommand;
+use Studio\Console\ScrapCommand;
+use Symfony\Component\Console\Application;
+
+$studioFile = getcwd().'/studio.json';
+$config = new Config(new FileStorage($studioFile));
+
+$application = new Application();
+$application->add(new CreateCommand($config));
+$application->add(new LoadCommand($config));
+$application->add(new ScrapCommand($config));
+$application->run();
