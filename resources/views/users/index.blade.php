@@ -42,7 +42,7 @@
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">
-			<img src="/img/users_2_b.png" /> <label>Users</label>
+			<img src="{{ URL::asset('/img/users_2_b.png') }}" /> <label>Users</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
