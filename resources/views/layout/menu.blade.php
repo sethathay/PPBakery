@@ -3,7 +3,7 @@
         <ul class="nav">
 			<li onclick="redirectPage('/')"><img src="{{ URL::asset('img/control_panel.png') }}" alt="order" /> &nbsp;&nbsp;<label style="vertical-align: middle;font-weight: normal;">Control Panel</label></li>
 			<li onclick="redirectPage('{{ URL::asset('users/index') }}')"><img src="{{ URL::asset('img/house_sale.png') }}" alt="order" /> &nbsp;&nbsp;<label style="vertical-align: middle;font-weight: normal;">Sales</label></li>
-			<li onclick="redirectPage('/products/index')"><img src="{{ URL::asset('img/product.png') }}" alt="Product" /> &nbsp;&nbsp;<label style="vertical-align: middle;font-weight: normal;">Products</label></li>
+			<li onclick="redirectPage('{{ URL::asset('products/index') }}')"><img src="{{ URL::asset('img/product.png') }}" alt="Product" /> &nbsp;&nbsp;<label style="vertical-align: middle;font-weight: normal;">Products</label></li>
 			<li onclick="redirectPage('/tables/index')"><img src="{{ URL::asset('img/furoisu_bath_chair.png') }}" alt="Table" /> &nbsp;&nbsp;<label style="vertical-align: middle;font-weight: normal;">Tables</label></li>
 			<li onclick="redirectPage('/currencies/index')"><img src="{{ URL::asset('img/emblem_money.png') }}" alt="Currency" /> &nbsp;&nbsp;<label style="vertical-align: middle;font-weight: normal;">Currencies</label></li>
 			<li onclick="redirectPage('/discounts/index')"><img src="{{ URL::asset('img/discounts.png') }}" alt="Discount" /> &nbsp;&nbsp;<label style="vertical-align: middle;font-weight: normal;">Discounts</label></li>
