@@ -78,7 +78,7 @@
 				<td>{{ $user->dob }}</td>
 				<td>{{ $user->username }}</td>
 				<td>{{ $user->email }}</td>
-				<td>{{ $user->phone }}</td>
+				<td>{{ $user->telephone }}</td>
 				<td class="last_td">
 					<button type="button" class="btn btn-xs btn-info">
 						<span class="glyphicon glyphicon-user"></span> View
