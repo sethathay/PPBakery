@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 use DB;
+use Hash;
+use App\User;
+use Input;
 
 class UsersController extends Controller
 {
@@ -17,7 +21,7 @@ class UsersController extends Controller
 	
     public function index()
     {
-    	$users = DB::table('users')->get();
+    	$users = User::get();
         return view('users/index', compact('users'));
     }
 
@@ -28,8 +32,9 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
-        return view('users/create');
+        //    	
+    	$countries = array_merge(array(''=>'Please Select'), DB::table('countries')->lists('name', 'id'));
+        return view('users/create', compact('countries'));
     }
 
     /**
@@ -40,8 +45,15 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        var_dump($_POST);exit;
+        /*
+         * $user = Input::all();
+         * or
+         */       
+        $user = $request->all();
+        $user['password']	= Hash::make($request->get('password'));
+        $user['created_by']	= 1;
+        User::create($user);
+        return Redirect::route('users.index');
     }
 
     /**

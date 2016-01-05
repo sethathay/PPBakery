@@ -15,9 +15,9 @@ Route::get('/', function(){
 	return view('/layout/index');
 });
 
-Route::get('users/index', 'UsersController@index');
+Route::get('users/index', ['as' => 'users.index', 'uses' => 'UsersController@index']);
 Route::get('users/create', 'UsersController@create');
-Route::get('users/store', 'UsersController@store');
+Route::post('users/store', ['as' => 'users.store', 'uses' => 'UsersController@store']);
 
 Route::get('products/index', 'ProductsController@index');
 Route::get('products/create', 'ProductsController@create');

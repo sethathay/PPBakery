@@ -6,15 +6,17 @@
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="{{ URL::asset('css/bootstrap.min.css') }}" rel="stylesheet">
 <script type="text/javascript" src="{{ URL::asset('js/jquery-1.11.3.min.js') }}"></script>
+<script src="{{ URL::asset('js/jquery.validator.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
-<link href="{{ URL::asset('js/posabsolute-jQuery-Validation-Engine-25e4691/css/validationEngine.jquery.css') }}" rel="stylesheet">
-<link href="{{ URL::asset('js/posabsolute-jQuery-Validation-Engine-25e4691/css/template.css') }}" rel="stylesheet">
+<link href="{{ URL::asset('css/bootstrap-3.3.2.css') }}" rel="stylesheet">
 
-<script src="{{ URL::asset('js/posabsolute-jQuery-Validation-Engine-25e4691/js/jquery.1.4.4.min.js') }}" type="text/javascript"></script>
-<script type="text/javascript"
-	src="{{ URL::asset('js/posabsolute-jQuery-Validation-Engine-25e4691/js/jquery.validationEngine-kh.js') }}"></script>
-<script type="text/javascript"
-	src="{{ URL::asset('js/posabsolute-jQuery-Validation-Engine-25e4691/js/jquery.validationEngine.js') }}"></script>
+<!-- DatePicker -->
+<link href="{{ URL::asset('bootstrap_datepicker/css/bootstrap-datepicker3.css') }}" rel="stylesheet">
+<script type="text/javascript" src="{{ URL::asset('bootstrap_datepicker/js/bootstrap-datepicker.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('bootstrap_datepicker/locales/bootstrap-datepicker.en-GB.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('bootstrap_datepicker/locales/bootstrap-datepicker.kh.min.js') }}"></script>
+<!-- End DatePicker -->
+
 <style>
 html, body {
 	height: 100%;
