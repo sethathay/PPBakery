@@ -1,10 +1,9 @@
 @extends('master') 
 
 @section('content')
-
 <link href="{{ URL::asset('css/general.css') }}" rel="stylesheet">
-<link href="{{ URL::asset('css/upload.css') }}" rel="stylesheet">
-{!! Form::open(array('url' => route('users.store'), 'method' => 'post', 'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
+{!! Form::model($user, array('route' => ['users.update'], 'method' => 'post', 'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
+{!! Form::hidden('id', null, array('id'=>'first_name')) !!}
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">
@@ -15,7 +14,7 @@
 			<button type="submit" class="btn btn-md btn-success">
 				<span class="glyphicon glyphicon-saved"></span> Save
 			</button>
-			<button onclick="redirectPage('index')" type="button"
+			<button onclick="redirectPage('{{ URL::asset('/users/index') }}')" type="button"
 				class="btn btn-md btn-danger">
 				<span class="glyphicon"></span> Cancel
 			</button>

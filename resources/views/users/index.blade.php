@@ -80,10 +80,10 @@
 				<td>{{ $user->email }}</td>
 				<td>{{ $user->phone }}</td>
 				<td class="last_td">
-					<button type="button" class="btn btn-xs btn-info">
+					<button type="button" onclick="redirectPage('show/{{ $user->id }}')" class="btn btn-xs btn-info">
 						<span class="glyphicon glyphicon-user"></span> View
 					</button>
-					<button type="button" class="btn btn-xs btn-primary">
+					<button type="button" onclick="redirectPage('edit/{{ $user->id }}')" class="btn btn-xs btn-primary">
 						<span class="glyphicon glyphicon-edit"></span> Edit
 					</button>
 					<button type="button" class="btn btn-xs btn-danger">

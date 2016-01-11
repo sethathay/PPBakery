@@ -43,16 +43,16 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(User $user, Request $request)
     {
         /*
          * $user = Input::all();
          * or
          */       
-        $user = $request->all();
-        $user['password']	= Hash::make($request->get('password'));
-        $user['created_by']	= 1;
-        User::create($user);
+        $users = $request->all();
+        $users['password']	= Hash::make($request->get('password'));
+        $users['created_by']	= 1;
+        $user->fill($users)->save();
         return Redirect::route('users.index');
     }
 
@@ -65,6 +65,9 @@ class UsersController extends Controller
     public function show($id)
     {
         //
+        $user = User::whereId($id)->first();
+    	$countries = array_merge(array(''=>'Please Select'), DB::table('countries')->lists('name', 'id'));
+        return view('users/show', compact('countries', 'user'));
     }
 
     /**
@@ -76,6 +79,9 @@ class UsersController extends Controller
     public function edit($id)
     {
         //
+        $user = User::find($id);//whereId($id)->first();
+    	$countries = array_merge(array(''=>'Please Select'), DB::table('countries')->lists('name', 'id'));
+        return view('users/edit', compact('countries', 'user'));
     }
 
     /**
@@ -85,9 +91,22 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(User $users, Request $request)
     {
         //
+//         $user = User::find(Input::get('id'));
+//         if ( $user == null ){
+//         	return false;        	
+//         }
+        $user = $request->all();
+        if ( $request->get('password') != null ){
+       		$user['password']	= Hash::make($request->get('password'));
+        }
+        unset($user['_token']);
+        unset($user['photo']);
+        unset($user['retype_password']);
+        $users->whereId(Input::get('id'))->update($user);
+        return Redirect::route('users.index');
     }
 
     /**

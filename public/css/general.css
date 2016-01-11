@@ -1,0 +1,56 @@
+.table-list {
+	width: 82%;
+	margin: 3px auto 0;
+}
+
+.table thead {
+	background: #3E5C9A;
+	color: #fff;
+}
+
+.table thead th {
+	text-align: center;
+}
+
+.last_td {
+	text-align: center;
+}
+
+.panel-heading {
+	background: #ebf4fe;
+	padding: 0 0 0 10px;
+	margin: 5px 0 10px;
+	border: 1px solid #ccc;
+}
+
+.panel-heading img {
+	width: 60px;
+	height: 60px;
+	vertical-align: middle;
+}
+
+.panel-heading label {
+	padding: 20px;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+select{
+	width: 180px !important;
+}
+.photo{
+	border: 1px solid #ccc;
+	padding: 30px 40px;
+	border-radius: 5px;
+}
+
+.form{
+	border: 1px solid #ccc;
+	padding: 10px 20px 30px;
+	background: #F7F8F9;
+}
+
+.star{
+	font-weight: bolder;
+	color: red;
+}
