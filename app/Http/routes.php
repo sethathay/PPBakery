@@ -29,3 +29,11 @@ Route::post('users/doLogin', ['as' => 'users.doLogin', 'uses' => 'UsersControlle
 Route::get('users/login', array('as' => 'users.login', function () { }));
 
 //Route::resource('users', 'UsersController');
+
+// Route of products by Thay Setha
+
+Route::get('products/index', 'ProductsController@index');
+Route::get('products/create', 'ProductsController@create');
+Route::get('products/store', 'ProductsController@store');
+
+//=========================================================
