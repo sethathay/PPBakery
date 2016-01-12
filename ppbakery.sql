@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2016-01-05 17:31:21
+Date: 2016-01-12 16:52:09
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20686,6 +20686,7 @@ CREATE TABLE `users` (
   `phone` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `country_id` int(11) DEFAULT NULL,
+  `remember_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
@@ -20694,14 +20695,15 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   KEY `first_name` (`first_name`),
   KEY `last_name` (`last_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'admin', '98272bd2662e1f66f468b0c80126c8c8', 'Super', 'Administrator', 'Male', '2010-02-15', 'Phnom Penh', '023881887', 'info@pos.com', '36', '2011-02-14 15:07:18', '1', '2015-11-17 14:09:02', '1', '1');
-INSERT INTO `users` VALUES ('2', 'sovath', '98272bd2662e1f66f468b0c80126c8c8', 'sreang', 'sovath', 'Male', '2013-10-17', '', '', '', '36', '2013-10-17 13:56:35', '1', '2013-10-17 13:56:35', null, '1');
-INSERT INTO `users` VALUES ('9', 'phoulin', '$2y$10$NDRnBX9Wu8M.2SURJo7La.S80eSHz4DXpvtSKGqcqXlRiGZmgGuES', 'Phou', 'Lin', '1', '1987-01-16', 'Phnom Penh', '089918188', 'phou.lin1@gmail.com', '35', '2016-01-05 07:40:41', '1', '2016-01-05 07:40:41', null, '1');
+INSERT INTO `users` VALUES ('1', 'admin', '$2y$10$tTgYRy/cv.LOg.ysSnKq8OUb135LsOEwuQJJzek.en5DcwfZiNjYa', 'Super', 'Administrator', '1', '2010-02-15', 'Phnom Penh', '023881887', 'info@pos.com', '35', null, '2011-02-14 15:07:18', '1', '2016-01-12 09:02:28', '1', '1');
+INSERT INTO `users` VALUES ('2', 'sovath', '98272bd2662e1f66f468b0c80126c8c8', 'sreang', 'sovath', 'Male', '2013-10-17', '', '', '', '36', null, '2013-10-17 13:56:35', '1', '2016-01-11 02:36:49', null, '1');
+INSERT INTO `users` VALUES ('16', 'phoulin', '$2y$10$s7HjuMZMG8Lc602QvXzrIeUUKocws54V8FhDOydR1F/JGrQOmqglW', 'Phou', 'Lin', '1', '1987-01-16', 'Phnom Penh', '089918188', 'phou.lin1@gmail.com', '35', null, '2016-01-11 02:32:58', '1', '2016-01-11 02:36:49', null, '1');
+INSERT INTO `users` VALUES ('17', 'jacklin', '$2y$10$5mj/4iHjgIudk95A85oXqOuWhXRnO2rmuOPYDTZSdRsdo/edrE4SK', 'Phou111', 'Lin1111', '1', '1987-01-16', 'Phnom Penh', '089 918 188', 'phou.lin1@gmail.com', '35', null, '2016-01-11 02:33:32', '1', '2016-01-11 03:07:38', null, '1');
 
 -- ----------------------------
 -- Table structure for user_companies
