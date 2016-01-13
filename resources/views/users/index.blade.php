@@ -52,6 +52,12 @@
 			</button>
 		</div>
 	</div>
+	<!-- check for flash notification message -->
+	@if(Session::has('flash_notice'))
+		<div id="login-alert" class="alert alert-success col-sm-12">
+			<div id="flash_notice">{{ Session::get('flash_notice') }}</div>
+		</div>
+	@endif
 	<table class="table table-hover table-bordered table-striped">
 		<thead>
 			<tr>
@@ -86,7 +92,7 @@
 					<button type="button" onclick="redirectPage('edit/{{ $user->id }}')" class="btn btn-xs btn-primary">
 						<span class="glyphicon glyphicon-edit"></span> Edit
 					</button>
-					<button type="button" class="btn btn-xs btn-danger">
+					<button type="button" onclick="redirectPage('destroy/{{ $user->id }}')" class="btn btn-xs btn-danger">
 						<span class="glyphicon glyphicon-trash"></span> Delete
 					</button>
 				</td>

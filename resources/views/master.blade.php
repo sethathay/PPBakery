@@ -97,7 +97,6 @@ body {
 .left_menu ul li {
 	width: 98%;
 	margin: 0 auto 1px;
-	padding: 6px 5px;
 	background: #EBF4FE;
 	border: 1px solid #ccc;
 	color: #333;
@@ -112,7 +111,13 @@ body {
 .left_menu li label:hover {
 	cursor: pointer;
 }
-
+.left_menu li a{
+	padding: 6px 5px;
+	background: none;
+}
+.left_menu li a:hover{
+	background: none;
+}
 .left_menu img {
 	width: 32px;
 	height: 32px;
@@ -120,9 +125,25 @@ body {
 }
 
 .user_info {
-	margin: 10px 0 0;
+	padding: 10px;
 	background: #A1BFFC;
+	color: #444547;
 	width: 100%;
+}
+.user_info li{
+	border: 0;
+	padding: 6px 5px;
+}
+.user_info li:hover{
+	cursor: default !important;
+	background: #EBF4FE;
+}
+.header_title{
+	background: #3E5C9A;
+	width: 100%;
+	padding: 10px;
+	color: #fff;
+	text-align: center;
 }
 /* end left column */
 @font-face {

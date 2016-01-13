@@ -24,7 +24,7 @@ class UsersController extends Controller
 
 	public function index()
 	{
-		$users = User::get();
+		$users = User::where('is_active', 1)->get();
 		return view('users/index', compact('users'));
 	}
 
@@ -96,14 +96,11 @@ class UsersController extends Controller
 	 */
 	public function update(User $users, Request $request)
 	{
-		//
-		//         $user = User::find(Input::get('id'));
-		//         if ( $user == null ){
-		//         	return false;
-		//         }
 		$user = $request->all();
 		if ( $request->get('password') != null ){
 			$user['password']	= Hash::make($request->get('password'));
+		}else{
+			unset($user['password']);
 		}
 		unset($user['_token']);
 		unset($user['photo']);
@@ -121,6 +118,9 @@ class UsersController extends Controller
 	public function destroy($id)
 	{
 		//
+		$user = new User;
+		$user->where('id', $id)->update(['is_active' => 0]);
+		return Redirect::route('users.index')->with('flash_notice', 'You are successfully delete!');
 	}
 
 
@@ -139,8 +139,15 @@ class UsersController extends Controller
 		}
 		else {
 			// if any error send back with message.
-			Session::flash('flash_error', 'Something went wrong');
+			Session::flash('flash_error', 'Invalid username or password!!');
 			return Redirect::to('/');
 		}
 	}
+	
+	public function logout() {
+		Auth::logout();
+		return Redirect::intended('/');
+	}
+	
+	
 }

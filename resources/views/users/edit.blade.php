@@ -122,11 +122,9 @@
                     minlength: 5
                 },
                 password: {
-                    required: true,
                     minlength: 5
                 },
                 retype_password: {
-                    required: true,
                     minlength: 5,
                     equalTo: "#password"
                 }
@@ -143,11 +141,9 @@
                     required: "Please enter a login username"
                 },
                  password: {
-                    required: "Please provide a password",
                     minlength: "Your password must be at least 5 characters long"
                 },
                 retype_password: {
-                    required: "Please provide a retype-password",
                     minlength: "Your password must be at least 5 characters long",
                     equalTo: "Please enter the same password as above"
                 },

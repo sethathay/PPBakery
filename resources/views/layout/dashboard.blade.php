@@ -26,6 +26,10 @@
 		}
 	</style>
 	<div class="col-lg-9 dashboard">
+		<!-- check for flash notification message -->
+        @if(Session::has('flash_notice'))
+            <div id="flash_notice">{{ Session::get('flash_notice') }}</div>
+        @endif
 		<div class="row" style="width:99%; margin: 0 auto;"><h2>Control Panel</h2></div>
 		<div class="row" style="width:99%; margin: 0 auto;">
 			<div class="col-md-2 board" onclick="redirectPage('orders/index')"><img src="{{ URL::asset('img/house_sale_b.png') }}" /><br/>Sales</div>
