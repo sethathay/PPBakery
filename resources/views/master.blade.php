@@ -202,7 +202,7 @@ body {
 		</div>
 		
 		<div class="col-md-12 footer">
-			<div class="footer_content">KHMER FOOD Â© {!! date('Y') !!}</div>
+			<div class="footer_content">KHMER FOOD © {!! date('Y') !!}</div>
 		</div>
 	</div>
 	</div>

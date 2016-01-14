@@ -1,10 +1,9 @@
 <div class="navbar col-md-2 left_menu">
 	<div class="navbar-inner">
 		<ul class="nav">
-			<li onclick="redirectPage('{{ URL::asset('/dashboard') }}')"><img
+			<li><a href="{{ URL::asset('/dashboard') }}"><img
 				src="{{ URL::asset('img/control_panel.png') }}" alt="order" />
-				&nbsp;&nbsp;<label
-				style="vertical-align: middle; font-weight: normal;">Control Panel</label>
+				&nbsp;&nbsp;<label style="vertical-align: middle; font-weight: normal;">Control Panel</label></a>
 			</li>
 			<li><a href="{{ URL::asset('/pos') }}" target="_blank" ><img
 				src="{{ URL::asset('img/house_sale.png') }}" alt="order" />

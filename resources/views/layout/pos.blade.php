@@ -5,25 +5,10 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="{{ URL::asset('css/bootstrap.min.css') }}" rel="stylesheet">
-<script type="text/javascript"
-	src="{{ URL::asset('js/jquery-1.11.3.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/jquery-1.11.3.min.js') }}"></script>
 <script src="{{ URL::asset('js/jquery.validator.js') }}"></script>
-<script type="text/javascript"
-	src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
-<link href="{{ URL::asset('css/bootstrap-3.3.2.css') }}"
-	rel="stylesheet">
-
-<!-- DatePicker -->
-<link
-	href="{{ URL::asset('bootstrap_datepicker/css/bootstrap-datepicker3.css') }}"
-	rel="stylesheet">
-<script type="text/javascript"
-	src="{{ URL::asset('bootstrap_datepicker/js/bootstrap-datepicker.js') }}"></script>
-<script type="text/javascript"
-	src="{{ URL::asset('bootstrap_datepicker/locales/bootstrap-datepicker.en-GB.min.js') }}"></script>
-<script type="text/javascript"
-	src="{{ URL::asset('bootstrap_datepicker/locales/bootstrap-datepicker.kh.min.js') }}"></script>
-<!-- End DatePicker -->
+<script type="text/javascript" src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
+<link href="{{ URL::asset('css/bootstrap-3.3.2.css') }}" rel="stylesheet">
 
 <style>
 html, body {
@@ -91,61 +76,88 @@ body {
 /* end left column */
 @font-face {
 	font-family: 'Glyphicons Halflings';
-	src: url('{{URL::asset(' bootstrap-3.3.2/ fonts/
-		glyphicons-halflings-regular.eot ')}}');
-	src: url('{{URL::asset(' bootstrap-3.3.2/ fonts/
-		glyphicons-halflings-regular.eot ? #iefix ')}}')
+	src: url('{{URL::asset('bootstrap-3.3.2/fonts/glyphicons-halflings-regular.eot')}}');
+	src:
+		url('{{URL::asset('bootstrap-3.3.2/fonts/glyphicons-halflings-regular.eot?#iefix')}}')
 		format('embedded-opentype'),
-		url('{{URL::asset(' bootstrap-3.3.2/ fonts/
-		glyphicons-halflings-regular.woff ')}}') format('woff'),
-		url('{{URL::asset(' bootstrap-3.3.2/ fonts/
-		glyphicons-halflings-regular.ttf ')}}') format('truetype'),
-		url('{{URL::asset(' bootstrap-3.3.2/ fonts/
-		glyphicons-halflings-regular.svg #glyphicons-halflingsregular ')}}')
+		url('{{URL::asset('bootstrap-3.3.2/fonts/glyphicons-halflings-regular.woff')}}')
+		format('woff'),
+		url('{{URL::asset('bootstrap-3.3.2/fonts/glyphicons-halflings-regular.ttf')}}')
+		format('truetype'),
+		url('{{URL::asset('bootstrap-3.3.2/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular')}}')
 		format('svg');
 }
 
 .header_info {
-	text-align: right;
 	margin: 25px 0 0;
 }
 
 .header_info div {
 	margin: 0 0 5px;
+	text-align: right;
 	font-size: 12px;
+}
+
+.photo_product{
+	margin: 8px 14px;
+	padding: 0;
+}
+.photo_product li{
+	width: 100px; 
+	height: 100px;
+	list-style: none;
+	display: inline;
+	margin: 10px 5px 0;
+	padding: 41px 0px 43px;
+	border: 1px #F84D36 solid; 
+	border-radius: 5px;
+	position: relative;
+}
+.product_name { 
+   position: absolute; 
+   top: 60px; 
+   left: 0; 
+   width: 100%; 
+   background: rgba(0,0,255,0.4);
+   color: #fff;
+   text-align: center;
+   padding: 10px 0;   
+   border-bottom-right-radius:5px;
+   border-bottom-left-radius:5px;
+   
+}
+.photo_product li:hover{
+	border: 1px #3E5C9A solid; 
+	box-shadow: 3px 3px 2px #ccc;
+	opacity: 0.5;
+}
+.photo_product li img{
+	width: 100px; 
+	height: 100px; 
+	border-radius: 5px;
+}
+.photo_product li img:hover{
+	cursor: pointer;
+}
+
+.table thead{
+	background: #E2E2E2;
 }
 
 .form-group {
 	margin: 10px 5px;
 }
 
-.row-form {
-	margin: 10px 0;
-	text-align: right;
-}
-
 .footer {
 	background-color: #3E5C9A;
 	height: 30px;
 	color: #fff;
-	position: fixed;
+	position:fixed;
 	bottom: 0;
 	text-align: center;
 }
-
-.footer_content {
+.footer_content{
 	padding-top: 5px;
-}
-
-.photo_product {
-	margin: 0;
-	padding: 0;
-}
-
-.photo_product li {
-	margin: 8px 5px 0px 10px;
-	list-style: none;
-	display: inline-block;
 }
 </style>
 </head>
@@ -181,53 +193,138 @@ body {
 					<div
 						style="background: #F5F5F5; height: 120px; width: 100%; border: 2px #fff solid;">
 						<ul class="photo_product">
-							<li style="width: 100px; height: 100px;"><img
-								src="{{ URL::asset('img/product/1.jpg') }}"
-								style="width: 100px; height: 100px; border: 1px #353F48 solid; border-radius: 5px;"
-								alt="" /></li>
-							<li style="width: 100px; height: 100px;"><img
-								src="{{ URL::asset('img/product/2.jpg') }}"
-								style="width: 100px; height: 100px; border: 1px #353F48 solid; border-radius: 5px;"
-								alt="" /></li>
-							<li style="width: 100px; height: 100px;"><img
-								src="{{ URL::asset('img/product/3.jpg') }}"
-								style="width: 100px; height: 100px; border: 1px #353F48 solid; border-radius: 5px;"
-								alt="" /></li>
-							<li style="width: 100px; height: 100px;"><img
-								src="{{ URL::asset('img/product/4.jpg') }}"
-								style="width: 100px; height: 100px; border: 1px #353F48 solid; border-radius: 5px;"
-								alt="" /></li>
-							<li style="width: 100px; height: 100px;"><img
-								src="{{ URL::asset('img/product/5.jpg') }}"
-								style="width: 100px; height: 100px; border: 1px #353F48 solid; border-radius: 5px;"
-								alt="" /></li>
-							<li style="width: 100px; height: 100px;"><img
-								src="{{ URL::asset('img/product/6.jpg') }}"
-								style="width: 100px; height: 100px; border: 1px #353F48 solid; border-radius: 5px;"
-								alt="" /></li>
-							<li style="width: 100px; height: 100px;"><img
-								src="{{ URL::asset('img/product/7.jpg') }}"
-								style="width: 100px; height: 100px; border: 1px #353F48 solid; border-radius: 5px;"
-								alt="" /></li>
-							<li style="width: 100px; height: 100px;"><img
-								src="{{ URL::asset('img/product/8.jpg') }}"
-								style="width: 100px; height: 100px; border: 1px #353F48 solid; border-radius: 5px;"
-								alt="" /></li>
+							<li><img src="{{ URL::asset('img/product/1.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
+							<li><img src="{{ URL::asset('img/product/2.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
+							<li><img src="{{ URL::asset('img/product/3.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
+							<li><img src="{{ URL::asset('img/product/4.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
+							<li><img src="{{ URL::asset('img/product/5.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
+							<li><img src="{{ URL::asset('img/product/6.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
+							<li><img src="{{ URL::asset('img/product/7.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
+							<li><img src="{{ URL::asset('img/product/8.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
 						</ul>
 					</div>
 				</div>
+				
 				<div class="row">
 					<div class="table-responsive">
-						<table class="table">
-							
-						</table>
+					  <table class="table table-hover">
+						<thead>
+					        <tr>
+					            <th>Description</th>
+					            <th>Qty</th>
+					            <th>Price</th>
+					            <th>Amount</th>
+					            <th></th>
+					        </tr>
+					    </thead>
+					    <tbody>
+					        <tr>
+					            <td>This is going to put our text right up on</td>
+					            <td>Item 1</td>
+					            <td>$1</td>
+					            <td>$1</td>
+					            <td>
+					            	<button type="button" class="btn btn-xs btn-primary">
+										<span class="glyphicon glyphicon-edit"></span> 
+									</button>
+									<button type="button" class="btn btn-xs btn-danger">
+										<span class="glyphicon glyphicon-trash"></span> 
+									</button>
+								</td>
+					        </tr>
+					        <tr>
+					            <td>This is going to put our text </td>
+					            <td>Item 2</td>
+					            <td>$2</td>
+					            <td>$1</td>
+					            <td>
+					            	<button type="button" class="btn btn-xs btn-primary">
+										<span class="glyphicon glyphicon-edit"></span> 
+									</button>
+									<button type="button" class="btn btn-xs btn-danger">
+										<span class="glyphicon glyphicon-trash"></span> 
+									</button>
+								</td>
+					        </tr>
+					        <tr>
+					            <td>This is going to put our text </td>
+					            <td>Item 2</td>
+					            <td>$2</td>
+					            <td>$1</td>
+					            <td>
+					            	<button type="button" class="btn btn-xs btn-primary">
+										<span class="glyphicon glyphicon-edit"></span> 
+									</button>
+									<button type="button" class="btn btn-xs btn-danger">
+										<span class="glyphicon glyphicon-trash"></span> 
+									</button>
+								</td>
+					        </tr>
+					        <tr>
+					            <td>This is going to put our text </td>
+					            <td>Item 2</td>
+					            <td>$2</td>
+					            <td>$1</td>
+					            <td>
+					            	<button type="button" class="btn btn-xs btn-primary">
+										<span class="glyphicon glyphicon-edit"></span> 
+									</button>
+									<button type="button" class="btn btn-xs btn-danger">
+										<span class="glyphicon glyphicon-trash"></span> 
+									</button>
+								</td>
+					        </tr>
+					        <tr>
+					            <td>This is going to put our text </td>
+					            <td>Item 2</td>
+					            <td>$2</td>
+					            <td>$1</td>
+					            <td>
+					            	<button type="button" class="btn btn-xs btn-primary">
+										<span class="glyphicon glyphicon-edit"></span> 
+									</button>
+									<button type="button" class="btn btn-xs btn-danger">
+										<span class="glyphicon glyphicon-trash"></span> 
+									</button>
+								</td>
+					        </tr>
+					        <tr>
+					            <td>This is going to put our text </td>
+					            <td>Item 2</td>
+					            <td>$2</td>
+					            <td>$1</td>
+					            <td>
+					            	<button type="button" class="btn btn-xs btn-primary">
+										<span class="glyphicon glyphicon-edit"></span> 
+									</button>
+									<button type="button" class="btn btn-xs btn-danger">
+										<span class="glyphicon glyphicon-trash"></span> 
+									</button>
+								</td>
+					        </tr>
+					        <tr>
+					            <td>This is going to put our text </td>
+					            <td>Item 2</td>
+					            <td>$2</td>
+					            <td>$1</td>
+					            <td>
+					            	<button type="button" class="btn btn-xs btn-primary">
+										<span class="glyphicon glyphicon-edit"></span> 
+									</button>
+									<button type="button" class="btn btn-xs btn-danger">
+										<span class="glyphicon glyphicon-trash"></span> 
+									</button>
+								</td>
+					        </tr>
+					    </tbody>
+					  </table>
 					</div>
 				</div>
 			</div>
 		</div>
 
 		<div class="col-md-12 footer">
-			<div class="footer_content">KHMER FOOD Â© {!! date('Y') !!}</div>
+			<div class="footer_content">KHMER FOOD © {!! date('Y') !!}</div>
 		</div>
 	</div>
 </body>
