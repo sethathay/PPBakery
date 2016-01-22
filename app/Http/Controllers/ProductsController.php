@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
+use App\Product;
+use Input;
+use Response;
 
 class ProductsController extends Controller
 {
@@ -87,5 +90,15 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    /**
+     * Search product from POS
+     * @param string $code
+     */
+    public function searchProdctByCode(){
+    	$code = Input::get('codeNumber');
+    	$products = Product::where('is_active', 1)->where('code', $code)->first();
+    	return Response::json($products);
     }
 }

@@ -87,7 +87,9 @@ body {
 		url('{{URL::asset('bootstrap-3.3.2/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular')}}')
 		format('svg');
 }
-
+.content-right{
+	border-left: 2px solid #DBEAF9; 
+}
 .header_info {
 	margin: 25px 0 0;
 }
@@ -144,6 +146,72 @@ body {
 	background: #E2E2E2;
 }
 
+.header-fixed {
+    width: 100%;
+    height: 330px;
+}
+
+.header-fixed > thead,
+.header-fixed > tbody,
+.header-fixed > thead > tr,
+.header-fixed > tbody > tr,
+.header-fixed > thead > tr > th,
+.header-fixed > tbody > tr > td {
+    display: block;
+}
+
+.header-fixed > tbody > tr:after,
+.header-fixed > thead > tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+.header-fixed > tbody {
+    overflow-y: auto;
+    height: 300px;
+}
+
+.header-fixed > tbody > tr > td,
+.header-fixed > thead > tr > th {
+    width: 15%;
+    float: left;
+    text-align: right;
+}
+.header-fixed > thead > tr > th {
+    text-align: center !important;
+}
+.first-column{
+    width: 40% !important;
+    text-align: left !important;
+    padding-left: 20px !important;
+}
+.qty-column{
+    text-align: center !important;
+}
+
+.content-left{
+	background: #DBEAF9;
+	padding: 24px 12px 0;
+}
+
+#code{
+	font-size: 20px;
+	color: red;
+	font-weight: bold;
+}
+.block-amount{
+	font-size: 18px;
+}
+.amount-big{
+	font-size: 26px;
+	color: red;
+}
+.amount, .amount-big{
+	text-align: right;
+}
+
 .form-group {
 	margin: 10px 5px;
 }
@@ -187,7 +255,29 @@ body {
 		</div>
 
 		<div class="col-md-12 content">
-			<div class="col-md-4 content-left">Left</div>
+			
+			<div class="col-md-4 content-left">
+				<div><input id="code" type="text" class="form-control" name="code" value="" placeholder="លេខកូដ"></div>
+				
+				<div style="padding-top:20px;">
+					<label>ជំនួយ៖</label> បញ្ជូលលេខកូដរួចចុច ប៊ូតុងខាងក្រោម តាមចំនួនដែលចង់បាន
+					<div style="padding-top:10px;">
+						<label>F9 = ចំនួន 5</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<label>F10 = ចំនួន 10</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<label>F11 = ចំនួន 20</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<label>F12 = ចំនួន 50</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</div>
+				</div>
+				
+				<div class="row">
+					<img src="{{ URL::asset('img/bread.png') }}" alt="" />
+				</div>
+				<div class="row" style="background: #fff; padding:10px 10px; text-align: center; font-size: 34px; color: #FF6600; font-weight: bold;">
+					PHNOM PENH BAKERY
+				</div>
+				
+			</div>
+			
 			<div class="col-md-8 content-right">
 				<div class="row">
 					<div
@@ -207,22 +297,22 @@ body {
 				
 				<div class="row">
 					<div class="table-responsive">
-					  <table class="table table-hover">
+					  <table class="table table-hover header-fixed">
 						<thead>
 					        <tr>
-					            <th>Description</th>
-					            <th>Qty</th>
-					            <th>Price</th>
-					            <th>Amount</th>
+					            <th class="first-column">ឈ្មោះទំនិញ</th>
+					            <th>ចំនួន</th>
+					            <th>តំ.រាយ</th>
+					            <th>សរុប</th>
 					            <th></th>
 					        </tr>
 					    </thead>
 					    <tbody>
-					        <tr>
-					            <td>This is going to put our text right up on</td>
-					            <td>Item 1</td>
-					            <td>$1</td>
-					            <td>$1</td>
+					    	<tr style="display: none;">
+					            <td class="first-column"></td>
+					            <td class="qty-column"></td>
+					            <td></td>
+					            <td></td>
 					            <td>
 					            	<button type="button" class="btn btn-xs btn-primary">
 										<span class="glyphicon glyphicon-edit"></span> 
@@ -231,93 +321,36 @@ body {
 										<span class="glyphicon glyphicon-trash"></span> 
 									</button>
 								</td>
-					        </tr>
-					        <tr>
-					            <td>This is going to put our text </td>
-					            <td>Item 2</td>
-					            <td>$2</td>
-					            <td>$1</td>
-					            <td>
-					            	<button type="button" class="btn btn-xs btn-primary">
-										<span class="glyphicon glyphicon-edit"></span> 
-									</button>
-									<button type="button" class="btn btn-xs btn-danger">
-										<span class="glyphicon glyphicon-trash"></span> 
-									</button>
-								</td>
-					        </tr>
-					        <tr>
-					            <td>This is going to put our text </td>
-					            <td>Item 2</td>
-					            <td>$2</td>
-					            <td>$1</td>
-					            <td>
-					            	<button type="button" class="btn btn-xs btn-primary">
-										<span class="glyphicon glyphicon-edit"></span> 
-									</button>
-									<button type="button" class="btn btn-xs btn-danger">
-										<span class="glyphicon glyphicon-trash"></span> 
-									</button>
-								</td>
-					        </tr>
-					        <tr>
-					            <td>This is going to put our text </td>
-					            <td>Item 2</td>
-					            <td>$2</td>
-					            <td>$1</td>
-					            <td>
-					            	<button type="button" class="btn btn-xs btn-primary">
-										<span class="glyphicon glyphicon-edit"></span> 
-									</button>
-									<button type="button" class="btn btn-xs btn-danger">
-										<span class="glyphicon glyphicon-trash"></span> 
-									</button>
-								</td>
-					        </tr>
-					        <tr>
-					            <td>This is going to put our text </td>
-					            <td>Item 2</td>
-					            <td>$2</td>
-					            <td>$1</td>
-					            <td>
-					            	<button type="button" class="btn btn-xs btn-primary">
-										<span class="glyphicon glyphicon-edit"></span> 
-									</button>
-									<button type="button" class="btn btn-xs btn-danger">
-										<span class="glyphicon glyphicon-trash"></span> 
-									</button>
-								</td>
-					        </tr>
-					        <tr>
-					            <td>This is going to put our text </td>
-					            <td>Item 2</td>
-					            <td>$2</td>
-					            <td>$1</td>
-					            <td>
-					            	<button type="button" class="btn btn-xs btn-primary">
-										<span class="glyphicon glyphicon-edit"></span> 
-									</button>
-									<button type="button" class="btn btn-xs btn-danger">
-										<span class="glyphicon glyphicon-trash"></span> 
-									</button>
-								</td>
-					        </tr>
-					        <tr>
-					            <td>This is going to put our text </td>
-					            <td>Item 2</td>
-					            <td>$2</td>
-					            <td>$1</td>
-					            <td>
-					            	<button type="button" class="btn btn-xs btn-primary">
-										<span class="glyphicon glyphicon-edit"></span> 
-									</button>
-									<button type="button" class="btn btn-xs btn-danger">
-										<span class="glyphicon glyphicon-trash"></span> 
-									</button>
-								</td>
-					        </tr>
+					    	</tr>
 					    </tbody>
 					  </table>
+					</div>
+				</div>
+				
+				<div class="row" style="background: #DBEAF9; height: 160px; font-size: 16px; padding-top: 10px;">
+					<div class="col-md-6">
+						<div><label>ម៉ោង: {{ date('H:i') }}</label></div>
+						<div><label>សារខា : A1</label></div>
+						<div><label>ឈ្មោះអ្នកប្រើប្រាស់ : Administrator</label></div>
+						<div style="font-size: 20px; border: 1px solid #aaa; padding: 10px; text-align: center;"><label>អត្រាប្តូរប្រាក់ :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:red;">1$ = 4000R</label></div>
+					</div>
+					<div class="col-md-6 block-amount">
+						<div class="row">
+							<div class="col-md-6"><label>តំលៃសរុប : </label></div>
+							<div class="col-md-6 amount"><label class="subtotal">125,000R</label></div>
+						</div>
+						<div class="row">
+							<div class="col-md-6"><label>បញ្ចុះតំលៃ : </label></div>
+							<div class="col-md-6  amount"><label class="discount">5,000R</label></div>
+						</div>
+						<div class="row">
+							<div class="col-md-6"><label>តំលៃសរុបត្រូវបង់ (R) : </label></div>
+							<div class="col-md-6  amount-big"><label class="discount">120,000R</label></div>
+						</div>
+						<div class="row">
+							<div class="col-md-6"><label>តំលៃសរុបត្រូវបង់ ($) : </label></div>
+							<div class="col-md-6  amount-big"><label class="discount">120,000R</label></div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -327,5 +360,88 @@ body {
 			<div class="footer_content">KHMER FOOD © {!! date('Y') !!}</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#code").focus();
+
+			var rate = '4000';
+			
+			$("#code").bind('keypress', function(e) {
+				var code = e.keyCode || e.which;
+								
+				// F9	
+				if(code == 120){
+					cloneRecord(5);
+				}
+				// F10
+				if(code == 121){
+					e.preventDefault(); //Disable shortcut browser
+					cloneRecord(10);
+				}
+				// F11
+				if(code == 122){
+					e.preventDefault(); //Disable shortcut browser
+					cloneRecord(20);
+				}
+				// F12
+				if(code == 123){
+					e.preventDefault(); //Disable shortcut browser
+					cloneRecord(50);
+				}
+
+				var token = "{!! csrf_token() !!}";
+				if(code == 13) { 
+					var codeNumber = $("#code").val();
+					if(codeNumber != ""){
+						$.ajax({
+							type : 'post',
+							url : '{{ route("products.searchProdctByCode") }}',
+							data : { _token : token, "codeNumber":codeNumber},
+							dataType : 'json',
+							success : function(result){
+								if(jQuery.isEmptyObject(result)){
+									alert("លេខកូដមិនត្រឹមត្រូវទេ!!");
+									$("#code").val("");
+								 	$("#code").focus();
+								}else{
+									cloneRecord(1,result);
+								}
+							}
+						});
+						
+					}else{
+						alert('បង់ប្រាក់');
+					}
+				}
+			});
+
+			// clone record
+			function cloneRecord(qty, result){
+				//Enter keycode
+				$(".header-fixed tbody").find('tr:last').clone(true).appendTo(".header-fixed tbody");
+			 	$(".header-fixed tbody").find("tr:last").css("display", "");
+			 	$(".header-fixed tbody").find("tr:last").find("td:first").text(result.name);
+			 	$(".header-fixed tbody").find("tr:last").find("td:eq(1)").text(qty);
+			 	$(".header-fixed tbody").find("tr:last").find("td:eq(2)").text(addCommas( result.price*1*rate ));
+			 	$(".header-fixed tbody").find("tr:last").find("td:eq(3)").text(addCommas( result.price*1*qty*rate ));
+			 	$("#code").val("");
+			 	$("#code").focus();
+			}
+
+			// add commas for number 120,000
+			function addCommas(nStr)
+			{
+				nStr += '';
+				x = nStr.split('.');
+				x1 = x[0];
+				x2 = x.length > 1 ? '.' + x[1] : '';
+				var rgx = /(\d+)(\d{3})/;
+				while (rgx.test(x1)) {
+					x1 = x1.replace(rgx, '$1' + "," + '$2');
+				}
+				return x1 + x2;
+			}
+		});
+	</script>
 </body>
 </html>
