@@ -360,61 +360,96 @@ body {
 			<div class="footer_content">KHMER FOOD © {!! date('Y') !!}</div>
 		</div>
 	</div>
+	
+	
+  		<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="">Open Modal</button>
+	<!-- Modal -->
+	  <div class="modal fade" id="myModal" role="dialog">
+	    <div class="modal-dialog">
+	    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-body">
+				<input id="qty_pro" type="text" class="form-control" name="qty_pro" value="" placeholder="ចំនួន">
+	        </div>
+	      </div>
+	      
+	    </div>
+	  </div>
+	<!-- End Modal -->
 	<script type="text/javascript">
 		$(document).ready(function(){
+		    		    
 			$("#code").focus();
-
-			var rate = '4000';
+			var rate = 4000;
 			
 			$("#code").bind('keypress', function(e) {
 				var code = e.keyCode || e.which;
-								
+				var token = "{!! csrf_token() !!}";
+
+				// F9	
+				if(code == 119){
+					//cloneRecord(5);
+					var codeNumber = $("#code").val();
+				}
+				
 				// F9	
 				if(code == 120){
-					cloneRecord(5);
+					//cloneRecord(5);
+					var codeNumber = $("#code").val();
+					getProduct(5, codeNumber, token);
 				}
 				// F10
 				if(code == 121){
 					e.preventDefault(); //Disable shortcut browser
-					cloneRecord(10);
+					//cloneRecord(10);
+					var codeNumber = $("#code").val();
+					getProduct(10, codeNumber, token);
 				}
 				// F11
 				if(code == 122){
 					e.preventDefault(); //Disable shortcut browser
-					cloneRecord(20);
+					//cloneRecord(20);
+					var codeNumber = $("#code").val();
+					getProduct(20, codeNumber, token);
 				}
 				// F12
 				if(code == 123){
 					e.preventDefault(); //Disable shortcut browser
-					cloneRecord(50);
+					//cloneRecord(50);
+					var codeNumber = $("#code").val();
+					getProduct(50, codeNumber, token);
 				}
 
-				var token = "{!! csrf_token() !!}";
 				if(code == 13) { 
 					var codeNumber = $("#code").val();
-					if(codeNumber != ""){
-						$.ajax({
-							type : 'post',
-							url : '{{ route("products.searchProdctByCode") }}',
-							data : { _token : token, "codeNumber":codeNumber},
-							dataType : 'json',
-							success : function(result){
-								if(jQuery.isEmptyObject(result)){
-									alert("លេខកូដមិនត្រឹមត្រូវទេ!!");
-									$("#code").val("");
-								 	$("#code").focus();
-								}else{
-									cloneRecord(1,result);
-								}
-							}
-						});
-						
-					}else{
-						alert('បង់ប្រាក់');
-					}
+					getProduct(1, codeNumber, token);
 				}
 			});
 
+			// Find product
+			function getProduct(qty, codeNumber, token){
+				if(codeNumber != ""){
+					$.ajax({
+						type : 'post',
+						url : '{{ route("products.searchProdctByCode") }}',
+						data : { _token : token, "codeNumber":codeNumber},
+						dataType : 'json',
+						success : function(result){
+							if(jQuery.isEmptyObject(result)){
+								alert("លេខកូដមិនត្រឹមត្រូវទេ!!");
+								$("#code").val("");
+							 	$("#code").focus();
+							}else{
+								cloneRecord(qty,result);
+							}
+						}
+					});
+					
+				}else{
+					alert('បង់ប្រាក់');
+				}
+			}
 			// clone record
 			function cloneRecord(qty, result){
 				//Enter keycode
@@ -422,8 +457,8 @@ body {
 			 	$(".header-fixed tbody").find("tr:last").css("display", "");
 			 	$(".header-fixed tbody").find("tr:last").find("td:first").text(result.name);
 			 	$(".header-fixed tbody").find("tr:last").find("td:eq(1)").text(qty);
-			 	$(".header-fixed tbody").find("tr:last").find("td:eq(2)").text(addCommas( result.price*1*rate ));
-			 	$(".header-fixed tbody").find("tr:last").find("td:eq(3)").text(addCommas( result.price*1*qty*rate ));
+			 	$(".header-fixed tbody").find("tr:last").find("td:eq(2)").text(addCommas( Number(result.price) * rate ));
+			 	$(".header-fixed tbody").find("tr:last").find("td:eq(3)").text(addCommas( Number(result.price) * Number(qty) * Number(rate) ));
 			 	$("#code").val("");
 			 	$("#code").focus();
 			}
@@ -441,7 +476,9 @@ body {
 				}
 				return x1 + x2;
 			}
+			
 		});
+		
 	</script>
 </body>
 </html>
