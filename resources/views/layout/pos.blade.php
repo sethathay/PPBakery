@@ -148,7 +148,7 @@ body {
 
 .header-fixed {
     width: 100%;
-    height: 430px;
+    height: 330px;
 }
 
 .header-fixed > thead,
@@ -290,7 +290,7 @@ body {
 							<li><img src="{{ URL::asset('img/product/5.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
 							<li><img src="{{ URL::asset('img/product/6.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
 							<li><img src="{{ URL::asset('img/product/7.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
-							<!--<li><img src="{{ URL::asset('img/product/8.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>-->
+							<li><img src="{{ URL::asset('img/product/8.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
 						</ul>
 					</div>
 				</div>
@@ -360,84 +360,105 @@ body {
 			<div class="footer_content">KHMER FOOD © {!! date('Y') !!}</div>
 		</div>
 	</div>
+	
+	
+  		<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="">Open Modal</button>
+	<!-- Modal -->
+	  <div class="modal fade" id="myModal" role="dialog">
+	    <div class="modal-dialog">
+	    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-body">
+				<input id="qty_pro" type="text" class="form-control" name="qty_pro" value="" placeholder="ចំនួន">
+	        </div>
+	      </div>
+	      
+	    </div>
+	  </div>
+	<!-- End Modal -->
 	<script type="text/javascript">
 		$(document).ready(function(){
+		    		    
 			$("#code").focus();
-
-			var rate = '4000';
+			var rate = 4000;
 			
 			$("#code").bind('keypress', function(e) {
 				var code = e.keyCode || e.which;
+				var token = "{!! csrf_token() !!}";
+
 				// F9	
-				if(code == 97){
-					cloneRecord(5);
+				if(code == 119){
+					//cloneRecord(5);
+					var codeNumber = $("#code").val();
+				}
+				
+				// F9	
+				if(code == 120){
+					//cloneRecord(5);
+					var codeNumber = $("#code").val();
+					getProduct(5, codeNumber, token);
 				}
 				// F10
-				if(code == 115){
+				if(code == 121){
 					e.preventDefault(); //Disable shortcut browser
-					cloneRecord(10);
+					//cloneRecord(10);
+					var codeNumber = $("#code").val();
+					getProduct(10, codeNumber, token);
 				}
 				// F11
-				if(code == 100){
+				if(code == 122){
 					e.preventDefault(); //Disable shortcut browser
-					cloneRecord(20);
+					//cloneRecord(20);
+					var codeNumber = $("#code").val();
+					getProduct(20, codeNumber, token);
 				}
 				// F12
-				if(code == 102){
+				if(code == 123){
 					e.preventDefault(); //Disable shortcut browser
-					cloneRecord(50);
+					//cloneRecord(50);
+					var codeNumber = $("#code").val();
+					getProduct(50, codeNumber, token);
 				}
 
-				var token = "{!! csrf_token() !!}";
 				if(code == 13) { 
-					cloneRecord(1);
-					/*var codeNumber = $("#code").val();
-					if(codeNumber != ""){
-						$.ajax({
-							type : 'post',
-							url : '{{ route("products.searchProdctByCode") }}',
-							data : { _token : token, "codeNumber":codeNumber},
-							dataType : 'json',
-							success : function(result){
-								if(jQuery.isEmptyObject(result)){
-									alert("លេខកូដមិនត្រឹមត្រូវទេ!!");
-									$("#code").val("");
-								 	$("#code").focus();
-								}else{
-									cloneRecord(1,result);
-								}
-							}
-						});
-						
-					}else{
-						alert('បង់ប្រាក់');
-					}*/
+					var codeNumber = $("#code").val();
+					getProduct(1, codeNumber, token);
 				}
 			});
-			
 
-			// clone record
-			function cloneRecord(qty){
-				//Enter keycode
-				$(".header-fixed tbody").find('tr:last').clone(true).appendTo(".header-fixed tbody");
-			 	$(".header-fixed tbody").find("tr:last").css("display", "");
-			 	$(".header-fixed tbody").find("tr:last").find("td:first").text($("#code").val());
-			 	$(".header-fixed tbody").find("tr:last").find("td:eq(1)").text(qty);
-			 	$(".header-fixed tbody").find("tr:last").find("td:eq(2)").text(addCommas(15000));
-			 	$(".header-fixed tbody").find("tr:last").find("td:eq(3)").text(addCommas( 15000));
-			 	$("#code").val("");
-			 	$("#code").focus();
+			// Find product
+			function getProduct(qty, codeNumber, token){
+				if(codeNumber != ""){
+					$.ajax({
+						type : 'post',
+						url : '{{ route("products.searchProdctByCode") }}',
+						data : { _token : token, "codeNumber":codeNumber},
+						dataType : 'json',
+						success : function(result){
+							if(jQuery.isEmptyObject(result)){
+								alert("លេខកូដមិនត្រឹមត្រូវទេ!!");
+								$("#code").val("");
+							 	$("#code").focus();
+							}else{
+								cloneRecord(qty,result);
+							}
+						}
+					});
+					
+				}else{
+					alert('បង់ប្រាក់');
+				}
 			}
-
 			// clone record
-			function cloneRecord1(qty, result){
+			function cloneRecord(qty, result){
 				//Enter keycode
 				$(".header-fixed tbody").find('tr:last').clone(true).appendTo(".header-fixed tbody");
 			 	$(".header-fixed tbody").find("tr:last").css("display", "");
 			 	$(".header-fixed tbody").find("tr:last").find("td:first").text(result.name);
 			 	$(".header-fixed tbody").find("tr:last").find("td:eq(1)").text(qty);
-			 	$(".header-fixed tbody").find("tr:last").find("td:eq(2)").text(addCommas( result.price*1*rate ));
-			 	$(".header-fixed tbody").find("tr:last").find("td:eq(3)").text(addCommas( result.price*1*qty*rate ));
+			 	$(".header-fixed tbody").find("tr:last").find("td:eq(2)").text(addCommas( Number(result.price) * rate ));
+			 	$(".header-fixed tbody").find("tr:last").find("td:eq(3)").text(addCommas( Number(result.price) * Number(qty) * Number(rate) ));
 			 	$("#code").val("");
 			 	$("#code").focus();
 			}
@@ -455,7 +476,9 @@ body {
 				}
 				return x1 + x2;
 			}
+			
 		});
+		
 	</script>
 </body>
 </html>

@@ -1,0 +1,19 @@
+User Type:
+1. Cashier (Sale only)
+2. Stock (Option to enable to adjust stock)
+3. Admin (All)
+
+
+
+Reports:
+1. Sale order by period 
+
+
+
+Expenses:
+1. Enter expense day by day
+2. Add list expense
+
+
+1. Option Clear Report  
+2. Edit price by user
