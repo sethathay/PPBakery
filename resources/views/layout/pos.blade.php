@@ -148,7 +148,7 @@ body {
 
 .header-fixed {
     width: 100%;
-    height: 330px;
+    height: 430px;
 }
 
 .header-fixed > thead,
@@ -290,7 +290,7 @@ body {
 							<li><img src="{{ URL::asset('img/product/5.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
 							<li><img src="{{ URL::asset('img/product/6.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
 							<li><img src="{{ URL::asset('img/product/7.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
-							<li><img src="{{ URL::asset('img/product/8.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
+							<!--<li><img src="{{ URL::asset('img/product/8.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>-->
 						</ul>
 					</div>
 				</div>
@@ -368,30 +368,30 @@ body {
 			
 			$("#code").bind('keypress', function(e) {
 				var code = e.keyCode || e.which;
-								
 				// F9	
-				if(code == 120){
+				if(code == 97){
 					cloneRecord(5);
 				}
 				// F10
-				if(code == 121){
+				if(code == 115){
 					e.preventDefault(); //Disable shortcut browser
 					cloneRecord(10);
 				}
 				// F11
-				if(code == 122){
+				if(code == 100){
 					e.preventDefault(); //Disable shortcut browser
 					cloneRecord(20);
 				}
 				// F12
-				if(code == 123){
+				if(code == 102){
 					e.preventDefault(); //Disable shortcut browser
 					cloneRecord(50);
 				}
 
 				var token = "{!! csrf_token() !!}";
 				if(code == 13) { 
-					var codeNumber = $("#code").val();
+					cloneRecord(1);
+					/*var codeNumber = $("#code").val();
 					if(codeNumber != ""){
 						$.ajax({
 							type : 'post',
@@ -411,12 +411,26 @@ body {
 						
 					}else{
 						alert('បង់ប្រាក់');
-					}
+					}*/
 				}
 			});
+			
 
 			// clone record
-			function cloneRecord(qty, result){
+			function cloneRecord(qty){
+				//Enter keycode
+				$(".header-fixed tbody").find('tr:last').clone(true).appendTo(".header-fixed tbody");
+			 	$(".header-fixed tbody").find("tr:last").css("display", "");
+			 	$(".header-fixed tbody").find("tr:last").find("td:first").text($("#code").val());
+			 	$(".header-fixed tbody").find("tr:last").find("td:eq(1)").text(qty);
+			 	$(".header-fixed tbody").find("tr:last").find("td:eq(2)").text(addCommas(15000));
+			 	$(".header-fixed tbody").find("tr:last").find("td:eq(3)").text(addCommas( 15000));
+			 	$("#code").val("");
+			 	$("#code").focus();
+			}
+
+			// clone record
+			function cloneRecord1(qty, result){
 				//Enter keycode
 				$(".header-fixed tbody").find('tr:last').clone(true).appendTo(".header-fixed tbody");
 			 	$(".header-fixed tbody").find("tr:last").css("display", "");
