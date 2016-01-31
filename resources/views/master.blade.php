@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Laravel</title>
+<title>PHNOM PENH BAKERY</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="{{ URL::asset('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -61,7 +61,7 @@ body {
 	font-family: Arial;
 	font-weight: bold;
 	font-size: 16pt;
-	margin: 18px 0 0 5px;
+	margin: 30px 0 0 5px;
 }
 
 .header .small_name label {
@@ -190,8 +190,7 @@ body {
 					<img class="logo" src="{{ URL::asset('img/hamburger.png') }}" alt="hamburger.png" />
 				</div>
 				<div class="col-md-2 header_name">
-					<label class="big_name">Khmer Food &nbsp;&nbsp;&nbsp;</label><label
-						class="small_name">&nbsp;Restaurant</label>
+					<label class="big_name">PHNOM PENH BAKERY</label>
 				</div>
 			</div>
 		</div>
@@ -202,7 +201,7 @@ body {
 		</div>
 		
 		<div class="col-md-12 footer">
-			<div class="footer_content">KHMER FOOD © {!! date('Y') !!}</div>
+			<div class="footer_content">PHNOM PENH BAKERY @ {!! date('Y') !!}</div>
 		</div>
 	</div>
 	</div>

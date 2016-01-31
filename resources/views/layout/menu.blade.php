@@ -1,3 +1,20 @@
+<script type="text/javascript">
+		$(document).ready(function(){
+
+			$("#setting").click(function(){
+				$("#settinglist").toggle();
+			});
+
+		});
+</script>
+
+<style type="text/css">
+	.inner_link{
+		border: none !important;
+		padding: 5px 45px 5px;
+	}	
+</style>
+
 <div class="navbar col-md-2 left_menu">
 	<div class="navbar-inner">
 		<ul class="nav">
@@ -13,38 +30,48 @@
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">Products</label></a>
 			</li>
-			<li onclick="redirectPage('/tables/index')"><img
-				src="{{ URL::asset('img/furoisu_bath_chair.png') }}" alt="Table" />
-				&nbsp;&nbsp;<label
-				style="vertical-align: middle; font-weight: normal;">Tables</label>
-			</li>
-			<li onclick="redirectPage('/currencies/index')"><img
+			<li><a href="{{ URL::asset('products/index') }}"><img
 				src="{{ URL::asset('img/emblem_money.png') }}" alt="Currency" />
 				&nbsp;&nbsp;<label
-				style="vertical-align: middle; font-weight: normal;">Currencies</label>
+				style="vertical-align: middle; font-weight: normal;">Currencies</label></a>
 			</li>
-			<li onclick="redirectPage('/discounts/index')"><img
+			<li><a href="{{ URL::asset('products/index') }}"><img
 				src="{{ URL::asset('img/discounts.png') }}" alt="Discount" />
 				&nbsp;&nbsp;<label
-				style="vertical-align: middle; font-weight: normal;">Discounts</label>
+				style="vertical-align: middle; font-weight: normal;">Discounts</label></a>
 			</li>
-			<li onclick="redirectPage('{{ URL::asset('/users/index') }}')"><img
+			<li><a href="{{ URL::asset('services') }}"><img
+				src="{{ URL::asset('img/furoisu_bath_chair.png') }}" alt="Table" />
+				&nbsp;&nbsp;<label
+				style="vertical-align: middle; font-weight: normal;">Expenses</label></a>
+			</li>
+			<li><a href="{{ URL::asset('users/index') }}"><img
 				src="{{ URL::asset('img/users_2.png') }}" alt="Users" />
 				&nbsp;&nbsp;<label
-				style="vertical-align: middle; font-weight: normal;">Users</label></li>
-			<li onclick="redirectPage('/reports/indexs')"><img
+				style="vertical-align: middle; font-weight: normal;">Users</label></li></a>
+			<li><a href="{{ URL::asset('products/index') }}"><img
 				src="{{ URL::asset('img/report.png') }}" alt="Report" />
 				&nbsp;&nbsp;<label
-				style="vertical-align: middle; font-weight: normal;">Report</label>
+				style="vertical-align: middle; font-weight: normal;">Report</label></a>
 			</li>
-			<li onclick="redirectPage('/settings/indexs')"><img
+			<li><a id="setting" href="#"><img
 				src="{{ URL::asset('img/settings.png') }}" alt="Setting" />
 				&nbsp;&nbsp;<label
-				style="vertical-align: middle; font-weight: normal;">Settings</label>
+				style="vertical-align: middle; font-weight: normal;">Settings</label></a>
 			</li>
-			<li><img src="{{ URL::asset('img/blue_external_drive_backup.png') }}"
+			<li id="settinglist" style="display:none;">
+				<ol class="nav">
+					<li class="inner_link">
+						<a href="{{ URL::asset('sections/index') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;&nbsp;&nbsp;Group Expense</a>
+					</li>
+					<li class="inner_link">
+						<a href="#"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;&nbsp;&nbsp;Group Customer</a>
+					</li>
+				</ol>
+			</li>
+			<li><a href="{{ URL::asset('products/index') }}"><img src="{{ URL::asset('img/blue_external_drive_backup.png') }}"
 				alt="Backup" /> &nbsp;&nbsp;<label
-				style="vertical-align: middle; font-weight: normal;">Database Backup</label>
+				style="vertical-align: middle; font-weight: normal;">Database Backup</label></a>
 			</li>
 		</ul>
 		<div class="col-md-3 user_info header_title">USER INFORMATION</div>

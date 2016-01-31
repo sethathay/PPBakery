@@ -98,7 +98,7 @@ class ProductsController extends Controller
      */
     public function searchProdctByCode(){
     	$code = Input::get('codeNumber');
-    	$products = Product::where('is_active', 1)->where('code', $code)->first();
+    	$products = Product::where('is_active', 1)->where('code', '5116')->first();
     	return Response::json($products);
     }
 }
