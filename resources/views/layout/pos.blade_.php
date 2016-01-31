@@ -175,7 +175,7 @@ body {
 
 .header-fixed > tbody > tr > td,
 .header-fixed > thead > tr > th {
-    width: 13%;
+    width: 15%;
     float: left;
     text-align: right;
 }
@@ -183,7 +183,7 @@ body {
     text-align: center !important;
 }
 .first-column{
-    width: 35% !important;
+    width: 40% !important;
     text-align: left !important;
     padding-left: 20px !important;
 }
@@ -210,17 +210,6 @@ body {
 }
 .amount, .amount-big{
 	text-align: right;
-}
-.row_input{
-	display : none;
-}
-.txt_discount,.txt_unit_price, .txt_total_by_item{
-	text-align : right;
-	width: 120px;
-}
-.txt_qty{
-	text-align:center;
-	width:50px;
 }
 
 .form-group {
@@ -301,7 +290,7 @@ body {
 							<li><img src="{{ URL::asset('img/product/5.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
 							<li><img src="{{ URL::asset('img/product/6.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
 							<li><img src="{{ URL::asset('img/product/7.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
-							<!--<li><img src="{{ URL::asset('img/product/8.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>-->
+							<li><img src="{{ URL::asset('img/product/8.jpg') }}" alt="" /><span class="product_name">Viggie Chili<span class='spacer'></span></li>
 						</ul>
 					</div>
 				</div>
@@ -314,7 +303,6 @@ body {
 					            <th class="first-column">ឈ្មោះទំនិញ</th>
 					            <th>ចំនួន</th>
 					            <th>តំ.រាយ</th>
-					            <th>បញ្ចុះតំលៃ</th>
 					            <th>សរុប</th>
 					            <th></th>
 					        </tr>
@@ -322,16 +310,14 @@ body {
 					    <tbody>
 					    	<tr style="display: none;">
 					            <td class="first-column"></td>
-					            <td class="qty-column"><label class="lbl_qty"></label>{!! Form::text('txt_qty[]', null, array('class'=>'row_input txt_qty')) !!}</td>
-					            <td><label class="lbl_unit_price"></label>{!! Form::text('txt_unit_price[]', null, array('class'=>'row_input txt_unit_price')) !!}</td>
-					            <td><label class="lbl_discount"></label>{!! Form::text('txt_discount[]', null, array('class'=>'row_input txt_discount')) !!}</td>
-					            <td><label class="lbl_total_by_item"></label>{!! Form::text('txt_total_by_item[]', null, array('class'=>'row_input txt_total_by_item')) !!}</td>
+					            <td class="qty-column"></td>
+					            <td></td>
+					            <td></td>
 					            <td>
-									{!! Form::hidden('id[]', null, array('class'=>'row_input id')) !!}
-					            	<button type="button" class="btn_edit btn btn-xs btn-primary">
+					            	<button type="button" class="btn btn-xs btn-primary">
 										<span class="glyphicon glyphicon-edit"></span> 
 									</button>
-									<button type="button" class="btn btn-xs btn-danger btn_delete">
+									<button type="button" class="btn btn-xs btn-danger">
 										<span class="glyphicon glyphicon-trash"></span> 
 									</button>
 								</td>
@@ -351,19 +337,19 @@ body {
 					<div class="col-md-6 block-amount">
 						<div class="row">
 							<div class="col-md-6"><label>តំលៃសរុប : </label></div>
-							<div class="col-md-6 amount"><label class="subtotal">0</label> <label>R</label>{!! Form::hidden('subtotal', 0, array('class'=>'txt_subtotal')) !!}</div>
+							<div class="col-md-6 amount"><label class="subtotal">125,000R</label></div>
 						</div>
 						<div class="row">
 							<div class="col-md-6"><label>បញ្ចុះតំលៃ : </label></div>
-							<div class="col-md-6  amount"><label class="discount">0</label>{!! Form::hidden('txt_total_discount', 0, array('class'=>'txt_total_discount')) !!}</div>
+							<div class="col-md-6  amount"><label class="discount">5,000R</label></div>
 						</div>
 						<div class="row">
 							<div class="col-md-6"><label>តំលៃសរុបត្រូវបង់ (R) : </label></div>
-							<div class="col-md-6  amount-big"><label class="total_amount_riel">0</label> <label>R</label>{!! Form::hidden('total_amount_riel', 0, array('class'=>'txt_total_amount_riel')) !!}</div>
+							<div class="col-md-6  amount-big"><label class="discount">120,000R</label></div>
 						</div>
 						<div class="row">
 							<div class="col-md-6"><label>តំលៃសរុបត្រូវបង់ ($) : </label></div>
-							<div class="col-md-6  amount-big"><label class="total_amount_us">0</label> <label>$</label>{!! Form::hidden('total_amount_us', 0, array('class'=>'txt_total_amount_us')) !!}</div>
+							<div class="col-md-6  amount-big"><label class="discount">120,000R</label></div>
 						</div>
 					</div>
 				</div>
@@ -374,140 +360,70 @@ body {
 			<div class="footer_content">KHMER FOOD © {!! date('Y') !!}</div>
 		</div>
 	</div>
-	
 	<script type="text/javascript">
 		$(document).ready(function(){
-		    		    
 			$("#code").focus();
-			var rate = 4000;
 
-			$(".txt_subtotal").val(0);
-			$(".txt_total_discount").val(0);
-			$(".txt_total_amount_riel").val(0);
-			$(".txt_total_amount_us").val(0);
+			var rate = '4000';
 			
 			$("#code").bind('keypress', function(e) {
 				var code = e.keyCode || e.which;
-				var token = "{!! csrf_token() !!}";
-
-				// F9	
-				if(code == 119){
-					//cloneRecord(5);
-					var codeNumber = $("#code").val();
-				}
-				
+								
 				// F9	
 				if(code == 120){
-					//cloneRecord(5);
-					var codeNumber = $("#code").val();
-					getProduct(5, codeNumber, token);
+					cloneRecord(5);
 				}
 				// F10
 				if(code == 121){
 					e.preventDefault(); //Disable shortcut browser
-					//cloneRecord(10);
-					var codeNumber = $("#code").val();
-					getProduct(10, codeNumber, token);
+					cloneRecord(10);
 				}
 				// F11
 				if(code == 122){
 					e.preventDefault(); //Disable shortcut browser
-					//cloneRecord(20);
-					var codeNumber = $("#code").val();
-					getProduct(20, codeNumber, token);
+					cloneRecord(20);
 				}
 				// F12
 				if(code == 123){
 					e.preventDefault(); //Disable shortcut browser
-					//cloneRecord(50);
-					var codeNumber = $("#code").val();
-					getProduct(50, codeNumber, token);
+					cloneRecord(50);
 				}
 
+				var token = "{!! csrf_token() !!}";
 				if(code == 13) { 
 					var codeNumber = $("#code").val();
-					getProduct(1, codeNumber, token);
+					if(codeNumber != ""){
+						$.ajax({
+							type : 'post',
+							url : '{{ route("products.searchProdctByCode") }}',
+							data : { _token : token, "codeNumber":codeNumber},
+							dataType : 'json',
+							success : function(result){
+								if(jQuery.isEmptyObject(result)){
+									alert("លេខកូដមិនត្រឹមត្រូវទេ!!");
+									$("#code").val("");
+								 	$("#code").focus();
+								}else{
+									cloneRecord(1,result);
+								}
+							}
+						});
+						
+					}else{
+						alert('បង់ប្រាក់');
+					}
 				}
-			});
-			
-			//click on button delete
-			$(".btn_delete").click(function(){
-				$(this).closest("tr").remove();
-			});
-			
-			// click on button edit
-			$(".btn_edit").click(function(){
-				$(this).closest("tr").find("input").toggle();
-				$(this).closest("tr").find("label").toggle();
 			});
 
-			// Find product
-			function getProduct(qty, codeNumber, token){
-				if(codeNumber != ""){
-					$.ajax({
-						type : 'post',
-						url : '{{ route("products.searchProdctByCode") }}',
-						data : { _token : token, "codeNumber":codeNumber},
-						dataType : 'json',
-						success : function(result){
-							if(jQuery.isEmptyObject(result)){
-								alert("លេខកូដមិនត្រឹមត្រូវទេ!!");
-								$("#code").val("");
-							 	$("#code").focus();
-							}else{
-								cloneRecord(qty,result);
-							}
-						}
-					});
-					
-				}else{
-					alert('បង់ប្រាក់');
-				}
-			}
 			// clone record
 			function cloneRecord(qty, result){
-				
-				var unit_price = Number(result.price);	
-				var discount = (Number(result.discount_amount) + Number(result.discount_percent));				
-				var total_by_item = getMathRound((unit_price - discount) * Number(qty));
-				
-				// Create row and set value
+				//Enter keycode
 				$(".header-fixed tbody").find('tr:last').clone(true).appendTo(".header-fixed tbody");
 			 	$(".header-fixed tbody").find("tr:last").css("display", "");
 			 	$(".header-fixed tbody").find("tr:last").find("td:first").text(result.name);
-			 	$(".header-fixed tbody").find("tr:last").find("td:eq(1)").find(".lbl_qty").text(qty);
-			 	$(".header-fixed tbody").find("tr:last").find("td:eq(1)").find(".txt_qty").val(qty);
-			 	$(".header-fixed tbody").find("tr:last").find("td:eq(2)").find(".lbl_unit_price").text(addCommas(unit_price));
-			 	$(".header-fixed tbody").find("tr:last").find("td:eq(2)").find(".txt_unit_price").val(unit_price);
-			 	$(".header-fixed tbody").find("tr:last").find("td:eq(3)").find(".lbl_discount").text(addCommas(discount));
-			 	$(".header-fixed tbody").find("tr:last").find("td:eq(3)").find(".txt_discount").val(discount);
-			 	$(".header-fixed tbody").find("tr:last").find("td:eq(4)").find(".lbl_total_by_item").text(addCommas(total_by_item));
-			 	$(".header-fixed tbody").find("tr:last").find("td:eq(4)").find(".txt_total_by_item").val(total_by_item);
-			 	$(".header-fixed tbody").find("tr:last").find("td:eq(5)").find(".id").val(result.id);
-								
-				
-				// Sum total discount
-				var txt_total_discount = Number($(".txt_total_discount").val());
-				var total_discount     = txt_total_discount;				
-				$(".discount").text(addCommas(total_discount));
-				$(".txt_total_discount").val(total_discount);
-				
-				// Sum subtotal
-				var txt_subtotal = Number($(".txt_subtotal").val());
-				var subtotal     = txt_subtotal + total_by_item;				
-				$(".subtotal").text(addCommas(subtotal));
-				$(".txt_subtotal").val(subtotal);
-								
-				// Sum total amount in riel
-				var total_amount_riel     = (subtotal);				
-				$(".total_amount_riel").text(addCommas(total_amount_riel));
-				$(".txt_total_amount_riel").val(total_amount_riel);
-				
-				// Sum total amount in us
-				var total_amount_us     = total_amount_riel / rate;				
-				$(".total_amount_us").text(addCommas(total_amount_us));
-				$(".txt_total_amount_us").val(total_amount_us);
-				
+			 	$(".header-fixed tbody").find("tr:last").find("td:eq(1)").text(qty);
+			 	$(".header-fixed tbody").find("tr:last").find("td:eq(2)").text(addCommas( result.price*1*rate ));
+			 	$(".header-fixed tbody").find("tr:last").find("td:eq(3)").text(addCommas( result.price*1*qty*rate ));
 			 	$("#code").val("");
 			 	$("#code").focus();
 			}
@@ -525,13 +441,7 @@ body {
 				}
 				return x1 + x2;
 			}
-			
-			function getMathRound(amount){
-				return Math.round( (amount) * 10 ) / 10;
-			}
-			
 		});
-		
 	</script>
 </body>
 </html>
