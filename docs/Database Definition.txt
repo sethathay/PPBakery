@@ -1,0 +1,22 @@
+1. cgroups = Customer Group (Grouping customer with retail sale or whole sale)
+2. customers
+3. customer_cgroups
+
+4. companies = Company inside corporation (relationship product and user)
+
+5. credit_memos
+6. credit_memo_details = For return products from customers (can be retail & whole sale)
+
+7. cycle_products
+8. cycle_product_details = For adjustment stock
+
+9. groups = Group of Users
+
+10. inventory_total_details = Store total of each operation (Cycle, SO, POS, CM)
+11. inventory_total = Store total product in inventory
+12. inventories = Store all transaction of inventory (Cycle, SO, POS, CM)
+
+13. locations
+14. location_groups = Group of locations
+
+15. 

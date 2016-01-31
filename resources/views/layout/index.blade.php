@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Laravel</title>
+<title>PHNOM PENH BAKERY</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="{{ URL::asset('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -58,10 +58,10 @@
 <body>
 	<div class="cover-container">
 		<div id="loginbox" style="margin-top: 50px;"
-			class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+			class="mainbox col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
 			<div class="panel panel-info">
 				<div class="panel-heading">
-					<div class="panel-title">Sign In</div>
+					<div class="panel-title">PHNOM PENH BAKERY</div>
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
@@ -102,7 +102,7 @@
 		</div>
 		
 		<div class="col-md-12 footer">
-			<div class="footer_content">KHMER FOOD © {!! date('Y') !!}</div>
+			<div class="footer_content">PHNOM PENH BAKERY @ {!! date('Y') !!}</div>
 		</div>
 	</div>
 	<script type="text/javascript">

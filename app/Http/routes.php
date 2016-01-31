@@ -47,4 +47,14 @@ Route::get('products/index', 'ProductsController@index');
 Route::get('products/create', 'ProductsController@create');
 Route::get('products/store', 'ProductsController@store');
 
-//=========================================================
+//Route of sections for expense group by Thay Setha
+Route::get('sections/index', ['as' => 'sections.index', 'uses' => 'SectionsController@index']);
+Route::get('sections/create', 'SectionsController@create');
+Route::post('sections/store', ['as' => 'sections.store', 'uses' => 'SectionsController@store']);
+Route::get('sections/show/{id}', 'SectionsController@show');
+Route::get('sections/edit/{id}', ['as' => 'sections.edit', 'uses' => 'SectionsController@edit']);
+Route::post('sections/update', ['as' => 'sections.update', 'uses' => 'SectionsController@update']);
+Route::get('sections/destroy/{id}', ['as' => 'sections.destroy', 'uses' => 'SectionsController@destroy']);
+
+//Route of services for daily expense input by Thay Setha
+Route::resource('services','ServicesController');
