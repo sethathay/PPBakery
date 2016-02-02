@@ -58,3 +58,9 @@ Route::get('sections/destroy/{id}', ['as' => 'sections.destroy', 'uses' => 'Sect
 
 //Route of services for daily expense input by Thay Setha
 Route::resource('services','ServicesController');
+
+//Route of exchange rate by Thay Setha
+Route::resource('exchangerates','ExchangeRatesController');
+
+//Route of location by Thay Setha
+Route::resource('locations','LocationsController');

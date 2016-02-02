@@ -30,10 +30,10 @@
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">Products</label></a>
 			</li>
-			<li><a href="{{ URL::asset('products/index') }}"><img
+			<li><a href="{{ URL::asset('exchangerates') }}"><img
 				src="{{ URL::asset('img/emblem_money.png') }}" alt="Currency" />
 				&nbsp;&nbsp;<label
-				style="vertical-align: middle; font-weight: normal;">Currencies</label></a>
+				style="vertical-align: middle; font-weight: normal;">Exchange Rate</label></a>
 			</li>
 			<li><a href="{{ URL::asset('products/index') }}"><img
 				src="{{ URL::asset('img/discounts.png') }}" alt="Discount" />
@@ -62,10 +62,13 @@
 			<li id="settinglist" style="display:none;">
 				<ol class="nav">
 					<li class="inner_link">
-						<a href="{{ URL::asset('sections/index') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;&nbsp;&nbsp;Group Expense</a>
+						<a href="{{ URL::asset('locations') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;Location</a>
 					</li>
 					<li class="inner_link">
-						<a href="#"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;&nbsp;&nbsp;Group Customer</a>
+						<a href="{{ URL::asset('sections/index') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;Group Expense</a>
+					</li>
+					<li class="inner_link">
+						<a href="#"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;Group Customer</a>
 					</li>
 				</ol>
 			</li>
