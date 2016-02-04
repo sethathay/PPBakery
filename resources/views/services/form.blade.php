@@ -41,7 +41,11 @@
 				</div>
 			</div>
 			<div class="row-form col-sm-6">
-				<div class="form-group has-feedback">
+				<div class="form-group col-md-12">
+					<label for="dob">Date:</label>
+					{!! Form::text('expense_date', null, array('class' => 'form-control', 'placeholder' => 'Expense Date', 'id'=>'expense_date')) !!}						
+				</div>
+				<div class="form-group has-feedback col-md-12">
 					<label for="country_id">Group Expense:</label>
 					{!! Form::select('section_id', $sections, Input::old('sections'), ['class'=>'form-control', 'id'=>'section_id']) !!}
 				</div>
@@ -54,3 +58,12 @@
 	</div>
 	
 </div>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+
+       $('#expense_date').datepicker({
+			format: 'yyyy/mm/dd'
+       });
+	});
+
+</script>

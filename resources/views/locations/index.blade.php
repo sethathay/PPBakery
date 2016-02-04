@@ -42,11 +42,11 @@
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">
-			<img src="{{ URL::asset('/img/furoisu_bath_chair.png') }}" /> <label>Daily Expenses</label>
+			<img src="{{ URL::asset('/img/settings_b.png') }}" /> <label>Shop Location</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
-			<button onclick="redirectPage('services/create')" type="button"
+			<button onclick="redirectPage('locations/create')" type="button"
 				class="btn btn-md btn-success">
 				<span class="glyphicon glyphicon-plus"></span> New
 			</button>
@@ -62,13 +62,13 @@
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="checkOptionAll" /></th>
-				<th>Group Expense</th>
-				<th>Expense</th>
-				<th>Date</th>
-				<th>Price ($)</th>
-				<th>Price (R)</th>
-				<th>Description</th>
-				<th>Modified</th>
+				<th>Name</th>
+				<th>Address</th>
+				<th>Shop Contact No</th>
+				<th>Phone No (1)</th>
+				<th>Phone No (2)</th>
+				<th>Fax</th>
+				<th>Email</th>
 				<th>Action</th>
 			</tr>
 		</thead>
@@ -76,26 +76,26 @@
 			
 			
 		<?php $i=1; ?>
-			@foreach($services as $service)
+			@foreach($locations as $loc)
 			<tr>
 				<td style="text-align: center;"><input type="checkbox"
 					name="checkOption" /></td>
-				<td>{{ $sections[$service->section_id]}}</td>
-				<td>{{ $service->name}}</td>
-				<td>{{ $service->expense_date}}</td>
-				<td>{{ $service->dollar_price}}</td>
-				<td>{{ $service->riel_price}}</td>
-				<td>{{ $service->description}}</td>
-				<td>{{ $service->updated_at->timezone('Asia/Phnom_Penh')}}</td>
+				<td>{{ $loc->name}}</td>
+				<td>{{ $loc->address}}</td>
+				<td>{{ $loc->business_number}}</td>
+				<td>{{ $loc->personal_number}}</td>
+				<td>{{ $loc->other_number}}</td>
+				<td>{{ $loc->fax_number}}</td>
+				<td>{{ $loc->email_address}}</td>
 				<td class="last_td">
-					<button style="float:left;margin-right:5px" type="button" onclick="redirectPage('services/{{ $service->id }}')" class="btn btn-xs btn-info">
+					<button style="float:left;margin-right:5px" type="button" onclick="redirectPage('locations/{{ $loc->id }}')" class="btn btn-xs btn-info">
 						<span class="glyphicon glyphicon-user"></span> View
 					</button>
-					<button style="float:left;margin-right:5px" type="button" onclick="redirectPage('services/{{ $service->id }}/edit')" class="btn btn-xs btn-primary">
+					<button style="float:left;margin-right:5px" type="button" onclick="redirectPage('locations/{{ $loc->id }}/edit')" class="btn btn-xs btn-primary">
 						<span class="glyphicon glyphicon-edit"></span> Edit
 					</button>
 					<div style="float:left;">
-					{!! Form::open(['route' => ['services.destroy', $service->id], 'method' => 'delete','id'=>'frmdelete']) !!}
+					{!! Form::open(['route' => ['locations.destroy', $loc->id], 'method' => 'delete','id'=>'frmdelete']) !!}
 						<button type="button" class="btn btn-xs btn-danger btndelete">
 							<span class="glyphicon glyphicon-trash"></span> Delete
 						</button>
