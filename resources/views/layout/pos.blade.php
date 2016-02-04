@@ -273,10 +273,10 @@ body {
 				<div style="padding-top:20px;">
 					<label>ជំនួយ៖</label> បញ្ជូលលេខកូដរួចចុច ប៊ូតុងខាងក្រោម តាមចំនួនដែលចង់បាន
 					<div style="padding-top:10px;">
-						<label>F9 = ចំនួន 5</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<label>F10 = ចំនួន 10</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<label>F11 = ចំនួន 20</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<label>F12 = ចំនួន 50</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<label>F9 = ចំនួន 5</label>&nbsp;&nbsp;&nbsp;&nbsp;
+						<label>F10 = ចំនួន 10</label>&nbsp;&nbsp;&nbsp;&nbsp;
+						<label>F11 = ចំនួន 20</label>&nbsp;&nbsp;&nbsp;&nbsp;
+						<label>F12 = ចំនួន 50</label>&nbsp;&nbsp;&nbsp;&nbsp;
 					</div>
 				</div>
 				
@@ -375,6 +375,22 @@ body {
 		</div>
 	</div>
 	
+	<!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+		  <div class="modal-body"><br/>
+			<input id="custom-amount" type="text" class="form-control custom-amount" name="custom-amount" value="" placeholder="ចំនួន">
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+		  </div>
+		</div>
+
+	  </div>
+	</div>
 	<script type="text/javascript">
 		$(document).ready(function(){
 		    		    
@@ -386,14 +402,39 @@ body {
 			$(".txt_total_amount_riel").val(0);
 			$(".txt_total_amount_us").val(0);
 			
+			$("#myModal").on('shown.bs.modal', function(){
+				$(this).find('input[type="text"]').focus();
+			});
+			
+			$("#custom-amount").keypress(function(e) {
+					
+				var codes = e.keyCode || e.which;
+				
+				if(codes == 13){						
+					var token1 = "{!! csrf_token() !!}";
+					var codeNumber1 = $("#code").val();
+					var qty_fill = Number($(this).val());
+					
+					getProduct(qty_fill, codeNumber1, token1);
+					
+					$(this).val('');
+					$('#myModal').modal('hide');
+					$("#code").focus();
+				}
+				
+			});
+			
+			
 			$("#code").bind('keypress', function(e) {
 				var code = e.keyCode || e.which;
 				var token = "{!! csrf_token() !!}";
-
-				// F9	
+				
+				// F8	
 				if(code == 119){
-					//cloneRecord(5);
 					var codeNumber = $("#code").val();
+					if(codeNumber != ""){						
+						$('#myModal').modal('show');
+					}
 				}
 				
 				// F9	
@@ -430,6 +471,7 @@ body {
 				}
 			});
 			
+			
 			//click on button delete
 			$(".btn_delete").click(function(){
 				$(this).closest("tr").remove();
@@ -440,7 +482,6 @@ body {
 				$(this).closest("tr").find("input").toggle();
 				$(this).closest("tr").find("label").toggle();
 			});
-
 			// Find product
 			function getProduct(qty, codeNumber, token){
 				if(codeNumber != ""){
