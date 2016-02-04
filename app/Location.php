@@ -10,15 +10,15 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class Service extends Model implements AuthenticatableContract,
+class Location extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
                                     CanResetPasswordContract
 {
     //
     use Authenticatable, Authorizable, CanResetPassword;
 
-    protected $table = 'services';
+    protected $table = 'locations';
 
-    protected $fillable = ['section_id','expense_date','company_id', 'name', 'dollar_price','riel_price',
-    'exchange_rate_id','description','created_by','updated_by','is_active'];
+    protected $fillable = ['name', 'address', 'business_number', 'personal_number','other_number',
+    'fax_number','email_address','created_by','updated_by','is_active'];
 }

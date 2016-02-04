@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
+use Input;
+use App\Location;
 
 class LocationsController extends Controller
 {
@@ -17,6 +20,8 @@ class LocationsController extends Controller
     public function index()
     {
         //
+        $locations = Location::where('is_active', 1)->orderBy('updated_at','desc')->get();
+        return view('locations/index',compact('locations'));
     }
 
     /**
@@ -27,6 +32,7 @@ class LocationsController extends Controller
     public function create()
     {
         //
+        return view('locations/create');
     }
 
     /**
@@ -35,9 +41,15 @@ class LocationsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Location $location,Request $request)
     {
         //
+        $data = $request->all();
+        $data['created_by']    = \Auth::user()->id;
+        $data['updated_by']    = \Auth::user()->id;
+        $data['is_active']     = 1;
+        $location->fill($data)->save();
+        return Redirect::route('locations.index');
     }
 
     /**
@@ -49,6 +61,8 @@ class LocationsController extends Controller
     public function show($id)
     {
         //
+        $loc = Location::whereId($id)->first();
+        return view('locations/show', compact('loc'));
     }
 
     /**
@@ -60,6 +74,8 @@ class LocationsController extends Controller
     public function edit($id)
     {
         //
+        $location = Location::find($id);        
+        return view('locations/edit', compact('location'));
     }
 
     /**
@@ -69,9 +85,17 @@ class LocationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Location $locations)
     {
         //
+        $data = $request->all();
+        unset($data['_token']);
+        unset($data['_method']);
+        $data['created_by']    = \Auth::user()->id;
+        $data['updated_by']    = \Auth::user()->id;
+        $data['is_active']     = 1;
+        $locations->whereId(Input::get('id'))->update($data);
+        return Redirect::route('locations.index');
     }
 
     /**
@@ -83,5 +107,8 @@ class LocationsController extends Controller
     public function destroy($id)
     {
         //
+        $loc = new Location;
+        $loc->where('id', $id)->update(['is_active' => 0]);
+        return Redirect::route('locations.index')->with('flash_notice', 'You are successfully delete!');
     }
 }

@@ -97,10 +97,10 @@ class ServicesController extends Controller
         $service = $request->all();
         unset($service['_token']);
         unset($service['_method']);
-        $data['created_by']    = \Auth::user()->id;
-        $data['updated_by']    = \Auth::user()->id;
-        $data['is_active']     = 1;
-        $data['company_id']    = 1;
+        $service['created_by']    = \Auth::user()->id;
+        $service['updated_by']    = \Auth::user()->id;
+        $service['is_active']     = 1;
+        $service['company_id']    = 1;
         $services->whereId(Input::get('id'))->update($service);
         return Redirect::route('services.index');
     }
