@@ -69,3 +69,9 @@ Route::resource('exchangerates','ExchangeRatesController');
 
 //Route of location by Thay Setha
 Route::resource('locations','LocationsController');
+
+//Route of uom by Thay Setha
+Route::resource('uoms','UomsController');
+
+//Route of uom conversion by Thay Setha
+Route::resource('uomconversions','UomConversionsController');
