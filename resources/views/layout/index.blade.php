@@ -107,7 +107,7 @@
 	</div>
 	<script type="text/javascript">
 	jQuery(document).ready(function($) {
-		
+		$("#login-username").focus();
 		$('form#loginform').validate({
             rules: {       
                 username: {

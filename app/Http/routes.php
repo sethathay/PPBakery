@@ -13,7 +13,7 @@
 Route::get('/', function(){
 	if ( Auth::check() ) // use Auth::check instead of Auth::user
 	{
-		return View::make('/layout/dashboard')->with('flash_notice', 'You are already logged in!');;
+		return View::make('/layout/dashboard')->with('flash_notice', 'You are already logged in!');
 	} else{
 		return View::make('/layout/index');
 	}
@@ -24,7 +24,12 @@ Route::get('/dashboard', array('as' => 'dashboard', function () {
 }));
 
 Route::get('/pos', array('as' => 'pos', function () {
-	return View::make('/layout/pos');
+	if ( Auth::check() ) // use Auth::check instead of Auth::user
+	{
+		return View::make('/layout/pos');
+	} else{
+		return View::make('/layout/index');
+	}	
 }));
 
 Route::get('users/index', ['as' => 'users.index', 'uses' => 'UsersController@index']);
