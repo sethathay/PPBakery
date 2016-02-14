@@ -68,6 +68,15 @@
 						<a href="{{ URL::asset('sections/index') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;Group Expense</a>
 					</li>
 					<li class="inner_link">
+						<a href="{{ URL::asset('pgroups') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;Product Group</a>
+					</li>
+					<li class="inner_link">
+						<a href="{{ URL::asset('cgroups') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;Customer Group</a>
+					</li>
+					<li class="inner_link">
+						<a href="{{ URL::asset('groups') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;User Group</a>
+					</li>
+					<li class="inner_link">
 						<a href="{{ URL::asset('uoms') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;Unit of Measure (UOM)</a>
 					</li>
 					<li class="inner_link">

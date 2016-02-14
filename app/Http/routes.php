@@ -75,3 +75,12 @@ Route::resource('uoms','UomsController');
 
 //Route of uom conversion by Thay Setha
 Route::resource('uomconversions','UomConversionsController');
+
+//Route of product group by Thay Setha
+Route::resource('pgroups','PGroupsController');
+
+//Route of customer group by Thay Setha
+Route::resource('cgroups','CGroupsController');
+
+//Route of user group by Thay Setha
+Route::resource('groups','GroupsController');
