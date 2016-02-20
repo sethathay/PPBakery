@@ -20,7 +20,7 @@ class UomsController extends Controller
     public function index()
     {
         //
-        $uoms = Uom::where('is_active', 1)->orderBy('updated_at','desc')->get();
+        $uoms = Uom::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
         return view('uoms/index',compact('uoms'));
     }
 

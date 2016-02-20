@@ -100,6 +100,7 @@
 			@endforeach
 		</tbody>
 	</table>
+	{!! $uoms->render() !!}
 </div>
 
 <script type="text/javascript">

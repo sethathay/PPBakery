@@ -21,7 +21,7 @@ class PGroupsController extends Controller
     public function index()
     {
         //
-        $pgroups = Pgroup::where('is_active', 1)->orderBy('updated_at','desc')->get();
+        $pgroups = Pgroup::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
         return view('pgroups/index',compact('pgroups'));
     }
 

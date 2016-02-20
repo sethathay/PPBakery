@@ -22,7 +22,7 @@ class UomConversionsController extends Controller
     public function index()
     {
         //
-        $conversions = UomConversion::where('is_active', 1)->orderBy('updated_at','desc')->get();
+        $conversions = UomConversion::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
         $uoms = DB::table('uoms')->lists('name', 'id');
         return view('uomconversions/index',compact('conversions','uoms'));
     }

@@ -21,7 +21,7 @@ class CGroupsController extends Controller
     public function index()
     {
         //
-        $cgroups = Cgroup::where('is_active', 1)->orderBy('updated_at','desc')->get();
+        $cgroups = Cgroup::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
         return view('cgroups/index',compact('cgroups'));
     }
 

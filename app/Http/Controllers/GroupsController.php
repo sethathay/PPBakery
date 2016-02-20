@@ -21,7 +21,7 @@ class GroupsController extends Controller
     public function index()
     {
         //
-        $groups = Group::where('is_active', 1)->orderBy('updated_at','desc')->get();
+        $groups = Group::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
         return view('groups/index',compact('groups'));
     }
 

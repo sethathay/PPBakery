@@ -81,5 +81,6 @@
 			@endforeach
 		</tbody>
 	</table>
+	{!! $rates->render() !!}
 </div>
 @stop

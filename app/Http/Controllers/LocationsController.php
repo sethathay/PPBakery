@@ -20,7 +20,7 @@ class LocationsController extends Controller
     public function index()
     {
         //
-        $locations = Location::where('is_active', 1)->orderBy('updated_at','desc')->get();
+        $locations = Location::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
         return view('locations/index',compact('locations'));
     }
 

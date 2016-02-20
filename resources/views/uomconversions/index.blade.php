@@ -100,6 +100,7 @@
 			@endforeach
 		</tbody>
 	</table>
+	{!! $conversions->render() !!}
 </div>
 
 <script type="text/javascript">
