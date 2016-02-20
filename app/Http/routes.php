@@ -48,9 +48,9 @@ Route::get('users/logout', 'UsersController@logout');
 
 // Route of products by Thay Setha
 Route::post('products/searchProdctByCode', ['as' => 'products.searchProdctByCode', 'uses' => 'ProductsController@searchProdctByCode']);
-Route::get('products/index', 'ProductsController@index');
-Route::get('products/create', 'ProductsController@create');
-Route::get('products/store', 'ProductsController@store');
+
+//Route of products by Thay Setha
+Route::resource('products','ProductsController');
 
 //Route of sections for expense group by Thay Setha
 Route::get('sections/index', ['as' => 'sections.index', 'uses' => 'SectionsController@index']);
