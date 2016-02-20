@@ -106,6 +106,7 @@
 			@endforeach
 		</tbody>
 	</table>
+	{!! $services->render() !!}
 </div>
 
 <script type="text/javascript">

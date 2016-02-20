@@ -96,6 +96,7 @@
 			@endforeach
 		</tbody>
 	</table>
+	{!! $cgroups->render() !!}
 </div>
 
 <script type="text/javascript">

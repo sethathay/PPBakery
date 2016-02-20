@@ -19,7 +19,7 @@ class ExchangeRatesController extends Controller
     public function index()
     {
         //
-        $rates = ExchangeRate::where('is_active', 1)->orderBy('updated_at','desc')->get();
+        $rates = ExchangeRate::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
         return view('exchangerates/index',compact('rates'));
     }
 

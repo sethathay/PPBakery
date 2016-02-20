@@ -94,6 +94,7 @@
 			@endforeach
 		</tbody>
 	</table>
+	{!! $sections->render() !!}
 </div>
 
 <script type="text/javascript">

@@ -102,6 +102,7 @@
 			@endforeach
 		</tbody>
 	</table>
+	{!! $products->render() !!}
 </div>
 
 <script type="text/javascript">

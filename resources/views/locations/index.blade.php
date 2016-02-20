@@ -106,6 +106,7 @@
 			@endforeach
 		</tbody>
 	</table>
+	{!! $locations->render() !!}
 </div>
 
 <script type="text/javascript">

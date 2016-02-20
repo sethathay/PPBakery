@@ -96,6 +96,9 @@
 			@endforeach
 		</tbody>
 	</table>
+
+	{!! $pgroups->render() !!}
+	
 </div>
 
 <script type="text/javascript">

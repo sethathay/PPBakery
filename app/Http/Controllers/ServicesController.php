@@ -21,7 +21,7 @@ class ServicesController extends Controller
     public function index()
     {
         //
-        $services = Service::where('is_active', 1)->orderBy('updated_at','desc')->get();
+        $services = Service::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
         $sections = DB::table('sections')->lists('name', 'id');
         return view('services/index',compact('services','sections'));
     }

@@ -21,7 +21,7 @@ class ProductsController extends Controller
 	
     public function index()
     {
-    	$products = Product::where('is_active', 1)->orderBy('updated_at','desc')->get();
+    	$products = Product::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
         $pgroups = DB::table('pgroups')->lists('name', 'id');
         return view('products/index', compact('products','pgroups'));
     }
