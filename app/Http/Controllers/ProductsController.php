@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 use DB;
 use App\Product;
 use Input;
@@ -20,8 +21,9 @@ class ProductsController extends Controller
 	
     public function index()
     {
-    	$users = DB::table('users')->get();
-        return view('products/index', compact('users'));
+    	$products = Product::where('is_active', 1)->orderBy('updated_at','desc')->get();
+        $pgroups = DB::table('pgroups')->lists('name', 'id');
+        return view('products/index', compact('products','pgroups'));
     }
 
     /**
@@ -32,7 +34,8 @@ class ProductsController extends Controller
     public function create()
     {
         //
-        return view('products/create');
+        $pgroups = DB::table('pgroups')->where('is_active',1)->lists('name','id');
+        return view('products/create',compact('pgroups'));
     }
 
     /**
@@ -41,10 +44,15 @@ class ProductsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Product $product,Request $request)
     {
         //
-        var_dump($_POST);exit;
+        $data = $request->all();
+        $data['created_by']    = \Auth::user()->id;
+        $data['updated_by']    = \Auth::user()->id;
+        $data['is_active']     = 1;
+        $product->fill($data)->save();
+        return Redirect::route('products.index');
     }
 
     /**
@@ -56,6 +64,9 @@ class ProductsController extends Controller
     public function show($id)
     {
         //
+        $product = Product::whereId($id)->first();
+        $pgroups = DB::table('pgroups')->lists('name', 'id');
+        return view('products/show', compact('product','pgroups'));
     }
 
     /**
@@ -67,6 +78,9 @@ class ProductsController extends Controller
     public function edit($id)
     {
         //
+        $product = Product::find($id);
+        $pgroups = DB::table('pgroups')->lists('name', 'id');
+        return view('products/edit', compact('product','pgroups'));
     }
 
     /**
@@ -76,9 +90,17 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $products)
     {
         //
+        $data = $request->all();
+        unset($data['_token']);
+        unset($data['_method']);
+        $data['created_by']    = \Auth::user()->id;
+        $data['updated_by']    = \Auth::user()->id;
+        $data['is_active']     = 1;
+        $products->whereId(Input::get('id'))->update($data);
+        return Redirect::route('products.index');
     }
 
     /**
@@ -90,6 +112,9 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         //
+        $product = new Product;
+        $product->where('id', $id)->update(['is_active' => 0]);
+        return Redirect::route('products.index')->with('flash_notice', 'You are successfully delete!');
     }
     
     /**

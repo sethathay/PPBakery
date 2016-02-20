@@ -20,12 +20,12 @@
 		<ul class="nav">
 			<li><a href="{{ URL::asset('/dashboard') }}"><img
 				src="{{ URL::asset('img/control_panel.png') }}" alt="order" />
-				&nbsp;&nbsp;<label style="vertical-align: middle; font-weight: normal;">Control Panel</label></a>
+				&nbsp;&nbsp;<label style="vertical-align: middle; font-weight: normal;">Dashboard</label></a>
 			</li>
 			<li><a href="{{ URL::asset('/pos') }}" target="_blank" ><img
 				src="{{ URL::asset('img/house_sale.png') }}" alt="order" />
 				&nbsp;&nbsp;<label style="vertical-align: middle; font-weight: normal;">Sales</label></a></li>
-			<li><a href="{{ URL::asset('products/index') }}"><img
+			<li><a href="{{ URL::asset('products') }}"><img
 				src="{{ URL::asset('img/product.png') }}" alt="Product" />
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">Products</label></a>
@@ -35,7 +35,7 @@
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">Exchange Rate</label></a>
 			</li>
-			<li><a href="{{ URL::asset('products/index') }}"><img
+			<li><a href="{{ URL::asset('#') }}"><img
 				src="{{ URL::asset('img/discounts.png') }}" alt="Discount" />
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">Discounts</label></a>
@@ -49,7 +49,7 @@
 				src="{{ URL::asset('img/users_2.png') }}" alt="Users" />
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">Users</label></li></a>
-			<li><a href="{{ URL::asset('products/index') }}"><img
+			<li><a href="{{ URL::asset('#') }}"><img
 				src="{{ URL::asset('img/report.png') }}" alt="Report" />
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">Report</label></a>
@@ -84,7 +84,7 @@
 					</li>
 				</ol>
 			</li>
-			<li><a href="{{ URL::asset('products/index') }}"><img src="{{ URL::asset('img/blue_external_drive_backup.png') }}"
+			<li><a href="{{ URL::asset('#') }}"><img src="{{ URL::asset('img/blue_external_drive_backup.png') }}"
 				alt="Backup" /> &nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">Database Backup</label></a>
 			</li>
