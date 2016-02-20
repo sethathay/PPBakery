@@ -61,6 +61,9 @@ Route::get('sections/edit/{id}', ['as' => 'sections.edit', 'uses' => 'SectionsCo
 Route::post('sections/update', ['as' => 'sections.update', 'uses' => 'SectionsController@update']);
 Route::get('sections/destroy/{id}', ['as' => 'sections.destroy', 'uses' => 'SectionsController@destroy']);
 
+// Route for pos
+Route::post('pos/sale', 'PosController@sale');
+
 //Route of services for daily expense input by Thay Setha
 Route::resource('services','ServicesController');
 

@@ -8,6 +8,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/jquery-1.11.3.min.js') }}"></script>
 <script src="{{ URL::asset('js/jquery.validator.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/loading.js') }}"></script>
 <link href="{{ URL::asset('css/bootstrap-3.3.2.css') }}" rel="stylesheet">
 
 <style>
@@ -280,9 +281,9 @@ body {
 		</div>
 
 		<div class="col-md-12 content">
-			
+			{!! Form::open(array('url' => 'pos/sale', 'method' => 'post', 'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
 			<div class="col-md-4 content-left">
-				<div><input id="code" type="text" class="form-control" name="code" value="" placeholder="លេខកូដ"></div>
+				<div><input id="code" type="text" class="form-control" name="code" style="width:100%;" value="" placeholder="លេខកូដ"></div>
 				
 				<div style="padding-top:20px;">
 					<label>ជំនួយ៖</label> បញ្ជូលលេខកូដរួចចុច ប៊ូតុងខាងក្រោម តាមចំនួនដែលចង់បាន
@@ -380,7 +381,67 @@ body {
 						</div>
 					</div>
 				</div>
-			</div>
+			</div>			
+	
+			<!-- Modal Payment -->
+			<div id="myModalPayment" class="modal fade bs-example-modal-lg" role="dialog">
+			  <div class="modal-dialog modal-lg">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-body"><br/>
+						<div class="row">
+							<div class="col-md-4"><label>តំលៃសរុបត្រូវបង់ (R) : </label></div>
+							<div class="col-md-7 amount-big"><label class="popup_total_amount_riel"></label> <label>R</label></div>
+						</div>
+						<div class="row">
+							<div class="col-md-4"><label>តំលៃសរុបត្រូវបង់ ($) : </label></div>
+							<div class="col-md-7 amount-big"><label class="popup_total_amount_us"></label> <label>$</label></div>
+						</div>
+						<div class="row">
+							<div style="margin-bottom: 50px">
+								<div class="col-md-4"><label>បញ្ចុះតំលៃ (R) : </label></div>
+								<div class="col-md-7 amount-big"><input id="custom-discount-riel" type="text" class="form-control custom-discount-riel" name="custom-discount-riel" value="0" placeholder=""></div>
+							</div>
+						</div>
+						<div class="row">
+							<div style="margin-bottom: 70px">
+								<div class="col-md-4"><label>បញ្ចុះតំលៃ ($) : </label></div>
+								<div class="col-md-7 amount-big"><input id="custom-discount-us" type="text" class="form-control custom-discount-us" name="custom-discount-us" value="0" placeholder=""></div>
+							</div>
+						</div>
+						<div class="row">
+							<div style="margin-bottom: 50px">
+								<div class="col-md-4"><label>បង់ប្រាក់ (R) : </label></div>
+								<div class="col-md-7 amount-big"><input id="amount_riel" type="text" class="form-control custom-amount" name="amount_riel" value="0" placeholder=""></div>
+							</div>
+						</div>
+						<div class="row">
+							<div style="margin-bottom: 50px">
+								<div class="col-md-4"><label>បង់ប្រាក់ ($) : </label></div>
+								<div class="col-md-7 amount-big"><input id="amount_us" type="text" class="form-control custom-amount" name="amount_us" value="0" placeholder=""></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4"><label>ប្រាក់អាប់ (R) : </label></div>
+							<div class="col-md-7 amount-big" style="color:blue;"><label class="remain_total_amount_riel">0</label> <label>R</label></div>
+						</div>
+						<div class="row">
+							<div class="col-md-4"><label>ប្រាក់អាប់ ($) : </label></div>
+							<div class="col-md-7 amount-big" style="color:blue;"><label class="remain_total_amount_us">0</label> <label>$</label></div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-print btn-primary" id="btn-paid" data-dismiss="modal">បង់ប្រាក់</button>				
+						<button type="button" class="btn btn-print btn-danger" data-dismiss="modal">ត្រឡប់ក្រោយ</button>
+					</div>
+				</div>
+
+			  </div>
+			</div>	
+			<!-- Modal QTY -->			
+			<input id="rate" type="hidden" class="form-control custom-amount" name="rate" value="4000" placeholder="">
+			{!! Form::close() !!}
 		</div>
 
 		<div class="col-md-12 footer">
@@ -400,64 +461,6 @@ body {
 		  <div class="modal-footer">
 			<button type="button" class="btn btn-default btn-ok" data-dismiss="modal">OK</button>
 		  </div>
-		</div>
-
-	  </div>
-	</div>	
-	<!-- Modal QTY -->
-	
-	<!-- Modal Payment -->
-	<div id="myModalPayment" class="modal fade bs-example-modal-lg" role="dialog">
-	  <div class="modal-dialog modal-lg">
-
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-body"><br/>
-				<div class="row">
-					<div class="col-md-4"><label>តំលៃសរុបត្រូវបង់ (R) : </label></div>
-					<div class="col-md-7 amount-big"><label class="popup_total_amount_riel"></label> <label>R</label></div>
-				</div>
-				<div class="row">
-					<div class="col-md-4"><label>តំលៃសរុបត្រូវបង់ ($) : </label></div>
-					<div class="col-md-7 amount-big"><label class="popup_total_amount_us"></label> <label>$</label></div>
-				</div>
-				<div class="row">
-					<div style="margin-bottom: 50px">
-						<div class="col-md-4"><label>បញ្ចុះតំលៃ (R) : </label></div>
-						<div class="col-md-7 amount-big"><input id="custom-discount-riel" type="text" class="form-control custom-discount-riel" name="custom-discount-riel" value="0" placeholder=""></div>
-					</div>
-				</div>
-				<div class="row">
-					<div style="margin-bottom: 70px">
-						<div class="col-md-4"><label>បញ្ចុះតំលៃ ($) : </label></div>
-						<div class="col-md-7 amount-big"><input id="custom-discount-us" type="text" class="form-control custom-discount-us" name="custom-discount-us" value="0" placeholder=""></div>
-					</div>
-				</div>
-				<div class="row">
-					<div style="margin-bottom: 50px">
-						<div class="col-md-4"><label>បង់ប្រាក់ (R) : </label></div>
-						<div class="col-md-7 amount-big"><input id="amount_riel" type="text" class="form-control custom-amount" name="amount_riel" value="0" placeholder=""></div>
-					</div>
-				</div>
-				<div class="row">
-					<div style="margin-bottom: 50px">
-						<div class="col-md-4"><label>បង់ប្រាក់ ($) : </label></div>
-						<div class="col-md-7 amount-big"><input id="amount_us" type="text" class="form-control custom-amount" name="amount_us" value="0" placeholder=""></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4"><label>ប្រាក់នៅសល់ (R) : </label></div>
-					<div class="col-md-7 amount-big" style="color:blue;"><label class="remain_total_amount_riel">0</label> <label>R</label></div>
-				</div>
-				<div class="row">
-					<div class="col-md-4"><label>ប្រាក់នៅសល់ ($) : </label></div>
-					<div class="col-md-7 amount-big" style="color:blue;"><label class="remain_total_amount_us">0</label> <label>$</label></div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-print btn-primary" data-dismiss="modal">បង់ប្រាក់</button>				
-				<button type="button" class="btn btn-print btn-danger" data-dismiss="modal">ត្រឡប់ក្រោយ</button>
-			</div>
 		</div>
 
 	  </div>
@@ -493,15 +496,54 @@ body {
 				inputs.eq(index).select();
 			}
 			
+			$("#code").val('');
 			$("#code").focus();
 			var rate = 4000;
 			var index = 1;
 			var productItem = Array();
+			var record = 0;
+			var token = "{!! csrf_token() !!}";
 
 			$(".txt_subtotal").val(0);
 			$(".txt_total_discount").val(0);
 			$(".txt_total_amount_riel").val(0);
 			$(".txt_total_amount_us").val(0);
+			
+			// when press enter button and amount paid < amount to be pay
+			$("#myModalPayment").find("input").keyup(function(e){
+				var key = e.keyCode || e.which;
+				if(key === 13){
+					if(record > 0){
+						$.ajax({
+							type : 'post',
+							url : '{{ URL::asset("pos/sale") }}',
+							data : $("#adminForm").serialize(),
+							dataType : 'json',
+							success : function(result){
+								// return sales_order_id;
+								alert(result);
+							}
+						});
+					}
+				}
+			});
+			
+			
+			// when click button Paid
+			$("#btn-paid").click(function(){
+				if(record > 0){
+					$.ajax({
+						type : 'post',
+						url : '{{ URL::asset("pos/sale") }}',
+						data : $("#adminForm").serialize(),
+						dataType : 'json',
+						success : function(result){
+							// return sales_order_id;
+							alert(result);
+						}
+					});
+				}
+			});
 			
 			$("#myModal").on('shown.bs.modal', function(){
 				$(this).find('input[type="text"]').focus();
@@ -537,7 +579,6 @@ body {
 			// when fill product code
 			$("#code").keydown(function(e) {
 				var code = e.keyCode || e.which;
-				var token = "{!! csrf_token() !!}";
 				
 				// F8	
 				if(code == 119){
@@ -728,47 +769,130 @@ body {
 						url : '{{ route("products.searchProdctByCode") }}',
 						data : { _token : token, "codeNumber":codeNumber},
 						dataType : 'json',
+						beforeSend: function(){
+							//waitingDialog.show();
+						},
 						success : function(result){
+							//waitingDialog.hide();
 							if(jQuery.isEmptyObject(result)){
 								alert("លេខកូដមិនត្រឹមត្រូវទេ!!");
 								$("#code").val("");
 							 	$("#code").focus();
 							}else{
 								cloneRecord(qty,result);
+								record++;
 							}
 						}
 					});
 					
+				}else if(record == 0){
+					alert("សូមបញ្ចូលលេខកូដទំនេញ!!");
 				}else{
 					$('#myModalPayment').modal({ keyboard: false, backdrop: 'static' });
 				}
 			}
 			$("#myModalPayment").on('shown.bs.modal', function(){
+				$(".header-fixed tbody").find('tr:last').remove();
+				$("#amount_us").val(0);
+				$("#custom-discount-riel").val(0);
+				$("#custom-discount-us").val(0);
 				$("#amount_riel").focus();
 				$(".popup_total_amount_riel").text(addCommas($(".txt_total_amount_riel").val()));
-				$(".popup_total_amount_us").text(addCommas(getMathRound($(".txt_total_amount_us").val())));
+				$(".popup_total_amount_us").text(addCommas(getMathRound100($(".txt_total_amount_us").val())));
 				
 				$("#amount_riel").val(addCommas($(".txt_total_amount_riel").val())).select();
+			});
+			$("#myModalPayment").on('hidden.bs.modal', function(e) { 
+				$("#amount_us").val(0);
+				$("#custom-discount-riel").val(0);
+				$("#custom-discount-us").val(0);
+				$("#code").focus();
 			});
 			
 			// when update paid price in riel
 			$("#amount_riel").keyup(function(){
-				if(Number($(this).val()) == 0 || $(this).val() == ""){
-					var amount_pay = Number($(".txt_total_amount_riel").val());
-					var amount_us = Number($("#amount_us").val().replace(",",""));
-					var amount_riel = addCommas(getMathRound100(amount_pay - amount_us*rate));
-					$("#amount_riel").val(amount_riel);
-				}
+				var amount_pay = Number($(".txt_total_amount_riel").val());
+				var amount_riel = 0;
+				var amount_us = 0;
+				var discount_riel = 0;
+				var discount_us = 0;
+								
+				discount_riel = Number($("#custom-discount-riel").val());
+				discount_us = Number($("#custom-discount-us").val());
+				amount_us = Number($("#amount_us").val().replace(",",""));
+				amount_riel = Number($("#amount_riel").val().replace(",",""));
+				
+				var amountPaidRiel = amount_pay - ( Number(amount_riel) + Number(amount_us)*rate + discount_riel + discount_us*rate );
+				var amountPaidUs = amountPaidRiel/rate;
+				var remain_riel = addCommas(getMathRound100(amountPaidRiel));
+				var remain_us = addCommas(getMathRound100(amountPaidUs));
+				
+				$(".remain_total_amount_riel").text(remain_riel);
+				$(".remain_total_amount_us").text(remain_us);
 			});
 			
 			// when update paid price us
 			$("#amount_us").keyup(function(){
-				if(Number($(this).val()) == 0){
-					var amount_pay = Number($(".txt_total_amount_riel").val());
-					var amount_riel = Number($("#amount_riel").val().replace(",",""));
-					var amount_us = addCommas(getMathRound100((amount_pay-amount_riel)/rate));
-					$("#amount_us").val(amount_us);
-				}
+				var amount_pay = Number($(".txt_total_amount_riel").val());
+				var amount_riel = 0;
+				var amount_us = 0;
+				var discount_riel = 0;
+				var discount_us = 0;
+											
+				discount_riel = Number($("#custom-discount-riel").val());
+				discount_us = Number($("#custom-discount-us").val());	
+				amount_us = Number($("#amount_us").val().replace(",",""));
+				amount_riel = Number($("#amount_riel").val().replace(",",""));
+				
+				var amountPaidRiel = amount_pay - ( Number(amount_riel) + Number(amount_us)*rate + discount_riel + discount_us*rate  );
+				var amountPaidUs = amountPaidRiel/rate;
+				var remain_riel = addCommas(getMathRound100(amountPaidRiel));
+				var remain_us = addCommas(getMathRound100(amountPaidUs));
+				
+				$(".remain_total_amount_riel").text(remain_riel);
+				$(".remain_total_amount_us").text(remain_us);
+			});
+			
+			// when update paid discount in riel
+			$("#custom-discount-riel").keyup(function(){
+				var amount_pay = Number($(".txt_total_amount_riel").val());
+				var amount_riel = 0;
+				var amount_us = 0;
+				var discount_riel = 0;
+				var discount_us = 0;
+				
+				discount_riel = Number($("#custom-discount-riel").val());
+				discount_us = Number($("#custom-discount-us").val());	
+				amount_us = Number($("#amount_us").val().replace(",",""));
+				amount_riel = Number($("#amount_riel").val().replace(",",""));
+				var amountPaidRiel = amount_pay - ( Number(amount_riel) + Number(amount_us)*rate + discount_riel + discount_us*rate  );
+				var amountPaidUs = amountPaidRiel/rate;
+				var remain_riel = addCommas(getMathRound100(amountPaidRiel));
+				var remain_us = addCommas(getMathRound100(amountPaidUs));
+				
+				$(".remain_total_amount_riel").text(remain_riel);
+				$(".remain_total_amount_us").text(remain_us);
+			});
+			
+			// when update paid discount in us
+			$("#custom-discount-us").keyup(function(){
+				var amount_pay = Number($(".txt_total_amount_riel").val());
+				var amount_riel = 0;
+				var amount_us = 0;
+				var discount_riel = 0;
+				var discount_us = 0;
+				
+				discount_riel = Number($("#custom-discount-riel").val());
+				discount_us = Number($("#custom-discount-us").val());	
+				amount_us = Number($("#amount_us").val().replace(",",""));
+				amount_riel = Number($("#amount_riel").val().replace(",",""));
+				var amountPaidRiel = amount_pay - ( Number(amount_riel) + Number(amount_us)*rate + discount_riel + discount_us*rate  );
+				var amountPaidUs = amountPaidRiel/rate;
+				var remain_riel = addCommas(getMathRound100(amountPaidRiel));
+				var remain_us = addCommas(getMathRound100(amountPaidUs));
+				
+				$(".remain_total_amount_riel").text(remain_riel);
+				$(".remain_total_amount_us").text(remain_us);
 			});
 			
 			// clone record
@@ -806,6 +930,7 @@ body {
 					obj.find("td:eq(4)").find(".lbl_total_by_item").text(addCommas(total_by_item));
 					obj.find("td:eq(4)").find(".txt_total_by_item").val(total_by_item);
 					obj.find("td:eq(5)").find(".id").val(result.id);
+					
 					
 				}else{
 					var oldQty = $(".header-fixed tbody").find(".id[value="+Number(result.id)+"]").parent().parent().find("td:eq(1)").find(".txt_qty").val();
@@ -867,10 +992,12 @@ body {
 				return x1 + x2;
 			}
 			
+			// Round number 0.0
 			function getMathRound(amount){
 				return Math.round( (amount) * 10 ) / 10;
 			}
 			
+			// Round number 0.00
 			function getMathRound100(amount){
 				return Math.round( (amount) * 100 ) / 100;
 			}
