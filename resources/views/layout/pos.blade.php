@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Laravel</title>
+
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="{{ URL::asset('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -253,6 +254,24 @@ body {
 .footer_content{
 	padding-top: 5px;
 }
+
+#slideshow {
+	margin-left:8px;
+    height:506px;
+}
+
+#slideshow IMG {
+    position:absolute;
+    z-index:8;
+}
+
+#slideshow IMG.active {
+    z-index:10;
+}
+
+#slideshow IMG.last-active {
+    z-index:9;
+}
 </style>
 </head>
 <body>
@@ -299,7 +318,12 @@ body {
 				</div>
 				
 				<div class="row">
-					<img class="img-responsive" src="{{ URL::asset('img/bread.jpg') }}" alt="" />
+					<div id="slideshow">
+						<img src="{{ URL::asset('img/slide/1.jpg') }}" alt="1.jpg" class="active" />
+						<img src="{{ URL::asset('img/slide/2.jpg') }}" alt="2.jpg" />
+						<img src="{{ URL::asset('img/slide/3.jpg') }}" alt="3.jpg" />
+						<img src="{{ URL::asset('img/slide/4.jpg') }}" alt="4.jpg" />
+					</div>
 				</div>
 				<div class="row" style="background: #fff; padding:10px 10px; text-align: center; font-size: 34px; color: #FF6600; font-weight: bold;">
 					PHNOM PENH BAKERY
@@ -358,7 +382,7 @@ body {
 				<div class="row block-total" style="background: #DBEAF9; height: 160px; font-size: 16px; padding-top: 10px; width:67%;">
 					<div class="col-md-6">
 						<div><label>សារខា : A1</label></div>
-						<div><label>ឈ្មោះអ្នកប្រើប្រាស់ : Administrator</label></div>
+						<div><label>ឈ្មោះអ្នកប្រើប្រាស់ :  {{  Auth::user()->first_name." ".Auth::user()->last_name }} </label></div>
 						<div><label>ថ្ងៃ-ខែ-ឆ្នាំ:  &nbsp;&nbsp;&nbsp;&nbsp; <span id="fullDate" style="color:blue;"></span> </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label>ម៉ោង:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <label style="color:blue;" id="dateBox"></label></div>
 						<div style="font-size: 20px; border: 1px solid #aaa; padding: 15px 10px 10px; text-align: center;"><label>អត្រាប្តូរប្រាក់ :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:blue;">1$ = 4000R</label></div>
 					</div>
@@ -450,7 +474,7 @@ body {
 	</div>
 	
 	<!-- Modal QTY -->
-	<div id="myModal" class="modal fade" role="dialog">
+	<div id="myModal" class="modal fade myModal" role="dialog">
 	  <div class="modal-dialog">
 
 		<!-- Modal content-->
@@ -467,7 +491,28 @@ body {
 	</div>	
 	<!-- Modal QTY -->
 	
+	<!-- Modal QTY minus -->
+	<div class="modal fade myModal" role="dialog">
+	  <div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+		  <div class="modal-body"><br/>
+			<input id="custom-amount-minus" type="text" class="form-control custom-amount" name="custom-amount-minus" value="" placeholder="ចំនួន">
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default btn-ok" data-dismiss="modal">OK</button>
+		  </div>
+		</div>
+
+	  </div>
+	</div>	
+	<!-- Modal QTY  minus-->
 	
+	
+	<!-- Modal Print Receipt -->
+	<div id="myModalPrint" class="modal fade col-md-3" role="dialog">
+	</div>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			
@@ -509,6 +554,9 @@ body {
 			$(".txt_total_amount_riel").val(0);
 			$(".txt_total_amount_us").val(0);
 			
+			/*$("#myModalPrint").on('shown.bs.modal', function(){
+			});*/
+			
 			// when press enter button and amount paid < amount to be pay
 			$("#myModalPayment").find("input").keyup(function(e){
 				var key = e.keyCode || e.which;
@@ -521,7 +569,35 @@ body {
 							dataType : 'json',
 							success : function(result){
 								// return sales_order_id;
-								alert(result);
+								$("#myModalPrint").load('pos/print/'+result, '', function(){
+									//$("#myModalPrint").modal();
+									w = window.open();
+									w.document.write($("#myModalPrint").html());
+									w.print(false);
+                                    w.close();
+									window.location.reload();
+								});
+								/*
+								$(".txt_subtotal").val(0);
+								$(".txt_total_discount").val(0);
+								$(".txt_total_amount_riel").val(0);
+								$(".txt_total_amount_us").val(0);
+								$("#custom-discount-riel").val(0);
+								$("#custom-discount-us").val(0);
+								$("#amount_riel").val(0);
+								$("#amount_us").val(0);
+								
+								$(".header-fixed tbody").find('tr').not('tr:last').remove();
+								$(".header-fixed tbody").find('tr:last').find("td:eq(5)").find(".id").val('');
+								productItem = [];
+								
+								$(".photo_product").find("li").remove();
+								record = 0;
+								
+								$("#myModalPrint").html("");
+								$('#myModalPayment').modal('hide');
+								$("#code").focus();
+								*/
 							}
 						});
 					}
@@ -548,6 +624,9 @@ body {
 			$("#myModal").on('shown.bs.modal', function(){
 				$(this).find('input[type="text"]').focus();
 			});
+			$("#myModal").on('hide.bs.modal', function(){
+				$("#code").focus();
+			});
 			
 			$(".btn-ok").click(function(){
 				var token1 = "{!! csrf_token() !!}";
@@ -558,6 +637,7 @@ body {
 				$("#code").focus();
 			});
 			
+			// F8
 			$("#custom-amount").keypress(function(e) {
 					
 				var codes = e.keyCode || e.which;
@@ -576,15 +656,49 @@ body {
 				
 			});
 			
+			$(".myModal").on('shown.bs.modal', function(){
+				$(this).find('input[type="text"]').focus();
+			});
+			$(".myModal").on('hide.bs.modal', function(){
+				$("#code").focus();
+			});
+			
+			// F7
+			$("#custom-amount-minus").keypress(function(e) {
+					
+				var codes = e.keyCode || e.which;
+				
+				if(codes == 13){						
+					var token1 = "{!! csrf_token() !!}";
+					var codeNumber1 = $("#code").val();
+					var qty_fill = Number($(this).val())*(-1);
+					
+					getProduct(qty_fill, codeNumber1, token1);
+					
+					$(this).val('');
+					$('.myModal').modal('hide');
+					$("#code").focus();
+				}
+				
+			});
 			// when fill product code
 			$("#code").keydown(function(e) {
 				var code = e.keyCode || e.which;
 				
+				// F7	
+				if(code == 118){
+					e.preventDefault(); //Disable shortcut browser
+					var codeNumber = $("#code").val();
+					if(codeNumber != ""){	
+						$('.myModal').modal({ keyboard: true, backdrop: 'static' });
+					}
+				}
+				
 				// F8	
 				if(code == 119){
 					var codeNumber = $("#code").val();
-					if(codeNumber != ""){						
-						$('#myModal').modal('show');
+					if(codeNumber != ""){	
+						$('#myModal').modal({ keyboard: true, backdrop: 'static' });		
 					}
 				}
 				
@@ -782,17 +896,18 @@ body {
 								cloneRecord(qty,result);
 								record++;
 							}
+							$("#code").focus();
 						}
 					});
 					
 				}else if(record == 0){
 					alert("សូមបញ្ចូលលេខកូដទំនេញ!!");
 				}else{
-					$('#myModalPayment').modal({ keyboard: false, backdrop: 'static' });
+					$('#myModalPayment').modal({ keyboard: true, backdrop: 'static' });
 				}
 			}
 			$("#myModalPayment").on('shown.bs.modal', function(){
-				$(".header-fixed tbody").find('tr:last').remove();
+				//$(".header-fixed tbody").find('tr:last').remove();
 				$("#amount_us").val(0);
 				$("#custom-discount-riel").val(0);
 				$("#custom-discount-us").val(0);
@@ -933,8 +1048,10 @@ body {
 					
 					
 				}else{
+					
+					
 					var oldQty = $(".header-fixed tbody").find(".id[value="+Number(result.id)+"]").parent().parent().find("td:eq(1)").find(".txt_qty").val();
-					var newQty = Number(qty)+Number(oldQty);
+					var newQty = ((Number(qty)+Number(oldQty)>=0)?Number(qty)+Number(oldQty):0);
 					var newDiscountByItem = (Number(result.discount_amount) + Number(result.discount_percent))*Number(newQty);
 					var newTotalPrice = newQty * Number(unit_price) - newDiscountByItem;
 					total_by_item = newTotalPrice - (oldQty * unit_price - (Number(result.discount_amount) + Number(result.discount_percent)) * oldQty);
@@ -949,6 +1066,14 @@ body {
 					newObj.find("td:eq(4)").find(".lbl_total_by_item").text(addCommas(newTotalPrice));
 					newObj.find("td:eq(4)").find(".txt_total_by_item").val(newTotalPrice);
 					
+					if(newQty == 0){
+						
+						// Remove product id from array in table list
+						productItem.splice(productItem.indexOf( result.id ), 1);
+						newObj.remove();
+						// Remove product picture
+						$(".product_name:contains('"+newObj.find("td:eq(0)").text()+"')").parents("li").remove();
+					}
 					
 				}
 				
@@ -1004,7 +1129,26 @@ body {
 			
 			
 			
+			setInterval( "slideSwitch()", 5000 );
 		});
+		
+		//slideshow
+		function slideSwitch() {
+			var $active = $('#slideshow IMG.active');
+
+			if ( $active.length == 0 ) $active = $('#slideshow IMG:last');
+
+			var $next =  $active.next().length ? $active.next()
+				: $('#slideshow IMG:first');
+
+			$active.addClass('last-active');
+				
+			$next.css({opacity: 0.0})
+				.addClass('active')
+				.animate({opacity: 1.0}, 1000, function() {
+					$active.removeClass('active last-active');
+				});
+		}
 		
 		function updateClock ( )
 		{

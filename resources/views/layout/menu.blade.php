@@ -41,7 +41,7 @@
 				style="vertical-align: middle; font-weight: normal;">Discounts</label></a>
 			</li>
 			<li><a href="{{ URL::asset('services') }}"><img
-				src="{{ URL::asset('img/furoisu_bath_chair.png') }}" alt="Table" />
+				src="{{ URL::asset('img/dollars.png') }}" alt="Table" />
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">Expenses</label></a>
 			</li>

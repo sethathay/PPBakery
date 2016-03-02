@@ -29,5 +29,10 @@ class SaleOrderDetail extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $fillable = ['sales_order_id', 'discount_price_riel', 'product_id', 'qty', 'qty_uom_id', 'conversion', 'unit_price', 'total_price_riel', 'total_price_us', 'note', 'is_free', 'is_promotion'];
+	
+	
+    public  function products(){
+        return $this->hasMany('App\Product');
+    }
 
 }

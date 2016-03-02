@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
 use Input;
+use App\Product;
 use App\SaleOrder;
 use App\SaleOrderDetail;
 use App\SaleOrderReceipt;
@@ -64,7 +65,7 @@ class PosController extends Controller
 		
 		
 		// To save sale order detail table
-		for($i=0; $i<count($inputs['id']); $i++){
+		for($i=0; $i<count($inputs['id'])-1; $i++){
 			$saleOrderDetail = new SaleOrderDetail;
 			$saleOrderDetail['sales_order_id'] = $sale_order_id;
 			$saleOrderDetail['product_id'] = $inputs['id'][$i];
@@ -78,7 +79,7 @@ class PosController extends Controller
 		}
 		
 		// Save to inventory
-		for($k=0; $k<count($inputs['id']); $k++){
+		for($k=0; $k<count($inputs['id'])-1; $k++){
 			
 			$fields = ['product_id'=>$inputs['id'][$k], 'location_id'=>1];
 			$checkIfSaleExistingProduct = InventoryTotal::where($fields)->first();
@@ -135,6 +136,12 @@ class PosController extends Controller
 		echo $sale_order_id;exit;
 		
     }
+	
+	// print receipt pos
+	public function printReceipt($sales_order_id){
+		$saleOrderDetail = SaleOrderDetail::join('products', 'products.id', '=', 'sales_order_details.product_id')->whereSales_order_id($sales_order_id)->get();
+		return view('/layout/printReceipt', compact('saleOrderDetail'));
+	}
 	
     
 }

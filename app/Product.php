@@ -24,5 +24,9 @@ class Product extends Model implements AuthenticatableContract,
     protected $table = 'products';
 
     protected $fillable = ['code','name','pgroup_id', 'price','created_by','updated_by','is_active'];
+	
+    public  function salesOrderDetails(){
+        return $this->belongsTo('App\SaleOrderDetail');
+    }
 
 }

@@ -125,7 +125,7 @@ class UsersController extends Controller
 
 
 
-	public function doLogin() {
+	public function doLogin(Request $request) {
 		// Applying validation rules.
 		$userdata = array(
 		    'username' => Input::get('username'),
@@ -134,6 +134,8 @@ class UsersController extends Controller
 		// doing login.
 		if (Auth::validate($userdata)) {
 			if (Auth::attempt($userdata)) {
+				//$exchangerate = DB::table('exchange_rates')->
+				//$request->session()->put('key', 'value');
 				return Redirect::intended('/dashboard');
 			}
 		}

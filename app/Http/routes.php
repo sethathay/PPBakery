@@ -63,6 +63,12 @@ Route::get('sections/destroy/{id}', ['as' => 'sections.destroy', 'uses' => 'Sect
 
 // Route for pos
 Route::post('pos/sale', 'PosController@sale');
+Route::get('pos/print/{id}', 'PosController@printReceipt');
+/*
+Route::get('/printReceipt', array('as' => 'printReceipt', function () {
+	return View::make('/layout/printReceipt');
+}));
+*/
 
 //Route of services for daily expense input by Thay Setha
 Route::resource('services','ServicesController');
