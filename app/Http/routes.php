@@ -20,7 +20,12 @@ Route::get('/', function(){
 });
 
 Route::get('/dashboard', array('as' => 'dashboard', function () {
-	return View::make('/layout/dashboard');
+	if ( Auth::check() ) // use Auth::check instead of Auth::user
+	{
+		return View::make('/layout/dashboard');
+	} else{
+		return View::make('/layout/index');
+	}
 }));
 
 Route::get('/pos', array('as' => 'pos', function () {

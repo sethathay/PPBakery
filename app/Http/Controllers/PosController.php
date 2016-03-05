@@ -32,11 +32,11 @@ class PosController extends Controller
         $saleOrder['_token']    = $inputs['_token'];
         $saleOrder['location_id']    = 1;
         $saleOrder['customer_id']    = 1;
-        $saleOrder['so_code']    = 1;
+        $saleOrder['so_code']    = $this->generateAutoCode("sales_orders", "so_code", 6, "SO");
         $saleOrder['total_amount_riel']    = $inputs['total_amount_riel'];
         $saleOrder['total_amount_us']    = $inputs['total_amount_us'];
-        $saleOrder['custom-discount-riel']    = $inputs['custom-discount-riel'];
-        $saleOrder['custom-discount-us']    = $inputs['custom-discount-us'];
+        $saleOrder['discount_riel']    = $inputs['custom-discount-riel'];
+        $saleOrder['discount_us']    = $inputs['custom-discount-us'];
         $saleOrder['balance']    = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$inputs['rate'] + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$inputs['rate']);		
         $saleOrder['order_date']    = date('Y-m-d');
 		$saleOrder['due_date']    = date('Y-m-d');
@@ -50,7 +50,7 @@ class PosController extends Controller
 		// To save sale order receipts table
 		$saleOrderReceipt = array();
 		$saleOrderReceipt['sale_order_id'] = $sale_order_id;
-		$saleOrderReceipt['exchange_rate_id'] = 1;
+		$saleOrderReceipt['exchange_rate_id'] = $inputs['exchange_rate_id'];
 		$saleOrderReceipt['receipt_code'] = 1;
 		$saleOrderReceipt['amount_us'] = $inputs['total_amount_us'];
 		$saleOrderReceipt['amount_kh'] = $inputs['total_amount_riel'];
@@ -139,9 +139,68 @@ class PosController extends Controller
 	
 	// print receipt pos
 	public function printReceipt($sales_order_id){
+		$saleOrder = SaleOrder::whereId($sales_order_id)->first();
 		$saleOrderDetail = SaleOrderDetail::join('products', 'products.id', '=', 'sales_order_details.product_id')->whereSales_order_id($sales_order_id)->get();
-		return view('/layout/printReceipt', compact('saleOrderDetail'));
+		return view('/layout/printReceipt', compact('saleOrderDetail', 'saleOrder'));
 	}
+	
+	function generateAutoCode($table, $field, $len, $char) {
+        $sqlArr = array('Table' => $table, 'Fields' => array('id', $field));
+        $code = $this->getCode($sqlArr, $sort = false);
+        $currentYear = date('y');
+        if (strlen($code) > $len) {
+            list($year, $id) = preg_split('/'.$char.'/' , $code);
+            $numId = (int) $id;
+            $numYear = (int) $year;
+            if ($numId == $this->get9NumberByLen($len)) {
+                $numId = 0;
+                $currentYear = $numYear + 1;
+            }
+			//echo $currentYear . $char . $this->getIdString($numId + 1, $len)."test";
+            return $currentYear . $char . $this->getIdString($numId + 1, $len);
+            //return $char . $this->getIdString($numId + 1, $len);
+        } else {
+            return $currentYear . $char . $this->getIdString($code, $len);
+            //return $char . $this->getIdString($code+1, $len);
+        }
+    }
+
+    function getCode($sqlArr, $sort=false) {
+              
+        $tableName = $sqlArr['Table'];
+        $fieldId = $sqlArr['Fields'][0];
+        $fieldCode = $sqlArr['Fields'][1];
+        $sortField = $fieldId;
+        if ($sort) {
+            $sortField = $fieldCode;
+        }
+        $sqlStr = 'SELECT ' . $fieldId . ',' . $fieldCode . ' FROM ' . $tableName . ' order by ' . $sortField . ' DESC LIMIT 0 ,1';
+		
+		$results = DB::select( DB::raw($sqlStr) );
+		
+        $dataList = $results;
+        $code = 1;
+        if (count($dataList) > 0) {
+            $code = $dataList[0]->$fieldCode;
+        }
+        return $code;
+    }
+
+    function get9NumberByLen($len) {
+        $numStr = '';
+        for ($i = 1; $i <= $len; $i++) {
+            $numStr = $numStr . '9';
+        }
+        return (int) $numStr;
+    }
+
+    function getIdString($numId, $len) {
+        $str = '';
+        for ($i = 1; $i <= ($len - strlen($numId)); $i++) {
+            $str = $str . '0';
+        }
+        return $str . $numId;
+    }
 	
     
 }
