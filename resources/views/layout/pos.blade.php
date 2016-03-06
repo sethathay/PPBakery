@@ -279,23 +279,11 @@ body {
 		<div class="col-md-12 header">
 			<div class="row">
 				<div class="col-md-1 header_logo">
-					<img class="logo" src="{{ URL::asset('img/hamburger.png') }}"
-						alt="hamburger.png" />
+					<img class="logo" src="{{ URL::asset('img/hamburger.png') }}" alt="hamburger.png" />
 				</div>
 				<div class="col-md-2 header_name">
-					<label class="big_name">Khmer Food &nbsp;&nbsp;&nbsp;</label><label
-						class="small_name">&nbsp;Restaurant</label>
+					<label class="big_name">PHNOM PENH BAKERY</label>
 				</div>
-				<div class="col-md-9 header_info">
-					<div>
-						<span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbsp;&nbsp;<label>ដីឡូតិ៍៣A
-							ផ្លូវលេខ១៦៩, សង្កាត់វាលវង់, រាជធានីភ្នំពេញ, ព្រះរាជាណាចក្រកម្ពុជា</label>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span
-							class="glyphicon glyphicon-phone-alt"></span>&nbsp;&nbsp;&nbsp;<label>(855)
-							89 918 188</label>
-					</div>
-				</div>
-
 			</div>
 		</div>
 
