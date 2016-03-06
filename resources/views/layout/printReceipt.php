@@ -13,7 +13,7 @@
 				Tel: 015 855 755
 			</div>
 			<div style="text-align : left;">
-				លេខវិក័យបត្រ : <label>0001</label>
+				លេខវិក័យបត្រ : <label><?php echo $saleOrder->so_code; ?></label>
 			</div>
 			<div style="text-align : left;">
 				កាលបរិច្ឆេទ : <label><?php echo date("d/m/Y")." ". date("H:i:s"); ?></label>
@@ -47,6 +47,14 @@
 					<tr>
 						<td colspan="4" style="text-align:right;">តំលៃសរុបត្រូវបង់ (R)</td>
 						<td colspan="2" style="text-align:right;"><label><?php echo number_format($sub_total); ?></label></td>
+					</tr>
+					<tr>
+						<td colspan="4" style="text-align:right;">ចុះតំលៃ (R)</td>
+						<td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrder->discount_riel); ?></label></td>
+					</tr>
+					<tr>
+						<td colspan="4" style="text-align:right;">ចុះតំលៃ ($)</td>
+						<td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrder->discount_us); ?></label></td>
 					</tr>
 					<tr>
 						<td colspan="4" style="text-align:right;">ប្រាក់បង់រួច (R)</td>

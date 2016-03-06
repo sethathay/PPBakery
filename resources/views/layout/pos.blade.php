@@ -313,19 +313,21 @@ body {
 						<label>F12 = ចំនួន 50</label>&nbsp;&nbsp;&nbsp;&nbsp;
 					</div>
 					<div style="padding:10px 0;">
-						- បញ្ជូលលេខកូដរួចចុច ប៊ូតុង <label>F8</label> គឺដើម្បីបញ្ចូលចំនួនតាមដែលយើងត្រូវការ
+						- បញ្ជូលលេខកូដរួចចុច ប៊ូតុង <label>F8</label> គឺដើម្បីបញ្ចូលចំនួនតាមដែលយើងត្រូវការ<br/>
+						- បញ្ជូលលេខកូដរួចចុច ប៊ូតុង <label>F7</label> គឺដើម្បីដកចំនួនទំនេញតាមដែលយើងត្រូវការ						
 					</div>					
 				</div>
 				
 				<div class="row">
 					<div id="slideshow">
-						<img src="{{ URL::asset('img/slide/1.jpg') }}" alt="1.jpg" class="active" />
-						<img src="{{ URL::asset('img/slide/2.jpg') }}" alt="2.jpg" />
-						<img src="{{ URL::asset('img/slide/3.jpg') }}" alt="3.jpg" />
-						<img src="{{ URL::asset('img/slide/4.jpg') }}" alt="4.jpg" />
+						<img class="img-responsive" src="{{ URL::asset('img/slide/1.jpg') }}" alt="1.jpg" class="active" />
+						<img class="img-responsive" src="{{ URL::asset('img/slide/2.jpg') }}" alt="2.jpg" />
+						<img class="img-responsive" src="{{ URL::asset('img/slide/3.jpg') }}" alt="3.jpg" />
+						<img class="img-responsive" src="{{ URL::asset('img/slide/4.jpg') }}" alt="4.jpg" />
 					</div>
 				</div>
 				<div class="row" style="background: #fff; padding:10px 10px; text-align: center; font-size: 34px; color: #FF6600; font-weight: bold;">
+					<label>ហាងនំបុ័ង ភ្នំពេញ</label><br/>
 					PHNOM PENH BAKERY
 				</div>
 				
@@ -341,6 +343,7 @@ body {
 					</div>
 				</div>
 				
+				 
 				<div class="row">
 					<div class="table-responsive">
 					  <table class="table table-hover header-fixed table-striped">
@@ -378,26 +381,25 @@ body {
 					  </table>
 					</div>
 				</div>
-				
 				<div class="row block-total" style="background: #DBEAF9; height: 160px; font-size: 16px; padding-top: 10px; width:67%;">
 					<div class="col-md-6">
-						<div><label>សារខា : A1</label></div>
+						<div><label>សារខា : A1 </label></div>
 						<div><label>ឈ្មោះអ្នកប្រើប្រាស់ :  {{  Auth::user()->first_name." ".Auth::user()->last_name }} </label></div>
 						<div><label>ថ្ងៃ-ខែ-ឆ្នាំ:  &nbsp;&nbsp;&nbsp;&nbsp; <span id="fullDate" style="color:blue;"></span> </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label>ម៉ោង:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <label style="color:blue;" id="dateBox"></label></div>
-						<div style="font-size: 20px; border: 1px solid #aaa; padding: 15px 10px 10px; text-align: center;"><label>អត្រាប្តូរប្រាក់ :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:blue;">1$ = 4000R</label></div>
+						<div style="font-size: 20px; border: 1px solid #aaa; padding: 15px 10px 10px; text-align: center;"><label>អត្រាប្តូរប្រាក់ :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:blue;">1$ = {{ number_format(Session::get('exchangerate')->riel) }}R</label>{!! Form::hidden('exchange_rate_id', Session::get('exchangerate')->id, array('class'=>'exchange_rate_id')) !!}</div>
 					</div>
 					<div class="col-md-6 block-amount">
 						<div class="row">
 							<div class="col-md-6"><label>តំលៃសរុប : </label></div>
-							<div class="col-md-6 amount"><label class="subtotal">0</label> <label>R</label>{!! Form::hidden('subtotal', 0, array('class'=>'txt_subtotal')) !!}</div>
+							<div class="col-md-6 amount"><label class="subtotal">0</label> <label>៛</label>{!! Form::hidden('subtotal', 0, array('class'=>'txt_subtotal')) !!}</div>
 						</div>
-						<div class="row">
+						<!--<div class="row">
 							<div class="col-md-6"><label>បញ្ចុះតំលៃ : </label></div>
-							<div class="col-md-6  amount"><label class="discount">0</label> <label>R</label>{!! Form::hidden('txt_total_discount', 0, array('class'=>'txt_total_discount')) !!}</div>
-						</div>
-						<div class="row" style="padding-top:10px;">
-							<div class="col-md-6" style="color:red;"><label>តំលៃសរុបត្រូវបង់ (R) : </label></div>
-							<div class="col-md-6  amount-big"><label class="total_amount_riel">0</label> <label>R</label>{!! Form::hidden('total_amount_riel', 0, array('class'=>'txt_total_amount_riel')) !!}</div>
+							<div class="col-md-6  amount"><label class="discount">0</label> <label>៛</label>{!! Form::hidden('txt_total_discount', 0, array('class'=>'txt_total_discount')) !!}</div>
+						</div>-->
+						<div class="row" style="padding-top:30px;">
+							<div class="col-md-6" style="color:red;"><label>តំលៃសរុបត្រូវបង់ (៛) : </label></div>
+							<div class="col-md-6  amount-big"><label class="total_amount_riel">0</label> <label>៛</label>{!! Form::hidden('total_amount_riel', 0, array('class'=>'txt_total_amount_riel')) !!}</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6" style="color:red;"><label>តំលៃសរុបត្រូវបង់ ($) : </label></div>
@@ -415,8 +417,8 @@ body {
 				<div class="modal-content">
 					<div class="modal-body"><br/>
 						<div class="row">
-							<div class="col-md-4"><label>តំលៃសរុបត្រូវបង់ (R) : </label></div>
-							<div class="col-md-7 amount-big"><label class="popup_total_amount_riel"></label> <label>R</label></div>
+							<div class="col-md-4"><label>តំលៃសរុបត្រូវបង់ (៛) : </label></div>
+							<div class="col-md-7 amount-big"><label class="popup_total_amount_riel"></label> <label>៛</label></div>
 						</div>
 						<div class="row">
 							<div class="col-md-4"><label>តំលៃសរុបត្រូវបង់ ($) : </label></div>
@@ -424,7 +426,7 @@ body {
 						</div>
 						<div class="row">
 							<div style="margin-bottom: 50px">
-								<div class="col-md-4"><label>បញ្ចុះតំលៃ (R) : </label></div>
+								<div class="col-md-4"><label>បញ្ចុះតំលៃ (៛) : </label></div>
 								<div class="col-md-7 amount-big"><input id="custom-discount-riel" type="text" class="form-control custom-discount-riel" name="custom-discount-riel" value="0" placeholder=""></div>
 							</div>
 						</div>
@@ -436,7 +438,7 @@ body {
 						</div>
 						<div class="row">
 							<div style="margin-bottom: 50px">
-								<div class="col-md-4"><label>បង់ប្រាក់ (R) : </label></div>
+								<div class="col-md-4"><label>បង់ប្រាក់ (៛) : </label></div>
 								<div class="col-md-7 amount-big"><input id="amount_riel" type="text" class="form-control custom-amount" name="amount_riel" value="0" placeholder=""></div>
 							</div>
 						</div>
@@ -447,8 +449,8 @@ body {
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-4"><label>ប្រាក់អាប់ (R) : </label></div>
-							<div class="col-md-7 amount-big" style="color:blue;"><label class="remain_total_amount_riel">0</label> <label>R</label></div>
+							<div class="col-md-4"><label>ប្រាក់អាប់ (៛) : </label></div>
+							<div class="col-md-7 amount-big" style="color:blue;"><label class="remain_total_amount_riel">0</label> <label>៛</label></div>
 						</div>
 						<div class="row">
 							<div class="col-md-4"><label>ប្រាក់អាប់ ($) : </label></div>
@@ -543,7 +545,7 @@ body {
 			
 			$("#code").val('');
 			$("#code").focus();
-			var rate = 4000;
+			var rate = "{{ Session::get('exchangerate')->riel }}";
 			var index = 1;
 			var productItem = Array();
 			var record = 0;
@@ -569,6 +571,7 @@ body {
 							dataType : 'json',
 							success : function(result){
 								// return sales_order_id;
+								
 								$("#myModalPrint").load('pos/print/'+result, '', function(){
 									//$("#myModalPrint").modal();
 									w = window.open();
@@ -577,27 +580,6 @@ body {
                                     w.close();
 									window.location.reload();
 								});
-								/*
-								$(".txt_subtotal").val(0);
-								$(".txt_total_discount").val(0);
-								$(".txt_total_amount_riel").val(0);
-								$(".txt_total_amount_us").val(0);
-								$("#custom-discount-riel").val(0);
-								$("#custom-discount-us").val(0);
-								$("#amount_riel").val(0);
-								$("#amount_us").val(0);
-								
-								$(".header-fixed tbody").find('tr').not('tr:last').remove();
-								$(".header-fixed tbody").find('tr:last').find("td:eq(5)").find(".id").val('');
-								productItem = [];
-								
-								$(".photo_product").find("li").remove();
-								record = 0;
-								
-								$("#myModalPrint").html("");
-								$('#myModalPayment').modal('hide');
-								$("#code").focus();
-								*/
 							}
 						});
 					}
@@ -615,7 +597,14 @@ body {
 						dataType : 'json',
 						success : function(result){
 							// return sales_order_id;
-							alert(result);
+							$("#myModalPrint").load('pos/print/'+result, '', function(){
+								//$("#myModalPrint").modal();
+								w = window.open();
+								w.document.write($("#myModalPrint").html());
+								w.print(false);
+								w.close();
+								window.location.reload();
+							});
 						}
 					});
 				}
@@ -810,13 +799,13 @@ body {
 				var getObj = $(this).parents("tr");
 				var newQty = Number(getObj.find(".txt_qty").val());
 				var unit_price = Number(getObj.find(".txt_unit_price").val());
-				var discount = Number($(".txt_discount").val());
+				var discount = Number($(this).val());
 				$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
 				
 				var total_by_item = unit_price*newQty - discount;
 				
-				getObj.find(".lbl_discount").text(addCommas($(".txt_discount").val()));
-				getObj.find(".txt_discount").val($(".txt_discount").val());
+				getObj.find(".lbl_unit_price").text(addCommas(unit_price));
+				getObj.find(".txt_unit_price").val(unit_price);
 				
 				getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
 				getObj.find(".txt_total_by_item").val(total_by_item);
@@ -863,7 +852,7 @@ body {
 				var subtotal     = txt_subtotal + total_by_item;				
 				$(".subtotal").text(addCommas(getMathRound(subtotal)));
 				$(".txt_subtotal").val(subtotal);
-								
+																
 				// Sum total amount in riel
 				var total_amount_riel     = (subtotal);				
 				$(".total_amount_riel").text(addCommas(getMathRound(total_amount_riel)));

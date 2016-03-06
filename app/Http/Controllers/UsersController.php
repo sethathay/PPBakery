@@ -134,8 +134,8 @@ class UsersController extends Controller
 		// doing login.
 		if (Auth::validate($userdata)) {
 			if (Auth::attempt($userdata)) {
-				//$exchangerate = DB::table('exchange_rates')->
-				//$request->session()->put('key', 'value');
+				$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
+				$request->session()->put('exchangerate', $exchangerate);
 				return Redirect::intended('/dashboard');
 			}
 		}
