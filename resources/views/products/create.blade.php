@@ -4,13 +4,62 @@
 
 <link href="{{ URL::asset('css/general.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('css/upload.css') }}" rel="stylesheet">
-{!! Form::open(array('url' => 'products', 'method' => 'post', 'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
+{!! Form::open(array('url' => 'products', 'method' => 'post', 'files'=>true, 'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
 	@include ('products.form')
 {!! Form::close() !!}
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
 		
-		$('form#adminForm').validate({
+		function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();            
+                reader.onload = function (e) {
+                    $('.pro_image').attr('src', e.target.result);
+                    $('.pro_image').attr('width','280px');
+                    $('.pro_image').attr('height','175px');
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        $(".upload").change(function(){
+            readURL(this);
+        });
+
+        $("form#adminForm").submit( function( e ) {
+            var form = this;
+            e.preventDefault(); //Stop the submit for now
+                                        //Replace with your selector to find the file input in your form
+            var fileInput = $(this).find("input[type=file]")[0],
+                file = fileInput.files && fileInput.files[0];
+
+            if( file ) {
+                var img = new Image();
+
+                img.src = window.URL.createObjectURL( file );
+
+                img.onload = function() {
+                    var width = img.naturalWidth,
+                        height = img.naturalHeight;
+
+                    window.URL.revokeObjectURL( img.src );
+
+                    if( width == 280 && height == 175 ) {
+                        form.submit();
+                    }
+                    else {
+                        alert('Picture must be have width and height 280px * 175px');
+                    }
+                };
+            }
+            else { //No file was input or browser doesn't support client side reading
+                form.submit();
+            }
+
+        });
+
+        $('form#adminForm').validate({
             rules: {                   
                 name: {
                     required: true

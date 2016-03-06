@@ -10,6 +10,55 @@
 {!! Form::close() !!}
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();            
+                reader.onload = function (e) {
+                    $('.pro_image').attr('src', e.target.result);
+                    $('.pro_image').attr('width','280px');
+                    $('.pro_image').attr('height','175px');
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        $(".upload").change(function(){
+            readURL(this);
+        });
+
+        $("form#adminForm").submit( function( e ) {
+            var form = this;
+            e.preventDefault(); //Stop the submit for now
+                                        //Replace with your selector to find the file input in your form
+            var fileInput = $(this).find("input[type=file]")[0],
+                file = fileInput.files && fileInput.files[0];
+
+            if( file ) {
+                var img = new Image();
+
+                img.src = window.URL.createObjectURL( file );
+
+                img.onload = function() {
+                    var width = img.naturalWidth,
+                        height = img.naturalHeight;
+
+                    window.URL.revokeObjectURL( img.src );
+
+                    if( width == 280 && height == 175 ) {
+                        form.submit();
+                    }
+                    else {
+                        alert('Picture must be have width and height 280px * 175px');
+                    }
+                };
+            }
+            else { //No file was input or browser doesn't support client side reading
+                form.submit();
+            }
+
+        });
 		
 		$('form#adminForm').validate({
             rules: {                   
@@ -56,6 +105,11 @@
                 }
             }
         });
+        if('{{$product->photo}}' == ""){
+                $('.pro_image').attr('src','{{ URL::asset("/img/image_png.png") }}');
+            }else{
+                $('.pro_image').attr('src','{{ URL::asset("/img/product") }}' + '/' + '{{$product->photo }}');
+            }
 	});
 
 </script>

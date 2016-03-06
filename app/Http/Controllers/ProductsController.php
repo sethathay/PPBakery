@@ -10,6 +10,8 @@ use DB;
 use App\Product;
 use Input;
 use Response;
+use Validator;
+use Session;
 
 class ProductsController extends Controller
 {
@@ -51,6 +53,15 @@ class ProductsController extends Controller
         $data['created_by']    = \Auth::user()->id;
         $data['updated_by']    = \Auth::user()->id;
         $data['is_active']     = 1;
+
+        if (Input::file('image')) {
+            $destinationPath = 'img/product'; // upload path
+            $extension = Input::file('image')->getClientOriginalExtension(); // getting image extension
+            $fileName = rand(11111,99999).'.'.$extension; // renameing image
+            $data['photo'] = $fileName;
+            Input::file('image')->move($destinationPath, $fileName); // uploading file to given path
+        }
+
         $product->fill($data)->save();
         return Redirect::route('products.index');
     }
@@ -99,6 +110,17 @@ class ProductsController extends Controller
         $data['created_by']    = \Auth::user()->id;
         $data['updated_by']    = \Auth::user()->id;
         $data['is_active']     = 1;
+
+        if (Input::file('image')) {
+            $destinationPath = 'img/product'; // upload path
+            $extension = Input::file('image')->getClientOriginalExtension(); // getting image extension
+            $fileName = rand(11111,99999).'.'.$extension; // renameing image
+            $data['photo'] = $fileName;
+            Input::file('image')->move($destinationPath, $fileName); // uploading file to given path
+        }
+
+        unset($data['image']);
+
         $products->whereId(Input::get('id'))->update($data);
         return Redirect::route('products.index');
     }

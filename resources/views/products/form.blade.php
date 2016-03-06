@@ -43,7 +43,12 @@
 			</div>
 			<div class="row-form col-sm-6">
 				<div style="text-align: center;">
-					{!! html_entity_decode( Html::link("#", Html::image("img/image_png.png", "Logo") ) ) !!}
+					{!! html_entity_decode( Html::link("#", Html::image("img/image_png.png", "Logo", array('class'=>'pro_image')) ) ) !!}
+					<div><span class="label label-danger">Size: 280px * 175px</span></div><br/>
+					<div class="fileupload fileupload-new" id="pic" data-provides="fileupload">
+					    <span class="btn btn-primary btn-file"><span class="fileupload-new">Choose File</span>
+					    {!! Form::file('image', ['class' => 'upload']) !!}</span>
+				  	</div>
 				</div>
 			</div>
 		</div>
