@@ -93,3 +93,6 @@ Route::resource('cgroups','CGroupsController');
 
 //Route of user group by Thay Setha
 Route::resource('groups','GroupsController');
+
+//Route of customer by Thay Setha
+Route::resource('customers','CustomersController');
