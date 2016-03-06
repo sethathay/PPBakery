@@ -49,9 +49,9 @@ class PosController extends Controller
 		
 		// To save sale order receipts table
 		$saleOrderReceipt = array();
-		$saleOrderReceipt['sale_order_id'] = $sale_order_id;
+		$saleOrderReceipt['sales_order_id'] = $sale_order_id;
 		$saleOrderReceipt['exchange_rate_id'] = $inputs['exchange_rate_id'];
-		$saleOrderReceipt['receipt_code'] = 1;
+		$saleOrderReceipt['receipt_code'] = $this->generateAutoCode("sales_order_receipts", "receipt_code", 6, "RE");;
 		$saleOrderReceipt['amount_us'] = $inputs['total_amount_us'];
 		$saleOrderReceipt['amount_kh'] = $inputs['total_amount_riel'];
 		$saleOrderReceipt['total_amount'] = $inputs['total_amount_riel'];
