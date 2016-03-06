@@ -71,6 +71,9 @@
 						<a href="{{ URL::asset('locations') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;Shop Location</a>
 					</li>
 					<li class="inner_link">
+						<a href="{{ URL::asset('customers') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;Customer</a>
+					</li>
+					<li class="inner_link">
 						<a href="{{ URL::asset('sections/index') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;Group Expense</a>
 					</li>
 					<li class="inner_link">

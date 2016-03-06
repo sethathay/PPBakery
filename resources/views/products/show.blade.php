@@ -11,7 +11,13 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		$('.btnsave').remove();
-		$('#pgroup_id').val('{{ $product->pgroup_id}}')
+		$('#pic').remove();
+		if('{{$product->photo}}' == ""){
+			$('.pro_image').attr('src','{{ URL::asset("/img/image_png.png") }}');
+		}else{
+			$('.pro_image').attr('src','{{ URL::asset("/img/product") }}' + '/' + '{{$product->photo }}');
+		}
+		$('#pgroup_id').val('{{ $product->pgroup_id}}');
 	});
 </script>
 @stop
