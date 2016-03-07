@@ -76,6 +76,9 @@ Route::get('/printReceipt', array('as' => 'printReceipt', function () {
 */
 
 //Route of services for daily expense input by Thay Setha
+Route::resource('saleOrders','SaleOrdersController');
+
+//Route of services for daily expense input by Thay Setha
 Route::resource('services','ServicesController');
 
 //Route of exchange rate by Thay Setha

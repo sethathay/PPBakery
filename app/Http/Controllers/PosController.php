@@ -27,6 +27,7 @@ class PosController extends Controller
     public function sale(SaleOrder $saleOrders, Request $request, SaleOrderDetail $saleOrderDetails, SaleOrderReceipt $saleOrderReceipts)
     {
     	$inputs = Input::all();
+		$inputs['amount_riel'] = str_replace(",","",$inputs['amount_riel']);
 		// To save sale order table
 		$saleOrder = array();
         $saleOrder['_token']    = $inputs['_token'];
