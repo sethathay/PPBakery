@@ -119,7 +119,7 @@ class ProductsController extends Controller
             Input::file('image')->move($destinationPath, $fileName); // uploading file to given path
         }
 
-        unset($data['image']);
+		unset($data['image']);
 
         $products->whereId(Input::get('id'))->update($data);
         return Redirect::route('products.index');

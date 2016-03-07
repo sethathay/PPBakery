@@ -4,7 +4,7 @@
 
 <link href="{{ URL::asset('css/general.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('css/upload.css') }}" rel="stylesheet">
-{!! Form::model($product,array('action' => ['ProductsController@update',$product->id], 'method' => 'patch', 'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
+{!! Form::model($product,array('action' => ['ProductsController@update',$product->id], 'method' => 'patch', 'files'=>true,  'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
 {!! Form::hidden('id', null, array('id'=>'product_id')) !!}
 	@include ('products.form')
 {!! Form::close() !!}
