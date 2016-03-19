@@ -45,14 +45,20 @@
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">Expenses</label></a>
 			</li>
-			<li><a href="{{ URL::asset('users/index') }}"><img
-				src="{{ URL::asset('img/users_2.png') }}" alt="Users" />
+			<li><a href="{{ URL::asset('saleOrders/index') }}"><img
+				src="{{ URL::asset('img/receipt.png') }}" alt="Receipt" />
 				&nbsp;&nbsp;<label
-				style="vertical-align: middle; font-weight: normal;">Users</label></li></a>
+				style="vertical-align: middle; font-weight: normal;">Receipt</label></a>
+			</li>
 			<li><a href="{{ URL::asset('#') }}"><img
 				src="{{ URL::asset('img/report.png') }}" alt="Report" />
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">Report</label></a>
+			</li>
+			<li><a href="{{ URL::asset('users/index') }}"><img
+				src="{{ URL::asset('img/users_2.png') }}" alt="Users" />
+				&nbsp;&nbsp;<label
+				style="vertical-align: middle; font-weight: normal;">Users</label></a>
 			</li>
 			<li><a id="setting" href="#"><img
 				src="{{ URL::asset('img/settings.png') }}" alt="Setting" />

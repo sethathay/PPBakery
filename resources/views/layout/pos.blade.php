@@ -371,7 +371,7 @@ body {
 				</div>
 				<div class="row block-total" style="background: #DBEAF9; height: 160px; font-size: 16px; padding-top: 10px; width:67%;">
 					<div class="col-md-6">
-						<div><label>សារខា : A1 </label></div>
+						<div><label>សារខា :   {{ Session::get('location_name') }} </label></div>
 						<div><label>ឈ្មោះអ្នកប្រើប្រាស់ :  {{  Auth::user()->first_name." ".Auth::user()->last_name }} </label></div>
 						<div><label>ថ្ងៃ-ខែ-ឆ្នាំ:  &nbsp;&nbsp;&nbsp;&nbsp; <span id="fullDate" style="color:blue;"></span> </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label>ម៉ោង:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <label style="color:blue;" id="dateBox"></label></div>
 						<div style="font-size: 20px; border: 1px solid #aaa; padding: 15px 10px 10px; text-align: center;"><label>អត្រាប្តូរប្រាក់ :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:blue;">1$ = {{ number_format(Session::get('exchangerate')->riel) }}R</label>{!! Form::hidden('exchange_rate_id', Session::get('exchangerate')->id, array('class'=>'exchange_rate_id')) !!}</div>
@@ -453,8 +453,7 @@ body {
 
 			  </div>
 			</div>	
-			<!-- Modal QTY -->			
-			<input id="rate" type="hidden" class="form-control custom-amount" name="rate" value="4000" placeholder="">
+			<!-- Modal QTY -->		
 			{!! Form::close() !!}
 		</div>
 
@@ -558,9 +557,9 @@ body {
 							data : $("#adminForm").serialize(),
 							dataType : 'json',
 							success : function(result){
-								// return sales_order_id;
-								
-								$("#myModalPrint").load('pos/print/'+result, '', function(){
+								// return sales_order_id;								
+								$("#myModalPayment").hide();
+								$("#myModalPrint").load('pos/print/'+result+'/no', '', function(){
 									//$("#myModalPrint").modal();
 									w = window.open();
 									w.document.write($("#myModalPrint").html());
@@ -584,8 +583,9 @@ body {
 						data : $("#adminForm").serialize(),
 						dataType : 'json',
 						success : function(result){
-							// return sales_order_id;
-							$("#myModalPrint").load('pos/print/'+result, '', function(){
+							// return sales_order_id;							
+							$("#myModalPayment").hide();
+							$("#myModalPrint").load('pos/print/'+result+'/no', '', function(){
 								//$("#myModalPrint").modal();
 								w = window.open();
 								w.document.write($("#myModalPrint").html());
@@ -848,7 +848,7 @@ body {
 				
 				// Sum total amount in us
 				var total_amount_us     = total_amount_riel / rate;				
-				$(".total_amount_us").text(addCommas(getMathRound(total_amount_us)));
+				$(".total_amount_us").text(addCommas(getMathRound100(total_amount_us)));
 				$(".txt_total_amount_us").val(total_amount_us);
 			}
 			

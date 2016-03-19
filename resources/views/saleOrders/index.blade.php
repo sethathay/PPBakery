@@ -42,13 +42,17 @@
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">
-			<img src="{{ URL::asset('/img/settings_b.png') }}" /> <label>Group Expense</label>
+			<img src="{{ URL::asset('/img/receipt_b.png') }}" /> <label>Receipt List</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
 			<button onclick="redirectPage('create')" type="button"
+				class="btn btn-md btn-primary">
+				<span class="glyphicon glyphicon-plus"></span> លក់ដុំ
+			</button>
+			<button onclick="redirectPage('book')" type="button"
 				class="btn btn-md btn-success">
-				<span class="glyphicon glyphicon-plus"></span> New
+				<span class="glyphicon glyphicon-plus"></span> កក់ទំនេញ
 			</button>
 		</div>
 	</div>
@@ -62,9 +66,13 @@
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="checkOptionAll" /></th>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Modified</th>
+				<th>Order Date</th>
+				<th>Receipt Code</th>
+				<th>Discount (៛)</th>
+				<th>Discount ($)</th>
+				<th>Total Amount (៛)</th>
+				<th>Total Amount ($)</th>
+				<th>Balance (៛)</th>
 				<th>Action</th>
 			</tr>
 		</thead>
@@ -72,21 +80,25 @@
 			
 			
 		<?php $i=1; ?>
-			@foreach($sections as $section)
+			@foreach($saleOrders as $saleOrder)
 			<tr>
 				<td style="text-align: center;"><input type="checkbox"
 					name="checkOption" /></td>
-				<td>{{ $section->name }}</td>
-				<td>{{ $section->description}}</td>
-				<td>{{ $section->updated_at->timezone('Asia/Phnom_Penh')}}</td>
+				<td>{{ $saleOrder->order_date }}</td>
+				<td>{{ $saleOrder->so_code}}</td>
+				<td>{{ number_format($saleOrder->discount_riel)}}</td>
+				<td>{{ number_format($saleOrder->discount_us,2)}}</td>
+				<td>{{ number_format($saleOrder->total_amount_riel)}}</td>
+				<td>{{ number_format($saleOrder->total_amount_us,2)}}</td>
+				<td>{{ number_format($saleOrder->balance)}}</td>
 				<td class="last_td">
-					<button type="button" onclick="redirectPage('show/{{ $section->id }}')" class="btn btn-xs btn-info">
+					<button type="button" id="{{ $saleOrder->id }}" class="btn btn-xs btn-info">
 						<span class="glyphicon glyphicon-user"></span> View
 					</button>
-					<button type="button" onclick="redirectPage('edit/{{ $section->id }}')" class="btn btn-xs btn-primary">
+					<button type="button" onclick="redirectPage('edit/{{ $saleOrder->id }}')" class="btn btn-xs btn-primary">
 						<span class="glyphicon glyphicon-edit"></span> Edit
 					</button>
-					<button type="button" onclick="if(confirm('Are you sure you want to delete this?')==true) redirectPage('saleOrders/destroy/{{ $section->id }}')" class="btn btn-xs btn-danger">
+					<button type="button" onclick="if(confirm('Are you sure you want to delete this?')==true) redirectPage('destroy/{{ $saleOrder->id }}')" class="btn btn-xs btn-danger">
 						<span class="glyphicon glyphicon-trash"></span> Delete
 					</button>
 				</td>
@@ -94,14 +106,26 @@
 			@endforeach
 		</tbody>
 	</table>
-	{!! $sections->render() !!}
 </div>
+	<!-- Modal Print Receipt -->
+	<div id="myModalPrint" class="modal fade col-md-4" role="dialog">
 
+	</div>
 <script type="text/javascript">
 
 	function redirectPage(url){
 		window.location = url;
 	}
+	
+	$(document).ready(function(){
+		$(".btn-info").click(function(){
+			var result = $(this).attr('id');
+			$("#myModalPrint").load("{{ URL::asset('pos/print/') }}/"+result+"/yes", '', function(){
+				$("#myModalPrint").modal();
+			});
+		});
+		
+	});
 
 </script>
 @stop

@@ -68,12 +68,23 @@ Route::get('sections/destroy/{id}', ['as' => 'sections.destroy', 'uses' => 'Sect
 
 // Route for pos
 Route::post('pos/sale', 'PosController@sale');
-Route::get('pos/print/{id}', 'PosController@printReceipt');
+Route::get('pos/print/{id}/{footer}', 'PosController@printReceipt');
 /*
 Route::get('/printReceipt', array('as' => 'printReceipt', function () {
 	return View::make('/layout/printReceipt');
 }));
 */
+
+//Route of services for daily expense input by Thay Setha
+Route::get('saleOrders/index', ['as' => 'saleOrders.index', 'uses' => 'SaleOrdersController@index']);
+Route::get('saleOrders/edit/{id}', ['as' => 'saleOrders.edit', 'uses' => 'SaleOrdersController@edit']);
+Route::get('saleOrders/destroy/{id}','SaleOrdersController@destroy');
+Route::post('saleOrders/sale', 'SaleOrdersController@sale');
+Route::get('saleOrders/print/{id}/{footer}', 'SaleOrdersController@printReceipt');
+Route::get('saleOrders/create', ['as' => 'saleOrders.create', 'uses' => 'SaleOrdersController@create']);
+Route::post('saleOrders/store', 'SaleOrdersController@store');
+Route::get('saleOrders/book', ['as' => 'saleOrders.book', 'uses' => 'SaleOrdersController@book']);
+Route::post('saleOrders/storeBook', 'SaleOrdersController@storeBook');
 
 //Route of services for daily expense input by Thay Setha
 Route::resource('services','ServicesController');

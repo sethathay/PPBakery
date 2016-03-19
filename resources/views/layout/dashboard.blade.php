@@ -46,8 +46,9 @@
 			<div class="col-md-2 board" onclick="redirectPage('services')"><img src="{{ URL::asset('img/dollars_b.png') }}" /><br/>Expenses</div>
 			<div class="col-md-2 board" onclick="redirectPage('exchangerates')"><img src="{{ URL::asset('img/emblem_money_b.png') }}" /><br/>Exchange Rate</div>
 			<div class="col-md-2 board" onclick="redirectPage('#')"><img src="{{ URL::asset('img/discount_b.png') }}" /><br/>Discounts</div>
-			<div class="col-md-2 board" onclick="redirectPage('{{ URL::asset('users/index') }}')"><img src="{{ URL::asset('img/users_2_b.png') }}" /><br/>Users</div>
+			<div class="col-md-2 board" onclick="redirectPage('saleOrders/index')"><img src="{{ URL::asset('img/receipt_b.png') }}" /><br/>Receipt</div>
 			<div class="col-md-2 board" onclick="redirectPage('#')"><img src="{{ URL::asset('img/report_b.png') }}" /><br/>Reports</div>
+			<div class="col-md-2 board" onclick="redirectPage('{{ URL::asset('users/index') }}')"><img src="{{ URL::asset('img/users_2_b.png') }}" /><br/>Users</div>
 			<!--<div class="col-md-2 board" id="dsettting"><img src="{{ URL::asset('img/settings_b.png') }}" /><br/>Settings</div>-->
 			<div class="col-md-2 board" onclick="redirectPage('#')"><img src="{{ URL::asset('img/blue_external_drive_backup.png') }}" /><br/>Backup Database</div>
 		</div>

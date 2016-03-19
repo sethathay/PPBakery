@@ -1,12 +1,18 @@
+<?php if($footer == "no"){?>
 <link href="<?php echo  URL::asset('css/bootstrap-3.3.2.css') ;?>" rel="stylesheet">
+<?php }?>
 <style>
 .receipt, .receipt table{
 	font-size: 10px !important;
 }
+.modal-content{
+	width:400px;
+	margin: 0 auto;
+}
 </style>
-<div class="modal-content">
-	<div class="modal-dialog modal-sm">
-		<div class="modal-body receipt" style="text-align: center">
+<div class="modal-content <?php echo ($footer == "no"?"col-md-3":"");?>">
+	<div class="content-body modal-dialog modal-sm" <?php echo ($footer == "no"?"style='margin-left:0px;'":"");?>>
+		<div class="modal-body receipt" style="text-align: center; width:80%;">
 			<label>ហាងនំបុ័ង ភ្នំពេញ</label><br/>
 			<label>PHNOM PHNOM BAKERY</label>
 			<div>
@@ -62,8 +68,30 @@
 					</tr>
 				</table>
 			</div>
-			
+			<?php if($footer == "yes"){?>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-default btn-print" data-dismiss="modal"><span class="glyphicon glyphicon-print"></span> Print</button>
+				<button type="button" class="btn btn-default btn-dismiss" data-dismiss="modal"><span class="glyphicon glyphicon-close"></span> Close</button>
+			  </div>
+			<?php }?>
 		</div>
 		
 	</div>
 </div>
+
+<?php if($footer == "yes"){?>
+<script>
+
+	
+	$(document).ready(function(){		
+		$(".btn-print").click(function(){
+			$(".modal-footer").hide();
+			w = window.open();
+			w.document.write($("#myModalPrint").html());
+			w.print();
+			w.close();
+			
+		});
+	});
+</script>
+<?php }?>

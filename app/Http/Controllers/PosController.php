@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 use DB;
 use Input;
 use App\Product;
@@ -27,17 +28,18 @@ class PosController extends Controller
     public function sale(SaleOrder $saleOrders, Request $request, SaleOrderDetail $saleOrderDetails, SaleOrderReceipt $saleOrderReceipts)
     {
     	$inputs = Input::all();
+		$inputs['amount_riel'] = str_replace(",","",$inputs['amount_riel']);
 		// To save sale order table
 		$saleOrder = array();
         $saleOrder['_token']    = $inputs['_token'];
-        $saleOrder['location_id']    = 1;
+        $saleOrder['location_id']    = Session::get('location_id');
         $saleOrder['customer_id']    = 1;
         $saleOrder['so_code']    = $this->generateAutoCode("sales_orders", "so_code", 6, "SO");
         $saleOrder['total_amount_riel']    = $inputs['total_amount_riel'];
         $saleOrder['total_amount_us']    = $inputs['total_amount_us'];
         $saleOrder['discount_riel']    = $inputs['custom-discount-riel'];
         $saleOrder['discount_us']    = $inputs['custom-discount-us'];
-        $saleOrder['balance']    = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$inputs['rate'] + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$inputs['rate']);		
+        $saleOrder['balance']    = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$inputs['exchange_rate_id'] + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$inputs['exchange_rate_id']);		
         $saleOrder['order_date']    = date('Y-m-d');
 		$saleOrder['due_date']    = date('Y-m-d');
         $saleOrder['is_active']    = 1;
@@ -49,13 +51,13 @@ class PosController extends Controller
 		
 		// To save sale order receipts table
 		$saleOrderReceipt = array();
-		$saleOrderReceipt['sale_order_id'] = $sale_order_id;
+		$saleOrderReceipt['sales_order_id'] = $sale_order_id;
 		$saleOrderReceipt['exchange_rate_id'] = $inputs['exchange_rate_id'];
-		$saleOrderReceipt['receipt_code'] = 1;
+		$saleOrderReceipt['receipt_code'] = $this->generateAutoCode("sales_order_receipts", "receipt_code", 6, "RE");
 		$saleOrderReceipt['amount_us'] = $inputs['total_amount_us'];
 		$saleOrderReceipt['amount_kh'] = $inputs['total_amount_riel'];
 		$saleOrderReceipt['total_amount'] = $inputs['total_amount_riel'];
-        $saleOrderReceipt['balance']    = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$inputs['rate'] + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$inputs['rate']);
+        $saleOrderReceipt['balance']    = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$inputs['exchange_rate_id'] + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$inputs['exchange_rate_id']);
 		$saleOrderReceipt['pay_date']    = date('Y-m-d');
 		$saleOrderReceipt['due_date']    = date('Y-m-d');	
         $saleOrderReceipt['created_by']    = \Auth::user()->id;
@@ -81,14 +83,14 @@ class PosController extends Controller
 		// Save to inventory
 		for($k=0; $k<count($inputs['id'])-1; $k++){
 			
-			$fields = ['product_id'=>$inputs['id'][$k], 'location_id'=>1];
+			$fields = ['product_id'=>$inputs['id'][$k], 'location_id'=>Session::get('location_id')];
 			$checkIfSaleExistingProduct = InventoryTotal::where($fields)->first();
 			
 			// Save to inventories table
 			$inventory = new Inventory;
 			$inventory['point_of_sales_id'] = $sale_order_id;
 			$inventory['product_id'] = $inputs['id'][$k];
-			$inventory['location_id'] = 1;
+			$inventory['location_id'] = Session::get('location_id');
 			$inventory['qty'] = $inputs['txt_qty'][$k];
 			$inventory['sale_price'] = $inputs['txt_unit_price'][$k];
 			$inventory['date'] = date('Y-m-d');
@@ -102,13 +104,17 @@ class PosController extends Controller
 				$inventoryTotals = new InventoryTotal;
 				$inventoryTotal = array();
 				$inventoryTotal['total_qty'] = $checkIfSaleExistingProduct['total_qty']-$inputs['txt_qty'][$k];
+				$inventoryTotal['created_by']    = \Auth::user()->id;
+				$inventoryTotal['updated_by']    = \Auth::user()->id;	
 				$inventoryTotals->where($fields)->update($inventoryTotal);
 				
 				// Save to inventory_total_details table
 				$inventoryTotalDetails = new InventoryTotalDetail;
 				$inventoryTotalDetail = array();
-				$fieldNews = ['product_id'=>$inputs['id'][$k], 'location_id'=>1, 'date'=>date('Y-m-d')];
+				$fieldNews = ['product_id'=>$inputs['id'][$k], 'location_id'=>Session::get('location_id'), 'date'=>date('Y-m-d')];
 				$inventoryTotalDetail['total_pos'] = $checkIfSaleExistingProduct['total_qty']-$inputs['txt_qty'][$k];
+				$inventoryTotalDetail['created_by']    = \Auth::user()->id;
+				$inventoryTotalDetail['updated_by']    = \Auth::user()->id;	
 				$inventoryTotalDetails->where($fieldNews)->update($inventoryTotalDetail);
 				
 				
@@ -117,14 +123,14 @@ class PosController extends Controller
 				// Save to inventory_totals table
 				$inventoryTotal = new InventoryTotal;
 				$inventoryTotal['product_id'] = $inputs['id'][$k];
-				$inventoryTotal['location_id'] = 1;
+				$inventoryTotal['location_id'] = Session::get('location_id');
 				$inventoryTotal['total_qty'] = (-1)*$inputs['txt_qty'][$k];
 				$inventoryTotal->save();
 				
 				// Save to inventory_total_details table
 				$inventoryTotalDetail = new InventoryTotalDetail;
 				$inventoryTotalDetail['product_id'] = $inputs['id'][$k];
-				$inventoryTotalDetail['location_id'] = 1;
+				$inventoryTotalDetail['location_id'] = Session::get('location_id');
 				$inventoryTotalDetail['total_pos'] = (-1)*$inputs['txt_qty'][$k];
 				$inventoryTotalDetail['date'] = date('Y-m-d');
 				$inventoryTotalDetail->save();
@@ -138,10 +144,10 @@ class PosController extends Controller
     }
 	
 	// print receipt pos
-	public function printReceipt($sales_order_id){
+	public function printReceipt($sales_order_id, $footer){
 		$saleOrder = SaleOrder::whereId($sales_order_id)->first();
 		$saleOrderDetail = SaleOrderDetail::join('products', 'products.id', '=', 'sales_order_details.product_id')->whereSales_order_id($sales_order_id)->get();
-		return view('/layout/printReceipt', compact('saleOrderDetail', 'saleOrder'));
+		return view('/layout/printReceipt', compact('saleOrderDetail', 'saleOrder', 'footer'));
 	}
 	
 	function generateAutoCode($table, $field, $len, $char) {
