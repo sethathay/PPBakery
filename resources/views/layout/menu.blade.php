@@ -45,7 +45,7 @@
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">Expenses</label></a>
 			</li>
-			<li><a href="{{ URL::asset('saleOrders') }}"><img
+			<li><a href="{{ URL::asset('saleOrders/index') }}"><img
 				src="{{ URL::asset('img/receipt.png') }}" alt="Receipt" />
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">Receipt</label></a>

@@ -86,7 +86,7 @@
 					<button type="button" onclick="redirectPage('edit/{{ $section->id }}')" class="btn btn-xs btn-primary">
 						<span class="glyphicon glyphicon-edit"></span> Edit
 					</button>
-					<button type="button" onclick="if(confirm('Are you sure you want to delete this?')==true) redirectPage('destroy/{{ $section->id }}')" class="btn btn-xs btn-danger">
+					<button type="button" onclick="if(confirm('Are you sure you want to delete this?')==true) redirectPage('saleOrders/destroy/{{ $section->id }}')" class="btn btn-xs btn-danger">
 						<span class="glyphicon glyphicon-trash"></span> Delete
 					</button>
 				</td>

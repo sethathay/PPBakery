@@ -69,7 +69,7 @@ class UsersController extends Controller
 	{
 		//
 		$user = User::whereId($id)->first();
-		$countries = array_merge(array(''=>'Please Select'), DB::table('countries')->lists('name', 'id'));
+		$countries = array_merge(array('0'=>'Please Select'), DB::table('countries')->lists('name', 'id'));
 		return view('users/show', compact('countries', 'user'));
 	}
 
@@ -83,7 +83,7 @@ class UsersController extends Controller
 	{
 		//
 		$user = User::find($id);//whereId($id)->first();
-		$countries = array_merge(array(''=>'Please Select'), DB::table('countries')->lists('name', 'id'));
+		$countries = array_merge(array('0'=>'Please Select'), DB::table('countries')->lists('name', 'id'));
 		return view('users/edit', compact('countries', 'user'));
 	}
 
@@ -134,8 +134,13 @@ class UsersController extends Controller
 		// doing login.
 		if (Auth::validate($userdata)) {
 			if (Auth::attempt($userdata)) {
+				
 				$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
 				$request->session()->put('exchangerate', $exchangerate);
+				
+				$getUserLocation = DB::table('user_locations')->join('locations', 'locations.id', '=', 'location_id')->where('user_id', Auth::user()->id)->first();
+				$request->session()->put('location_id', $getUserLocation->location_id);
+				$request->session()->put('location_name', $getUserLocation->name);
 				return Redirect::intended('/dashboard');
 			}
 		}

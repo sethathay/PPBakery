@@ -47,8 +47,12 @@
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
 			<button onclick="redirectPage('create')" type="button"
+				class="btn btn-md btn-primary">
+				<span class="glyphicon glyphicon-plus"></span> លក់ដុំ
+			</button>
+			<button onclick="redirectPage('book')" type="button"
 				class="btn btn-md btn-success">
-				<span class="glyphicon glyphicon-plus"></span> New
+				<span class="glyphicon glyphicon-plus"></span> កក់ទំនេញ
 			</button>
 		</div>
 	</div>
@@ -102,12 +106,11 @@
 			@endforeach
 		</tbody>
 	</table>
-	{!! $saleOrders->render() !!}
 </div>
-<!-- Modal Print Receipt -->
-<div id="myModalPrint" class="modal fade col-md-4" role="dialog">
+	<!-- Modal Print Receipt -->
+	<div id="myModalPrint" class="modal fade col-md-4" role="dialog">
 
-</div>
+	</div>
 <script type="text/javascript">
 
 	function redirectPage(url){
@@ -117,14 +120,11 @@
 	$(document).ready(function(){
 		$(".btn-info").click(function(){
 			var result = $(this).attr('id');
-			$("#myModalPrint").load('pos/print/'+result, '', function(){
+			$("#myModalPrint").load("{{ URL::asset('pos/print/') }}/"+result+"/yes", '', function(){
 				$("#myModalPrint").modal();
-				/*w = window.open();
-				w.document.write($("#myModalPrint").html());
-				w.print(false);
-				w.close();*/
 			});
 		});
+		
 	});
 
 </script>
