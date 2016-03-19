@@ -80,7 +80,7 @@
 						<a href="{{ URL::asset('groups') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;User Group</a>
 					</li>
 					<li class="inner_link">
-						<a href="{{ URL::asset('uoms') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;Unit of Measure (UOM)</a>
+						<a href="{{ URL::asset('uoms') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;វង្វាស់ខ្នាត</a>
 					</li>
 					<li class="inner_link">
 						<a href="{{ URL::asset('uomconversions') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;UOM Conversion</a>
