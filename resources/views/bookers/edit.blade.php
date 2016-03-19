@@ -3,7 +3,6 @@
 @section('content')
 
 <link href="{{ URL::asset('css/general.css') }}" rel="stylesheet">
-<script type="text/javascript" src="{{ URL::asset('js/typeahead.js') }}"></script>
 <style>
 .info div{
 	padding: 5px 0;
@@ -100,15 +99,16 @@ function number_format_unlimited_precision($number,$decimal = '.')
    }
 }
 ?>
-{!! Form::open(array('url' => 'saleOrders/store', 'method' => 'post', 'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
+{!! Form::open(array('url' => 'bookers/update', 'method' => 'post', 'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
+{!! Form::hidden('sales_order_id', $saleOrders->id, array('id'=>'sales_order_id')) !!}
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading" style="background:#449D44;">
 		<div class="col-sm-7">
-			<img src="{{ URL::asset('/img/receipt_b.png') }}" /> <label style="color:#fff;">កក់ទំនេញ</label>
+			<img src="{{ URL::asset('/img/book_b.png') }}" /> <label style="color:#fff;">កក់ទំនេញ</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 30px 10px; vertical-align: middle;">
-			<button onclick="redirectPage('{{ URL::asset('saleOrders/index') }}')" type="button"
+			<button onclick="redirectPage('{{ URL::asset('bookers/index') }}')" type="button"
 				class="btn btn-md btn-danger">
 				<span class="glyphicon"></span> ត្រឡប់ក្រោយ
 			</button>
@@ -118,13 +118,13 @@ function number_format_unlimited_precision($number,$decimal = '.')
 	<div class="col-sm-12 form">
 		<div class="row">
 			<div class="col-sm-12 info">
-				<div class="col-sm-3">លេខវិក័យប័ត្រ: <label>{{ $codeGenerator }}</label></div>
-				<div class="col-sm-3">ថ្ងៃកូម៉ង់ទំនេញ :  {!! Form::text('date_order', date('Y-m-d'), array('class'=>'form-control date_order')) !!} </div>
-				<div class="col-sm-3">ថ្ងៃទទួលទំនេញ :  {!! Form::text('date_due', date('Y-m-d'), array('class'=>'form-control date_due')) !!}</div>
+				<div class="col-sm-3">លេខវិក័យប័ត្រ: <label>{{ $saleOrders->so_code }}</label></div>
+				<div class="col-sm-3">ថ្ងៃកូម៉ង់ទំនេញ : <label>{{ date("d-m-Y",strtotime($saleOrders->order_date)) }}</label></div>
+				<div class="col-sm-3">ថ្ងៃទទួលទំនេញ : <label>{{ date("d-m-Y",strtotime($saleOrders->due_date)) }}</label></div>
 			</div>
 			<div class="col-sm-12 info">
-				<div class="col-sm-3">អតិថិជន<span class="star"> * </span> :  {!! Form::text('booker', '', array('class'=>'form-control booker')) !!}</div>
-				<div class="col-sm-3">លេខទូរស័ព្ទ <span class="star"> * </span>:  {!! Form::text('phone', '', array('class'=>'form-control phone')) !!}</div>
+				<div class="col-sm-3">ទីតាំង : <label>{{ $saleOrders->location_name }}</label></div>
+				<div class="col-sm-3">អតិថិជន : <label>{{ $saleOrders->customer_name }}</label></div>
 			</div>
 			<div class="col-sm-12">
 				<div class="form-group col-md-6">
@@ -147,6 +147,32 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				</tr>
 			</thead>
 			<tbody>
+				<?php $subtotal = $record = 0; ?>
+				<?php $productId = array(); ?>
+				@foreach($saleOrderDetails as $saleOrderDetail)
+				<tr>
+					<td class="first-column">{{ $saleOrderDetail->name }}</td>
+					<td class="qty-column"><label class="lbl_qty">{{ number_format_unlimited_precision($saleOrderDetail->qty) }}</label>{!! Form::text('txt_qty[]', $saleOrderDetail->qty, array('class'=>'row_input txt_qty')) !!}</td>
+					<td><label class="lbl_unit_price">{{ number_format_unlimited_precision($saleOrderDetail->unit_price) }}</label>{!! Form::text('txt_unit_price[]', $saleOrderDetail->unit_price, array('class'=>'row_input txt_unit_price')) !!}</td>
+					<td><label class="lbl_discount">{{ number_format_unlimited_precision($saleOrderDetail->discount_price_riel) }}</label>{!! Form::text('txt_discount[]', $saleOrderDetail->discount_price_riel, array('class'=>'row_input txt_discount')) !!}</td>
+					<td><label class="lbl_total_by_item">{{ number_format_unlimited_precision($saleOrderDetail->total_price_riel) }}</label>{!! Form::text('txt_total_by_item[]', $saleOrderDetail->total_price_riel, array('class'=>'row_input txt_total_by_item')) !!}</td>
+					<td>
+						{!! Form::hidden('id[]', $saleOrderDetail->product_id, array('class'=>'row_input id')) !!}
+						<button type="button" class="btn_edit btn btn-xs btn-primary">
+							<span class="glyphicon glyphicon-edit"></span> 
+						</button>
+						<button type="button" class="btn_save btn btn-xs btn-success" style="display:none;">
+							<span class="glyphicon glyphicon-save"></span> 
+						</button>
+						<button type="button" class="btn btn-xs btn-danger btn_delete">
+							<span class="glyphicon glyphicon-trash"></span> 
+						</button>
+					</td>
+				</tr>
+				<?php $productId[] = $saleOrderDetail->product_id; ?>
+				<?php $subtotal = $subtotal + $saleOrderDetail->total_price_riel;?>
+				<?php $record++;?>
+				@endforeach
 				<tr style="display: none;">
 					<td class="first-column"></td>
 					<td class="qty-column"><label class="lbl_qty"></label>{!! Form::text('txt_qty[]', null, array('class'=>'row_input txt_qty')) !!}</td>
@@ -169,7 +195,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				
 				<div class="row block-total" style="background: #DBEAF9; height: 200px; font-size: 16px; padding-top: 10px; width:83%;">
 					<div class="col-md-6">
-						<div><label>សារខា :  {{ Session::get('location_name') }} </label></div>
+						<div><label>សារខា :  {{  Session::get('location_id') }} </label></div>
 						<div><label>ឈ្មោះអ្នកប្រើប្រាស់ :  {{  Auth::user()->first_name." ".Auth::user()->last_name }} </label></div>
 						<div><label>ថ្ងៃ-ខែ-ឆ្នាំ:  &nbsp;&nbsp;&nbsp;&nbsp; <span id="fullDate" style="color:blue;"></span> </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label>ម៉ោង:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <label style="color:blue;" id="dateBox"></label></div>
 						<div style="font-size: 20px; border: 1px solid #aaa; padding: 15px 10px 10px; text-align: center;"><label>អត្រាប្តូរប្រាក់ :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:blue;">1$ = {{ number_format_unlimited_precision(Session::get('exchangerate')->riel) }}R</label>{!! Form::hidden('exchange_rate_id', Session::get('exchangerate')->id, array('class'=>'exchange_rate_id')) !!}</div>
@@ -177,19 +203,23 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					<div class="col-md-6 block-amount">
 						<div class="row">
 							<div class="col-md-6"><label>តំលៃសរុប : </label></div>
-							<div class="col-md-6 amount"><label class="subtotal">0</label> <label>៛</label>{!! Form::hidden('subtotal', 0, array('class'=>'txt_subtotal')) !!}</div>
+							<div class="col-md-6 amount"><label class="subtotal">{{ number_format_unlimited_precision($subtotal) }}</label> <label>៛</label>{!! Form::hidden('subtotal', $subtotal, array('class'=>'txt_subtotal')) !!}</div>
 						</div>
-						<!--<div class="row">
-							<div class="col-md-6"><label>បញ្ចុះតំលៃ : </label></div>
-							<div class="col-md-6  amount"><label class="discount">0</label> <label>៛</label>{!! Form::hidden('txt_total_discount', 0, array('class'=>'txt_total_discount')) !!}</div>
-						</div>-->
-						<div class="row" style="padding-top:30px;">
+						<div class="row">
+							<div class="col-md-6"><label>បញ្ចុះតំលៃ (៛) : </label></div>
+							<div class="col-md-6  amount"><label class="lbl_total_discount_riel">{{ number_format_unlimited_precision($saleOrders->discount_riel) }}</label> <label>៛</label>{!! Form::hidden('txt_total_discount_riel', $saleOrders->discount_riel, array('class'=>'txt_total_discount_riel')) !!}</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6"><label>បញ្ចុះតំលៃ ($)  : </label></div>
+							<div class="col-md-6  amount"><label class="lbl_total_discount_us">{{ number_format_unlimited_precision($saleOrders->discount_us) }}</label> <label>$</label>{!! Form::hidden('txt_total_discount_us', $saleOrders->discount_us, array('class'=>'txt_total_discount_us')) !!}</div>
+						</div>
+						<div class="row" style="padding-top:25px;">
 							<div class="col-md-6" style="color:red;"><label>តំលៃសរុបត្រូវបង់ (៛) : </label></div>
-							<div class="col-md-6  amount-big"><label class="total_amount_riel">0</label> <label>៛</label>{!! Form::hidden('total_amount_riel', 0, array('class'=>'txt_total_amount_riel')) !!}</div>
+							<div class="col-md-6  amount-big"><label class="total_amount_riel">{{ number_format_unlimited_precision($saleOrders->total_amount_riel) }}</label> <label>៛</label>{!! Form::hidden('total_amount_riel', $saleOrders->total_amount_riel, array('class'=>'txt_total_amount_riel')) !!}</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6" style="color:red;"><label>តំលៃសរុបត្រូវបង់ ($) : </label></div>
-							<div class="col-md-6  amount-big"><label class="total_amount_us">0</label> <label>$</label>{!! Form::hidden('total_amount_us', 0, array('class'=>'txt_total_amount_us')) !!}</div>
+							<div class="col-md-6  amount-big"><label class="total_amount_us">{{ number_format($saleOrders->total_amount_us, 2) }}</label> <label>$</label>{!! Form::hidden('total_amount_us', $saleOrders->total_amount_us, array('class'=>'txt_total_amount_us')) !!}</div>
 						</div>
 					</div>
 				</div>
@@ -302,8 +332,6 @@ function number_format_unlimited_precision($number,$decimal = '.')
 </div>
 <script type="text/javascript">
 		$(document).ready(function(){
-		
-			
 		$("#myModalPayment").find("input").keydown(
 			function(e)
 			{    
@@ -328,19 +356,15 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			inputs.eq(index).focus();
 			inputs.eq(index).select();
 		}
-			
+		
 		$("#code").val('');
 		$("#code").focus();
+		
+		
 		var rate = "{{ Session::get('exchangerate')->riel }}";
-		var index = 1;
-		var productItem = Array();
-		var record = 0;
+		var productItem = [{{ implode(",",$productId) }}];
+		var record = {{ $record }};
 		var token = "{!! csrf_token() !!}";
-
-		$(".txt_subtotal").val(0);
-		$(".txt_total_discount").val(0);
-		$(".txt_total_amount_riel").val(0);
-		$(".txt_total_amount_us").val(0);
 		
 		// when press enter button and amount paid < amount to be pay
 		$("#myModalPayment").find("input").keyup(function(e){
@@ -349,21 +373,21 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				if(record > 0){
 					$.ajax({
 						type : 'post',
-						url : '{{ URL::asset("saleOrders/storeBook") }}',
+						url : '{{ URL::asset("bookers/sale") }}',
 						data : $("#adminForm").serialize(),
 						dataType : 'json',
 						success : function(result){
-							// return sales_order_id;		
-							window.location = '{{ URL::asset("saleOrders/index") }}';						
+							// return sales_order_id;			
+							window.location = '{{ URL::asset("bookers/index") }}';						
 							/*
 							$("#myModalPayment").hide();
-							$("#myModalPrint").load('{{ URL::asset("saleOrders/print")}}/'+result+'/no', '', function(){
+							$("#myModalPrint").load('{{ URL::asset("bookers/print")}}/'+result+'/no', '', function(){
 								//$("#myModalPrint").modal();
 								w = window.open();
 								w.document.write($("#myModalPrint").html());
 								w.print(false);
 								w.close();
-								window.location = '{{ URL::asset("saleOrders/index") }}';
+								window.location = '{{ URL::asset("bookers/index") }}';
 							});
 							*/
 						}
@@ -378,23 +402,12 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			if(record > 0){
 				$.ajax({
 					type : 'post',
-					url : '{{ URL::asset("saleOrders/storeBook") }}',
+					url : '{{ URL::asset("bookers/sale") }}',
 					data : $("#adminForm").serialize(),
 					dataType : 'json',
 					success : function(result){
-						// return sales_order_id;		
-						window.location = '{{ URL::asset("saleOrders/index") }}';						
-						/*
-						$("#myModalPayment").hide();
-						$("#myModalPrint").load('{{ URL::asset("saleOrders/print")}}/'+result+'/no', '', function(){
-							//$("#myModalPrint").modal();
-							w = window.open();
-							w.document.write($("#myModalPrint").html());
-							w.print(false);
-							w.close();
-							window.location = '{{ URL::asset("saleOrders/index") }}';
-						});
-						*/
+						// return sales_order_id;								
+							window.location = '{{ URL::asset("bookers/index") }}';	
 					}
 				});
 			}
@@ -847,12 +860,6 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			$("#code").focus();
 		});
 		
-		// datepicker
-		$('.date_due, .date_order').datepicker({
-			format: 'yyyy/mm/dd',
-			autoclose: true
-		});
-		
 		// Calculate total block
 		function calculateTotalBlock(total_by_item){			
 							
@@ -877,7 +884,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			
 			// Sum total amount in us
 			var total_amount_us     = total_amount_riel / rate;				
-			$(".total_amount_us").text(addCommas(getMathRound(total_amount_us)));
+			$(".total_amount_us").text(addCommas(getMathRound100(total_amount_us)));
 			$(".txt_total_amount_us").val(total_amount_us);
 		}
 	});

@@ -54,13 +54,13 @@ function number_format_unlimited_precision($number,$decimal = '.')
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">
-			<img src="{{ URL::asset('/img/receipt_b.png') }}" /> <label>Receipt List</label>
+			<img src="{{ URL::asset('/img/book_b.png') }}" /> <label>Booking</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
-			<button onclick="redirectPage('create')" type="button"
-				class="btn btn-md btn-primary">
-				<span class="glyphicon glyphicon-plus"></span> លក់ដុំ
+			<button onclick="redirectPage('book')" type="button"
+				class="btn btn-md btn-success">
+				<span class="glyphicon glyphicon-plus"></span> កក់ទំនេញ
 			</button>
 		</div>
 	</div>
@@ -100,8 +100,8 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				<td>{{ number_format($saleOrder->total_amount_us,2)}}</td>
 				<td>{{ number_format_unlimited_precision($saleOrder->balance)}}</td>
 				<td class="last_td" style="text-align:right;">
-					@if($saleOrder->receipt_id > 0)						
-						<button type="button" id="{{ $saleOrder->id }}" class="btn btn-xs btn-warning">
+					@if($saleOrder->is_book > 0)						
+						<button type="button" id="{{ $saleOrder->id }}" class="btn btn-xs btn-warning paid">
 							<span class="fa fa-dollar"></span> &nbsp;Pay&nbsp;
 						</button>
 					@endif
@@ -135,6 +135,31 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			var result = $(this).attr('id');
 			$("#myModalPrint").load("{{ URL::asset('pos/print/') }}/"+result+"/yes", '', function(){
 				$("#myModalPrint").modal();
+			});
+		});
+		
+		var token = "{!! csrf_token() !!}";
+		$('.paid').click(function(){
+			var sales_order_id = $(this).attr('id');
+			$.ajax({
+				type : 'post',
+				url : '{{ URL::asset("bookers/pay") }}',
+				data : {sales_order_id:sales_order_id, _token:token},
+				dataType : 'json',
+				success : function(result){
+					// return sales_order_id;								
+					
+					$("#myModalPayment").hide();
+					$("#myModalPrint").load('{{ URL::asset("bookers/print")}}/'+result+'/no', '', function(){
+						//$("#myModalPrint").modal();
+						w = window.open();
+						w.document.write($("#myModalPrint").html());
+						w.print(false);
+						w.close();
+						window.location = '{{ URL::asset("bookers/index") }}';
+					});
+					
+				}
 			});
 		});
 		

@@ -100,15 +100,15 @@ function number_format_unlimited_precision($number,$decimal = '.')
    }
 }
 ?>
-{!! Form::open(array('url' => 'saleOrders/store', 'method' => 'post', 'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
+{!! Form::open(array('url' => 'bookers/store', 'method' => 'post', 'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading" style="background:#449D44;">
 		<div class="col-sm-7">
-			<img src="{{ URL::asset('/img/receipt_b.png') }}" /> <label style="color:#fff;">កក់ទំនេញ</label>
+			<img src="{{ URL::asset('/img/book_b.png') }}" /> <label style="color:#fff;">កក់ទំនេញ</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 30px 10px; vertical-align: middle;">
-			<button onclick="redirectPage('{{ URL::asset('saleOrders/index') }}')" type="button"
+			<button onclick="redirectPage('{{ URL::asset('bookers/index') }}')" type="button"
 				class="btn btn-md btn-danger">
 				<span class="glyphicon"></span> ត្រឡប់ក្រោយ
 			</button>
@@ -349,21 +349,21 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				if(record > 0){
 					$.ajax({
 						type : 'post',
-						url : '{{ URL::asset("saleOrders/storeBook") }}',
+						url : '{{ URL::asset("bookers/storeBook") }}',
 						data : $("#adminForm").serialize(),
 						dataType : 'json',
 						success : function(result){
 							// return sales_order_id;		
-							window.location = '{{ URL::asset("saleOrders/index") }}';						
+							window.location = '{{ URL::asset("bookers/index") }}';						
 							/*
 							$("#myModalPayment").hide();
-							$("#myModalPrint").load('{{ URL::asset("saleOrders/print")}}/'+result+'/no', '', function(){
+							$("#myModalPrint").load('{{ URL::asset("bookers/print")}}/'+result+'/no', '', function(){
 								//$("#myModalPrint").modal();
 								w = window.open();
 								w.document.write($("#myModalPrint").html());
 								w.print(false);
 								w.close();
-								window.location = '{{ URL::asset("saleOrders/index") }}';
+								window.location = '{{ URL::asset("bookers/index") }}';
 							});
 							*/
 						}
@@ -378,21 +378,21 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			if(record > 0){
 				$.ajax({
 					type : 'post',
-					url : '{{ URL::asset("saleOrders/storeBook") }}',
+					url : '{{ URL::asset("bookers/storeBook") }}',
 					data : $("#adminForm").serialize(),
 					dataType : 'json',
 					success : function(result){
 						// return sales_order_id;		
-						window.location = '{{ URL::asset("saleOrders/index") }}';						
+						window.location = '{{ URL::asset("bookers/index") }}';						
 						/*
 						$("#myModalPayment").hide();
-						$("#myModalPrint").load('{{ URL::asset("saleOrders/print")}}/'+result+'/no', '', function(){
+						$("#myModalPrint").load('{{ URL::asset("bookers/print")}}/'+result+'/no', '', function(){
 							//$("#myModalPrint").modal();
 							w = window.open();
 							w.document.write($("#myModalPrint").html());
 							w.print(false);
 							w.close();
-							window.location = '{{ URL::asset("saleOrders/index") }}';
+							window.location = '{{ URL::asset("bookers/index") }}';
 						});
 						*/
 					}

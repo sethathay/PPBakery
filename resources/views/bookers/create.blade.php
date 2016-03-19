@@ -100,15 +100,15 @@ function number_format_unlimited_precision($number,$decimal = '.')
    }
 }
 ?>
-{!! Form::open(array('url' => 'saleOrders/store', 'method' => 'post', 'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
+{!! Form::open(array('url' => 'bookers/store', 'method' => 'post', 'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
 <div class="table-responsive table-list">
-	<div class="col-sm-12 panel-heading" style="background:#449D44;">
+	<div class="col-sm-12 panel-heading" style="background:#286090;">
 		<div class="col-sm-7">
-			<img src="{{ URL::asset('/img/receipt_b.png') }}" /> <label style="color:#fff;">កក់ទំនេញ</label>
+			<img src="{{ URL::asset('/img/receipt_b.png') }}" /> <label style="color:#fff;">លក់ដុំ</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 30px 10px; vertical-align: middle;">
-			<button onclick="redirectPage('{{ URL::asset('saleOrders/index') }}')" type="button"
+			<button onclick="redirectPage('{{ URL::asset('bookers/index') }}')" type="button"
 				class="btn btn-md btn-danger">
 				<span class="glyphicon"></span> ត្រឡប់ក្រោយ
 			</button>
@@ -123,8 +123,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				<div class="col-sm-3">ថ្ងៃទទួលទំនេញ :  {!! Form::text('date_due', date('Y-m-d'), array('class'=>'form-control date_due')) !!}</div>
 			</div>
 			<div class="col-sm-12 info">
-				<div class="col-sm-3">អតិថិជន<span class="star"> * </span> :  {!! Form::text('booker', '', array('class'=>'form-control booker')) !!}</div>
-				<div class="col-sm-3">លេខទូរស័ព្ទ <span class="star"> * </span>:  {!! Form::text('phone', '', array('class'=>'form-control phone')) !!}</div>
+				<div class="col-sm-3">អតិថិជន :  {!! Form::select('customer_id', $customers, 1, ['class'=>'form-control', 'id'=>'customer_id']) !!}</div>
 			</div>
 			<div class="col-sm-12">
 				<div class="form-group col-md-6">
@@ -349,12 +348,12 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				if(record > 0){
 					$.ajax({
 						type : 'post',
-						url : '{{ URL::asset("saleOrders/storeBook") }}',
+						url : '{{ URL::asset("bookers/storeBook") }}',
 						data : $("#adminForm").serialize(),
 						dataType : 'json',
 						success : function(result){
 							// return sales_order_id;		
-							window.location = '{{ URL::asset("saleOrders/index") }}';						
+							window.location = '{{ URL::asset("bookers/index") }}';						
 							/*
 							$("#myModalPayment").hide();
 							$("#myModalPrint").load('{{ URL::asset("saleOrders/print")}}/'+result+'/no', '', function(){
@@ -376,27 +375,27 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		// when click button Paid
 		$("#btn-paid").click(function(){
 			if(record > 0){
-				$.ajax({
-					type : 'post',
-					url : '{{ URL::asset("saleOrders/storeBook") }}',
-					data : $("#adminForm").serialize(),
-					dataType : 'json',
-					success : function(result){
-						// return sales_order_id;		
-						window.location = '{{ URL::asset("saleOrders/index") }}';						
-						/*
-						$("#myModalPayment").hide();
-						$("#myModalPrint").load('{{ URL::asset("saleOrders/print")}}/'+result+'/no', '', function(){
-							//$("#myModalPrint").modal();
-							w = window.open();
-							w.document.write($("#myModalPrint").html());
-							w.print(false);
-							w.close();
-							window.location = '{{ URL::asset("saleOrders/index") }}';
-						});
-						*/
-					}
-				});
+					$.ajax({
+						type : 'post',
+						url : '{{ URL::asset("bookers/storeBook") }}',
+						data : $("#adminForm").serialize(),
+						dataType : 'json',
+						success : function(result){
+							// return sales_order_id;		
+							window.location = '{{ URL::asset("bookers/index") }}';						
+							/*
+							$("#myModalPayment").hide();
+							$("#myModalPrint").load('{{ URL::asset("saleOrders/print")}}/'+result+'/no', '', function(){
+								//$("#myModalPrint").modal();
+								w = window.open();
+								w.document.write($("#myModalPrint").html());
+								w.print(false);
+								w.close();
+								window.location = '{{ URL::asset("saleOrders/index") }}';
+							});
+							*/
+						}
+					});
 			}
 		});
 		

@@ -19,5 +19,5 @@ class Booker extends Model implements AuthenticatableContract,
 
     protected $table = 'bookers';
 
-    protected $fillable = ['name','created_by','modified_by','is_active'];
+    protected $fillable = ['name', 'phone','created_by','modified_by','is_active'];
 }

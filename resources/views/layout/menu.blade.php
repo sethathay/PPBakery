@@ -17,6 +17,7 @@
 <div class="navbar col-md-2 left_menu">
 	<div class="navbar-inner">
 		<ul class="nav">
+		
 			@if ( Session::get('group_id') == 1)
 			<li><a href="{{ URL::asset('/dashboard') }}"><img
 				src="{{ URL::asset('img/control_panel.png') }}" alt="order" />
@@ -53,6 +54,11 @@
 				src="{{ URL::asset('img/receipt.png') }}" alt="Receipt" />
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">Receipt</label></a>
+			</li>
+			<li><a href="{{ URL::asset('bookers/index') }}"><img
+				src="{{ URL::asset('img/books.png') }}" alt="Booking" />
+				&nbsp;&nbsp;<label
+				style="vertical-align: middle; font-weight: normal;">Booking</label></a>
 			</li>
 			@if ( Session::get('group_id') == 1)
 			<li><a href="{{ URL::asset('#') }}"><img

@@ -28,6 +28,6 @@ class SaleOrder extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['location_id', 'customer_id', 'so_code', 'total_amount_riel', 'total_amount_us', 'balance', 'discount_riel', 'discount_us', 'order_date', 'due_date', 'memo', 'created_by', 'updated_by', 'is_pos'];
+    protected $fillable = ['location_id', 'customer_id', 'booker_id', 'so_code', 'total_amount_riel', 'total_amount_us', 'balance', 'discount_riel', 'discount_us', 'order_date', 'due_date', 'memo', 'created_by', 'updated_by', 'is_pos', 'is_book'];
 
 }

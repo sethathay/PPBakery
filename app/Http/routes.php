@@ -83,8 +83,15 @@ Route::post('saleOrders/sale', 'SaleOrdersController@sale');
 Route::get('saleOrders/print/{id}/{footer}', 'SaleOrdersController@printReceipt');
 Route::get('saleOrders/create', ['as' => 'saleOrders.create', 'uses' => 'SaleOrdersController@create']);
 Route::post('saleOrders/store', 'SaleOrdersController@store');
-Route::get('saleOrders/book', ['as' => 'saleOrders.book', 'uses' => 'SaleOrdersController@book']);
-Route::post('saleOrders/storeBook', 'SaleOrdersController@storeBook');
+
+
+Route::get('bookers/index', ['as' => 'bookers.index', 'uses' => 'BookersController@index']);
+Route::get('bookers/book', ['as' => 'bookers.book', 'uses' => 'BookersController@book']);
+Route::post('bookers/storeBook', 'BookersController@storeBook');
+Route::get('bookers/edit/{id}', ['as' => 'bookers.edit', 'uses' => 'BookersController@edit']);
+Route::post('bookers/sale', 'BookersController@sale');
+Route::post('bookers/pay', 'BookersController@pay');
+Route::get('bookers/print/{id}/{footer}', 'BookersController@printReceipt');
 
 //Route of services for daily expense input by Thay Setha
 Route::resource('services','ServicesController');

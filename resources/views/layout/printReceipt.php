@@ -64,7 +64,7 @@
 					</tr>
 					<tr>
 						<td colspan="4" style="text-align:right;">ប្រាក់បង់រួច (R)</td>
-						<td colspan="2" style="text-align:right;"><label><?php echo number_format($sub_total); ?></label></td>
+						<td colspan="2" style="text-align:right;"><label><?php echo number_format($sub_total-$saleOrder->balance); ?></label></td>
 					</tr>
 				</table>
 			</div>
