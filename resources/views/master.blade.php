@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>PHNOM PENH BAKERY</title>
+<title>ហាងនំបុ័ងភ្នំពេញ</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="{{ URL::asset('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -194,7 +194,7 @@ body {
 					<img class="logo" src="{{ URL::asset('img/hamburger.png') }}" alt="hamburger.png" />
 				</div>
 				<div class="col-md-2 header_name">
-					<label class="big_name">PHNOM PENH BAKERY</label>
+					<label class="big_name">ហាងនំបុ័ងភ្នំពេញ</label>
 				</div>
 			</div>
 		</div>
@@ -205,7 +205,7 @@ body {
 		</div>
 		
 		<div class="col-md-12 footer">
-			<div class="footer_content">PHNOM PENH BAKERY @ {!! date('Y') !!}</div>
+			<div class="footer_content">ហាងនំបុ័ងភ្នំពេញ © {!! date('Y') !!}</div>
 		</div>
 	</div>
 	</div>

@@ -139,9 +139,15 @@ class UsersController extends Controller
 				$request->session()->put('exchangerate', $exchangerate);
 				
 				$getUserLocation = DB::table('user_locations')->join('locations', 'locations.id', '=', 'location_id')->where('user_id', Auth::user()->id)->first();
+				$userGroup = DB::table('user_groups')->where('user_id',Auth::user()->id)->first();
 				$request->session()->put('location_id', $getUserLocation->location_id);
 				$request->session()->put('location_name', $getUserLocation->name);
-				return Redirect::intended('/dashboard');
+				$request->session()->put('group_id', $userGroup->group_id);
+				$direction = '/dashboard';
+				if($userGroup->group_id != 1){
+					$direction = '/saleOrders/index';
+				}
+				return Redirect::intended($direction);
 			}
 		}
 		else {

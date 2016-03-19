@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>PHNOM PENH BAKERY</title>
+<title>ហាងនំបុ័ងភ្នំពេញ</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="{{ URL::asset('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -61,7 +61,7 @@
 			class="mainbox col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
 			<div class="panel panel-info">
 				<div class="panel-heading">
-					<div class="panel-title">PHNOM PENH BAKERY</div>
+					<div class="panel-title">ហាងនំបុ័ងភ្នំពេញ</div>
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
@@ -79,19 +79,19 @@
 						<span class="input-group-addon"><i
 							class="glyphicon glyphicon-user"></i> </span> <input
 							id="login-username" type="text" class="form-control"
-							name="username" value="" placeholder="username or email">
+							name="username" value="" placeholder="ឈ្មោះអ្នកប្រើប្រាស់">
 					</div>
 
 					<div style="margin-bottom: 15px" class="input-group">
 						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> </span> 
-						<input id="login-password" type="password" class="form-control" name="password" placeholder="password">
+						<input id="login-password" type="password" class="form-control" name="password" placeholder="លេខសំងាត់">
 					</div>
 
 					<div style="margin-top: 10px" class="form-group">
 						<!-- Button -->
 						<div class="col-sm-12 controls">
 							<button type="submit" class="btn btn-md btn-success">
-								<span class="glyphicon"></span> Login
+								<span class="glyphicon"></span> ចូលទៅកាន់ប្រព័ន្ធ
 							</button>
 
 						</div>
@@ -102,7 +102,7 @@
 		</div>
 		
 		<div class="col-md-12 footer">
-			<div class="footer_content">PHNOM PENH BAKERY @ {!! date('Y') !!}</div>
+			<div class="footer_content">ហាងនំបុ័ងភ្នំពេញ © {!! date('Y') !!}</div>
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -121,11 +121,11 @@
             },
             messages: {
             	username: {
-                    required: "Please enter a login username"
+                    required: "* សូមបញ្ចូលឈ្មោះរបស់អ្នក"
                 },
                  password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 5 characters long"
+                    required: "* សូមបញ្ចូលលេខសំងាត់របស់អ្នក",
+                    minlength: "* លេខសំងាត់ត្រូវតែចាប់ពី ៥ ខ្ទង់ឡើងទៅ"
                 }
             },
             highlight: function(element) {

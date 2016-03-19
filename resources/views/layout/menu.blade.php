@@ -14,17 +14,20 @@
 		padding: 5px 45px 5px;
 	}	
 </style>
-
 <div class="navbar col-md-2 left_menu">
 	<div class="navbar-inner">
 		<ul class="nav">
+			@if ( Session::get('group_id') == 1)
 			<li><a href="{{ URL::asset('/dashboard') }}"><img
 				src="{{ URL::asset('img/control_panel.png') }}" alt="order" />
 				&nbsp;&nbsp;<label style="vertical-align: middle; font-weight: normal;">Dashboard</label></a>
 			</li>
+			@endif
 			<li><a href="{{ URL::asset('/pos') }}" target="_blank" ><img
 				src="{{ URL::asset('img/house_sale.png') }}" alt="order" />
-				&nbsp;&nbsp;<label style="vertical-align: middle; font-weight: normal;">Sales</label></a></li>
+				&nbsp;&nbsp;<label style="vertical-align: middle; font-weight: normal;">Sales</label></a>
+			</li>
+			@if ( Session::get('group_id') == 1)
 			<li><a href="{{ URL::asset('products') }}"><img
 				src="{{ URL::asset('img/product.png') }}" alt="Product" />
 				&nbsp;&nbsp;<label
@@ -45,11 +48,13 @@
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">Expenses</label></a>
 			</li>
+			@endif
 			<li><a href="{{ URL::asset('saleOrders/index') }}"><img
 				src="{{ URL::asset('img/receipt.png') }}" alt="Receipt" />
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">Receipt</label></a>
 			</li>
+			@if ( Session::get('group_id') == 1)
 			<li><a href="{{ URL::asset('#') }}"><img
 				src="{{ URL::asset('img/report.png') }}" alt="Report" />
 				&nbsp;&nbsp;<label
@@ -97,17 +102,18 @@
 				alt="Backup" /> &nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">Database Backup</label></a>
 			</li>
+			@endif
 		</ul>
-		<div class="col-md-3 user_info header_title">USER INFORMATION</div>
+		<div class="col-md-3 user_info header_title">ពត៍មានរបស់អ្នកប្រើប្រាស់</div>
 		<div class="col-md-3 user_info">
 			<ul style="margin: 0;">
-				<li>{!! "Username : <b>".Auth::user()->username."</b>" !!}
+				<li>{!! "ឈ្មោះ  <b>".Auth::user()->first_name . " " . Auth::user()->last_name ."</b>" !!}
 				</li>
-				<li>{!! "Date : <b>".date("Y-m-d")."</b>" !!}
+				<li>{!! "ថ្ងៃទី : <b>".date("Y-m-d")."</b>" !!}
 				</li>
 				<li style="text-align: right; background: none; border: none;">
 					<button onclick="redirectPage('{{ URL::asset('users/logout') }}');" class="btn btn-md btn-danger">
-						<span class="glyphicon glyphicon-logout"></span> Logout
+						<span class="glyphicon glyphicon-logout"></span> ចាកចេញពីប្រព័ន្ធ
 					</button>
 				</li>
 			</ul>
