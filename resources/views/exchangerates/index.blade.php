@@ -42,13 +42,13 @@
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">
-			<img src="{{ URL::asset('/img/emblem_money_b.png') }}" /> <label>Exchange Rates</label>
+			<img src="{{ URL::asset('/img/emblem_money_b.png') }}" /> <label>អត្រា​ប្តូ​រ​ប្រាក់</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
 			<button onclick="redirectPage('exchangerates/create')" type="button"
 				class="btn btn-md btn-success">
-				<span class="glyphicon glyphicon-plus"></span> New
+				<span class="glyphicon glyphicon-plus"></span> បង្កើតថ្មី
 			</button>
 		</div>
 	</div>
@@ -62,9 +62,9 @@
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="checkOptionAll" /></th>
-				<th>Rates</th>
-				<th>Description</th>
-				<th>Modified</th>
+				<th>អត្រា​ប្រាក់</th>
+				<th>បរិយាយផ្សេងៗ</th>
+				<th>ថ្ងៃនៃការកែប្រែ</th>
 			</tr>
 		</thead>
 		<tbody>

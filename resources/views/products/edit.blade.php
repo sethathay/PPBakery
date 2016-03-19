@@ -50,7 +50,7 @@
                         form.submit();
                     }
                     else {
-                        alert('Picture must be have width and height 280px * 175px');
+                        alert('ទំហំរបស់រូបភាពនៃទំនិញត្រូវមានបណ្តោយនិងទទឹង 280px * 175px');
                     }
                 };
             }
@@ -77,16 +77,16 @@
             },
             messages: {
             	name: {
-                    required: "Please enter name of product"
+                    required: "សូមបញ្ចូលឈ្មោះរបស់ទំនិញ"
                 },
                 code:{
-                	required: "Please enter code of product"
+                	required: "សូមបញ្ចូលលេខកូដរបស់ទំនិញ"
                 },
                 price:{
-                	required: "Please enter price of product in riels currency"
+                	required: "សូមបញ្ចូលតម្លៃរបស់ទំនិញគិតជារៀល"
                 },
                 pgroup_id:{
-                	required: "Please select category of product"
+                	required: ""
                 }
             },
             highlight: function(element) {

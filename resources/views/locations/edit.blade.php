@@ -25,13 +25,13 @@
             },
             messages: {
             	name: {
-                    required: "Please enter shop name"
+                    required: "សូមបញ្ចូលឈ្មោះហាង"
                 },
                 address:{
-                	required: "Please enter address of shop"
+                	required: "សូមបញ្ចូលអាសយដ្ឋានរបស់ហាង"
                 },
                 business_number:{
-                	required: "Please enter contact number of shop"
+                	required: "សូមបញ្ចូលលេខ​ទំនាក់​ទំនងរបស់ហាង"
                 }
             },
             highlight: function(element) {

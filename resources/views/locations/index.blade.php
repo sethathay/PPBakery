@@ -42,13 +42,13 @@
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">
-			<img src="{{ URL::asset('/img/settings_b.png') }}" /> <label>Shop Location</label>
+			<img src="{{ URL::asset('/img/settings_b.png') }}" /> <label>ទីតាំងហាង</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
 			<button onclick="redirectPage('locations/create')" type="button"
 				class="btn btn-md btn-success">
-				<span class="glyphicon glyphicon-plus"></span> New
+				<span class="glyphicon glyphicon-plus"></span> បង្កើតថ្មី
 			</button>
 		</div>
 	</div>
@@ -62,14 +62,14 @@
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="checkOptionAll" /></th>
-				<th>Name</th>
-				<th>Address</th>
-				<th>Shop Contact No</th>
-				<th>Phone No (1)</th>
-				<th>Phone No (2)</th>
-				<th>Fax</th>
-				<th>Email</th>
-				<th>Action</th>
+				<th>ឈ្មោះហាង</th>
+				<th>អាសយដ្ឋាន</th>
+				<th>លេខ​ទំនាក់​ទំនងរបស់ហាង</th>
+				<th>លេខទូរសព្ទ(1)</th>
+				<th>លេខទូរសព្ទ(2)</th>
+				<th>ទូរសារ</th>
+				<th>អ៊ីម៉ែល</th>
+				<th>សកម្មភាព</th>
 			</tr>
 		</thead>
 		<tbody>
