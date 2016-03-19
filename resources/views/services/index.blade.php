@@ -12,6 +12,11 @@
 	color: #fff;
 }
 
+.table-responsive{
+	overflow: hidden;
+	min-height: .01%;
+}
+
 .table thead th {
 	text-align: center;
 }
@@ -42,13 +47,13 @@
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">
-			<img src="{{ URL::asset('/img/furoisu_bath_chair.png') }}" /> <label>Daily Expenses</label>
+			<img src="{{ URL::asset('/img/dollars_b.png') }}" /> <label>ការចំនាយ</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
 			<button onclick="redirectPage('services/create')" type="button"
 				class="btn btn-md btn-success">
-				<span class="glyphicon glyphicon-plus"></span> New
+				<span class="glyphicon glyphicon-plus"></span> បង្កើតថ្មី
 			</button>
 		</div>
 	</div>
@@ -58,55 +63,20 @@
 			<div id="flash_notice">{{ Session::get('flash_notice') }}</div>
 		</div>
 	@endif
-	<table class="table table-hover table-bordered table-striped">
+	<table class="table table-hover table-bordered table-striped" id="tbl_expense">
 		<thead>
-			<tr>
-				<th><input type="checkbox" name="checkOptionAll" /></th>
-				<th>Group Expense</th>
-				<th>Expense</th>
-				<th>Date</th>
-				<th>Price ($)</th>
-				<th>Price (R)</th>
-				<th>Description</th>
-				<th>Modified</th>
-				<th>Action</th>
+			<tr>				
+				<th>ក្រុមចំនាយ</th>
+				<th>ឈ្មោះនៃការចំនាយ</th>
+				<th>កាលបរិច្ឆេទ</th>
+				<th>តម្លៃ($)</th>
+				<th>តម្លៃ(​​៛)</th>
+				<th>បរិយាយផ្សេងៗ</th>
+				<th>ថ្ងៃនៃការកែប្រែ</th>
+				<th>សកម្មភាព</th>
 			</tr>
 		</thead>
-		<tbody>
-			
-			
-		<?php $i=1; ?>
-			@foreach($services as $service)
-			<tr>
-				<td style="text-align: center;"><input type="checkbox"
-					name="checkOption" /></td>
-				<td>{{ $sections[$service->section_id]}}</td>
-				<td>{{ $service->name}}</td>
-				<td>{{ $service->expense_date}}</td>
-				<td>{{ $service->dollar_price}}</td>
-				<td>{{ $service->riel_price}}</td>
-				<td>{{ $service->description}}</td>
-				<td>{{ $service->updated_at->timezone('Asia/Phnom_Penh')}}</td>
-				<td class="last_td">
-					<button style="float:left;margin-right:5px" type="button" onclick="redirectPage('services/{{ $service->id }}')" class="btn btn-xs btn-info">
-						<span class="glyphicon glyphicon-user"></span> View
-					</button>
-					<button style="float:left;margin-right:5px" type="button" onclick="redirectPage('services/{{ $service->id }}/edit')" class="btn btn-xs btn-primary">
-						<span class="glyphicon glyphicon-edit"></span> Edit
-					</button>
-					<div style="float:left;">
-					{!! Form::open(['route' => ['services.destroy', $service->id], 'method' => 'delete','id'=>'frmdelete']) !!}
-						<button type="button" class="btn btn-xs btn-danger btndelete">
-							<span class="glyphicon glyphicon-trash"></span> Delete
-						</button>
-					{!! Form::close() !!}
-					</div>
-				</td>
-			</tr>
-			@endforeach
-		</tbody>
 	</table>
-	{!! $services->render() !!}
 </div>
 
 <script type="text/javascript">
@@ -115,13 +85,60 @@
 		window.location = url;
 	}
 
-	$(document).ready(function(){
-		$(document).on('click','.btndelete',function(){
-			if(confirm('Are you sure you want to delete this?')){
-				$('#frmdelete').submit();
-			}
-		});
-	});
+	var table = $('#tbl_expense').DataTable( {
+
+        "data": <?php echo $services ?>,
+        "order": [[ 6, "desc" ]],
+        "createdRow": function ( row, datas, index ) {
+        	$('td', row).eq(7).addClass('last_td');
+        },
+        "columns": [
+           	{ "data": "section_name" },
+            { "data": "name" },
+            { "data": "expense_date" },
+            { "data": "dollar_price" },
+            { "data": "riel_price" },
+            { "data": "description" },
+            { "data": "updated_at" },
+            { "data": null }
+        ],
+        "columnDefs": [ {
+            "targets": -1,
+            "defaultContent":
+            '<button style="margin-right:5px" type="button" class="btnview btn btn-xs btn-info">'
+            + '<span class="glyphicon glyphicon-user"></span> View</button>'
+            +'<button style="margin-right:5px" type="button" class="btnedit btn btn-xs btn-primary">'
+			+'<span class="glyphicon glyphicon-edit"></span> Edit</button>'
+			+'<button type="button" class="btn btn-xs btn-danger btndelete">'
+			+'<span class="glyphicon glyphicon-trash"></span> Delete'
+			+'</button>'
+        } ]
+    } );
+
+	$('#tbl_expense tbody').on( 'click', '.btnview', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        redirectPage('services/' + data['id']);
+    } );
+
+    $('#tbl_expense tbody').on( 'click', '.btnedit', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        redirectPage('services/' + data['id'] + '/edit');
+    } );
+
+    $('#tbl_expense tbody').on( 'click', '.btndelete', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        var ts = $(this);
+        if(confirm('តើអ្នកពិតជាចង់លុបវាពិតមែនទេ?')){
+			$.ajax({
+			    url: 'services/' + data['id'],
+			    type: 'DELETE',
+			    data:{"_token": "{{ csrf_token() }}"},
+			    success: function(result) {
+			    	table.row(ts.parents('tr')).remove().draw( false );
+			    }
+			});
+		}
+    } );
 
 </script>
 @stop

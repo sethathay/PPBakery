@@ -31,16 +31,16 @@
             },
             messages: {
             	name: {
-                    required: "Please enter name of daily expense"
+                    required: "សូមបញ្ចូលឈ្មោះនៃការចំនាយ"
                 },
                 section_id:{
-                	required: "Please select group of expense"
+                	required: ""
                 },
                 dollar_price:{
-                	required: "Please enter your expense in dollar($) or riels(R)"
+                	required: "សូមបញ្ចូលតម្លៃជាលុយដុល្លា​ ឬលុយរៀល"
                 },
                 riel_price:{
-                	required: "Please enter your expense in dollar($) or riels(R)"
+                	required: "សូមបញ្ចូលតម្លៃជាលុយដុល្លា​ ឬលុយរៀល"
                 }
             },
             highlight: function(element) {

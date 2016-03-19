@@ -39,18 +39,17 @@
         @if(Session::has('flash_notice'))
             <div id="flash_notice">{{ Session::get('flash_notice') }}</div>
         @endif
-		<div class="row" style="width:99%; margin: 0 auto;"><h2>Dashboard</h2></div>
 		<div class="row" style="width:99%; margin: 0 auto;">
-			<div class="col-md-2 board" onclick="redirectPage('pos','_blank')"><img src="{{ URL::asset('img/house_sale_b.png') }}" /><br/>Sales</div>
-			<div class="col-md-2 board" onclick="redirectPage('products')"><img src="{{ URL::asset('img/product_b.png') }}" /><br/>Products</div>
-			<div class="col-md-2 board" onclick="redirectPage('services')"><img src="{{ URL::asset('img/dollars_b.png') }}" /><br/>Expenses</div>
-			<div class="col-md-2 board" onclick="redirectPage('exchangerates')"><img src="{{ URL::asset('img/emblem_money_b.png') }}" /><br/>Exchange Rate</div>
-			<div class="col-md-2 board" onclick="redirectPage('#')"><img src="{{ URL::asset('img/discount_b.png') }}" /><br/>Discounts</div>
-			<div class="col-md-2 board" onclick="redirectPage('saleOrders/index')"><img src="{{ URL::asset('img/receipt_b.png') }}" /><br/>Receipt</div>
-			<div class="col-md-2 board" onclick="redirectPage('#')"><img src="{{ URL::asset('img/report_b.png') }}" /><br/>Reports</div>
-			<div class="col-md-2 board" onclick="redirectPage('{{ URL::asset('users/index') }}')"><img src="{{ URL::asset('img/users_2_b.png') }}" /><br/>Users</div>
-			<!--<div class="col-md-2 board" id="dsettting"><img src="{{ URL::asset('img/settings_b.png') }}" /><br/>Settings</div>-->
-			<div class="col-md-2 board" onclick="redirectPage('#')"><img src="{{ URL::asset('img/blue_external_drive_backup.png') }}" /><br/>Backup Database</div>
+			<div class="col-md-2 board" onclick="redirectPage('pos','_blank')"><img src="{{ URL::asset('img/house_sale_b.png') }}" /><br/>ការលក់</div>
+			<div class="col-md-2 board" onclick="redirectPage('products')"><img src="{{ URL::asset('img/product_b.png') }}" /><br/>មុខទំនិញ</div>
+			<div class="col-md-2 board" onclick="redirectPage('services')"><img src="{{ URL::asset('img/dollars_b.png') }}" /><br/>ការចំនាយ</div>
+			<div class="col-md-2 board" onclick="redirectPage('exchangerates')"><img src="{{ URL::asset('img/emblem_money_b.png') }}" /><br/>អត្រា​ប្តូ​រ​ប្រាក់</div>
+			<div class="col-md-2 board" onclick="redirectPage('#')"><img src="{{ URL::asset('img/discount_b.png') }}" /><br/>ការបញ្ចុះតំលៃ</div>
+			<div class="col-md-2 board" onclick="redirectPage('saleOrders/index')"><img src="{{ URL::asset('img/receipt_b.png') }}" /><br/>វិក័យប័ត្រ</div>
+			<div class="col-md-2 board" onclick="redirectPage('#')"><img src="{{ URL::asset('img/report_b.png') }}" /><br/>របាយការណ៍</div>
+			<div class="col-md-2 board" onclick="redirectPage('{{ URL::asset('users/index') }}')"><img src="{{ URL::asset('img/users_2_b.png') }}" /><br/>អ្នកប្រើប្រាស់</div>
+			<div class="col-md-2 board" id="dsettting"><img src="{{ URL::asset('img/settings_b.png') }}" /><br/>ការកំណត់របស់ប្រព័ន្ធ</div>
+			<div class="col-md-2 board" onclick="redirectPage('#')"><img src="{{ URL::asset('img/blue_external_drive_backup.png') }}" /><br/>រក្សាទុកទិន្នន័យរបស់ប្រព័ន្ធ</div>
 		</div>
 	</div>
 	<script type="text/javascript">

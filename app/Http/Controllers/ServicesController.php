@@ -21,7 +21,8 @@ class ServicesController extends Controller
     public function index()
     {
         //
-        $services = Service::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
+        $sv = Service::select('services.*','sections.name AS section_name')->join('sections','sections.id','=','section_id')->where('services.is_active', 1)->get();
+        $services = json_encode($sv);
         $sections = DB::table('sections')->lists('name', 'id');
         return view('services/index',compact('services','sections'));
     }
@@ -116,6 +117,6 @@ class ServicesController extends Controller
         //
         $service = new Service;
         $service->where('id', $id)->update(['is_active' => 0]);
-        return Redirect::route('services.index')->with('flash_notice', 'You are successfully delete!');
+        //return Redirect::route('services.index')->with('flash_notice', 'You are successfully delete!');
     }
 }

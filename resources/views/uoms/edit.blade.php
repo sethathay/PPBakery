@@ -22,10 +22,10 @@
             },
             messages: {
             	name: {
-                    required: "Please enter name of unit of measure"
+                    required: "សូមបញ្ចូលឈ្មោះវង្វាស់ខ្នាត"
                 },
                 abbr:{
-                	required: "Please enter abbreviation of unit of measure"
+                	required: "សូមបញ្ចូលពាក្យកាត់របស់វាស់ខ្នាត"
                 }
             },
             highlight: function(element) {

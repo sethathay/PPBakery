@@ -42,13 +42,13 @@
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">
-			<img src="{{ URL::asset('/img/product.png') }}" /> <label>Products</label>
+			<img src="{{ URL::asset('/img/product.png') }}" /> <label>មុខទំនិញ</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
 			<button onclick="redirectPage('products/create')" type="button"
 				class="btn btn-md btn-success">
-				<span class="glyphicon glyphicon-plus"></span> New
+				<span class="glyphicon glyphicon-plus"></span> បង្កើតថ្មី
 			</button>
 		</div>
 	</div>
@@ -62,12 +62,12 @@
 		<thead>
 			<tr>
 				<th><input type="checkbox" name="checkOptionAll" /></th>
-				<th>Code</th>
-				<th>Name</th>
-				<th>Category</th>
-				<th>Price</th>
-				<th>Modified</th>
-				<th>Action</th>
+				<th>លេខកូដ</th>
+				<th>ឈ្មោះទំនិញ</th>
+				<th>ក្រុមទំនិញ</th>
+				<th>តម្លៃ</th>
+				<th>ថ្ងៃនៃការកែប្រែ</th>
+				<th>សកម្មភាព</th>
 			</tr>
 		</thead>
 		<tbody>
