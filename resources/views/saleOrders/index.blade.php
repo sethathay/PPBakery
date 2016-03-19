@@ -39,6 +39,18 @@
 	font-weight: bold;
 }
 </style>
+
+<?php
+function number_format_unlimited_precision($number,$decimal = '.')
+{
+   $broken_number = explode($decimal,$number);
+   if(count($broken_number) > 1){
+		return (number_format($broken_number[0]).$decimal.$broken_number[1]);
+   }else{
+		return (number_format($broken_number[0]));
+   }
+}
+?>
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">
@@ -86,11 +98,11 @@
 					name="checkOption" /></td>
 				<td>{{ $saleOrder->order_date }}</td>
 				<td>{{ $saleOrder->so_code}}</td>
-				<td>{{ number_format($saleOrder->discount_riel)}}</td>
+				<td>{{ number_format_unlimited_precision($saleOrder->discount_riel)}}</td>
 				<td>{{ number_format($saleOrder->discount_us,2)}}</td>
-				<td>{{ number_format($saleOrder->total_amount_riel)}}</td>
+				<td>{{ number_format_unlimited_precision($saleOrder->total_amount_riel)}}</td>
 				<td>{{ number_format($saleOrder->total_amount_us,2)}}</td>
-				<td>{{ number_format($saleOrder->balance)}}</td>
+				<td>{{ number_format_unlimited_precision($saleOrder->balance)}}</td>
 				<td class="last_td">
 					<button type="button" id="{{ $saleOrder->id }}" class="btn btn-xs btn-info">
 						<span class="glyphicon glyphicon-user"></span> View

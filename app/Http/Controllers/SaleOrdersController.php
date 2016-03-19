@@ -9,6 +9,7 @@ use DB;
 use Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use App\Booker;
 use App\SaleOrder;
 use App\SaleOrderDetail;
 use App\SaleOrderReceipt;
@@ -99,7 +100,7 @@ class SaleOrdersController extends Controller
 			
 			// Save to inventories table
 			$inventory = new Inventory;
-			$inventory['point_of_sales_id'] = $sale_order_id;
+			$inventory['sales_order_id'] = $sale_order_id;
 			$inventory['product_id'] = $inputs['id'][$k];
 			$inventory['location_id'] = Session::get('location_id');
 			$inventory['qty'] = $inputs['txt_qty'][$k];
@@ -164,15 +165,26 @@ class SaleOrdersController extends Controller
 	}
 	
 	
-	public function storeBook(SaleOrder $saleOrders, Request $request, SaleOrderDetail $saleOrderDetails, SaleOrderReceipt $saleOrderReceipts)
+	public function storeBook(SaleOrder $saleOrders, Request $request, SaleOrderDetail $saleOrderDetails, SaleOrderReceipt $saleOrderReceipts, Booker $bookers)
     {
     	$inputs = Input::all();
 		$inputs['amount_riel'] = str_replace(",","",$inputs['amount_riel']);
+		
+		// To save booker information
+		$booker = array();
+        $booker['_token']    = $inputs['_token'];
+        $booker['name']    = $inputs['booker'];
+        $booker['phone']    = $inputs['phone'];
+        $booker['created_by']    = \Auth::user()->id;
+        $booker['updated_by']    = \Auth::user()->id;
+		$bookers->fill($booker)->save();
+		$booker_id = $bookers->id;
+		
 		// To save sale order table
 		$saleOrder = array();
         $saleOrder['_token']    = $inputs['_token'];
         $saleOrder['location_id']    = Session::get('location_id');
-        $saleOrder['customer_id']    = $inputs['customer_id'];;
+        $saleOrder['customer_id']    = $booker_id;
         $saleOrder['so_code']    = $this->generateAutoCode("sales_orders", "so_code", 6, "SO");
         $saleOrder['total_amount_riel']    = $inputs['total_amount_riel'];
         $saleOrder['total_amount_us']    = $inputs['total_amount_us'];
@@ -211,7 +223,7 @@ class SaleOrdersController extends Controller
 			
 			// Save to inventories table
 			$inventory = new Inventory;
-			$inventory['point_of_sales_id'] = $sale_order_id;
+			$inventory['sales_order_id'] = $sale_order_id;
 			$inventory['product_id'] = $inputs['id'][$k];
 			$inventory['location_id'] = Session::get('location_id');
 			$inventory['qty'] = $inputs['txt_qty'][$k];
@@ -270,7 +282,8 @@ class SaleOrdersController extends Controller
 	{
 		
 		$saleOrders = SaleOrder::select("sales_orders.*","locations.name AS location_name",DB::raw('CONCAT(customers.firstname, " ", customers.lastname) AS customer_name'))->
-						join('customers', 'customers.id', '=', 'sales_orders.customer_id')->
+						leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')->
+						leftJoin('bookers', 'bookers.id', '=', 'sales_orders.booker_id')->
 						join('locations', 'locations.id', '=', 'sales_orders.location_id')->
 						where('sales_orders.id', $id)->first();
 						
