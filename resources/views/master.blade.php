@@ -8,6 +8,10 @@
 <script type="text/javascript" src="{{ URL::asset('js/jquery-1.11.3.min.js') }}"></script>
 <script src="{{ URL::asset('js/jquery.validator.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/jquery.dataTables.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/dataTables.bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/moment.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/moment-timezone-with-data.js') }}"></script>
 <link href="{{ URL::asset('css/bootstrap-3.3.2.css') }}" rel="stylesheet">
 
 <!-- DatePicker -->

@@ -12,6 +12,11 @@
 	color: #fff;
 }
 
+.table-responsive{
+	overflow: hidden;
+	min-height: .01%;
+}
+
 .table thead th {
 	text-align: center;
 }
@@ -42,13 +47,13 @@
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">
-			<img src="{{ URL::asset('/img/settings_b.png') }}" /> <label>Unit of Measure (UOM)</label>
+			<img src="{{ URL::asset('/img/settings_b.png') }}" /> <label>វង្វាស់ខ្នាត</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
 			<button onclick="redirectPage('uoms/create')" type="button"
 				class="btn btn-md btn-success">
-				<span class="glyphicon glyphicon-plus"></span> New
+				<span class="glyphicon glyphicon-plus"></span> បង្កើតថ្មី
 			</button>
 		</div>
 	</div>
@@ -58,49 +63,18 @@
 			<div id="flash_notice">{{ Session::get('flash_notice') }}</div>
 		</div>
 	@endif
-	<table class="table table-hover table-bordered table-striped">
+	<table class="table table-hover table-bordered table-striped" id="tbl_uom">
 		<thead>
 			<tr>
-				<th><input type="checkbox" name="checkOptionAll" /></th>
-				<th>Name</th>
-				<th>Abbreviation</th>
-				<th>Description</th>
-				<th>Modified</th>
-				<th>Action</th>
+				<th>ឈ្មោះវង្វាស់ខ្នាត</th>
+				<th>ពាក្យកាត់</th>
+				<th>បរិយាយផ្សេងៗ</th>
+				<th>ថ្ងៃនៃការកែប្រែ</th>
+				<th>សកម្មភាព</th>
 			</tr>
 		</thead>
-		<tbody>
-			
-			
-		<?php $i=1; ?>
-			@foreach($uoms as $uom)
-			<tr>
-				<td style="text-align: center;"><input type="checkbox"
-					name="checkOption" /></td>
-				<td>{{ $uom->name}}</td>
-				<td>{{ $uom->abbr}}</td>
-				<td>{{ $uom->description}}</td>
-				<td>{{ $uom->updated_at->timezone('Asia/Phnom_Penh')}}</td>
-				<td class="last_td">
-					<button style="float:left;margin-right:5px" type="button" onclick="redirectPage('uoms/{{ $uom->id }}')" class="btn btn-xs btn-info">
-						<span class="glyphicon glyphicon-user"></span> View
-					</button>
-					<button style="float:left;margin-right:5px" type="button" onclick="redirectPage('uoms/{{ $uom->id }}/edit')" class="btn btn-xs btn-primary">
-						<span class="glyphicon glyphicon-edit"></span> Edit
-					</button>
-					<div style="float:left;">
-					{!! Form::open(['route' => ['uoms.destroy', $uom->id], 'method' => 'delete','id'=>'frmdelete']) !!}
-						<button type="button" class="btn btn-xs btn-danger btndelete">
-							<span class="glyphicon glyphicon-trash"></span> Delete
-						</button>
-					{!! Form::close() !!}
-					</div>
-				</td>
-			</tr>
-			@endforeach
-		</tbody>
-	</table>
-	{!! $uoms->render() !!}
+	</table>	
+	
 </div>
 
 <script type="text/javascript">
@@ -109,13 +83,57 @@
 		window.location = url;
 	}
 
-	$(document).ready(function(){
-		$(document).on('click','.btndelete',function(){
-			if(confirm('Are you sure you want to delete this?')){
-				$('#frmdelete').submit();
-			}
-		});
-	});
+	var table = $('#tbl_uom').DataTable( {
+
+        "data": <?php echo $uoms ?>,
+        "order": [[ 3, "desc" ]],
+        "createdRow": function ( row, data, index ) {
+        	$('td', row).eq(4).addClass('last_td');
+        },
+        "columns": [
+           	{ "data": "name" },
+            { "data": "abbr" },
+            { "data": "description" },
+            { "data": "updated_at" },
+            { "data": null }
+        ],
+        "columnDefs": [ {
+            "targets": -1,
+            "defaultContent":
+            '<button style="margin-right:5px" type="button" class="btnview btn btn-xs btn-info">'
+            + '<span class="glyphicon glyphicon-user"></span> View</button>'
+            +'<button style="margin-right:5px" type="button" class="btnedit btn btn-xs btn-primary">'
+			+'<span class="glyphicon glyphicon-edit"></span> Edit</button>'
+			+'<button type="button" class="btn btn-xs btn-danger btndelete">'
+			+'<span class="glyphicon glyphicon-trash"></span> Delete'
+			+'</button>'
+        } ]
+    } );
+
+	$('#tbl_uom tbody').on( 'click', '.btnview', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        redirectPage('uoms/' + data['id']);
+    } );
+
+    $('#tbl_uom tbody').on( 'click', '.btnedit', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        redirectPage('uoms/' + data['id'] + '/edit');
+    } );
+
+    $('#tbl_uom tbody').on( 'click', '.btndelete', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        var ts = $(this);
+        if(confirm('តើអ្នកពិតជាចង់លុបវាពិតមែនទេ?')){
+			$.ajax({
+			    url: 'uoms/' + data['id'],
+			    type: 'DELETE',
+			    data:{"_token": "{{ csrf_token() }}"},
+			    success: function(result) {
+			    	table.row(ts.parents('tr')).remove().draw( false );
+			    }
+			});
+		}
+    } );
 
 </script>
 @stop

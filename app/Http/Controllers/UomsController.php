@@ -20,7 +20,11 @@ class UomsController extends Controller
     public function index()
     {
         //
-        $uoms = Uom::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
+        //$uoms = Uom::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
+        //return view('uoms/index',compact('uoms'));
+
+        $us = Uom::where('is_active', 1)->get();
+        $uoms = json_encode($us);
         return view('uoms/index',compact('uoms'));
     }
 
@@ -106,9 +110,8 @@ class UomsController extends Controller
      */
     public function destroy($id)
     {
-        //
         $uom = new Uom;
         $uom->where('id', $id)->update(['is_active' => 0]);
-        return Redirect::route('uoms.index')->with('flash_notice', 'You are successfully delete!');
+        //return Redirect::route('uoms.index')->with('flash_notice', 'You are successfully delete!');
     }
 }
