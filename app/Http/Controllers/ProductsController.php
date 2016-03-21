@@ -23,7 +23,9 @@ class ProductsController extends Controller
 	
     public function index()
     {
-    	$products = Product::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
+    	$prod = Product::select('products.*','pgroups.name AS product_group')
+        ->join('pgroups','pgroups.id','=','pgroup_id')->where('products.is_active', 1)->get();
+        $products = json_encode($prod);
         $pgroups = DB::table('pgroups')->lists('name', 'id');
         return view('products/index', compact('products','pgroups'));
     }
@@ -136,7 +138,7 @@ class ProductsController extends Controller
         //
         $product = new Product;
         $product->where('id', $id)->update(['is_active' => 0]);
-        return Redirect::route('products.index')->with('flash_notice', 'You are successfully delete!');
+        //return Redirect::route('products.index')->with('flash_notice', 'You are successfully delete!');
     }
     
     /**

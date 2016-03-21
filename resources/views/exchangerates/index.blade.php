@@ -12,6 +12,11 @@
 	color: #fff;
 }
 
+.table-responsive{
+	overflow: hidden;
+	min-height: .01%;
+}
+
 .table thead th {
 	text-align: center;
 }
@@ -58,29 +63,34 @@
 			<div id="flash_notice">{{ Session::get('flash_notice') }}</div>
 		</div>
 	@endif
-	<table class="table table-hover table-bordered table-striped">
+	<table class="table table-hover table-bordered table-striped" id="tbl_exchange">
 		<thead>
 			<tr>
-				<th><input type="checkbox" name="checkOptionAll" /></th>
 				<th>អត្រា​ប្រាក់</th>
 				<th>បរិយាយផ្សេងៗ</th>
 				<th>ថ្ងៃនៃការកែប្រែ</th>
 			</tr>
 		</thead>
-		<tbody>
-			
-		<?php $i=1; ?>
-			@foreach($rates as $rate)
-			<tr>
-				<td style="text-align: center;"><input type="checkbox"
-					name="checkOption" /></td>
-				<td><span class="label label-success">$1</span> <span class="label label-danger">{{ $rate->riel}}</span></td>
-				<td>{{ $rate->description}}</td>
-				<td>{{ $rate->updated_at->timezone('Asia/Phnom_Penh')}}</td>
-			</tr>
-			@endforeach
-		</tbody>
 	</table>
-	{!! $rates->render() !!}
 </div>
+<script type="text/javascript">
+	var table = $('#tbl_exchange').DataTable( {
+
+        "data": <?php echo $rates ?>,
+        "order": [[ 2, "desc" ]],
+        "columns": [
+           	{ "data": "riel" },
+            { "data": "description" },
+            { "data": "updated_at" }
+        ],
+        "columnDefs": [
+            {
+                "targets": 0,
+                "render": function ( data, type, row ) {
+                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> 1$</span> <span class="label label-danger" style="font-size:14px;">' + data + '</span>';
+                },
+            },
+        ]
+    } );
+</script>
 @stop

@@ -21,7 +21,8 @@ class GroupsController extends Controller
     public function index()
     {
         //
-        $groups = Group::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
+        $g = Group::where('is_active', 1)->get();
+        $groups = json_encode($g);
         return view('groups/index',compact('groups'));
     }
 
@@ -110,6 +111,6 @@ class GroupsController extends Controller
         //
         $group = new Group;
         $group->where('id', $id)->update(['is_active' => 0]);
-        return Redirect::route('groups.index')->with('flash_notice', 'You are successfully delete!');
+        //return Redirect::route('groups.index')->with('flash_notice', 'You are successfully delete!');
     }
 }

@@ -22,7 +22,10 @@ class UomConversionsController extends Controller
     public function index()
     {
         //
-        $conversions = UomConversion::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
+        $conv = UomConversion::select('uom_conversions.*','u1.name as from_uom','u2.name as to_uom')
+        ->join('uoms as u1','u1.id','=','from_uom_id')->join('uoms as u2','u2.id','=','to_uom_id')
+        ->where('uom_conversions.is_active', 1)->get();
+        $conversions = json_encode($conv);
         $uoms = DB::table('uoms')->lists('name', 'id');
         return view('uomconversions/index',compact('conversions','uoms'));
     }
@@ -115,6 +118,6 @@ class UomConversionsController extends Controller
         //
         $uomconv = new UomConversion;
         $uomconv->where('id', $id)->update(['is_active' => 0]);
-        return Redirect::route('uomconversions.index')->with('flash_notice', 'You are successfully delete!');
+        //return Redirect::route('uomconversions.index')->with('flash_notice', 'You are successfully delete!');
     }
 }

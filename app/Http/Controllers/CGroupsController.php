@@ -21,7 +21,8 @@ class CGroupsController extends Controller
     public function index()
     {
         //
-        $cgroups = Cgroup::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
+        $cg = Cgroup::where('is_active', 1)->get();
+        $cgroups = json_encode($cg);
         return view('cgroups/index',compact('cgroups'));
     }
 
@@ -110,6 +111,6 @@ class CGroupsController extends Controller
         //
         $cgroup = new Cgroup;
         $cgroup->where('id', $id)->update(['is_active' => 0]);
-        return Redirect::route('cgroups.index')->with('flash_notice', 'You are successfully delete!');
+        //return Redirect::route('cgroups.index')->with('flash_notice', 'You are successfully delete!');
     }
 }

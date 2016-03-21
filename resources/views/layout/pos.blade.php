@@ -46,9 +46,9 @@ body {
 }
 
 .header .logo {
-	width: 50px;
-	height: 50px;
-	margin: 10px 0 0 13px;
+	width: 80px;
+	height: 80px;
+	margin: -2px 0 0 1px;
 	vertical-align: middle;
 }
 
@@ -56,7 +56,7 @@ body {
 	font-family: Arial;
 	font-weight: bold;
 	font-size: 16pt;
-	margin: 18px 0 0 5px;
+	margin: 30px 0 0 5px;
 }
 
 .header .small_name label {
@@ -279,7 +279,7 @@ body {
 		<div class="col-md-12 header">
 			<div class="row">
 				<div class="col-md-1 header_logo">
-					<img class="logo" src="{{ URL::asset('img/hamburger.png') }}" alt="hamburger.png" />
+					<img class="logo" src="{{ URL::asset('img/ppbakery.png') }}" alt="hamburger.png" />
 				</div>
 				<div class="col-md-2 header_name">
 					<label class="big_name">ហាងនំបុ័ងភ្នំពេញ</label>

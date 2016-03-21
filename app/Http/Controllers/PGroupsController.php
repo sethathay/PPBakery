@@ -21,7 +21,8 @@ class PGroupsController extends Controller
     public function index()
     {
         //
-        $pgroups = Pgroup::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
+        $pg = Pgroup::where('is_active', 1)->get();
+        $pgroups = json_encode($pg);
         return view('pgroups/index',compact('pgroups'));
     }
 
@@ -110,6 +111,6 @@ class PGroupsController extends Controller
         //
         $pgroup = new Pgroup;
         $pgroup->where('id', $id)->update(['is_active' => 0]);
-        return Redirect::route('pgroups.index')->with('flash_notice', 'You are successfully delete!');
+        //return Redirect::route('pgroups.index')->with('flash_notice', 'You are successfully delete!');
     }
 }

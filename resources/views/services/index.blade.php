@@ -112,7 +112,20 @@
 			+'<button type="button" class="btn btn-xs btn-danger btndelete">'
 			+'<span class="glyphicon glyphicon-trash"></span> Delete'
 			+'</button>'
-        } ]
+        },
+        {
+                "targets": 3,
+                "render": function ( data, type, row ) {
+                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> $ </span> <span class="label label-danger" style="font-size:14px;">' + data + '</span>';
+                },
+        },
+        {
+                "targets": 4,
+                "render": function ( data, type, row ) {
+                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> ៛ </span> <span class="label label-danger" style="font-size:14px;">' + data + '</span>';
+                },
+            },
+         ]
     } );
 
 	$('#tbl_expense tbody').on( 'click', '.btnview', function () {

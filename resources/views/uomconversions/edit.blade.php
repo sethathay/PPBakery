@@ -25,13 +25,13 @@
             },
             messages: {
             	from_uom_id: {
-                    required: "Please enter UOM (From)"
+                    required: ""
                 },
                 to_uom_id:{
-                	required: "Please enter UOM (To)"
+                	required: ""
                 },
                 value:{
-                	required: "Please enter value"
+                	required: "សូមបញ្ចូលតម្លៃ"
                 },
             },
             highlight: function(element) {

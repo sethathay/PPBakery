@@ -16,6 +16,11 @@
 	text-align: center;
 }
 
+.table-responsive{
+	overflow: hidden;
+	min-height: .01%;
+}
+
 .last_td {
 	text-align: center;
 }
@@ -58,10 +63,9 @@
 			<div id="flash_notice">{{ Session::get('flash_notice') }}</div>
 		</div>
 	@endif
-	<table class="table table-hover table-bordered table-striped">
+	<table class="table table-hover table-bordered table-striped" id="tbl_shop">
 		<thead>
 			<tr>
-				<th><input type="checkbox" name="checkOptionAll" /></th>
 				<th>ឈ្មោះហាង</th>
 				<th>អាសយដ្ឋាន</th>
 				<th>លេខ​ទំនាក់​ទំនងរបស់ហាង</th>
@@ -72,41 +76,7 @@
 				<th>សកម្មភាព</th>
 			</tr>
 		</thead>
-		<tbody>
-			
-			
-		<?php $i=1; ?>
-			@foreach($locations as $loc)
-			<tr>
-				<td style="text-align: center;"><input type="checkbox"
-					name="checkOption" /></td>
-				<td>{{ $loc->name}}</td>
-				<td>{{ $loc->address}}</td>
-				<td>{{ $loc->business_number}}</td>
-				<td>{{ $loc->personal_number}}</td>
-				<td>{{ $loc->other_number}}</td>
-				<td>{{ $loc->fax_number}}</td>
-				<td>{{ $loc->email_address}}</td>
-				<td class="last_td">
-					<button style="float:left;margin-right:5px" type="button" onclick="redirectPage('locations/{{ $loc->id }}')" class="btn btn-xs btn-info">
-						<span class="glyphicon glyphicon-user"></span> View
-					</button>
-					<button style="float:left;margin-right:5px" type="button" onclick="redirectPage('locations/{{ $loc->id }}/edit')" class="btn btn-xs btn-primary">
-						<span class="glyphicon glyphicon-edit"></span> Edit
-					</button>
-					<div style="float:left;">
-					{!! Form::open(['route' => ['locations.destroy', $loc->id], 'method' => 'delete','id'=>'frmdelete']) !!}
-						<button type="button" class="btn btn-xs btn-danger btndelete">
-							<span class="glyphicon glyphicon-trash"></span> Delete
-						</button>
-					{!! Form::close() !!}
-					</div>
-				</td>
-			</tr>
-			@endforeach
-		</tbody>
 	</table>
-	{!! $locations->render() !!}
 </div>
 
 <script type="text/javascript">
@@ -115,13 +85,59 @@
 		window.location = url;
 	}
 
-	$(document).ready(function(){
-		$(document).on('click','.btndelete',function(){
-			if(confirm('Are you sure you want to delete this?')){
-				$('#frmdelete').submit();
-			}
-		});
-	});
+	var table = $('#tbl_shop').DataTable( {
+
+        "data": <?php echo $locations ?>,
+        "createdRow": function ( row, data, index ) {
+        	$('td', row).eq(7).addClass('last_td');
+        },
+        "columns": [
+           	{ "data": "name" },
+            { "data": "address" },
+            { "data": "business_number" },
+            { "data": "personal_number" },
+            { "data": "other_number" },
+            { "data": "fax_number" },
+            { "data": "email_address" },
+            { "data": null }
+        ],
+        "columnDefs": [ {
+            "targets": -1,
+            "defaultContent":
+            '<button style="margin-right:5px" type="button" class="btnview btn btn-xs btn-info">'
+            + '<span class="glyphicon glyphicon-user"></span> View</button>'
+            +'<button style="margin-right:5px" type="button" class="btnedit btn btn-xs btn-primary">'
+			+'<span class="glyphicon glyphicon-edit"></span> Edit</button>'
+			+'<button type="button" class="btn btn-xs btn-danger btndelete">'
+			+'<span class="glyphicon glyphicon-trash"></span> Delete'
+			+'</button>'
+        } ]
+    } );
+
+	$('#tbl_shop tbody').on( 'click', '.btnview', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        redirectPage('locations/' + data['id']);
+    } );
+
+    $('#tbl_shop tbody').on( 'click', '.btnedit', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        redirectPage('locations/' + data['id'] + '/edit');
+    } );
+
+    $('#tbl_shop tbody').on( 'click', '.btndelete', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        var ts = $(this);
+        if(confirm('តើអ្នកពិតជាចង់លុបវាពិតមែនទេ?')){
+			$.ajax({
+			    url: 'locations/' + data['id'],
+			    type: 'DELETE',
+			    data:{"_token": "{{ csrf_token() }}"},
+			    success: function(result) {
+			    	table.row(ts.parents('tr')).remove().draw( false );
+			    }
+			});
+		}
+    } );
 
 </script>
 @stop

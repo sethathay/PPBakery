@@ -19,7 +19,7 @@
             },
             messages: {
             	name: {
-                    required: "Please enter name of user group"
+                    required: "សូមបញ្ចូលឈ្មោះរបស់ក្រុមអ្នកប្រើប្រាស់"
                 }
             },
             highlight: function(element) {

@@ -18,7 +18,7 @@
             },
             messages: {
             	name: {
-                    required: "Please enter name of product group"
+                    required: "សូមបញ្ចូលឈ្មោះរបស់ក្រុមទំនិញ"
                 }
             },
             highlight: function(element) {

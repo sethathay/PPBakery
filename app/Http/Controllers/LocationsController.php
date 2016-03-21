@@ -20,7 +20,8 @@ class LocationsController extends Controller
     public function index()
     {
         //
-        $locations = Location::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
+        $loc = Location::where('is_active', 1)->get();
+        $locations = json_encode($loc);
         return view('locations/index',compact('locations'));
     }
 
@@ -109,6 +110,6 @@ class LocationsController extends Controller
         //
         $loc = new Location;
         $loc->where('id', $id)->update(['is_active' => 0]);
-        return Redirect::route('locations.index')->with('flash_notice', 'You are successfully delete!');
+        //return Redirect::route('locations.index')->with('flash_notice', 'You are successfully delete!');
     }
 }

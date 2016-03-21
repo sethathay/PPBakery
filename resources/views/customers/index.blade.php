@@ -16,6 +16,11 @@
 	text-align: center;
 }
 
+.table-responsive{
+	overflow: hidden;
+	min-height: .01%;
+}
+
 .last_td {
 	text-align: center;
 }
@@ -42,13 +47,13 @@
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">
-			<img src="{{ URL::asset('/img/settings_b.png') }}" /> <label>Customer</label>
+			<img src="{{ URL::asset('/img/settings_b.png') }}" /> <label>អតិថិជន</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
 			<button onclick="redirectPage('customers/create')" type="button"
 				class="btn btn-md btn-success">
-				<span class="glyphicon glyphicon-plus"></span> New
+				<span class="glyphicon glyphicon-plus"></span> បង្កើតថ្មី
 			</button>
 		</div>
 	</div>
@@ -58,53 +63,19 @@
 			<div id="flash_notice">{{ Session::get('flash_notice') }}</div>
 		</div>
 	@endif
-	<table class="table table-hover table-bordered table-striped">
+	<table class="table table-hover table-bordered table-striped" id="tbl_customer">
 		<thead>
 			<tr>
-				<th><input type="checkbox" name="checkOptionAll" /></th>
-				<th>Customer Code</th>
-				<th>Name</th>
-				<th>Gender</th>
-				<th>Phone No</th>
-				<th>Address</th>
-				<th>Modified</th>
-				<th>Action</th>
+				<th>លេខកូដ</th>
+				<th>ឈ្មោះ</th>
+				<th>ភេទ</th>
+				<th>លេខទូរស័ព្ទ</th>
+				<th>អាសយដ្ឋាន</th>
+				<th>ថ្ងៃនៃការកែប្រែ</th>
+				<th>សកម្មភាព</th>
 			</tr>
 		</thead>
-		<tbody>
-			
-			
-		<?php $i=1; ?>
-			@foreach($customers as $cus)
-			<tr>
-				<td style="text-align: center;"><input type="checkbox"
-					name="checkOption" /></td>
-				<td>{{ $cus->customer_code}}</td>
-				<td>{{ $cus->firstname}}</td>
-				<td>{{ $cus->sex == 1? "Male" : "Female"}}</td>
-				<td>{{ $cus->mobile_number}}</td>
-				<td>{{ $cus->address}}</td>
-				<td>{{ $cus->updated_at->timezone('Asia/Phnom_Penh')}}</td>
-				<td class="last_td">
-					<button style="float:left;margin-right:5px" type="button" onclick="redirectPage('customers/{{ $cus->id }}')" class="btn btn-xs btn-info">
-						<span class="glyphicon glyphicon-user"></span> View
-					</button>
-					<button style="float:left;margin-right:5px" type="button" onclick="redirectPage('customers/{{ $cus->id }}/edit')" class="btn btn-xs btn-primary">
-						<span class="glyphicon glyphicon-edit"></span> Edit
-					</button>
-					<div style="float:left;">
-					{!! Form::open(['route' => ['customers.destroy', $cus->id], 'method' => 'delete','id'=>'frmdelete']) !!}
-						<button type="button" class="btn btn-xs btn-danger btndelete">
-							<span class="glyphicon glyphicon-trash"></span> Delete
-						</button>
-					{!! Form::close() !!}
-					</div>
-				</td>
-			</tr>
-			@endforeach
-		</tbody>
 	</table>
-	{!! $customers->render() !!}
 </div>
 
 <script type="text/javascript">
@@ -113,13 +84,71 @@
 		window.location = url;
 	}
 
-	$(document).ready(function(){
-		$(document).on('click','.btndelete',function(){
-			if(confirm('Are you sure you want to delete this?')){
-				$('#frmdelete').submit();
-			}
-		});
-	});
+	var table = $('#tbl_customer').DataTable( {
+
+        "data": <?php echo $customers ?>,
+        "order": [[ 5, "desc" ]],
+        "createdRow": function ( row, datas, index ) {
+        	$('td', row).eq(6).addClass('last_td');
+        },
+        "columns": [
+           	{ "data": "customer_code" },
+            { "data": "firstname" },
+            { "data": "sex" },
+            { "data": "mobile_number" },
+            { "data": "address" },
+            { "data": "updated_at" },
+            { "data": null }
+        ],
+        "columnDefs": [ {
+            "targets": -1,
+            "defaultContent":
+            '<button style="margin-right:5px" type="button" class="btnview btn btn-xs btn-info">'
+            + '<span class="glyphicon glyphicon-user"></span> View</button>'
+            +'<button style="margin-right:5px" type="button" class="btnedit btn btn-xs btn-primary">'
+			+'<span class="glyphicon glyphicon-edit"></span> Edit</button>'
+			+'<button type="button" class="btn btn-xs btn-danger btndelete">'
+			+'<span class="glyphicon glyphicon-trash"></span> Delete'
+			+'</button>'
+        },
+        {
+            "targets": 2,
+            "render": function ( data, type, row ) {
+                var sex = "";
+                if(data == 1) {
+                	sex = "Male";
+                }else{
+                	sex = "Female";
+                }
+                return sex;
+            },
+        }]
+    } );
+
+	$('#tbl_customer tbody').on( 'click', '.btnview', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        redirectPage('customers/' + data['id']);
+    } );
+
+    $('#tbl_customer tbody').on( 'click', '.btnedit', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        redirectPage('customers/' + data['id'] + '/edit');
+    } );
+
+    $('#tbl_customer tbody').on( 'click', '.btndelete', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        var ts = $(this);
+        if(confirm('តើអ្នកពិតជាចង់លុបវាពិតមែនទេ?')){
+			$.ajax({
+			    url: 'customers/' + data['id'],
+			    type: 'DELETE',
+			    data:{"_token": "{{ csrf_token() }}"},
+			    success: function(result) {
+			    	table.row(ts.parents('tr')).remove().draw( false );
+			    }
+			});
+		}
+    } );
 
 </script>
 @stop

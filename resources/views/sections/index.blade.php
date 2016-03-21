@@ -16,6 +16,11 @@
 	text-align: center;
 }
 
+.table-responsive{
+	overflow: hidden;
+	min-height: .01%;
+}
+
 .last_td {
 	text-align: center;
 }
@@ -42,13 +47,13 @@
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">
-			<img src="{{ URL::asset('/img/settings_b.png') }}" /> <label>Group Expense</label>
+			<img src="{{ URL::asset('/img/settings_b.png') }}" /> <label>ក្រុមចំនាយ</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
 			<button onclick="redirectPage('create')" type="button"
 				class="btn btn-md btn-success">
-				<span class="glyphicon glyphicon-plus"></span> New
+				<span class="glyphicon glyphicon-plus"></span> បង្កើតថ្មី
 			</button>
 		</div>
 	</div>
@@ -58,43 +63,16 @@
 			<div id="flash_notice">{{ Session::get('flash_notice') }}</div>
 		</div>
 	@endif
-	<table class="table table-hover table-bordered table-striped">
+	<table class="table table-hover table-bordered table-striped" id="tbl_sections">
 		<thead>
 			<tr>
-				<th><input type="checkbox" name="checkOptionAll" /></th>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Modified</th>
-				<th>Action</th>
+				<th>ឈ្មោះរបស់ក្រុមចំនាយ</th>
+				<th>បរិយាយផ្សេងៗ</th>
+				<th>ថ្ងៃនៃការកែប្រែ</th>
+				<th>សកម្មភាព</th>
 			</tr>
 		</thead>
-		<tbody>
-			
-			
-		<?php $i=1; ?>
-			@foreach($sections as $section)
-			<tr>
-				<td style="text-align: center;"><input type="checkbox"
-					name="checkOption" /></td>
-				<td>{{ $section->name }}</td>
-				<td>{{ $section->description}}</td>
-				<td>{{ $section->updated_at->timezone('Asia/Phnom_Penh')}}</td>
-				<td class="last_td">
-					<button type="button" onclick="redirectPage('show/{{ $section->id }}')" class="btn btn-xs btn-info">
-						<span class="glyphicon glyphicon-user"></span> View
-					</button>
-					<button type="button" onclick="redirectPage('edit/{{ $section->id }}')" class="btn btn-xs btn-primary">
-						<span class="glyphicon glyphicon-edit"></span> Edit
-					</button>
-					<button type="button" onclick="if(confirm('Are you sure you want to delete this?')==true) redirectPage('saleOrders/destroy/{{ $section->id }}')" class="btn btn-xs btn-danger">
-						<span class="glyphicon glyphicon-trash"></span> Delete
-					</button>
-				</td>
-			</tr>
-			@endforeach
-		</tbody>
 	</table>
-	{!! $sections->render() !!}
 </div>
 
 <script type="text/javascript">
@@ -102,6 +80,57 @@
 	function redirectPage(url){
 		window.location = url;
 	}
+
+	var table = $('#tbl_sections').DataTable( {
+
+        "data": <?php echo $sections ?>,
+        "order": [[ 2, "desc" ]],
+        "createdRow": function ( row, data, index ) {
+        	$('td', row).eq(3).addClass('last_td');
+        },
+        "columns": [
+           	{ "data": "name" },
+            { "data": "description" },
+            { "data": "updated_at" },
+            { "data": null }
+        ],
+        "columnDefs": [ {
+            "targets": -1,
+            "defaultContent":
+            '<button style="margin-right:5px" type="button" class="btnview btn btn-xs btn-info">'
+            + '<span class="glyphicon glyphicon-user"></span> View</button>'
+            +'<button style="margin-right:5px" type="button" class="btnedit btn btn-xs btn-primary">'
+			+'<span class="glyphicon glyphicon-edit"></span> Edit</button>'
+			+'<button type="button" class="btn btn-xs btn-danger btndelete">'
+			+'<span class="glyphicon glyphicon-trash"></span> Delete'
+			+'</button>'
+        } ]
+    } );
+
+	$('#tbl_sections tbody').on( 'click', '.btnview', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        redirectPage('show/' + data['id']);
+    } );
+
+    $('#tbl_sections tbody').on( 'click', '.btnedit', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        redirectPage('edit/' + data['id']);
+    } );
+
+    $('#tbl_sections tbody').on( 'click', '.btndelete', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        var ts = $(this);
+        if(confirm('តើអ្នកពិតជាចង់លុបវាពិតមែនទេ?')){
+			$.ajax({
+			    url: 'destroy/' + data['id'],
+			    type: 'GET',
+			    data:{"_token": "{{ csrf_token() }}"},
+			    success: function(result) {
+			    	table.row(ts.parents('tr')).remove().draw( false );
+			    }
+			});
+		}
+    } );
 
 </script>
 @stop

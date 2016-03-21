@@ -21,10 +21,10 @@
             },
             messages: {
             	customer_code: {
-                    required: "Please enter customer code"
+                    required: "សូមបញ្ចូលលេខកូដរបស់អតិថិជន"
                 },
                 firstname:{
-                	required: "Please enter customer name"
+                	required: "សូមបញ្ចូលឈ្មោះរបស់អតិថិជន"
                 }
             },
             highlight: function(element) {

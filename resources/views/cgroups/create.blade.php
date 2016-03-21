@@ -18,7 +18,7 @@
             },
             messages: {
             	name: {
-                    required: "Please enter name of customer group"
+                    required: "សូមបញ្ចូលឈ្មោះរបស់ក្រុមអតិថិជន"
                 }
             },
             highlight: function(element) {

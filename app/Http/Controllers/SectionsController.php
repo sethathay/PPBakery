@@ -20,7 +20,8 @@ class SectionsController extends Controller
     public function index()
     {
         //Index of sections refer as expense group
-        $sections = Section::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
+        $sec = Section::where('is_active', 1)->get();
+        $sections = json_encode($sec);
         return view('sections/index',compact('sections'));
     }
 

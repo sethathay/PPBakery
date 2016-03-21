@@ -58,7 +58,7 @@
 			<li><a href="{{ URL::asset('bookers/index') }}"><img
 				src="{{ URL::asset('img/books.png') }}" alt="Booking" />
 				&nbsp;&nbsp;<label
-				style="vertical-align: middle; font-weight: normal;">Booking</label></a>
+				style="vertical-align: middle; font-weight: normal;">លក់កក់</label></a>
 			</li>
 			@if ( Session::get('group_id') == 1)
 			<li><a href="{{ URL::asset('#') }}"><img

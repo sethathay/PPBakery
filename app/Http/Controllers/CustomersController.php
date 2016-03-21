@@ -20,7 +20,8 @@ class CustomersController extends Controller
     public function index()
     {
         //
-        $customers = Customer::where('is_active', 1)->orderBy('updated_at','desc')->simplePaginate(12);
+        $cus = Customer::where('is_active', 1)->get();
+        $customers = json_encode($cus);
         return view('customers/index',compact('customers'));
     }
 
@@ -109,6 +110,6 @@ class CustomersController extends Controller
         //
         $cus = new Customer;
         $cus->where('id', $id)->update(['is_active' => 0]);
-        return Redirect::route('customers.index')->with('flash_notice', 'You are successfully delete!');
+        //return Redirect::route('customers.index')->with('flash_notice', 'You are successfully delete!');
     }
 }

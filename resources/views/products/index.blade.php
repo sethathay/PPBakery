@@ -20,6 +20,11 @@
 	text-align: center;
 }
 
+.table-responsive{
+	overflow: hidden;
+	min-height: .01%;
+}
+
 .panel-heading {
 	background: #ebf4fe;
 	padding: 0 0 0 10px;
@@ -58,10 +63,9 @@
 			<div id="flash_notice">{{ Session::get('flash_notice') }}</div>
 		</div>
 	@endif
-	<table class="table table-hover table-bordered table-striped">
+	<table class="table table-hover table-bordered table-striped" id="tbl_product">
 		<thead>
 			<tr>
-				<th><input type="checkbox" name="checkOptionAll" /></th>
 				<th>លេខកូដ</th>
 				<th>ឈ្មោះទំនិញ</th>
 				<th>ក្រុមទំនិញ</th>
@@ -70,39 +74,7 @@
 				<th>សកម្មភាព</th>
 			</tr>
 		</thead>
-		<tbody>
-			
-			
-		<?php $i=1; ?>
-			@foreach($products as $p)
-			<tr>
-				<td style="text-align: center;"><input type="checkbox"
-					name="checkOption" /></td>
-				<td>{{ $p->code }}</td>		
-				<td>{{ $p->name }}</td>
-				<td>{{ $pgroups[$p->pgroup_id] }}</td>
-				<td><span class="label label-success">R</span> {{ $p->price }}</td>
-				<td>{{ $p->updated_at->timezone('Asia/Phnom_Penh')}}</td>
-				<td class="last_td">
-					<button style="float:left;margin-right:5px" type="button" onclick="redirectPage('products/{{ $p->id }}')" class="btn btn-xs btn-info">
-						<span class="glyphicon glyphicon-user"></span> View
-					</button>
-					<button style="float:left;margin-right:5px" type="button" onclick="redirectPage('products/{{ $p->id }}/edit')" class="btn btn-xs btn-primary">
-						<span class="glyphicon glyphicon-edit"></span> Edit
-					</button>
-					<div style="float:left;">
-					{!! Form::open(['route' => ['products.destroy', $p->id], 'method' => 'delete','id'=>'frmdelete']) !!}
-						<button type="button" class="btn btn-xs btn-danger btndelete">
-							<span class="glyphicon glyphicon-trash"></span> Delete
-						</button>
-					{!! Form::close() !!}
-					</div>
-				</td>
-			</tr>
-			@endforeach
-		</tbody>
 	</table>
-	{!! $products->render() !!}
 </div>
 
 <script type="text/javascript">
@@ -111,13 +83,64 @@
 		window.location = url;
 	}
 
-	$(document).ready(function(){
-		$(document).on('click','.btndelete',function(){
-			if(confirm('Are you sure you want to delete this?')){
-				$('#frmdelete').submit();
-			}
-		});
-	});
+	var table = $('#tbl_product').DataTable( {
+
+        "data": <?php echo $products ?>,
+        "order": [[ 4, "desc" ]],
+        "createdRow": function ( row, datas, index ) {
+        	$('td', row).eq(5).addClass('last_td');
+        },
+        "columns": [
+           	{ "data": "code" },
+            { "data": "name" },
+            { "data": "product_group" },
+            { "data": "price" },
+            { "data": "updated_at" },
+            { "data": null }
+        ],
+        "columnDefs": [ {
+            "targets": -1,
+            "defaultContent":
+            '<button style="margin-right:5px" type="button" class="btnview btn btn-xs btn-info">'
+            + '<span class="glyphicon glyphicon-user"></span> View</button>'
+            +'<button style="margin-right:5px" type="button" class="btnedit btn btn-xs btn-primary">'
+			+'<span class="glyphicon glyphicon-edit"></span> Edit</button>'
+			+'<button type="button" class="btn btn-xs btn-danger btndelete">'
+			+'<span class="glyphicon glyphicon-trash"></span> Delete'
+			+'</button>'
+        },
+        {
+            "targets": 3,
+            "render": function ( data, type, row ) {
+                return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> ៛ </span> <span class="label label-danger" style="font-size:14px;">' + data + '</span>';
+            },
+        } ]
+    } );
+
+	$('#tbl_product tbody').on( 'click', '.btnview', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        redirectPage('products/' + data['id']);
+    } );
+
+    $('#tbl_product tbody').on( 'click', '.btnedit', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        redirectPage('products/' + data['id'] + '/edit');
+    } );
+
+    $('#tbl_product tbody').on( 'click', '.btndelete', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        var ts = $(this);
+        if(confirm('តើអ្នកពិតជាចង់លុបវាពិតមែនទេ?')){
+			$.ajax({
+			    url: 'products/' + data['id'],
+			    type: 'DELETE',
+			    data:{"_token": "{{ csrf_token() }}"},
+			    success: function(result) {
+			    	table.row(ts.parents('tr')).remove().draw( false );
+			    }
+			});
+		}
+    } );
 
 </script>
 @stop

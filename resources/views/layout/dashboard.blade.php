@@ -34,7 +34,7 @@
 
 		});
 	</script>
-	<div class="col-lg-9 dashboard">
+	<div class="col-lg-10 dashboard">
 		<!-- check for flash notification message -->
         @if(Session::has('flash_notice'))
             <div id="flash_notice">{{ Session::get('flash_notice') }}</div>
@@ -48,7 +48,7 @@
 			<div class="col-md-2 board" onclick="redirectPage('saleOrders/index')"><img src="{{ URL::asset('img/receipt_b.png') }}" /><br/>វិក័យប័ត្រ</div>
 			<div class="col-md-2 board" onclick="redirectPage('#')"><img src="{{ URL::asset('img/report_b.png') }}" /><br/>របាយការណ៍</div>
 			<div class="col-md-2 board" onclick="redirectPage('{{ URL::asset('users/index') }}')"><img src="{{ URL::asset('img/users_2_b.png') }}" /><br/>អ្នកប្រើប្រាស់</div>
-			<div class="col-md-2 board" id="dsettting"><img src="{{ URL::asset('img/settings_b.png') }}" /><br/>ការកំណត់របស់ប្រព័ន្ធ</div>
+			<div class="col-md-2 board" onclick="redirectPage('{{ URL::asset('bookers/index') }}')"><img src="{{ URL::asset('img/book_b.png') }}" /><br/>លក់កក់</div>
 			<div class="col-md-2 board" onclick="redirectPage('#')"><img src="{{ URL::asset('img/blue_external_drive_backup.png') }}" /><br/>រក្សាទុកទិន្នន័យរបស់ប្រព័ន្ធ</div>
 		</div>
 	</div>

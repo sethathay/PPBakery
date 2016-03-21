@@ -53,15 +53,19 @@
 .footer_content{
 	padding-top: 5px;
 }
+.title-head{
+	font-size: 30px;
+	font-weight: bold;
+}
 </style>
 </head>
 <body>
 	<div class="cover-container">
-		<div id="loginbox" style="margin-top: 50px;"
-			class="mainbox col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
-			<div class="panel panel-info">
+		<div id="loginbox" class="mainbox col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+			<img class="logo img-responsive" src="{{ URL::asset('img/pp.png') }}" alt="hamburger.png" style="padding-left:23%;" />
+			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<div class="panel-title">ហាងនំបុ័ងភ្នំពេញ</div>
+					<div class="panel-title title-head">ហាងនំបុ័ងភ្នំពេញ</div>
 				</div>
 
 				<div style="padding-top: 30px" class="panel-body">
@@ -75,22 +79,22 @@
 					'post', 'class' => 'form-horizontal', 'role'=>'form',
 					'id'=>'loginform', 'data-toggle'=>'validator')) !!}
 
-					<div style="margin-bottom: 15px" class="input-group">
+					<div style="margin-bottom: 15px;height:50px" class="input-group">
 						<span class="input-group-addon"><i
 							class="glyphicon glyphicon-user"></i> </span> <input
 							id="login-username" type="text" class="form-control"
-							name="username" value="" placeholder="ឈ្មោះអ្នកប្រើប្រាស់">
+							name="username" value="" style="height:50px" placeholder="ឈ្មោះអ្នកប្រើប្រាស់">
 					</div>
 
-					<div style="margin-bottom: 15px" class="input-group">
+					<div style="margin-bottom: 15px;height:50px" class="input-group">
 						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> </span> 
-						<input id="login-password" type="password" class="form-control" name="password" placeholder="លេខសំងាត់">
+						<input id="login-password" style="height:50px" type="password" class="form-control" name="password" placeholder="លេខសំងាត់">
 					</div>
 
 					<div style="margin-top: 10px" class="form-group">
 						<!-- Button -->
 						<div class="col-sm-12 controls">
-							<button type="submit" class="btn btn-md btn-success">
+							<button type="submit" style="padding:12px;" class="btn btn-md btn-success">
 								<span class="glyphicon"></span> ចូលទៅកាន់ប្រព័ន្ធ
 							</button>
 
