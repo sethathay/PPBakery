@@ -39,7 +39,7 @@
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">អត្រា​ប្តូ​រ​ប្រាក់</label></a>
 			</li>
-			<li><a href="{{ URL::asset('#') }}"><img
+			<li><a href="{{ URL::asset('discounts') }}"><img
 				src="{{ URL::asset('img/discounts.png') }}" alt="Discount" />
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">ការបញ្ចុះតំលៃ</label></a>

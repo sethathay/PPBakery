@@ -119,3 +119,6 @@ Route::resource('groups','GroupsController');
 
 //Route of customer by Thay Setha
 Route::resource('customers','CustomersController');
+
+//Route of discount by Thay Setha
+Route::resource('discounts','DiscountsController');
