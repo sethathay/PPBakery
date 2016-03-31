@@ -54,18 +54,28 @@
 						<td colspan="4" style="text-align:right;">តំលៃសរុបត្រូវបង់ (R)</td>
 						<td colspan="2" style="text-align:right;"><label><?php echo number_format($sub_total); ?></label></td>
 					</tr>
+					<?php if($saleOrder->discount_riel != ""){?>
 					<tr>
 						<td colspan="4" style="text-align:right;">ចុះតំលៃ (R)</td>
 						<td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrder->discount_riel); ?></label></td>
 					</tr>
+					<?php }?>
+					<?php if($saleOrder->discount_us != ""){?>
 					<tr>
 						<td colspan="4" style="text-align:right;">ចុះតំលៃ ($)</td>
 						<td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrder->discount_us); ?></label></td>
 					</tr>
+					<?php }?>
 					<tr>
 						<td colspan="4" style="text-align:right;">ប្រាក់បង់រួច (R)</td>
 						<td colspan="2" style="text-align:right;"><label><?php echo number_format($sub_total-$saleOrder->balance); ?></label></td>
 					</tr>
+					<?php if($saleOrder->balance != ""){?>
+					<tr>
+						<td colspan="4" style="text-align:right;">ប្រាក់មិនទាន់បង់ (R)</td>
+						<td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrder->balance); ?></label></td>
+					</tr>
+					<?php }?>
 				</table>
 			</div>
 			<?php if($footer == "yes"){?>

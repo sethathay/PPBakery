@@ -173,7 +173,7 @@ body {
 
 .header-fixed > tbody {
     overflow-y: auto;
-    height: 300px;
+    height: 350px;
 }
 
 .header-fixed > tbody > tr > td,
@@ -272,6 +272,13 @@ body {
 #slideshow IMG.last-active {
     z-index:9;
 }
+
+.setBackground{
+	background: #F9AEC3 !important;
+}
+.align_right{
+	text-align:right;
+}
 </style>
 </head>
 <body>
@@ -283,6 +290,16 @@ body {
 				</div>
 				<div class="col-md-2 header_name">
 					<label class="big_name">ហាងនំបុ័ងភ្នំពេញ</label>
+				</div>
+				<div class="col-md-9" style="text-align:right; padding-top: 20px;">
+					<button onclick="redirectPage('saleOrders/create')" type="button"
+						class="btn btn-md btn-primary">
+						<span class="glyphicon glyphicon-plus"></span> លក់ដុំ
+					</button>
+					<button onclick="redirectPage('bookers/book')" type="button"
+						class="btn btn-md btn-success">
+					<span class="glyphicon glyphicon-plus"></span> កក់ទំនេញ
+				</button>
 				</div>
 			</div>
 		</div>
@@ -354,6 +371,13 @@ body {
 					            <td><label class="lbl_total_by_item"></label>{!! Form::text('txt_total_by_item[]', null, array('class'=>'row_input txt_total_by_item')) !!}</td>
 					            <td>
 									{!! Form::hidden('id[]', null, array('class'=>'row_input id')) !!}
+									<button type="button" class="btn_decrease btn btn-xs btn-danger">
+										<span class="glyphicon glyphicon-minus"></span> 
+									</button>
+									<button type="button" class="btn_increase btn btn-xs btn-success">
+										<span class="glyphicon glyphicon-plus"></span> 
+									</button>
+									&nbsp;&nbsp;&nbsp;
 					            	<button type="button" class="btn_edit btn btn-xs btn-primary">
 										<span class="glyphicon glyphicon-edit"></span> 
 									</button>
@@ -399,54 +423,54 @@ body {
 	
 			<!-- Modal Payment -->
 			<div id="myModalPayment" class="modal fade bs-example-modal-lg" role="dialog">
-			  <div class="modal-dialog modal-lg">
+			  <div class="modal-dialog modal-md">
 
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-body"><br/>
 						<div class="row">
-							<div class="col-md-4"><label>តំលៃសរុបត្រូវបង់ (៛) : </label></div>
-							<div class="col-md-7 amount-big"><label class="popup_total_amount_riel"></label> <label>៛</label></div>
+							<div class="col-md-4 align_right"><label>តំលៃសរុបត្រូវបង់ (៛) : </label></div>
+							<div class="col-md-5 amount-big" style="padding-right:0;"><label class="popup_total_amount_riel"></label> <label>៛</label></div>
 						</div>
 						<div class="row">
-							<div class="col-md-4"><label>តំលៃសរុបត្រូវបង់ ($) : </label></div>
-							<div class="col-md-7 amount-big"><label class="popup_total_amount_us"></label> <label>$</label></div>
+							<div class="col-md-4 align_right"><label>តំលៃសរុបត្រូវបង់ ($) : </label></div>
+							<div class="col-md-5 amount-big" style="padding-right:0;"><label class="popup_total_amount_us"></label> <label>$</label></div>
 						</div>
-						<div class="row">
+						<div class="row" style="margin-top: 20px">
 							<div style="margin-bottom: 50px">
-								<div class="col-md-4"><label>បញ្ចុះតំលៃ (៛) : </label></div>
-								<div class="col-md-7 amount-big"><input id="custom-discount-riel" type="text" class="form-control custom-discount-riel" name="custom-discount-riel" value="0" placeholder=""></div>
+								<div class="col-md-4 align_right"><label>បញ្ចុះតំលៃ (៛) : </label></div>
+								<div class="col-md-5 amount-big"><input id="custom-discount-riel" type="text" class="form-control custom-discount-riel" name="custom-discount-riel" value="0" placeholder=""></div>
 							</div>
 						</div>
 						<div class="row">
 							<div style="margin-bottom: 70px">
-								<div class="col-md-4"><label>បញ្ចុះតំលៃ ($) : </label></div>
-								<div class="col-md-7 amount-big"><input id="custom-discount-us" type="text" class="form-control custom-discount-us" name="custom-discount-us" value="0" placeholder=""></div>
+								<div class="col-md-4 align_right"><label>បញ្ចុះតំលៃ ($) : </label></div>
+								<div class="col-md-5 amount-big align_right"><input id="custom-discount-us" type="text" class="form-control custom-discount-us" name="custom-discount-us" value="0" placeholder=""></div>
 							</div>
 						</div>
 						<div class="row">
 							<div style="margin-bottom: 50px">
-								<div class="col-md-4"><label>បង់ប្រាក់ (៛) : </label></div>
-								<div class="col-md-7 amount-big"><input id="amount_riel" type="text" class="form-control custom-amount" name="amount_riel" value="0" placeholder=""></div>
+								<div class="col-md-4 align_right"><label>បង់លុយ (៛) : </label></div>
+								<div class="col-md-5 amount-big align_right"><input id="amount_riel" type="text" class="form-control custom-amount" name="amount_riel" value="0" placeholder=""></div>
 							</div>
 						</div>
 						<div class="row">
 							<div style="margin-bottom: 50px">
-								<div class="col-md-4"><label>បង់ប្រាក់ ($) : </label></div>
-								<div class="col-md-7 amount-big"><input id="amount_us" type="text" class="form-control custom-amount" name="amount_us" value="0" placeholder=""></div>
+								<div class="col-md-4 align_right"><label>បង់លុយ ($) : </label></div>
+								<div class="col-md-5 amount-big align_right"><input id="amount_us" type="text" class="form-control custom-amount" name="amount_us" value="0" placeholder=""></div>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-md-4"><label>ប្រាក់អាប់ (៛) : </label></div>
-							<div class="col-md-7 amount-big" style="color:blue;"><label class="remain_total_amount_riel">0</label> <label>៛</label></div>
+						<div class="row" style="margin-top: 20px">
+							<div class="col-md-4 align_right"><label>លុយអាប់ (៛) : </label></div>
+							<div class="col-md-5 amount-big" style="color:blue;padding-right:0;"><label class="remain_total_amount_riel">0</label> <label>៛</label></div>
 						</div>
 						<div class="row">
-							<div class="col-md-4"><label>ប្រាក់អាប់ ($) : </label></div>
-							<div class="col-md-7 amount-big" style="color:blue;"><label class="remain_total_amount_us">0</label> <label>$</label></div>
+							<div class="col-md-4 align_right"><label>លុយអាប់ ($) : </label></div>
+							<div class="col-md-5 amount-big" style="color:blue;padding-right:0;"><label class="remain_total_amount_us">0</label> <label>$</label></div>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-print btn-primary" id="btn-paid" data-dismiss="modal">បង់ប្រាក់</button>				
+						<button type="button" class="btn btn-print btn-primary" id="btn-paid" data-dismiss="modal">គិតលុយ</button>				
 						<button type="button" class="btn btn-print btn-danger" data-dismiss="modal">ត្រឡប់ក្រោយ</button>
 					</div>
 				</div>
@@ -503,6 +527,10 @@ body {
 	<div id="myModalPrint" class="modal fade col-md-3" role="dialog">
 	</div>
 	<script type="text/javascript">
+		
+		function redirectPage(url){
+			window.open(url);
+		}
 		$(document).ready(function(){
 			
 			$("#myModalPayment").find("input").keydown(
@@ -550,25 +578,36 @@ body {
 			$("#myModalPayment").find("input").keyup(function(e){
 				var key = e.keyCode || e.which;
 				if(key === 13){
-					if(record > 0){
-						$.ajax({
-							type : 'post',
-							url : '{{ URL::asset("pos/sale") }}',
-							data : $("#adminForm").serialize(),
-							dataType : 'json',
-							success : function(result){
-								// return sales_order_id;								
-								$("#myModalPayment").hide();
-								$("#myModalPrint").load('pos/print/'+result+'/no', '', function(){
-									//$("#myModalPrint").modal();
-									w = window.open();
-									w.document.write($("#myModalPrint").html());
-									w.print(false);
-                                    w.close();
-									window.location.reload();
-								});
-							}
-						});
+					var amount_riel = Number($("#amount_riel").val());
+					var amount_us = Number($("#amount_us").val());
+					var custom_discount_riel = Number($("#custom-discount-riel").val().replace(",",""));
+					var custom_discount_us = Number($("#custom-discount-us").val().replace(",",""));
+					var total_amount = $(".txt_total_amount_riel").val();
+					var total_amount_tobe_paid = amount_riel+(amount_us*rate)+custom_discount_riel+(custom_discount_us*rate);
+					
+					if(total_amount <= total_amount_tobe_paid){
+						if(record > 0){
+							$.ajax({
+								type : 'post',
+								url : '{{ URL::asset("pos/sale") }}',
+								data : $("#adminForm").serialize(),
+								dataType : 'json',
+								success : function(result){
+									// return sales_order_id;								
+									$("#myModalPayment").hide();
+									$("#myModalPrint").load('pos/print/'+result+'/no', '', function(){
+										//$("#myModalPrint").modal();
+										w = window.open();
+										w.document.write($("#myModalPrint").html());
+										w.print(false);
+										w.close();
+										window.location.reload();
+									});
+								}
+							});
+						}
+					}else{
+						alert("លុយបង់មិនគ្រប់មិនអាចលក់បានទេ!");
 					}
 				}
 			});
@@ -576,25 +615,37 @@ body {
 			
 			// when click button Paid
 			$("#btn-paid").click(function(){
-				if(record > 0){
-					$.ajax({
-						type : 'post',
-						url : '{{ URL::asset("pos/sale") }}',
-						data : $("#adminForm").serialize(),
-						dataType : 'json',
-						success : function(result){
-							// return sales_order_id;							
-							$("#myModalPayment").hide();
-							$("#myModalPrint").load('pos/print/'+result+'/no', '', function(){
-								//$("#myModalPrint").modal();
-								w = window.open();
-								w.document.write($("#myModalPrint").html());
-								w.print(false);
-								w.close();
-								window.location.reload();
-							});
-						}
-					});
+				
+				var amount_riel = Number($("#amount_riel").val());
+				var amount_us = Number($("#amount_us").val());
+				var custom_discount_riel = Number($("#custom-discount-riel").val().replace(",",""));
+				var custom_discount_us = Number($("#custom-discount-us").val().replace(",",""));
+				var total_amount = $(".txt_total_amount_riel").val();
+				var total_amount_tobe_paid = amount_riel+(amount_us*rate)+custom_discount_riel+(custom_discount_us*rate);
+				
+				if(total_amount <= total_amount_tobe_paid){
+					if(record > 0){
+						$.ajax({
+							type : 'post',
+							url : '{{ URL::asset("pos/sale") }}',
+							data : $("#adminForm").serialize(),
+							dataType : 'json',
+							success : function(result){
+								// return sales_order_id;							
+								$("#myModalPayment").hide();
+								$("#myModalPrint").load('pos/print/'+result+'/no', '', function(){
+									//$("#myModalPrint").modal();
+									w = window.open();
+									w.document.write($("#myModalPrint").html());
+									w.print(false);
+									w.close();
+									window.location.reload();
+								});
+							}
+						});
+					}
+				}else{
+					alert("លុយបង់មិនគ្រប់មិនអាចលក់បានទេ!");
 				}
 			});
 			
@@ -640,7 +691,7 @@ body {
 				$("#code").focus();
 			});
 			
-			// F7
+			
 			$("#custom-amount-minus").keypress(function(e) {
 					
 				var codes = e.keyCode || e.which;
@@ -658,6 +709,11 @@ body {
 				}
 				
 			});
+			
+			$(".table-responsive").click(function(){
+				$("#code").focus();
+			});
+			
 			// when fill product code
 			$("#code").keydown(function(e) {
 				var code = e.keyCode || e.which;
@@ -740,6 +796,60 @@ body {
 				$(this).closest("tr").find(".btn_save").toggle();
 				$(this).closest("tr").find("input").toggle();
 				$(this).closest("tr").find("label").toggle();
+			});
+			
+			// when click on increase button
+			$(".btn_increase").click(function(){				
+				var getObj = $(this).parents("tr");
+				var newQty = Number(getObj.find(".txt_qty").val())+1;
+				getObj.find(".txt_qty").val( newQty );
+				
+				var unit_price = Number(getObj.find(".txt_unit_price").val());
+				var oldDiscount = Number(getObj.find(".lbl_discount").text().replace(",","")) / Number(getObj.find(".lbl_qty").text());
+				$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
+				
+				getObj.find(".lbl_qty").text(Number(getObj.find(".txt_qty").val()));
+				
+				getObj.find(".lbl_discount").text(addCommas( oldDiscount * newQty ));
+				getObj.find(".txt_discount").val(oldDiscount * newQty);
+				var newDiscount = oldDiscount * newQty;
+				
+				var total_by_item = unit_price*newQty - newDiscount;				
+				getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
+				getObj.find(".txt_total_by_item").val(total_by_item);
+				
+				calculateTotalBlock(total_by_item);
+				
+				$("#code").focus();
+			});
+			// when click on decrease button
+			$(".btn_decrease").click(function(){				
+				var getObj = $(this).parents("tr");
+				if(Number(getObj.find(".txt_qty").val()) > 1){
+					var newQty = Number(getObj.find(".txt_qty").val())-1;
+					getObj.find(".txt_qty").val( newQty );
+					
+					
+					var unit_price = Number(getObj.find(".txt_unit_price").val());
+					var oldDiscount = Number(getObj.find(".lbl_discount").text().replace(",","")) / Number(getObj.find(".lbl_qty").text());
+					$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
+					
+					getObj.find(".lbl_qty").text(Number(getObj.find(".txt_qty").val()));
+					
+					getObj.find(".lbl_discount").text(addCommas( oldDiscount * newQty ));
+					getObj.find(".txt_discount").val(oldDiscount * newQty);
+					var newDiscount = oldDiscount * newQty;
+					
+					var total_by_item = unit_price*newQty - newDiscount;				
+					getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
+					getObj.find(".txt_total_by_item").val(total_by_item);
+					
+					calculateTotalBlock(total_by_item);
+				}else{
+					alert("មិនអាចដកទៀតបានទេ ទំនិញយ៉ាងហោចណាស់ត្រូវទុកចំនួន​ 1!!");
+				}
+				
+				$("#code").focus();
 			});
 			
 			// when qty is change
@@ -1003,14 +1113,18 @@ body {
 					if(index > 10){
 						$(".photo_product").find('li:eq('+(index-11)+')').hide();
 					}
-					$(".photo_product").append('<li><img src="{{ URL::asset("img/product/") }}/'+picture+'" alt="" /><span class="product_name">'+result.name+'<span class="spacer"></span></li>');
+					if(index > 1){						
+						$(".photo_product li:eq(0)").before('<li><img src="{{ URL::asset("img/product/") }}/'+picture+'" alt="" /><span class="product_name">'+result.name+'<span class="spacer"></span></li>');
+					}else{
+						$(".photo_product").append('<li><img src="{{ URL::asset("img/product/") }}/'+picture+'" alt="" /><span class="product_name">'+result.name+'<span class="spacer"></span></li>');
+					}
 					index++;
 					
-					var obj = $(".header-fixed tbody").find('tr:last');
+					var obj = $(".header-fixed tbody").find('tr:first');
 					// Add product id into array
 					productItem.push(result.id);
 					// Create row and set value
-					obj.clone(true).appendTo(".header-fixed tbody");
+					obj.clone(true).insertAfter(".header-fixed tbody tr:nth-child(1)");
 					obj.css("display", "");
 					obj.find("td:first").text(result.name);
 					obj.find("td:eq(1)").find(".lbl_qty").text(qty);
@@ -1023,6 +1137,8 @@ body {
 					obj.find("td:eq(4)").find(".txt_total_by_item").val(total_by_item);
 					obj.find("td:eq(5)").find(".id").val(result.id);
 					
+					$("tr").removeClass("setBackground");					
+					obj.addClass("setBackground");
 					
 				}else{
 					
@@ -1051,6 +1167,9 @@ body {
 						// Remove product picture
 						$(".product_name:contains('"+newObj.find("td:eq(0)").text()+"')").parents("li").remove();
 					}
+				
+					$("tr").removeClass("setBackground");					
+					newObj.addClass("setBackground");
 					
 				}
 				

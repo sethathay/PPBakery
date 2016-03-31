@@ -86,6 +86,10 @@
 	text-align: right;
 	padding-right : 50px;
 }
+
+.setBackground{
+	background: #F9AEC3 !important;
+}
 </style>
 
 <?php
@@ -181,6 +185,13 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					<td><label class="lbl_total_by_item"></label>{!! Form::text('txt_total_by_item[]', null, array('class'=>'row_input txt_total_by_item')) !!}</td>
 					<td>
 						{!! Form::hidden('id[]', null, array('class'=>'row_input id')) !!}
+						<button type="button" class="btn_decrease btn btn-xs btn-danger">
+							<span class="glyphicon glyphicon-minus"></span> 
+						</button>
+						<button type="button" class="btn_increase btn btn-xs btn-success">
+							<span class="glyphicon glyphicon-plus"></span> 
+						</button>
+						&nbsp;&nbsp;&nbsp;
 						<button type="button" class="btn_edit btn btn-xs btn-primary">
 							<span class="glyphicon glyphicon-edit"></span> 
 						</button>
@@ -193,7 +204,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					</td>
 				</tr>
 				
-				<div class="row block-total" style="background: #DBEAF9; height: 200px; font-size: 16px; padding-top: 10px; width:83%;">
+				<div class="row block-total" style="background: #DBEAF9; height: 230px; font-size: 16px; padding-top: 10px; width:83%;">
 					<div class="col-md-6">
 						<div><label>សារខា :  {{  Session::get('location_id') }} </label></div>
 						<div><label>ឈ្មោះអ្នកប្រើប្រាស់ :  {{  Auth::user()->first_name." ".Auth::user()->last_name }} </label></div>
@@ -213,7 +224,13 @@ function number_format_unlimited_precision($number,$decimal = '.')
 							<div class="col-md-6"><label>បញ្ចុះតំលៃ ($)  : </label></div>
 							<div class="col-md-6  amount"><label class="lbl_total_discount_us">{{ number_format_unlimited_precision($saleOrders->discount_us) }}</label> <label>$</label>{!! Form::hidden('txt_total_discount_us', $saleOrders->discount_us, array('class'=>'txt_total_discount_us')) !!}</div>
 						</div>
-						<div class="row" style="padding-top:25px;">
+						
+						<div class="row">
+							<div class="col-md-6" style="color:blue;"><label>ប្រាក់បង់រួច (៛) : </label></div>
+							<div class="col-md-6  amount-big" style="color:blue;"><label class="total_amount_riel">{{ number_format_unlimited_precision($saleOrders->total_amount_riel - $saleOrders->balance) }}</label> <label>៛</label>{!! Form::hidden('paid-amount', ($saleOrders->total_amount_riel-$saleOrders->balance), array('class'=>'paid-amount')) !!}</div>
+						</div>
+						
+						<div class="row">
 							<div class="col-md-6" style="color:red;"><label>តំលៃសរុបត្រូវបង់ (៛) : </label></div>
 							<div class="col-md-6  amount-big"><label class="total_amount_riel">{{ number_format_unlimited_precision($saleOrders->total_amount_riel) }}</label> <label>៛</label>{!! Form::hidden('total_amount_riel', $saleOrders->total_amount_riel, array('class'=>'txt_total_amount_riel')) !!}</div>
 						</div>
@@ -278,7 +295,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-print btn-primary" id="btn-paid" data-dismiss="modal">បង់ប្រាក់</button>				
+				<button type="button" class="btn btn-print btn-primary" id="btn-paid" data-dismiss="modal">គិតលុយ</button>				
 				<button type="button" class="btn btn-print btn-danger" data-dismiss="modal">ត្រឡប់ក្រោយ</button>
 			</div>
 		</div>
@@ -359,6 +376,11 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		
 		$("#code").val('');
 		$("#code").focus();
+		
+		$(".table-responsive").click(function(){
+			$("#code").focus();
+		});
+
 		
 		
 		var rate = "{{ Session::get('exchangerate')->riel }}";
@@ -680,11 +702,11 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			if(productItem.indexOf(Number(result.id)) == -1){
 				
 				
-				var obj = $(".header-fixed tbody").find('tr:last');
+				var obj = $(".header-fixed tbody").find('tr:first');
 				// Add product id into array
 				productItem.push(result.id);
 				// Create row and set value
-				obj.clone(true).appendTo(".header-fixed tbody");
+				obj.clone(true).insertAfter(".header-fixed tbody tr:nth-child(1)");
 				obj.css("display", "");
 				obj.find("td:first").text(result.name);
 				obj.find("td:eq(1)").find(".lbl_qty").text(qty);
@@ -696,6 +718,9 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				obj.find("td:eq(4)").find(".lbl_total_by_item").text(addCommas(total_by_item));
 				obj.find("td:eq(4)").find(".txt_total_by_item").val(total_by_item);
 				obj.find("td:eq(5)").find(".id").val(result.id);
+					
+				$("tr").removeClass("setBackground");					
+				obj.addClass("setBackground");
 				
 				
 			}else{
@@ -726,6 +751,9 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					$(".product_name:contains('"+newObj.find("td:eq(0)").text()+"')").parents("li").remove();
 				}
 				
+				
+				$("tr").removeClass("setBackground");					
+				newObj.addClass("setBackground");
 			}
 			
 			// Sum total discount
@@ -772,6 +800,62 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			}
 			
 			$("#code").focus();				
+		});
+		
+		
+			
+		// when click on increase button
+		$(".btn_increase").click(function(){				
+			var getObj = $(this).parents("tr");
+			var newQty = Number(getObj.find(".txt_qty").val())+1;
+			getObj.find(".txt_qty").val( newQty );
+			
+			var unit_price = Number(getObj.find(".txt_unit_price").val());
+			var oldDiscount = Number(getObj.find(".lbl_discount").text().replace(",","")) / Number(getObj.find(".lbl_qty").text());
+			$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
+			
+			getObj.find(".lbl_qty").text(Number(getObj.find(".txt_qty").val()));
+			
+			getObj.find(".lbl_discount").text(addCommas( oldDiscount * newQty ));
+			getObj.find(".txt_discount").val(oldDiscount * newQty);
+			var newDiscount = oldDiscount * newQty;
+			
+			var total_by_item = unit_price*newQty - newDiscount;				
+			getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
+			getObj.find(".txt_total_by_item").val(total_by_item);
+			
+			calculateTotalBlock(total_by_item);
+			
+			$("#code").focus();
+		});
+		// when click on decrease button
+		$(".btn_decrease").click(function(){				
+			var getObj = $(this).parents("tr");
+			if(Number(getObj.find(".txt_qty").val()) > 1){
+				var newQty = Number(getObj.find(".txt_qty").val())-1;
+				getObj.find(".txt_qty").val( newQty );
+				
+				
+				var unit_price = Number(getObj.find(".txt_unit_price").val());
+				var oldDiscount = Number(getObj.find(".lbl_discount").text().replace(",","")) / Number(getObj.find(".lbl_qty").text());
+				$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
+				
+				getObj.find(".lbl_qty").text(Number(getObj.find(".txt_qty").val()));
+				
+				getObj.find(".lbl_discount").text(addCommas( oldDiscount * newQty ));
+				getObj.find(".txt_discount").val(oldDiscount * newQty);
+				var newDiscount = oldDiscount * newQty;
+				
+				var total_by_item = unit_price*newQty - newDiscount;				
+				getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
+				getObj.find(".txt_total_by_item").val(total_by_item);
+				
+				calculateTotalBlock(total_by_item);
+			}else{
+				alert("មិនអាចដកទៀតបានទេ ទំនិញយ៉ាងហោចណាស់ត្រូវទុកចំនួន​ 1!!");
+			}
+			
+			$("#code").focus();
 		});
 		
 		// click on button edit

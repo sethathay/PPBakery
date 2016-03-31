@@ -44,6 +44,8 @@ class BookersController extends Controller
     	$inputs = Input::all();
 		$inputs['amount_riel'] = str_replace(",","",$inputs['amount_riel']);
 		
+		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
+		$rate = $exchangerate->riel;
 		// To save booker information
 		$booker = array();
         $booker['_token']    = $inputs['_token'];
@@ -63,7 +65,7 @@ class BookersController extends Controller
         $saleOrder['total_amount_us']    = $inputs['total_amount_us'];
         $saleOrder['discount_riel']    = $inputs['custom-discount-riel'];
         $saleOrder['discount_us']    = $inputs['custom-discount-us'];
-        $saleOrder['balance']    = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$inputs['exchange_rate_id'] + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$inputs['exchange_rate_id']);		
+        $saleOrder['balance']    = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$rate + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$rate);		
         $saleOrder['order_date']    = $inputs['date_order'];
 		$saleOrder['due_date']    = $inputs['date_due'];
         $saleOrder['is_active']    = 1;
@@ -72,6 +74,22 @@ class BookersController extends Controller
         $saleOrder['updated_by']    = \Auth::user()->id;
 		$saleOrders->fill($saleOrder)->save();
 		$sale_order_id = $saleOrders->id;
+				
+		// To save sale order receipts table
+		$saleOrderReceipt = array();
+		$saleOrderReceipt['sales_order_id'] = $sale_order_id;
+		$saleOrderReceipt['exchange_rate_id'] = $exchangerate->id;
+		$saleOrderReceipt['receipt_code'] = $this->generateAutoCode("sales_order_receipts", "receipt_code", 6, "RE");
+		$saleOrderReceipt['amount_us'] = $inputs['amount_us']*$inputs['exchange_rate_id'];
+		$saleOrderReceipt['amount_kh'] = $inputs['amount_riel'];
+		$saleOrderReceipt['total_amount'] = $inputs['total_amount_riel'];
+		$saleOrderReceipt['balance'] = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$rate + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$rate);		
+		$saleOrderReceipt['pay_date']    = date('Y-m-d');
+		$saleOrderReceipt['due_date']    = date('Y-m-d');	
+        $saleOrderReceipt['created_by']    = \Auth::user()->id;
+        $saleOrderReceipt['updated_by']    = \Auth::user()->id;	
+        $saleOrderReceipt['is_active']    = 1;
+		$saleOrderReceipts->fill($saleOrderReceipt)->save();
 				
 		
 		// To save sale order detail table
@@ -186,6 +204,22 @@ class BookersController extends Controller
         $saleOrder['updated_by']    = \Auth::user()->id;
 		$saleOrders->whereId($inputs['sales_order_id'])->update($saleOrder);		
 		$sale_order_id = $inputs['sales_order_id'];
+		
+		// To save sale order receipts table
+		$saleOrderReceipt = array();
+		$saleOrderReceipt['sales_order_id'] = $sale_order_id;
+		$saleOrderReceipt['exchange_rate_id'] = $exchangerate->id;
+		$saleOrderReceipt['receipt_code'] = $this->generateAutoCode("sales_order_receipts", "receipt_code", 6, "RE");
+		$saleOrderReceipt['amount_us'] = $inputs['amount_us']*$rate;
+		$saleOrderReceipt['amount_kh'] = $inputs['amount_riel'];
+		$saleOrderReceipt['total_amount'] = $inputs['total_amount_riel'];
+		$saleOrderReceipt['balance'] = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$rate + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$rate);		
+		$saleOrderReceipt['pay_date']    = date('Y-m-d');
+		$saleOrderReceipt['due_date']    = date('Y-m-d');	
+        $saleOrderReceipt['created_by']    = \Auth::user()->id;
+        $saleOrderReceipt['updated_by']    = \Auth::user()->id;	
+        $saleOrderReceipt['is_active']    = 1;
+		$saleOrderReceipts->where('sales_order_id',$sale_order_id)->update($saleOrderReceipt);
 		
 		$products 	= SaleOrderDetail::whereSalesOrderId($sale_order_id)->get();
 		// Update old qty inventoryTotalDetail and InventoryTotal
