@@ -578,8 +578,8 @@ body {
 			$("#myModalPayment").find("input").keyup(function(e){
 				var key = e.keyCode || e.which;
 				if(key === 13){
-					var amount_riel = Number($("#amount_riel").val());
-					var amount_us = Number($("#amount_us").val());
+					var amount_riel = Number($("#amount_riel").val().replace(",",""));
+					var amount_us = Number($("#amount_us").val().replace(",",""));
 					var custom_discount_riel = Number($("#custom-discount-riel").val().replace(",",""));
 					var custom_discount_us = Number($("#custom-discount-us").val().replace(",",""));
 					var total_amount = $(".txt_total_amount_riel").val();
@@ -616,8 +616,8 @@ body {
 			// when click button Paid
 			$("#btn-paid").click(function(){
 				
-				var amount_riel = Number($("#amount_riel").val());
-				var amount_us = Number($("#amount_us").val());
+				var amount_riel = Number($("#amount_riel").val().replace(",",""));
+				var amount_us = Number($("#amount_us").val().replace(",",""));
 				var custom_discount_riel = Number($("#custom-discount-riel").val().replace(",",""));
 				var custom_discount_us = Number($("#custom-discount-us").val().replace(",",""));
 				var total_amount = $(".txt_total_amount_riel").val();
