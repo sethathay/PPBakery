@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use Hash;
 use App\User;
+use App\UserGroup;
 use Input;
 
 class UsersController extends Controller
@@ -24,7 +25,7 @@ class UsersController extends Controller
 
 	public function index()
 	{
-		$users = User::where('is_active', 1)->get();
+		$users = json_encode(User::where('is_active', 1)->get());
 		return view('users/index', compact('users'));
 	}
 
@@ -36,8 +37,9 @@ class UsersController extends Controller
 	public function create()
 	{
 		//
-		$countries = array_merge(array(''=>'Please Select'), DB::table('countries')->lists('name', 'id'));
-		return view('users/create', compact('countries'));
+		$groups = array_merge(array('0'=>'Please Select'), DB::table('groups')->lists('name', 'id'));
+		$countries = array_merge(array('0'=>'Please Select'), DB::table('countries')->lists('name', 'id'));
+		return view('users/create', compact('countries', 'groups'));
 	}
 
 	/**
@@ -46,7 +48,7 @@ class UsersController extends Controller
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(User $user, Request $request)
+	public function store(User $user, Request $request, UserGroup $user_groups)
 	{
 		/*
 		 * $user = Input::all();
@@ -56,6 +58,13 @@ class UsersController extends Controller
 		$users['password']	= Hash::make($request->get('password'));
 		$users['created_by']	= 1;
 		$user->fill($users)->save();
+		$userId = $user->id;
+		
+		$group = array();
+		$group['user_id'] = $userId;
+		$group['group_id'] = $request->get('group_id');
+		$user_groups->fill($group)->save();
+		
 		return Redirect::route('users.index');
 	}
 
@@ -82,9 +91,11 @@ class UsersController extends Controller
 	public function edit($id)
 	{
 		//
-		$user = User::find($id);//whereId($id)->first();
+		$groups = array_merge(array('0'=>'Please Select'), DB::table('groups')->lists('name', 'id'));
+		$user = User::select('users.*','user_groups.*')->leftJoin('user_groups','user_id','=', 'users.id')->where('users.id',$id)->first();//whereId($id)->first();
+		
 		$countries = array_merge(array('0'=>'Please Select'), DB::table('countries')->lists('name', 'id'));
-		return view('users/edit', compact('countries', 'user'));
+		return view('users/edit', compact('countries', 'user', 'groups'));
 	}
 
 	/**
@@ -94,8 +105,10 @@ class UsersController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(User $users, Request $request)
+	public function update(User $users, Request $request, UserGroup $user_groups)
 	{
+		
+		$user = array();
 		$user = $request->all();
 		if ( $request->get('password') != null ){
 			$user['password']	= Hash::make($request->get('password'));
@@ -103,9 +116,17 @@ class UsersController extends Controller
 			unset($user['password']);
 		}
 		unset($user['_token']);
+        unset($user['_method']);
 		unset($user['photo']);
+		unset($user['dob']);
+		unset($user['group_id']);
 		unset($user['retype_password']);
-		$users->whereId(Input::get('id'))->update($user);
+		$users->where('id','=',$request->get('id'))->update($user);
+		
+		$group = array();
+		$group['group_id'] = $request->get('group_id');
+		$userId = $request->get('user_id');
+		$user_groups->where('user_id',$userId)->update($group);
 		return Redirect::route('users.index');
 	}
 

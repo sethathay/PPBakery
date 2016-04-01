@@ -26,7 +26,7 @@ class SaleOrdersController extends Controller
      */
     public function index()
     {
-        $saleOrders = SaleOrder::where('sales_orders.is_active', 1)->where('sales_orders.is_book',0)->orderBy('sales_orders.created_at','desc')->simplePaginate(12);
+        $saleOrders = json_encode(SaleOrder::where('sales_orders.is_active', 1)->where('sales_orders.is_book',0)->orderBy('sales_orders.created_at','desc')->get());
 		
         return view('saleOrders.index',compact('saleOrders'));
     }

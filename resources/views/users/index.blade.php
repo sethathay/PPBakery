@@ -38,17 +38,22 @@
 	font-size: 24px;
 	font-weight: bold;
 }
+
+.table-responsive{
+	overflow: hidden;
+	min-height: .01%;
+}
 </style>
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">
-			<img src="{{ URL::asset('/img/users_2_b.png') }}" /> <label>Users</label>
+			<img src="{{ URL::asset('/img/users_2_b.png') }}" /> <label>អ្នកប្រើប្រាស់</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
 			<button onclick="redirectPage('create')" type="button"
 				class="btn btn-md btn-success">
-				<span class="glyphicon glyphicon-plus"></span> New
+				<span class="glyphicon glyphicon-plus"></span> បង្កើតថ្មី
 			</button>
 		</div>
 	</div>
@@ -58,10 +63,10 @@
 			<div id="flash_notice">{{ Session::get('flash_notice') }}</div>
 		</div>
 	@endif
-	<table class="table table-hover table-bordered table-striped">
+	<table class="table table-hover table-bordered table-striped" id="tbl_expense">
 		<thead>
 			<tr>
-				<th><input type="checkbox" name="checkOptionAll" /></th>
+				<!--<th><input type="checkbox" name="checkOptionAll" /></th>-->
 				<th>Firstname</th>
 				<th>Lastname</th>
 				<th>Date of Birth</th>
@@ -71,6 +76,7 @@
 				<th>Action</th>
 			</tr>
 		</thead>
+		<?php /*
 		<tbody>
 			
 			
@@ -99,6 +105,7 @@
 			</tr>
 			@endforeach
 		</tbody>
+		*/ ?>
 	</table>
 </div>
 
@@ -107,6 +114,61 @@
 	function redirectPage(url){
 		window.location = url;
 	}
+	var table = $('#tbl_expense').DataTable( {
 
+        "data": <?php echo $users ?>,
+        "order": [[ 6, "desc" ]],
+        "createdRow": function ( row, datas, index ) {
+        	$('td', row).eq(7).addClass('last_td');
+        },
+        "columns": [
+           	{ "data": "first_name" },
+            { "data": "last_name" },
+            { "data": "dob" },
+            { "data": "username" },
+            { "data": "email" },
+            { "data": "phone" },
+            { "data": null }
+        ],
+        "columnDefs": [ {
+            "targets": -1,
+            "defaultContent":
+            '<button style="margin-right:5px" type="button" class="btnview btn btn-xs btn-info">'
+            + '<span class="glyphicon glyphicon-user"></span> View</button>'
+            +'<button style="margin-right:5px" type="button" class="btnedit btn btn-xs btn-primary">'
+			+'<span class="glyphicon glyphicon-edit"></span> Edit</button>'
+			+'<button type="button" class="btn btn-xs btn-danger btndelete">'
+			+'<span class="glyphicon glyphicon-trash"></span> Delete'
+			+'</button>'
+        }
+	 ]
+    } );
+
+	$('#tbl_expense tbody').on( 'click', '.btnview', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+		$("#myModalPrint").load("{{ URL::asset('pos/print/') }}/"+data['id']+"/yes", '', function(){
+			$("#myModalPrint").modal();
+		});
+    } );
+
+    $('#tbl_expense tbody').on( 'click', '.btnedit', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        redirectPage('edit/' + data['id']);
+    } );
+
+    $('#tbl_expense tbody').on( 'click', '.btndelete', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        var ts = $(this);
+        if(confirm('តើអ្នកពិតជាចង់លុបវាពិតមែនទេ?')){
+			$.ajax({
+			    url: 'destroy/' + data['id'],
+			    type: 'GET',
+			    data:{"_token": "{{ csrf_token() }}"},
+			    success: function(result) {
+			    	table.row(ts.parents('tr')).remove().draw( false );
+			    }
+			});
+		}
+    } );
 </script>
 @stop

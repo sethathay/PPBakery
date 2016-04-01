@@ -710,10 +710,6 @@ body {
 				
 			});
 			
-			$(".table-responsive").click(function(){
-				$("#code").focus();
-			});
-			
 			// when fill product code
 			$("#code").keydown(function(e) {
 				var code = e.keyCode || e.which;

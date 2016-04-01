@@ -83,6 +83,11 @@
 					<label for="username">Username <span class="star"> * </span>:</label>
 					{!! Form::text('username', null, array('class' => 'form-control', 'placeholder' => 'Username', 'id'=>'username')) !!}
 				</div>
+				<div class="form-group">
+					<label for="group_id">Group:</label>
+					{!! Form::select('group_id', $groups, 2, ['class'=>'form-control', 'id'=>'group_id']) !!}
+					
+				</div>
 			</div>
 			<div class="row-form col-sm-4">
 				<div class="form-group">
