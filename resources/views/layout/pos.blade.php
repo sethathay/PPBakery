@@ -112,21 +112,21 @@ body {
 	list-style: none;
 	display: inline;
 	margin: 10px 5px 0;
-	padding: 41px 0px 43px;
+	padding: 65px 0 70px;
 	border: 1px #F84D36 solid; 
 	border-radius: 5px;
 	position: relative;
 }
 .product_name { 
    position: absolute; 
-   top: 65px; 
+   top: 102px; 
    left: 0; 
    width: 100%; 
    font-size: 11px;
    background: rgba(0,0,255,0.4);
    color: #fff;
    text-align: center;
-   padding: 10px 0;   
+   padding: 17px 0;   
    border-bottom-right-radius:5px;
    border-bottom-left-radius:5px;
    
@@ -137,8 +137,8 @@ body {
 	opacity: 0.5;
 }
 .photo_product li img{
-	width: 100px; 
-	height: 100px; 
+	width: 150px; 
+	height: 150px; 
 	border-radius: 5px;
 }
 .photo_product li img:hover{
@@ -258,7 +258,7 @@ body {
 }
 
 #slideshow {
-	margin-left:8px;
+	margin:8px;
     height:506px;
 }
 
@@ -284,6 +284,10 @@ body {
 
 .user_info{
 	padding : 2px 0;
+}
+.numberInput{
+	font-size:20px;
+	font-weight: bold;
 }
 </style>
 </head>
@@ -347,7 +351,7 @@ body {
 			<div class="col-md-8 content-right">
 				<div class="row">
 					<div
-						style="background: #F5F5F5; height: 120px; width: 100%; border: 2px #fff solid;">
+						style="background: #F5F5F5; height: 170px; width: 100%; border: 2px #fff solid;">
 						<ul class="photo_product">
 							
 						</ul>
@@ -371,10 +375,10 @@ body {
 					    <tbody>
 					    	<tr style="display: none;">
 					            <td class="first-column"></td>
-					            <td class="qty-column"><label class="lbl_qty"></label>{!! Form::text('txt_qty[]', null, array('class'=>'row_input txt_qty')) !!}</td>
-					            <td><label class="lbl_unit_price"></label>{!! Form::text('txt_unit_price[]', null, array('class'=>'row_input txt_unit_price')) !!}</td>
-					            <td><label class="lbl_discount"></label>{!! Form::text('txt_discount[]', null, array('class'=>'row_input txt_discount')) !!}</td>
-					            <td><label class="lbl_total_by_item"></label>{!! Form::text('txt_total_by_item[]', null, array('class'=>'row_input txt_total_by_item')) !!}</td>
+					            <td class="qty-column"><label class="lbl_qty"></label>{!! Form::text('txt_qty[]', null, array('class'=>'row_input txt_qty numberInput')) !!}</td>
+					            <td><label class="lbl_unit_price"></label>{!! Form::text('txt_unit_price[]', null, array('class'=>'row_input txt_unit_price numberInput')) !!}</td>
+					            <td><label class="lbl_discount"></label>{!! Form::text('txt_discount[]', null, array('class'=>'row_input txt_discount numberInput')) !!}</td>
+					            <td><label class="lbl_total_by_item"></label>{!! Form::text('txt_total_by_item[]', null, array('class'=>'row_input txt_total_by_item numberInput')) !!}</td>
 					            <td>
 									{!! Form::hidden('id[]', null, array('class'=>'row_input id')) !!}
 									<button type="button" class="btn_decrease btn btn-xs btn-danger">
@@ -435,43 +439,43 @@ body {
 				<div class="modal-content">
 					<div class="modal-body"><br/>
 						<div class="row">
-							<div class="col-md-4 align_right"><label>តំលៃសរុបត្រូវបង់ (៛) : </label></div>
+							<div class="col-md-5 align_right" style="color:red; font-size:20px;"><label>តំលៃសរុបត្រូវបង់ (៛) : </label></div>
 							<div class="col-md-5 amount-big" style="padding-right:0;"><label class="popup_total_amount_riel"></label> <label>៛</label></div>
 						</div>
 						<div class="row">
-							<div class="col-md-4 align_right"><label>តំលៃសរុបត្រូវបង់ ($) : </label></div>
+							<div class="col-md-5 align_right" style="color:red; font-size:20px;"><label>តំលៃសរុបត្រូវបង់ ($) : </label></div>
 							<div class="col-md-5 amount-big" style="padding-right:0;"><label class="popup_total_amount_us"></label> <label>$</label></div>
 						</div>
 						<div class="row" style="margin-top: 20px">
 							<div style="margin-bottom: 50px">
-								<div class="col-md-4 align_right"><label>បញ្ចុះតំលៃ (៛) : </label></div>
-								<div class="col-md-5 amount-big"><input id="custom-discount-riel" type="text" class="form-control custom-discount-riel" name="custom-discount-riel" value="0" placeholder=""></div>
+								<div class="col-md-4 align_right" style="font-size:20px;"><label>បញ្ចុះតំលៃ (៛) : </label></div>
+								<div class="col-md-5 amount-big"><input id="custom-discount-riel" type="text" class="form-control custom-discount-riel numberInput" name="custom-discount-riel" value="0" placeholder=""></div>
 							</div>
 						</div>
 						<div class="row">
 							<div style="margin-bottom: 70px">
-								<div class="col-md-4 align_right"><label>បញ្ចុះតំលៃ ($) : </label></div>
-								<div class="col-md-5 amount-big align_right"><input id="custom-discount-us" type="text" class="form-control custom-discount-us" name="custom-discount-us" value="0" placeholder=""></div>
+								<div class="col-md-4 align_right" style="font-size:20px;"><label>បញ្ចុះតំលៃ ($) : </label></div>
+								<div class="col-md-5 amount-big align_right"><input id="custom-discount-us" type="text" class="form-control custom-discount-us numberInput" name="custom-discount-us" value="0" placeholder=""></div>
 							</div>
 						</div>
 						<div class="row">
 							<div style="margin-bottom: 50px">
-								<div class="col-md-4 align_right"><label>បង់លុយ (៛) : </label></div>
-								<div class="col-md-5 amount-big align_right"><input id="amount_riel" type="text" class="form-control custom-amount" name="amount_riel" value="0" placeholder=""></div>
+								<div class="col-md-4 align_right" style="font-size:20px;"><label>បង់លុយ (៛) : </label></div>
+								<div class="col-md-5 amount-big align_right"><input id="amount_riel" type="text" class="form-control custom-amount numberInput" name="amount_riel" value="0" placeholder=""></div>
 							</div>
 						</div>
 						<div class="row">
 							<div style="margin-bottom: 50px">
-								<div class="col-md-4 align_right"><label>បង់លុយ ($) : </label></div>
-								<div class="col-md-5 amount-big align_right"><input id="amount_us" type="text" class="form-control custom-amount" name="amount_us" value="0" placeholder=""></div>
+								<div class="col-md-4 align_right" style="font-size:20px;"><label>បង់លុយ ($) : </label></div>
+								<div class="col-md-5 amount-big align_right"><input id="amount_us" type="text" class="form-control custom-amount numberInput" name="amount_us" value="0" placeholder=""></div>
 							</div>
 						</div>
 						<div class="row" style="margin-top: 20px">
-							<div class="col-md-4 align_right"><label>លុយអាប់ (៛) : </label></div>
+							<div class="col-md-5 align_right" style="color:blue; font-size:26px;"><label>លុយអាប់ (៛) : </label></div>
 							<div class="col-md-5 amount-big" style="color:blue;padding-right:0;"><label class="remain_total_amount_riel">0</label> <label>៛</label></div>
 						</div>
 						<div class="row">
-							<div class="col-md-4 align_right"><label>លុយអាប់ ($) : </label></div>
+							<div class="col-md-5 align_right" style="color:blue; font-size:26px;"><label>លុយអាប់ ($) : </label></div>
 							<div class="col-md-5 amount-big" style="color:blue;padding-right:0;"><label class="remain_total_amount_us">0</label> <label>$</label></div>
 						</div>
 					</div>
@@ -483,7 +487,7 @@ body {
 
 			  </div>
 			</div>	
-			<!-- Modal QTY -->		
+			<!-- Modal Payment -->		
 			{!! Form::close() !!}
 		</div>
 
@@ -563,6 +567,17 @@ body {
 				inputs.eq(index).focus();
 				inputs.eq(index).select();
 			}
+			
+			$(".numberInput").keypress(function(event){	
+				if((event.which != 8 && isNaN(String.fromCharCode(event.which))) && event.which != 46){
+				   event.preventDefault(); //stop character from entering input
+			   }else if(event.which == 46){
+				   if($(this).val() == ""){
+					  $(this).val(0); 
+				   }
+			   }
+			});
+
 			
 			$("#code").val('');
 			$("#code").focus();
@@ -855,62 +870,70 @@ body {
 			});
 			
 			// when qty is change
-			$(".txt_qty").keyup(function(){				
-				var getObj = $(this).parents("tr");
-				var newQty = Number(getObj.find(".txt_qty").val());
-				var unit_price = Number(getObj.find(".txt_unit_price").val());
-				var oldDiscount = Number(getObj.find(".lbl_discount").text().replace(",","")) / Number(getObj.find(".lbl_qty").text());
-				$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
+			$(".txt_qty").keyup(function(){		
 				
-				getObj.find(".lbl_qty").text(getObj.find(".txt_qty").val());
-				
-				getObj.find(".lbl_discount").text(addCommas( oldDiscount * newQty ));
-				getObj.find(".txt_discount").val(oldDiscount * newQty);
-				var newDiscount = oldDiscount * newQty;
-				
-				var total_by_item = unit_price*newQty - newDiscount;				
-				getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
-				getObj.find(".txt_total_by_item").val(total_by_item);
-				
-				calculateTotalBlock(total_by_item);
+				if(Number($(this).val()) > 0){
+					var getObj = $(this).parents("tr");
+					var newQty = Number(getObj.find(".txt_qty").val());
+					var unit_price = Number(getObj.find(".txt_unit_price").val());
+					var oldDiscount = Number(getObj.find(".lbl_discount").text().replace(",","")) / Number(getObj.find(".lbl_qty").text());
+					$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
+					
+					getObj.find(".lbl_qty").text(getObj.find(".txt_qty").val());
+					
+					getObj.find(".lbl_discount").text(addCommas( oldDiscount * newQty ));
+					getObj.find(".txt_discount").val(oldDiscount * newQty);
+					var newDiscount = oldDiscount * newQty;
+					
+					var total_by_item = unit_price*newQty - newDiscount;				
+					getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
+					getObj.find(".txt_total_by_item").val(total_by_item);
+					
+					calculateTotalBlock(total_by_item);
+					
+				}
 			});
 			
 			// when unit price is change
 			$(".txt_unit_price").keyup(function(){	
-				var getObj = $(this).parents("tr");
-				var newQty = Number(getObj.find(".txt_qty").val());
-				var unit_price = Number(getObj.find(".txt_unit_price").val());
-				var discount = Number(getObj.find(".lbl_discount").text().replace(",","")) / Number(getObj.find(".lbl_qty").text());
-				$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
-				
-				var total_by_item = unit_price*newQty - discount;
-				
-				getObj.find(".lbl_unit_price").text(addCommas(unit_price));
-				getObj.find(".txt_unit_price").val(unit_price);
-				
-				getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
-				getObj.find(".txt_total_by_item").val(total_by_item);
-				
-				calculateTotalBlock(total_by_item);
+				if(Number($(this).val()) > 0){
+					var getObj = $(this).parents("tr");
+					var newQty = Number(getObj.find(".txt_qty").val());
+					var unit_price = Number(getObj.find(".txt_unit_price").val());
+					var discount = Number(getObj.find(".lbl_discount").text().replace(",","")) / Number(getObj.find(".lbl_qty").text());
+					$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
+					
+					var total_by_item = unit_price*newQty - discount;
+					
+					getObj.find(".lbl_unit_price").text(addCommas(unit_price));
+					getObj.find(".txt_unit_price").val(unit_price);
+					
+					getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
+					getObj.find(".txt_total_by_item").val(total_by_item);
+					
+					calculateTotalBlock(total_by_item);
+				}
 			});
 			
 			// when discount is change
 			$(".txt_discount").keyup(function(){	
-				var getObj = $(this).parents("tr");
-				var newQty = Number(getObj.find(".txt_qty").val());
-				var unit_price = Number(getObj.find(".txt_unit_price").val());
-				var discount = Number($(this).val());
-				$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
-				
-				var total_by_item = unit_price*newQty - discount;
-				
-				getObj.find(".lbl_unit_price").text(addCommas(unit_price));
-				getObj.find(".txt_unit_price").val(unit_price);
-				
-				getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
-				getObj.find(".txt_total_by_item").val(total_by_item);
-				
-				calculateTotalBlock(total_by_item);
+				if(Number($(this).val()) > 0){
+					var getObj = $(this).parents("tr");
+					var newQty = Number(getObj.find(".txt_qty").val());
+					var unit_price = Number(getObj.find(".txt_unit_price").val());
+					var discount = Number($(this).val());
+					$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
+					
+					var total_by_item = unit_price*newQty - discount;
+					
+					getObj.find(".lbl_unit_price").text(addCommas(unit_price));
+					getObj.find(".txt_unit_price").val(unit_price);
+					
+					getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
+					getObj.find(".txt_total_by_item").val(total_by_item);
+					
+					calculateTotalBlock(total_by_item);
+				}
 			});
 			
 			// Click Save Record

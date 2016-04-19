@@ -53,7 +53,7 @@
 			<li><a href="{{ URL::asset('saleOrders/index') }}"><img
 				src="{{ URL::asset('img/receipt.png') }}" alt="Receipt" />
 				&nbsp;&nbsp;<label
-				style="vertical-align: middle; font-weight: normal;">វិក័យប័ត្រ</label></a>
+				style="vertical-align: middle; font-weight: normal;">លក់ដុំ</label></a>
 			</li>
 			<li><a href="{{ URL::asset('bookers/index') }}"><img
 				src="{{ URL::asset('img/books.png') }}" alt="Booking" />

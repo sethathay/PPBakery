@@ -70,6 +70,7 @@
 				<th>ឈ្មោះទំនិញ</th>
 				<th>ក្រុមទំនិញ</th>
 				<th>តម្លៃ</th>
+				<th>ចំនួនទំនិញ</th>
 				<th>ថ្ងៃនៃការកែប្រែ</th>
 				<th>សកម្មភាព</th>
 			</tr>
@@ -88,13 +89,15 @@
         "data": <?php echo $products ?>,
         "order": [[ 4, "desc" ]],
         "createdRow": function ( row, datas, index ) {
-        	$('td', row).eq(5).addClass('last_td');
+        	$('td', row).eq(4).css('text-align','center');
+        	$('td', row).eq(6).addClass('last_td');
         },
         "columns": [
            	{ "data": "code" },
             { "data": "name" },
             { "data": "product_group" },
             { "data": "price" },
+            { "data": "total_qty" },
             { "data": "updated_at" },
             { "data": null }
         ],

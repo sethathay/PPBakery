@@ -23,7 +23,8 @@ class ProductsController extends Controller
 	
     public function index()
     {
-    	$prod = Product::select('products.*','pgroups.name AS product_group')
+    	$prod = Product::select('products.*','pgroups.name AS product_group', 'total_qty')
+		->leftJoin('inventory_totals', 'inventory_totals.product_id','=', 'products.id')
         ->join('pgroups','pgroups.id','=','pgroup_id')->where('products.is_active', 1)->get();
         $products = json_encode($prod);
         $pgroups = DB::table('pgroups')->lists('name', 'id');

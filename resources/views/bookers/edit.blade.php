@@ -41,6 +41,7 @@
 
 .header-fixed > tbody > tr > td,
 .header-fixed > thead > tr > th {
+	font-size: 18px;
     width: 13%;
     float: left;
     text-align: right;
@@ -89,6 +90,10 @@
 
 .setBackground{
 	background: #F9AEC3 !important;
+}
+.numberInput{
+	font-size:20px;
+	font-weight: bold;
 }
 </style>
 
@@ -156,10 +161,10 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				@foreach($saleOrderDetails as $saleOrderDetail)
 				<tr>
 					<td class="first-column">{{ $saleOrderDetail->name }}</td>
-					<td class="qty-column"><label class="lbl_qty">{{ number_format_unlimited_precision($saleOrderDetail->qty) }}</label>{!! Form::text('txt_qty[]', $saleOrderDetail->qty, array('class'=>'row_input txt_qty')) !!}</td>
-					<td><label class="lbl_unit_price">{{ number_format_unlimited_precision($saleOrderDetail->unit_price) }}</label>{!! Form::text('txt_unit_price[]', $saleOrderDetail->unit_price, array('class'=>'row_input txt_unit_price')) !!}</td>
-					<td><label class="lbl_discount">{{ number_format_unlimited_precision($saleOrderDetail->discount_price_riel) }}</label>{!! Form::text('txt_discount[]', $saleOrderDetail->discount_price_riel, array('class'=>'row_input txt_discount')) !!}</td>
-					<td><label class="lbl_total_by_item">{{ number_format_unlimited_precision($saleOrderDetail->total_price_riel) }}</label>{!! Form::text('txt_total_by_item[]', $saleOrderDetail->total_price_riel, array('class'=>'row_input txt_total_by_item')) !!}</td>
+					<td class="qty-column"><label class="lbl_qty">{{ number_format_unlimited_precision($saleOrderDetail->qty) }}</label>{!! Form::text('txt_qty[]', $saleOrderDetail->qty, array('class'=>'row_input txt_qty numberInput')) !!}</td>
+					<td><label class="lbl_unit_price">{{ number_format_unlimited_precision($saleOrderDetail->unit_price) }}</label>{!! Form::text('txt_unit_price[]', $saleOrderDetail->unit_price, array('class'=>'row_input txt_unit_price numberInput')) !!}</td>
+					<td><label class="lbl_discount">{{ number_format_unlimited_precision($saleOrderDetail->discount_price_riel) }}</label>{!! Form::text('txt_discount[]', $saleOrderDetail->discount_price_riel, array('class'=>'row_input txt_discount numberInput')) !!}</td>
+					<td><label class="lbl_total_by_item">{{ number_format_unlimited_precision($saleOrderDetail->total_price_riel) }}</label>{!! Form::text('txt_total_by_item[]', $saleOrderDetail->total_price_riel, array('class'=>'row_input txt_total_by_item numberInput')) !!}</td>
 					<td>
 						{!! Form::hidden('id[]', $saleOrderDetail->product_id, array('class'=>'row_input id')) !!}
 						<button type="button" class="btn_edit btn btn-xs btn-primary">
@@ -179,10 +184,10 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				@endforeach
 				<tr style="display: none;">
 					<td class="first-column"></td>
-					<td class="qty-column"><label class="lbl_qty"></label>{!! Form::text('txt_qty[]', null, array('class'=>'row_input txt_qty')) !!}</td>
-					<td><label class="lbl_unit_price"></label>{!! Form::text('txt_unit_price[]', null, array('class'=>'row_input txt_unit_price')) !!}</td>
-					<td><label class="lbl_discount"></label>{!! Form::text('txt_discount[]', null, array('class'=>'row_input txt_discount')) !!}</td>
-					<td><label class="lbl_total_by_item"></label>{!! Form::text('txt_total_by_item[]', null, array('class'=>'row_input txt_total_by_item')) !!}</td>
+					<td class="qty-column"><label class="lbl_qty"></label>{!! Form::text('txt_qty[]', null, array('class'=>'row_input txt_qty numberInput')) !!}</td>
+					<td><label class="lbl_unit_price"></label>{!! Form::text('txt_unit_price[]', null, array('class'=>'row_input txt_unit_price numberInput')) !!}</td>
+					<td><label class="lbl_discount"></label>{!! Form::text('txt_discount[]', null, array('class'=>'row_input txt_discount numberInput')) !!}</td>
+					<td><label class="lbl_total_by_item"></label>{!! Form::text('txt_total_by_item[]', null, array('class'=>'row_input txt_total_by_item numberInput')) !!}</td>
 					<td>
 						{!! Form::hidden('id[]', null, array('class'=>'row_input id')) !!}
 						<button type="button" class="btn_decrease btn btn-xs btn-danger">
@@ -243,55 +248,54 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			</tbody>
 		  </table>
 		</div>
-	</div>
-		
+	</div>		
 	
 	<!-- Modal Payment -->
 	<div id="myModalPayment" class="modal fade bs-example-modal-lg" role="dialog">
-	  <div class="modal-dialog modal-lg">
+	  <div class="modal-dialog modal-md">
 
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-body"><br/>
 				<div class="row">
-					<div class="col-md-4"><label>តំលៃសរុបត្រូវបង់ (៛) : </label></div>
-					<div class="col-md-7 amount-big"><label class="popup_total_amount_riel"></label> <label>៛</label></div>
+					<div class="col-md-5 align_right" style="color:red; font-size:20px;"><label>តំលៃសរុបត្រូវបង់ (៛) : </label></div>
+					<div class="col-md-5 amount-big" style="padding-right:0;"><label class="popup_total_amount_riel"></label> <label>៛</label></div>
 				</div>
 				<div class="row">
-					<div class="col-md-4"><label>តំលៃសរុបត្រូវបង់ ($) : </label></div>
-					<div class="col-md-7 amount-big"><label class="popup_total_amount_us"></label> <label>$</label></div>
-				</div>	
-				<div class="row">
+					<div class="col-md-5 align_right" style="color:red; font-size:20px;"><label>តំលៃសរុបត្រូវបង់ ($) : </label></div>
+					<div class="col-md-5 amount-big" style="padding-right:0;"><label class="popup_total_amount_us"></label> <label>$</label></div>
+				</div>
+				<div class="row" style="margin-top: 20px">
 					<div style="margin-bottom: 50px">
-						<div class="col-md-4"><label>បញ្ចុះតំលៃ (៛) : </label></div>
-						<div class="col-md-7 amount-big"><input id="custom-discount-riel" type="text" class="form-control custom-discount-riel" name="custom-discount-riel" value="0" placeholder=""></div>
+						<div class="col-md-4 align_right" style="font-size:20px;"><label>បញ្ចុះតំលៃ (៛) : </label></div>
+						<div class="col-md-5 amount-big"><input id="custom-discount-riel" type="text" class="form-control custom-discount-riel numberInput" name="custom-discount-riel" value="0" placeholder=""></div>
 					</div>
 				</div>
 				<div class="row">
 					<div style="margin-bottom: 70px">
-						<div class="col-md-4"><label>បញ្ចុះតំលៃ ($) : </label></div>
-						<div class="col-md-7 amount-big"><input id="custom-discount-us" type="text" class="form-control custom-discount-us" name="custom-discount-us" value="0" placeholder=""></div>
+						<div class="col-md-4 align_right" style="font-size:20px;"><label>បញ្ចុះតំលៃ ($) : </label></div>
+						<div class="col-md-5 amount-big align_right"><input id="custom-discount-us" type="text" class="form-control custom-discount-us numberInput" name="custom-discount-us" value="0" placeholder=""></div>
 					</div>
 				</div>
 				<div class="row">
 					<div style="margin-bottom: 50px">
-						<div class="col-md-4"><label>បង់ប្រាក់ (៛) : </label></div>
-						<div class="col-md-7 amount-big"><input id="amount_riel" type="text" class="form-control custom-amount" name="amount_riel" value="0" placeholder=""></div>
+						<div class="col-md-4 align_right" style="font-size:20px;"><label>បង់លុយ (៛) : </label></div>
+						<div class="col-md-5 amount-big align_right"><input id="amount_riel" type="text" class="form-control custom-amount numberInput" name="amount_riel" value="0" placeholder=""></div>
 					</div>
 				</div>
 				<div class="row">
 					<div style="margin-bottom: 50px">
-						<div class="col-md-4"><label>បង់ប្រាក់ ($) : </label></div>
-						<div class="col-md-7 amount-big"><input id="amount_us" type="text" class="form-control custom-amount" name="amount_us" value="0" placeholder=""></div>
+						<div class="col-md-4 align_right" style="font-size:20px;"><label>បង់លុយ ($) : </label></div>
+						<div class="col-md-5 amount-big align_right"><input id="amount_us" type="text" class="form-control custom-amount numberInput" name="amount_us" value="0" placeholder=""></div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-4"><label>ប្រាក់អាប់ (៛) : </label></div>
-					<div class="col-md-7 amount-big" style="color:blue;"><label class="remain_total_amount_riel">0</label> <label>៛</label></div>
+				<div class="row" style="margin-top: 20px">
+					<div class="col-md-5 align_right" style="color:blue; font-size:26px;"><label>លុយអាប់ (៛) : </label></div>
+					<div class="col-md-5 amount-big" style="color:blue;padding-right:0;"><label class="remain_total_amount_riel">0</label> <label>៛</label></div>
 				</div>
 				<div class="row">
-					<div class="col-md-4"><label>ប្រាក់អាប់ ($) : </label></div>
-					<div class="col-md-7 amount-big" style="color:blue;"><label class="remain_total_amount_us">0</label> <label>$</label></div>
+					<div class="col-md-5 align_right" style="color:blue; font-size:26px;"><label>លុយអាប់ ($) : </label></div>
+					<div class="col-md-5 amount-big" style="color:blue;padding-right:0;"><label class="remain_total_amount_us">0</label> <label>$</label></div>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -302,7 +306,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 
 	  </div>
 	</div>	
-	<!-- Modal QTY -->	
+	<!-- Modal Payment -->	
 	
 	{!! Form::close() !!}
 </div>
@@ -377,9 +381,18 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		$("#code").val('');
 		$("#code").focus();
 		
-		$(".table-responsive").click(function(){
-			$("#code").focus();
+		
+		$(".numberInput").keypress(function(event){	
+			if((event.which != 8 && isNaN(String.fromCharCode(event.which))) && event.which != 46){
+			   event.preventDefault(); //stop character from entering input
+		   }else if(event.which == 46){
+			   if($(this).val() == ""){
+				  $(this).val(0); 
+			   }
+		   }
 		});
+
+
 		
 		var rate = "{{ Session::get('exchangerate')->riel }}";
 		var productItem = [{{ implode(",",$productId) }}];
@@ -859,62 +872,68 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		});
 		
 		// when qty is change
-		$(".txt_qty").keyup(function(){				
-			var getObj = $(this).parents("tr");
-			var newQty = Number(getObj.find(".txt_qty").val());
-			var unit_price = Number(getObj.find(".txt_unit_price").val());
-			var oldDiscount = Number(getObj.find(".lbl_discount").text().replace(",","")) / Number(getObj.find(".lbl_qty").text());
-			$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
-			
-			getObj.find(".lbl_qty").text(getObj.find(".txt_qty").val());
-			
-			getObj.find(".lbl_discount").text(addCommas( oldDiscount * newQty ));
-			getObj.find(".txt_discount").val(oldDiscount * newQty);
-			var newDiscount = oldDiscount * newQty;
-			
-			var total_by_item = unit_price*newQty - newDiscount;				
-			getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
-			getObj.find(".txt_total_by_item").val(total_by_item);
-			
-			calculateTotalBlock(total_by_item);
+		$(".txt_qty").keyup(function(){	
+			if(Number($(this).val()) > 0){			
+				var getObj = $(this).parents("tr");
+				var newQty = Number(getObj.find(".txt_qty").val());
+				var unit_price = Number(getObj.find(".txt_unit_price").val());
+				var oldDiscount = Number(getObj.find(".lbl_discount").text().replace(",","")) / Number(getObj.find(".lbl_qty").text());
+				$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
+				
+				getObj.find(".lbl_qty").text(getObj.find(".txt_qty").val());
+				
+				getObj.find(".lbl_discount").text(addCommas( oldDiscount * newQty ));
+				getObj.find(".txt_discount").val(oldDiscount * newQty);
+				var newDiscount = oldDiscount * newQty;
+				
+				var total_by_item = unit_price*newQty - newDiscount;				
+				getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
+				getObj.find(".txt_total_by_item").val(total_by_item);
+				
+				calculateTotalBlock(total_by_item);
+			}
 		});
 		
 		// when unit price is change
 		$(".txt_unit_price").keyup(function(){	
-			var getObj = $(this).parents("tr");
-			var newQty = Number(getObj.find(".txt_qty").val());
-			var unit_price = Number(getObj.find(".txt_unit_price").val());
-			var discount = Number(getObj.find(".lbl_discount").text().replace(",","")) / Number(getObj.find(".lbl_qty").text());
-			$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
-			
-			var total_by_item = unit_price*newQty - discount;
-			
-			getObj.find(".lbl_unit_price").text(addCommas(unit_price));
-			getObj.find(".txt_unit_price").val(unit_price);
-			
-			getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
-			getObj.find(".txt_total_by_item").val(total_by_item);
-			
-			calculateTotalBlock(total_by_item);
+			if(Number($(this).val()) > 0){
+				var getObj = $(this).parents("tr");
+				var newQty = Number(getObj.find(".txt_qty").val());
+				var unit_price = Number(getObj.find(".txt_unit_price").val());
+				var discount = Number(getObj.find(".lbl_discount").text().replace(",","")) / Number(getObj.find(".lbl_qty").text());
+				$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
+				
+				var total_by_item = unit_price*newQty - discount;
+				
+				getObj.find(".lbl_unit_price").text(addCommas(unit_price));
+				getObj.find(".txt_unit_price").val(unit_price);
+				
+				getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
+				getObj.find(".txt_total_by_item").val(total_by_item);
+				
+				calculateTotalBlock(total_by_item);
+			}
 		});
 		
 		// when discount is change
-		$(".txt_discount").keyup(function(){	
-			var getObj = $(this).parents("tr");
-			var newQty = Number(getObj.find(".txt_qty").val());
-			var unit_price = Number(getObj.find(".txt_unit_price").val());
-			var discount = Number($(this).val());
-			$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
-			
-			var total_by_item = unit_price*newQty - discount;
-			
-			getObj.find(".lbl_unit_price").text(addCommas(unit_price));
-			getObj.find(".txt_unit_price").val(unit_price);
-			
-			getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
-			getObj.find(".txt_total_by_item").val(total_by_item);
-			
-			calculateTotalBlock(total_by_item);
+		$(".txt_discount").keyup(function(){
+			if(Number($(this).val()) > 0){	
+				var getObj = $(this).parents("tr");
+				var newQty = Number(getObj.find(".txt_qty").val());
+				var unit_price = Number(getObj.find(".txt_unit_price").val());
+				var discount = Number($(this).val());
+				$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
+				
+				var total_by_item = unit_price*newQty - discount;
+				
+				getObj.find(".lbl_unit_price").text(addCommas(unit_price));
+				getObj.find(".txt_unit_price").val(unit_price);
+				
+				getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
+				getObj.find(".txt_total_by_item").val(total_by_item);
+				
+				calculateTotalBlock(total_by_item);
+			}
 		});
 		
 		// Click Save Record

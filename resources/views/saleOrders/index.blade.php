@@ -79,14 +79,14 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		<thead>
 			<tr>
 				<!--<th><input type="checkbox" name="checkOptionAll" /></th>-->
-				<th>Order Date</th>
-				<th>Receipt Code</th>
-				<th>Discount (៛)</th>
-				<th>Discount ($)</th>
-				<th>Total Amount (៛)</th>
-				<th>Total Amount ($)</th>
-				<th>Balance (៛)</th>
-				<th>Action</th>
+				<th>ថ្ងៃខែឆ្នាំទិញ</th>
+				<th>លេខកូដវិក័យប័ត្រ</th>
+				<th>បញ្ចុះតំលៃ (៛)</th>
+				<th>បញ្ចុះតំលៃ ($)</th>
+				<th>តំលៃសរុប (៛)</th>
+				<th>តំលៃសរុប ($)</th>
+				<th>លុយនៅសល់ (៛)</th>
+				<th>សកម្មភាព</th>
 			</tr>
 		</thead>
 		<?php /*
