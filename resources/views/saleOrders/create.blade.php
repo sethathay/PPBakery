@@ -342,7 +342,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		$("#code").focus();
 				
 		$(".numberInput").keypress(function(event){	
-			if(event.which != 8 && isNaN(String.fromCharCode(event.which))){
+			if((event.which != 8 && isNaN(String.fromCharCode(event.which))) && event.which != 46){
 			   event.preventDefault(); //stop character from entering input
 		   }
 		});

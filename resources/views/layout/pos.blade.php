@@ -178,12 +178,14 @@ body {
 
 .header-fixed > tbody > tr > td,
 .header-fixed > thead > tr > th {
+	font-size: 18px;
     width: 13%;
     float: left;
     text-align: right;
 }
 .header-fixed > thead > tr > th {
     text-align: center !important;
+	font-size: 20px;
 }
 .first-column{
     width: 35% !important;
@@ -208,11 +210,11 @@ body {
 	font-size: 18px;
 }
 .amount-big{
-	font-size: 26px;
+	font-size: 30px;
 	color: red;
 }
 .amount, .amount-big{
-	text-align: right;
+	text-align: center;
 	padding-right : 50px;
 }
 .row_input{
@@ -278,6 +280,10 @@ body {
 }
 .align_right{
 	text-align:right;
+}
+
+.user_info{
+	padding : 2px 0;
 }
 </style>
 </head>
@@ -393,29 +399,29 @@ body {
 					  </table>
 					</div>
 				</div>
-				<div class="row block-total" style="background: #DBEAF9; height: 160px; font-size: 16px; padding-top: 10px; width:67%;">
+				<div class="row block-total" style="background: #DBEAF9; height: 200px; font-size: 16px; padding-top: 10px; width:67%;">
 					<div class="col-md-6">
-						<div><label>សារខា :   {{ Session::get('location_name') }} </label></div>
-						<div><label>ឈ្មោះអ្នកប្រើប្រាស់ :  {{  Auth::user()->first_name." ".Auth::user()->last_name }} </label></div>
-						<div><label>ថ្ងៃ-ខែ-ឆ្នាំ:  &nbsp;&nbsp;&nbsp;&nbsp; <span id="fullDate" style="color:blue;"></span> </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label>ម៉ោង:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <label style="color:blue;" id="dateBox"></label></div>
-						<div style="font-size: 20px; border: 1px solid #aaa; padding: 15px 10px 10px; text-align: center;"><label>អត្រាប្តូរប្រាក់ :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:blue;">1$ = {{ number_format(Session::get('exchangerate')->riel) }}R</label>{!! Form::hidden('exchange_rate_id', Session::get('exchangerate')->id, array('class'=>'exchange_rate_id')) !!}</div>
+						<div class="user_info"><label>សារខា :   {{ Session::get('location_name') }} </label></div>
+						<div class="user_info"><label>ឈ្មោះអ្នកប្រើប្រាស់ :  {{  Auth::user()->first_name." ".Auth::user()->last_name }} </label></div>
+						<div class="user_info"><label>ថ្ងៃ-ខែ-ឆ្នាំ:  &nbsp;&nbsp;&nbsp;&nbsp; <span id="fullDate" style="color:blue;"></span> </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label>ម៉ោង:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <label style="color:blue;" id="dateBox"></label></div>
+						<div style="font-size: 30px; border: 1px solid #aaa; padding: 15px 10px 10px; text-align: center;"><label>អត្រាប្តូរប្រាក់ :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:blue;">1$ = {{ number_format(Session::get('exchangerate')->riel) }}R</label>{!! Form::hidden('exchange_rate_id', Session::get('exchangerate')->id, array('class'=>'exchange_rate_id')) !!}</div>
 					</div>
 					<div class="col-md-6 block-amount">
 						<div class="row">
-							<div class="col-md-6"><label>តំលៃសរុប : </label></div>
-							<div class="col-md-6 amount"><label class="subtotal">0</label> <label>៛</label>{!! Form::hidden('subtotal', 0, array('class'=>'txt_subtotal')) !!}</div>
+							<div class="col-md-6" style="font-size:22px;"><label>តំលៃសរុប : </label></div>
+							<div class="col-md-6 amount" style="font-size:24px;"><label class="subtotal">0</label> <label>៛</label>{!! Form::hidden('subtotal', 0, array('class'=>'txt_subtotal')) !!}</div>
 						</div>
 						<!--<div class="row">
 							<div class="col-md-6"><label>បញ្ចុះតំលៃ : </label></div>
 							<div class="col-md-6  amount"><label class="discount">0</label> <label>៛</label>{!! Form::hidden('txt_total_discount', 0, array('class'=>'txt_total_discount')) !!}</div>
 						</div>-->
-						<div class="row" style="padding-top:30px;">
-							<div class="col-md-6" style="color:red;"><label>តំលៃសរុបត្រូវបង់ (៛) : </label></div>
-							<div class="col-md-6  amount-big"><label class="total_amount_riel">0</label> <label>៛</label>{!! Form::hidden('total_amount_riel', 0, array('class'=>'txt_total_amount_riel')) !!}</div>
+						<div class="row" style="padding:20px 0 10px;">
+							<div class="col-md-6" style="color:red; font-size:26px;"><label>តំលៃសរុបត្រូវបង់ (៛) : </label></div>
+							<div class="col-md-6 amount-big"><label class="total_amount_riel">0</label> <label>៛</label>{!! Form::hidden('total_amount_riel', 0, array('class'=>'txt_total_amount_riel')) !!}</div>
 						</div>
 						<div class="row">
-							<div class="col-md-6" style="color:red;"><label>តំលៃសរុបត្រូវបង់ ($) : </label></div>
-							<div class="col-md-6  amount-big"><label class="total_amount_us">0</label> <label>$</label>{!! Form::hidden('total_amount_us', 0, array('class'=>'txt_total_amount_us')) !!}</div>
+							<div class="col-md-6" style="color:red; font-size:26px;"><label>តំលៃសរុបត្រូវបង់ ($) : </label></div>
+							<div class="col-md-6 amount-big"><label class="total_amount_us">0</label> <label>$</label>{!! Form::hidden('total_amount_us', 0, array('class'=>'txt_total_amount_us')) !!}</div>
 						</div>
 					</div>
 				</div>

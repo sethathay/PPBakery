@@ -51,7 +51,7 @@ class UsersController extends Controller
 	public function store(User $user, Request $request, UserGroup $user_groups)
 	{
 		/*
-		 * $user = Input::all();
+		* $user = Input::all();
 		* or
 		*/
 		$users = $request->all();
