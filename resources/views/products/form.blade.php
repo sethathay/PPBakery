@@ -55,3 +55,35 @@
 	</div>
 	
 </div>
+<script>
+$(document).ready(function(){
+	// this block use to detect if product code already exist.
+	var token = "{!! csrf_token() !!}";
+	var productId  = '<?php echo (isset($product->id))? $product->id : "";?>';
+	$("#code").blur(function(){
+		var obj = $(this);
+		$.ajax({
+			type : 'post',
+			url : '{{ route("products.checkProductExist") }}',
+			data: { _token : token, "code":$(this).val()},
+			success: function(id){
+				if(id > 0 && id != productId){
+					if(confirm("លេខកូនេះបានបង្កើតម្ដងហើយ!! តើអ្នកចង់ចូលទៅកាន់ទំនិញដែលមានលេខកូដនេះទេ?")){
+						//window.location = id+"/edit";
+						window.location = '{!! URL::asset("products/'+id+'/edit") !!}';
+					}else{
+						if(productId != ""){
+							obj.val('<?php echo (isset($product->code))? $product->code : "";?>');
+							obj.focus();
+						}else{
+							obj.val('');
+							obj.focus();
+						}
+					}
+				}
+			}
+		});
+	});
+	//---------------------------------------------------------
+});
+</script>

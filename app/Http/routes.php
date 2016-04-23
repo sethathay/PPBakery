@@ -53,6 +53,8 @@ Route::get('users/logout', 'UsersController@logout');
 
 // Route of products by Thay Setha
 Route::post('products/searchProdctByCode', ['as' => 'products.searchProdctByCode', 'uses' => 'ProductsController@searchProdctByCode']);
+// Route of products by Phou Lin
+Route::post('products/checkProductExist', ['as' => 'products.checkProductExist', 'uses' => 'ProductsController@checkProductExist']);
 
 //Route of products by Thay Setha
 Route::resource('products','ProductsController');

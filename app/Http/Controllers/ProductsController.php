@@ -151,4 +151,10 @@ class ProductsController extends Controller
     	$products = Product::where('is_active', 1)->where('code', $code)->first();
     	return Response::json($products);
     }
+	
+	public function checkProductExist(){
+    	$code = Input::get('code');
+    	$products = Product::where('is_active', 1)->where('code', $code)->first();
+		echo $products->id;exit;
+	}
 }

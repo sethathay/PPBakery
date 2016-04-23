@@ -10,6 +10,7 @@
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
 		
+		
 		function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();            
