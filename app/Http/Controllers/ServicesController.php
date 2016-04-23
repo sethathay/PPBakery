@@ -35,7 +35,7 @@ class ServicesController extends Controller
     public function create()
     {
         //
-        $sections = DB::table('sections')->where('is_active',1)->lists('name','id');
+		$sections = DB::table('sections')->where('is_active',1)->orderBy('id', 'desc')->lists('name','id');
         return view('services/create',compact('sections'));
     }
 
@@ -81,7 +81,7 @@ class ServicesController extends Controller
     {
         //
         $service = Service::find($id);
-        $sections = DB::table('sections')->lists('name', 'id');
+		$sections = DB::table('sections')->where('is_active',1)->orderBy('id', 'desc')->lists('name','id');
         return view('services/edit', compact('service','sections'));
     }
 

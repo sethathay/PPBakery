@@ -12,9 +12,6 @@
 		
 		$('form#adminForm').validate({
             rules: {                   
-                name: {
-                    required: true
-                },
                 section_id:{
                 	required:true
                 },
@@ -34,7 +31,7 @@
                     required: "សូមបញ្ចូលឈ្មោះនៃការចំនាយ"
                 },
                 section_id:{
-                	required: ""
+                	required: "សូមជ្រើសរើសមុខចំនាយ"
                 },
                 dollar_price:{
                 	required: "សូមបញ្ចូលតម្លៃជាលុយដុល្លា​ ឬលុយរៀល"

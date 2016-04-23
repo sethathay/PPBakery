@@ -67,7 +67,6 @@
 		<thead>
 			<tr>				
 				<th>ក្រុមចំនាយ</th>
-				<th>ឈ្មោះនៃការចំនាយ</th>
 				<th>កាលបរិច្ឆេទ</th>
 				<th>តម្លៃ($)</th>
 				<th>តម្លៃ(​​៛)</th>
@@ -94,7 +93,6 @@
         },
         "columns": [
            	{ "data": "section_name" },
-            { "data": "name" },
             { "data": "expense_date" },
             { "data": "dollar_price" },
             { "data": "riel_price" },
@@ -114,13 +112,13 @@
 			+'</button>'
         },
         {
-                "targets": 3,
+                "targets": 2,
                 "render": function ( data, type, row ) {
                     return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> $ </span> <span class="label label-danger" style="font-size:14px;">' + data + '</span>';
                 },
         },
         {
-                "targets": 4,
+                "targets": 3,
                 "render": function ( data, type, row ) {
                     return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> ៛ </span> <span class="label label-danger" style="font-size:14px;">' + data + '</span>';
                 },
