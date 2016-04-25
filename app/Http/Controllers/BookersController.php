@@ -138,7 +138,8 @@ class BookersController extends Controller
 				$inventoryTotalDetails = new InventoryTotalDetail;
 				$inventoryTotalDetail = array();
 				$fieldNews = ['product_id'=>$inputs['id'][$k], 'location_id'=>Session::get('location_id'), 'date'=>date('Y-m-d')];
-				$inventoryTotalDetail['total_pos'] = $checkIfSaleExistingProduct['total_qty']-$inputs['txt_qty'][$k];
+				$checkIfSaleExistingProductInventoryDetail = InventoryTotalDetail::where($fieldNews)->first();
+				$inventoryTotalDetail['total_pos'] = $checkIfSaleExistingProductInventoryDetail['total_qty']-$inputs['txt_qty'][$k];
 				$inventoryTotalDetail['created_by']    = \Auth::user()->id;
 				$inventoryTotalDetail['updated_by']    = \Auth::user()->id;	
 				$inventoryTotalDetails->where($fieldNews)->update($inventoryTotalDetail);
@@ -235,7 +236,8 @@ class BookersController extends Controller
 			
 			$inventoryTotalDetails = new InventoryTotalDetail;		
 			$fieldNews = ['product_id'=>$product->product_id, 'location_id'=>Session::get('location_id')];
-			$inventoryTotalDetail['total_pos'] = $checkIfSaleExistingProducts['total_qty']-($product->qty * $product->conversion);
+			$checkIfSaleExistingProductInventoryDetail = InventoryTotalDetail::where($fieldNews)->first();
+			$inventoryTotalDetail['total_pos'] = $checkIfSaleExistingProductInventoryDetail['total_qty']-($product->qty * $product->conversion);
 			$inventoryTotalDetail['updated_by']    = \Auth::user()->id;	
 			$inventoryTotalDetails->where($fieldNews)->update($inventoryTotalDetail);
 		}
@@ -291,7 +293,8 @@ class BookersController extends Controller
 				$inventoryTotalDetails = new InventoryTotalDetail;
 				$inventoryTotalDetail = array();
 				$fieldNews = ['product_id'=>$inputs['id'][$k], 'location_id'=>$location, 'date'=>date('Y-m-d')];
-				$inventoryTotalDetail['total_pos'] = $checkIfSaleExistingProduct['total_qty']-$inputs['txt_qty'][$k];
+				$checkIfSaleExistingProductInventoryDetail = InventoryTotalDetail::where($fieldNews)->first();
+				$inventoryTotalDetail['total_pos'] = $checkIfSaleExistingProductInventoryDetail['total_qty']-$inputs['txt_qty'][$k];
 				$inventoryTotalDetail['created_by']    = \Auth::user()->id;
 				$inventoryTotalDetail['updated_by']    = \Auth::user()->id;	
 				$inventoryTotalDetails->where($fieldNews)->update($inventoryTotalDetail);
@@ -384,7 +387,8 @@ class BookersController extends Controller
 				
 				$inventoryTotalDetails = new InventoryTotalDetail;		
 				$fieldNews = ['product_id'=>$product->product_id, 'location_id'=>\Auth::user()->location, 'date'=>date('Y-m-d')];
-				$inventoryTotalDetail['total_pos'] = $checkIfSaleExistingProduct['total_qty']-($product->qty * $product->conversion);
+				$checkIfSaleExistingProductInventoryDetail = InventoryTotalDetail::where($fieldNews)->first();
+				$inventoryTotalDetail['total_pos'] = $checkIfSaleExistingProductInventoryDetail['total_qty']-($product->qty * $product->conversion);
 				$inventoryTotalDetail['created_by']    = \Auth::user()->id;
 				$inventoryTotalDetail['updated_by']    = \Auth::user()->id;	
 				$inventoryTotalDetails->where($fieldNews)->update($inventoryTotalDetail);

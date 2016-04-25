@@ -61,6 +61,11 @@
 				style="vertical-align: middle; font-weight: normal;">លក់កក់</label></a>
 			</li>
 			@if ( Session::get('group_id') == 1)
+			<li><a href="{{ URL::asset('inventories/index') }}"><img
+				src="{{ URL::asset('img/stock.png') }}" alt="Inventory" />
+				&nbsp;&nbsp;<label
+				style="vertical-align: middle; font-weight: normal;">ស្តុកទំនិញ</label></a>
+			</li>
 			<li><a href="{{ URL::asset('#') }}"><img
 				src="{{ URL::asset('img/report.png') }}" alt="Report" />
 				&nbsp;&nbsp;<label

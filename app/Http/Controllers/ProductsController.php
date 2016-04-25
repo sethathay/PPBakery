@@ -93,6 +93,7 @@ class ProductsController extends Controller
     {
         //
         $product = Product::find($id);
+		
         $pgroups = DB::table('pgroups')->lists('name', 'id');
         return view('products/edit', compact('product','pgroups'));
     }

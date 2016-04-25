@@ -59,6 +59,12 @@ Route::post('products/checkProductExist', ['as' => 'products.checkProductExist',
 //Route of products by Thay Setha
 Route::resource('products','ProductsController');
 
+
+//Route of inventories by Phou Lin
+Route::get('inventories/index','InventoriesController@index');
+Route::post('inventories/save','InventoriesController@save');
+Route::post('inventories/searchInventory', ['as' => 'inventories.searchInventory', 'uses' => 'inventoriesController@searchInventory']);
+
 //Route of sections for expense group by Thay Setha
 Route::get('sections/index', ['as' => 'sections.index', 'uses' => 'SectionsController@index']);
 Route::get('sections/create', 'SectionsController@create');

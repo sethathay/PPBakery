@@ -18,7 +18,7 @@
 	<div class="col-sm-12 form">
 		<div class="row">
 			<div class="col-sm-12">
-				<h4>ពត៍មានរបស់ទំនិញ</h4>
+				<h4>ពត៌មានរបស់ទំនិញ</h4>
 			</div>
 			<div class="row-form col-sm-6">
 				<div class="form-group col-md-12">
@@ -39,6 +39,10 @@
 						<div class="input-group-addon">៛</div>
 						{!! Form::text('price', null, array('class' => 'form-control', 'placeholder' => 'តម្លៃ(៛)', 'id'=>'price')) !!}
 					</div>
+				</div>
+				<div class="form-group col-md-12">
+					<label for="first_name">ទំនិញគិតស្តុក : </label>
+					{!! Form::checkbox('is_stock', ((isset($product->is_stock))? $product->is_stock : 0), false, array('id'=>'is_stock')) !!}
 				</div>
 			</div>
 			<div class="row-form col-sm-6">
@@ -85,5 +89,13 @@ $(document).ready(function(){
 		});
 	});
 	//---------------------------------------------------------
+	
+	$("#is_stock").click(function(){
+		if($("#is_stock").is(":checked")){
+			$(this).val(1);
+		}else{
+			$(this).val(0);
+		}
+	});
 });
 </script>

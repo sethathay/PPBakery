@@ -46,9 +46,10 @@
 			<div class="col-md-2 board" onclick="redirectPage('exchangerates')"><img src="{{ URL::asset('img/emblem_money_b.png') }}" /><br/>អត្រា​ប្តូ​រ​ប្រាក់</div>
 			<div class="col-md-2 board" onclick="redirectPage('#')"><img src="{{ URL::asset('img/discount_b.png') }}" /><br/>ការបញ្ចុះតំលៃ</div>
 			<div class="col-md-2 board" onclick="redirectPage('saleOrders/index')"><img src="{{ URL::asset('img/receipt_b.png') }}" /><br/>វិក័យប័ត្រ</div>
+			<div class="col-md-2 board" onclick="redirectPage('{{ URL::asset('bookers/index') }}')"><img src="{{ URL::asset('img/book_b.png') }}" /><br/>លក់កក់</div>
+			<div class="col-md-2 board" onclick="redirectPage('inventories/index')"><img src="{{ URL::asset('img/stock.png') }}" /><br/>ស្តុកទំនិញ</div>
 			<div class="col-md-2 board" onclick="redirectPage('#')"><img src="{{ URL::asset('img/report_b.png') }}" /><br/>របាយការណ៍</div>
 			<div class="col-md-2 board" onclick="redirectPage('{{ URL::asset('users/index') }}')"><img src="{{ URL::asset('img/users_2_b.png') }}" /><br/>អ្នកប្រើប្រាស់</div>
-			<div class="col-md-2 board" onclick="redirectPage('{{ URL::asset('bookers/index') }}')"><img src="{{ URL::asset('img/book_b.png') }}" /><br/>លក់កក់</div>
 			<div class="col-md-2 board" onclick="redirectPage('#')"><img src="{{ URL::asset('img/blue_external_drive_backup.png') }}" /><br/>រក្សាទុកទិន្នន័យរបស់ប្រព័ន្ធ</div>
 		</div>
 	</div>

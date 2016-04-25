@@ -112,7 +112,8 @@ class PosController extends Controller
 				$inventoryTotalDetails = new InventoryTotalDetail;
 				$inventoryTotalDetail = array();
 				$fieldNews = ['product_id'=>$inputs['id'][$k], 'location_id'=>Session::get('location_id'), 'date'=>date('Y-m-d')];
-				$inventoryTotalDetail['total_pos'] = $checkIfSaleExistingProduct['total_qty']-$inputs['txt_qty'][$k];
+				$checkIfSaleExistingProductInventoryDetail = InventoryTotalDetail::where($fieldNews)->first();
+				$inventoryTotalDetail['total_pos'] = $checkIfSaleExistingProductInventoryDetail['total_qty']-$inputs['txt_qty'][$k];
 				$inventoryTotalDetail['created_by']    = \Auth::user()->id;
 				$inventoryTotalDetail['updated_by']    = \Auth::user()->id;	
 				$inventoryTotalDetails->where($fieldNews)->update($inventoryTotalDetail);
