@@ -49,7 +49,7 @@ class BookersController extends Controller
 		// To save booker information
 		$booker = array();
         $booker['_token']    = $inputs['_token'];
-        $booker['name']    = $inputs['booker'];
+        //$booker['name']    = $inputs['booker'];
         $booker['phone']    = $inputs['phone'];
         $booker['created_by']    = \Auth::user()->id;
         $booker['updated_by']    = \Auth::user()->id;
@@ -152,6 +152,8 @@ class BookersController extends Controller
 				$inventoryTotal['product_id'] = $inputs['id'][$k];
 				$inventoryTotal['location_id'] = Session::get('location_id');
 				$inventoryTotal['total_qty'] = (-1)*$inputs['txt_qty'][$k];
+				$inventoryTotal['created_by']    = \Auth::user()->id;
+				$inventoryTotal['updated_by']    = \Auth::user()->id;	
 				$inventoryTotal->save();
 				
 				// Save to inventory_total_details table
@@ -160,6 +162,8 @@ class BookersController extends Controller
 				$inventoryTotalDetail['location_id'] = Session::get('location_id');
 				$inventoryTotalDetail['total_pos'] = (-1)*$inputs['txt_qty'][$k];
 				$inventoryTotalDetail['date'] = date('Y-m-d');
+				$inventoryTotalDetail['created_by']    = \Auth::user()->id;
+				$inventoryTotalDetail['updated_by']    = \Auth::user()->id;	
 				$inventoryTotalDetail->save();
 				
 			}
@@ -307,6 +311,8 @@ class BookersController extends Controller
 				$inventoryTotal['product_id'] = $inputs['id'][$k];
 				$inventoryTotal['location_id'] = $location;
 				$inventoryTotal['total_qty'] = (-1)*$inputs['txt_qty'][$k];
+				$inventoryTotal['created_by']    = \Auth::user()->id;
+				$inventoryTotal['updated_by']    = \Auth::user()->id;
 				$inventoryTotal->save();
 				
 				// Save to inventory_total_details table
@@ -315,6 +321,8 @@ class BookersController extends Controller
 				$inventoryTotalDetail['location_id'] = $location;
 				$inventoryTotalDetail['total_pos'] = (-1)*$inputs['txt_qty'][$k];
 				$inventoryTotalDetail['date'] = date('Y-m-d');
+				$inventoryTotalDetail['created_by']    = \Auth::user()->id;
+				$inventoryTotalDetail['updated_by']    = \Auth::user()->id;	
 				$inventoryTotalDetail->save();
 				
 			}
@@ -381,7 +389,7 @@ class BookersController extends Controller
 				
 				$inventoryTotals = new InventoryTotal;		
 				$inventoryTotal['total_qty'] = $checkIfSaleExistingProduct['total_qty']+($product->qty * $product->conversion);
-				$inventoryTotal['created_by']    = 1;
+				$inventoryTotal['created_by']    = \Auth::user()->id;
 				$inventoryTotal['updated_by']    = \Auth::user()->id;	
 				$inventoryTotals->where($fields)->update($inventoryTotal);
 				

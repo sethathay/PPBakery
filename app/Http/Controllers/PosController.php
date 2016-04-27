@@ -29,6 +29,7 @@ class PosController extends Controller
     {
     	$inputs = Input::all();
 		$inputs['amount_riel'] = str_replace(",","",$inputs['amount_riel']);
+		$user  = \Auth::user()->id;
 		// To save sale order table
 		$saleOrder = array();
         $saleOrder['_token']    = $inputs['_token'];
@@ -44,8 +45,8 @@ class PosController extends Controller
 		$saleOrder['due_date']    = date('Y-m-d');
         $saleOrder['is_active']    = 1;
         $saleOrder['is_pos']    = 1;
-        $saleOrder['created_by']    = \Auth::user()->id;
-        $saleOrder['updated_by']    = \Auth::user()->id;
+        $saleOrder['created_by']    = $user;
+        $saleOrder['updated_by']    = $user;
 		$saleOrders->fill($saleOrder)->save();
 		$sale_order_id = $saleOrders->id;
 		
@@ -60,8 +61,8 @@ class PosController extends Controller
         $saleOrderReceipt['balance']    = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$inputs['exchange_rate_id'] + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$inputs['exchange_rate_id']);
 		$saleOrderReceipt['pay_date']    = date('Y-m-d');
 		$saleOrderReceipt['due_date']    = date('Y-m-d');	
-        $saleOrderReceipt['created_by']    = \Auth::user()->id;
-        $saleOrderReceipt['updated_by']    = \Auth::user()->id;	
+        $saleOrderReceipt['created_by']    = $user;
+        $saleOrderReceipt['updated_by']    = $user;
         $saleOrderReceipt['is_active']    = 1;
 		$saleOrderReceipts->fill($saleOrderReceipt)->save();
 		
@@ -94,8 +95,8 @@ class PosController extends Controller
 			$inventory['qty'] = $inputs['txt_qty'][$k];
 			$inventory['sale_price'] = $inputs['txt_unit_price'][$k];
 			$inventory['date'] = date('Y-m-d');
-			$inventory['created_by']    = \Auth::user()->id;
-			$inventory['updated_by']    = \Auth::user()->id;	
+			$inventory['created_by']    = $user;
+			$inventory['updated_by']    = $user;	
 			$inventory->save();
 			
 			if(count($checkIfSaleExistingProduct)>0){ //for existing product in inventory
@@ -104,8 +105,8 @@ class PosController extends Controller
 				$inventoryTotals = new InventoryTotal;
 				$inventoryTotal = array();
 				$inventoryTotal['total_qty'] = $checkIfSaleExistingProduct['total_qty']-$inputs['txt_qty'][$k];
-				$inventoryTotal['created_by']    = \Auth::user()->id;
-				$inventoryTotal['updated_by']    = \Auth::user()->id;	
+				$inventoryTotal['created_by']    = $user;
+				$inventoryTotal['updated_by']    = $user;	
 				$inventoryTotals->where($fields)->update($inventoryTotal);
 				
 				// Save to inventory_total_details table
@@ -114,8 +115,8 @@ class PosController extends Controller
 				$fieldNews = ['product_id'=>$inputs['id'][$k], 'location_id'=>Session::get('location_id'), 'date'=>date('Y-m-d')];
 				$checkIfSaleExistingProductInventoryDetail = InventoryTotalDetail::where($fieldNews)->first();
 				$inventoryTotalDetail['total_pos'] = $checkIfSaleExistingProductInventoryDetail['total_qty']-$inputs['txt_qty'][$k];
-				$inventoryTotalDetail['created_by']    = \Auth::user()->id;
-				$inventoryTotalDetail['updated_by']    = \Auth::user()->id;	
+				$inventoryTotalDetail['created_by']    = $user;
+				$inventoryTotalDetail['updated_by']    = $user;	
 				$inventoryTotalDetails->where($fieldNews)->update($inventoryTotalDetail);
 				
 				
@@ -126,6 +127,8 @@ class PosController extends Controller
 				$inventoryTotal['product_id'] = $inputs['id'][$k];
 				$inventoryTotal['location_id'] = Session::get('location_id');
 				$inventoryTotal['total_qty'] = (-1)*$inputs['txt_qty'][$k];
+				$inventoryTotal['created_by']    = $user;
+				$inventoryTotal['updated_by']    = $user;	
 				$inventoryTotal->save();
 				
 				// Save to inventory_total_details table
@@ -134,6 +137,8 @@ class PosController extends Controller
 				$inventoryTotalDetail['location_id'] = Session::get('location_id');
 				$inventoryTotalDetail['total_pos'] = (-1)*$inputs['txt_qty'][$k];
 				$inventoryTotalDetail['date'] = date('Y-m-d');
+				$inventoryTotalDetail['created_by']    = $user;
+				$inventoryTotalDetail['updated_by']    = $user;	
 				$inventoryTotalDetail->save();
 				
 			}

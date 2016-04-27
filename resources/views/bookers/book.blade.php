@@ -560,6 +560,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			}else if(record == 0){
 				alert("សូមបញ្ចូលលេខកូដទំនេញ!!");
 			}else{
+				
 				$('#myModalPayment').modal({ keyboard: true, backdrop: 'static' });
 			}
 		}

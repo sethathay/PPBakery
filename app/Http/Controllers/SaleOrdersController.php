@@ -139,6 +139,8 @@ class SaleOrdersController extends Controller
 				$inventoryTotal['product_id'] = $inputs['id'][$k];
 				$inventoryTotal['location_id'] = Session::get('location_id');
 				$inventoryTotal['total_qty'] = (-1)*$inputs['txt_qty'][$k];
+				$inventoryTotal['created_by']    = $user;
+				$inventoryTotal['updated_by']    = $user;	
 				$inventoryTotal->save();
 				
 				// Save to inventory_total_details table
@@ -147,6 +149,8 @@ class SaleOrdersController extends Controller
 				$inventoryTotalDetail['location_id'] = Session::get('location_id');
 				$inventoryTotalDetail['total_pos'] = (-1)*$inputs['txt_qty'][$k];
 				$inventoryTotalDetail['date'] = date('Y-m-d');
+				$inventoryTotalDetail['created_by']    = \Auth::user()->id;
+				$inventoryTotalDetail['updated_by']    = \Auth::user()->id;	
 				$inventoryTotalDetail->save();
 				
 			}
@@ -290,6 +294,8 @@ class SaleOrdersController extends Controller
 				$inventoryTotal['product_id'] = $inputs['id'][$k];
 				$inventoryTotal['location_id'] = $location;
 				$inventoryTotal['total_qty'] = (-1)*$inputs['txt_qty'][$k];
+				$inventoryTotal['created_by']    = \Auth::user()->id;
+				$inventoryTotal['updated_by']    = \Auth::user()->id;	
 				$inventoryTotal->save();
 				
 				// Save to inventory_total_details table
@@ -298,6 +304,8 @@ class SaleOrdersController extends Controller
 				$inventoryTotalDetail['location_id'] = $location;
 				$inventoryTotalDetail['total_pos'] = (-1)*$inputs['txt_qty'][$k];
 				$inventoryTotalDetail['date'] = date('Y-m-d');
+				$inventoryTotalDetail['created_by']    = \Auth::user()->id;
+				$inventoryTotalDetail['updated_by']    = \Auth::user()->id;	
 				$inventoryTotalDetail->save();
 				
 			}
@@ -335,7 +343,7 @@ class SaleOrdersController extends Controller
 				
 				$inventoryTotals = new InventoryTotal;		
 				$inventoryTotal['total_qty'] = $checkIfSaleExistingProduct['total_qty']+($product->qty * $product->conversion);
-				$inventoryTotal['created_by']    = 1;
+				$inventoryTotal['created_by']    = \Auth::user()->id;
 				$inventoryTotal['updated_by']    = \Auth::user()->id;	
 				$inventoryTotals->where($fields)->update($inventoryTotal);
 				

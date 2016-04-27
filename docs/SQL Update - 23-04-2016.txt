@@ -1,0 +1,27 @@
+ALTER TABLE `products`
+	ADD COLUMN `is_stock` TINYINT(4) NOT NULL DEFAULT '0' AFTER `is_fixed`;
+
+ALTER TABLE `inventories`
+	ADD COLUMN `actions` VARCHAR(255) NULL COLLATE 'utf8_unicode_ci' AFTER `date_expired`;
+
+ALTER TABLE `cycle_inventories`
+	DROP COLUMN `inventory_id`;
+
+ALTER TABLE `cycle_inventories`
+	DROP COLUMN `type`;
+
+ALTER TABLE `cycle_product_details`
+	CHANGE COLUMN `cycle_product_id` `cycle_inventory_id` BIGINT(20) NULL DEFAULT NULL AFTER `id`;
+
+ALTER TABLE `cycle_inventories`
+	DROP COLUMN `current_qty`,
+	DROP COLUMN `new_qty`,
+	DROP COLUMN `qty_uom_id`;
+
+ALTER TABLE `cycle_product_details`
+	ADD COLUMN `actions` VARCHAR(50) NULL DEFAULT NULL AFTER `new_qty`;
+
+ALTER TABLE `cycle_product_details`
+	DROP COLUMN `qty_difference`;
+
+DROP TABLE `cycle_products`;
