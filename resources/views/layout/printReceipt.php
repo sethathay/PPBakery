@@ -3,20 +3,42 @@
 <?php }?>
 <style>
 .receipt, .receipt table{
-	font-size: 10px !important;
+	font-size: 11px !important;
 }
 .modal-content{
-	width:400px;
-	margin: 0 auto;
+	width:100%;
+}
+th{	
+	height: 30px;
+	border-width: 1px;
+	border-color: #ccc;
+    border-style: solid;
+	border-left:0px;
+	border-right: 0px;
+}
+td{
+	height: 30px;
+	border-width: 1px;
+	border-color: #ccc;
+    border-style: solid;
+	border-top: 0px;
+	border-left:0px;
+	border-right: 0px;
+}
+.content-body{
+	width: 100%;
 }
 </style>
 <div class="modal-content <?php echo ($footer == "no"?"col-md-3":"");?>">
 	<div class="content-body modal-dialog modal-sm" <?php echo ($footer == "no"?"style='margin-left:0px;'":"");?>>
-		<div class="modal-body receipt" style="text-align: center; width:80%;">
-			<label>ហាងនំបុ័ង ភ្នំពេញ</label><br/>
-			<label>PHNOM PHNOM BAKERY</label>
-			<div>
-				Tel: 015 855 755
+		<div class="modal-body receipt" style="text-align: center;">
+			<div style="width:35%; float:left;"><img src="<?php echo  URL::asset('img/ppbakery.png') ;?>" alt="Logo" /></div>
+			<div style="width:47%; float:left; text-align:center;">
+				<label>ហាងនំបុ័ង ភ្នំពេញ</label><br/>
+				<label>PHNOM PHNOM BAKERY</label>
+				<div>
+					លេខទូរស័ព្ទ : 015 855 755
+				</div>
 			</div>
 			<div style="text-align : left;">
 				លេខវិក័យបត្រ : <label><?php echo $saleOrder->so_code; ?></label>
@@ -25,10 +47,10 @@
 				កាលបរិច្ឆេទ : <label><?php echo date("d/m/Y")." ". date("H:i:s"); ?></label>
 			</div>
 
-			<div>
-				<table class="table table-hover">
-					<tr>
-						<th>កូដទំនិញ</th>
+			<div style="width:90%; margin: 0 auto;">
+				<table class="table-hover" style="width:100%">
+					<tr style="border-top:1px solid #ccc;">
+						<th>កូដ</th>
 						<th>ឈ្មោះទំនិញ</th>
 						<th>ចំនួន</th>
 						<th>តំលៃ</th>
@@ -51,12 +73,12 @@
 				<?php }?>
 				
 					<tr>
-						<td colspan="4" style="text-align:right;">តំលៃសរុបត្រូវបង់ (R)</td>
+						<td colspan="4" style="text-align:right;">តំលៃសរុបត្រូវបង់ (៛)</td>
 						<td colspan="2" style="text-align:right;"><label><?php echo number_format($sub_total); ?></label></td>
 					</tr>
 					<?php if($saleOrder->discount_riel != ""){?>
 					<tr>
-						<td colspan="4" style="text-align:right;">ចុះតំលៃ (R)</td>
+						<td colspan="4" style="text-align:right;">ចុះតំលៃ (៛)</td>
 						<td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrder->discount_riel); ?></label></td>
 					</tr>
 					<?php }?>
@@ -67,16 +89,19 @@
 					</tr>
 					<?php }?>
 					<tr>
-						<td colspan="4" style="text-align:right;">ប្រាក់បង់រួច (R)</td>
+						<td colspan="4" style="text-align:right;">ប្រាក់បង់រួច (៛)</td>
 						<td colspan="2" style="text-align:right;"><label><?php echo number_format($sub_total-$saleOrder->balance); ?></label></td>
 					</tr>
 					<?php if($saleOrder->balance != ""){?>
 					<tr>
-						<td colspan="4" style="text-align:right;">ប្រាក់មិនទាន់បង់ (R)</td>
+						<td colspan="4" style="text-align:right;">ប្រាក់មិនទាន់បង់ (៛)</td>
 						<td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrder->balance); ?></label></td>
 					</tr>
 					<?php }?>
 				</table>
+			</div>
+			<div style="width:90%; margin: 10px auto 30px; text-align:center;">
+				សូមអរគុណ! អញ្ជើញមកម្តងទៀត៕
 			</div>
 			<?php if($footer == "yes"){?>
 			  <div class="modal-footer">
@@ -96,10 +121,12 @@
 	$(document).ready(function(){		
 		$(".btn-print").click(function(){
 			$(".modal-footer").hide();
+			$(".modal-content").css("width","80%");
+			//$(".receipt").css("width","65%");
 			w = window.open();
-			w.document.write($("#myModalPrint").html());
+			w.document.write("<div style='width:350px; font-size: 9px;'>"+$("#myModalPrint").html()+"</div>");
 			w.print();
-			w.close();
+			//w.close();
 			
 		});
 	});

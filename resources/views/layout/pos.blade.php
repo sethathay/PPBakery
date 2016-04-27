@@ -618,8 +618,9 @@ body {
 									$("#myModalPayment").hide();
 									$("#myModalPrint").load('pos/print/'+result+'/no', '', function(){
 										//$("#myModalPrint").modal();
+										$(".modal-content").css("width","80%");
 										w = window.open();
-										w.document.write($("#myModalPrint").html());
+										w.document.write("<div style='width:350px; font-size: 9px;'>"+$("#myModalPrint").html()+"</div>");
 										w.print(false);
 										w.close();
 										window.location.reload();
@@ -656,8 +657,9 @@ body {
 								$("#myModalPayment").hide();
 								$("#myModalPrint").load('pos/print/'+result+'/no', '', function(){
 									//$("#myModalPrint").modal();
+									$(".modal-content").css("width","80%");
 									w = window.open();
-									w.document.write($("#myModalPrint").html());
+									w.document.write("<div style='width:350px; font-size: 9px;'>"+$("#myModalPrint").html()+"</div>");
 									w.print(false);
 									w.close();
 									window.location.reload();
