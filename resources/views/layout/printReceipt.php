@@ -126,7 +126,7 @@ td{
 			w = window.open();
 			w.document.write("<div style='width:350px; font-size: 9px;'>"+$("#myModalPrint").html()+"</div>");
 			w.print();
-			//w.close();
+			w.close();
 			
 		});
 	});
