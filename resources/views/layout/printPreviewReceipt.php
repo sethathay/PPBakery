@@ -34,10 +34,12 @@ td{
 	<div class="content-body modal-dialog modal-sm" <?php echo ($footer == "no"?"style='margin-left:0px;'":"");?>>
 		<div class="modal-body receipt" style="text-align: center;">
 			<div style="width:35%; float:left;"><img src="<?php echo  URL::asset('img/ppbakery.png') ;?>" alt="Logo" /></div>
-			<div style="width:48%; float:left; text-align:center;">
+			<div style="width:47%; float:left; text-align:center;">
 				<label>ហាងនំបុ័ង ភ្នំពេញ</label><br/>
 				<label>PHNOM PHNOM BAKERY</label>
-				<label>ទូរស័ព្ទ / Tel : 015 855 755</label>
+				<div>
+					ទូរស័ព្ទ / Tel : 015 855 755
+				</div>
 			</div>
 			<div style="text-align : left;">
 				លេខវិក័យបត្រ / InvID : <label><?php echo $saleOrder->so_code; ?></label>
@@ -104,7 +106,7 @@ td{
 			</div>
 			<?php if($footer == "yes"){?>
 			  <div class="modal-footer">
-				<button type="button" class="btn btn-default btn-print" data-dismiss="modal"><span class="glyphicon glyphicon-print"></span> Print</button>
+				<button type="button" class="btn btn-default btn-paid" data-dismiss="modal"><span class="glyphicon glyphicon-print"></span> Paid</button>
 				<button type="button" class="btn btn-default btn-dismiss" data-dismiss="modal"><span class="glyphicon glyphicon-close"></span> Close</button>
 			  </div>
 			<?php }?>
@@ -118,14 +120,29 @@ td{
 
 	
 	$(document).ready(function(){		
-		$(".btn-print").click(function(){
-			$(".modal-footer").hide();
-			$(".modal-content").css("width","80%");
-			//$(".receipt").css("width","65%");
-			w = window.open();
-			w.document.write("<div style='width:350px; font-size: 9px;'>"+$("#myModalPrint").html()+"</div>");
-			w.print();
-			w.close();
+		$(".btn-paid").click(function(){
+			var token = "<?php echo csrf_token();?>";
+			var sales_order_id = '<?php echo $saleOrder->id; ?>';
+			$.ajax({
+				type : 'post',
+				url : 'pay',
+				data : {sales_order_id:sales_order_id, _token:token},
+				dataType : 'json',
+				success : function(result){
+					// return sales_order_id;								
+					
+					$("#myModalPayment").hide();
+					$("#myModalPrint").load('{{ URL::asset("bookers/print")}}/'+result+'/no', '', function(){
+						//$("#myModalPrint").modal();
+						w = window.open();
+						w.document.write("<div style='width:350px; font-size: 9px;'>"+$("#myModalPrint").html()+"</div>");
+						w.print(false);
+						w.close();
+						window.location = 'index';
+					});
+					
+				}
+			});
 			
 		});
 	});

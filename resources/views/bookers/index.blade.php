@@ -79,12 +79,13 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			<tr>
 				<!--<th><input type="checkbox" name="checkOptionAll" /></th>-->
 				<th>ថ្ងៃខែឆ្នាំកក់</th>
+				<th>ទូរស័ព្ទ</th>
 				<th>លេខកូដវិក័យប័ត្រ</th>
 				<th>បញ្ចុះតំលៃ (៛)</th>
 				<th>បញ្ចុះតំលៃ ($)</th>
 				<th>តំលៃសរុប (៛)</th>
 				<th>តំលៃសរុប ($)</th>
-				<th>លុយនៅសល់ (៛)</th>
+				<th>ប្រាក់នៅខ្ងះ (៛)</th>
 				<th>សកម្មភាព</th>
 			</tr>
 		</thead>
@@ -139,10 +140,11 @@ function number_format_unlimited_precision($number,$decimal = '.')
         "data": <?php echo $saleOrders ?>,
         "order": [[ 6, "desc" ]],
         "createdRow": function ( row, datas, index ) {
-        	$('td', row).eq(7).addClass('last_td');
+        	$('td', row).eq(9).addClass('last_td');
         },
         "columns": [
            	{ "data": "order_date" },
+           	{ "data": "phone" },
             { "data": "so_code" },
             { "data": "discount_riel" },
             { "data": "discount_us" },
@@ -154,7 +156,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
         "columnDefs": [ {
             "targets": -1,
             "defaultContent":
-			'<button style="margin-right:5px" type="button" class="btn btn-xs btn-warning paid"><span class="fa fa-dollar"></span> &nbsp;Pay&nbsp;</button>'
+			'<button style="margin-right:5px" type="button" class="btn btn-xs btn-warning view_paid"><span class="fa fa-dollar"></span> &nbsp;Pay&nbsp;</button>'
             +'<button style="margin-right:5px" type="button" class="btnview btn btn-xs btn-info">'
             + '<span class="glyphicon glyphicon-user"></span> View</button>'
             +'<button style="margin-right:5px" type="button" class="btnedit btn btn-xs btn-primary">'
@@ -164,31 +166,31 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			+'</button>'
         },
         {
-                "targets": 2,
+                "targets": 3,
                 "render": function ( data, type, row ) {
                     return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> $ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(data) + '</span>';
                 },
 		},
         {
-                "targets": 3,
+                "targets": 4,
                 "render": function ( data, type, row ) {
                     return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> $ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(getMathRound100(data)) + '</span>';
                 },
         },
         {
-                "targets": 4,
+                "targets": 5,
                 "render": function ( data, type, row ) {
                     return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> ៛ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(data) + '</span>';
                 },
 		},
         {
-                "targets": 5,
+                "targets": 6,
                 "render": function ( data, type, row ) {
                     return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> $ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(getMathRound100(data)) + '</span>';
                 },
 		},
         {
-                "targets": 6,
+                "targets": 7,
                 "render": function ( data, type, row ) {
                     return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> $ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(data) + '</span>';
                 },
@@ -196,6 +198,13 @@ function number_format_unlimited_precision($number,$decimal = '.')
 	 ]
     } );
 
+	$('#tbl_expense tbody').on( 'click', '.view_paid', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+		$("#myModalPrint").load("{{ URL::asset('bookers/printPaid/') }}/"+data['id']+"/yes", '', function(){
+			$("#myModalPrint").modal();
+		});
+    } );
+	/*
 	$('#tbl_expense tbody').on( 'click', '.paid', function () {
         var data = table.row( $(this).parents('tr') ).data();
 		var token = "{!! csrf_token() !!}";
@@ -220,6 +229,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			}
 		});
     } );
+	*/
 
 	$('#tbl_expense tbody').on( 'click', '.btnview', function () {
         var data = table.row( $(this).parents('tr') ).data();

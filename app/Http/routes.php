@@ -110,6 +110,7 @@ Route::get('bookers/edit/{id}', ['as' => 'bookers.edit', 'uses' => 'BookersContr
 Route::post('bookers/sale', 'BookersController@sale');
 Route::post('bookers/pay', 'BookersController@pay');
 Route::get('bookers/print/{id}/{footer}', 'BookersController@printReceipt');
+Route::get('bookers/printPaid/{id}/{footer}', 'BookersController@printPreviewReceipt');
 
 //Route of services for daily expense input by Thay Setha
 Route::resource('services','ServicesController');
