@@ -44,7 +44,7 @@ td{
 				លេខវិក័យបត្រ : <label><?php echo $saleOrder->so_code; ?></label>
 			</div>
 			<div style="text-align : left;">
-				កាលបរិច្ឆេទ : <label><?php echo date("d/m/Y")." ". date("H:i:s"); ?></label>
+				កាលបរិច្ឆេទ : <label><?php echo $saleOrder->created_at; ?></label>
 			</div>
 
 			<div style="width:90%; margin: 0 auto;">
