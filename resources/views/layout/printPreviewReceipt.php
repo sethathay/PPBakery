@@ -34,14 +34,12 @@ td{
 	<div class="content-body modal-dialog modal-sm" <?php echo ($footer == "no"?"style='margin-left:0px;'":"");?>>
 		<div class="modal-body receipt" style="text-align: center;">
 			<div style="width:35%; float:left;"><img src="<?php echo  URL::asset('img/ppbakery.png') ;?>" alt="Logo" /></div>
-			<div style="width:47%; float:left; text-align:center;">
+			<div style="width:48%; float:left; text-align:center; margin-bottom:20px;">
 				<label>ហាងនំបុ័ង ភ្នំពេញ</label><br/>
 				<label>PHNOM PHNOM BAKERY</label>
-				<div>
-					ទូរស័ព្ទ / Tel : 015 855 755
-				</div>
+				<label>ទូរស័ព្ទ / Tel : 015 855 755</label>
 			</div>
-			<div style="text-align : left;">
+			<div style="text-align : center; float:left; width:100%;">
 				លេខវិក័យបត្រ / InvID : <label><?php echo $saleOrder->so_code; ?></label>
 			</div>
 			<div style="text-align : center;">
@@ -134,6 +132,8 @@ td{
 					$("#myModalPayment").hide();
 					$("#myModalPrint").load('{{ URL::asset("bookers/print")}}/'+result+'/no', '', function(){
 						//$("#myModalPrint").modal();
+						$(".modal-footer").hide();
+						$(".modal-content").css("width","80%");
 						w = window.open();
 						w.document.write("<div style='width:350px; font-size: 9px;'>"+$("#myModalPrint").html()+"</div>");
 						w.print(false);

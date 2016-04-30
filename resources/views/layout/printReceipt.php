@@ -34,12 +34,12 @@ td{
 	<div class="content-body modal-dialog modal-sm" <?php echo ($footer == "no"?"style='margin-left:0px;'":"");?>>
 		<div class="modal-body receipt" style="text-align: center;">
 			<div style="width:35%; float:left;"><img src="<?php echo  URL::asset('img/ppbakery.png') ;?>" alt="Logo" /></div>
-			<div style="width:48%; float:left; text-align:center;">
+			<div style="width:48%; float:left; text-align:center; margin-bottom:20px;">
 				<label>ហាងនំបុ័ង ភ្នំពេញ</label><br/>
 				<label>PHNOM PHNOM BAKERY</label>
 				<label>ទូរស័ព្ទ / Tel : 015 855 755</label>
 			</div>
-			<div style="text-align : left;">
+			<div style="text-align : center; float:left; width:100%;">
 				លេខវិក័យបត្រ / InvID : <label><?php echo $saleOrder->so_code; ?></label>
 			</div>
 			<div style="text-align : center;">

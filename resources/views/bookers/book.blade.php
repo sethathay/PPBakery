@@ -389,7 +389,8 @@ function number_format_unlimited_precision($number,$decimal = '.')
 							// return sales_order_id;		
 							$("#myModalPayment").hide();
 							$("#myModalPrint").load('{{ URL::asset("bookers/print")}}/'+result+'/no', '', function(){
-								//$("#myModalPrint").modal();
+								//$("#myModalPrint").modal();								
+								$(".modal-content").css("width","80%");
 								w = window.open();
 								w.document.write("<div style='width:350px; font-size: 9px;'>"+$("#myModalPrint").html()+"</div>");
 								w.print(false);
@@ -416,6 +417,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 						$("#myModalPayment").hide();
 						$("#myModalPrint").load('{{ URL::asset("bookers/print")}}/'+result+'/no', '', function(){
 							//$("#myModalPrint").modal();
+							$(".modal-content").css("width","80%");
 							w = window.open();
 							w.document.write("<div style='width:350px; font-size: 9px;'>"+$("#myModalPrint").html()+"</div>");
 							w.print(false);

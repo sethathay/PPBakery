@@ -411,12 +411,13 @@ function number_format_unlimited_precision($number,$decimal = '.')
 						data : $("#adminForm").serialize(),
 						dataType : 'json',
 						success : function(result){
-							// return sales_order_id;								
+							// return sales_order_id;							
 							$("#myModalPayment").hide();
 							$("#myModalPrint").load('{{ URL::asset("saleOrders/print")}}/'+result+'/no', '', function(){
 								//$("#myModalPrint").modal();
+								$(".modal-content").css("width","80%");
 								w = window.open();
-								w.document.write($("#myModalPrint").html());
+								w.document.write("<div style='width:350px; font-size: 9px;'>"+$("#myModalPrint").html()+"</div>");
 								w.print(false);
 								w.close();
 								window.location = '{{ URL::asset("saleOrders/index") }}';
@@ -441,8 +442,9 @@ function number_format_unlimited_precision($number,$decimal = '.')
 						$("#myModalPayment").hide();
 							$("#myModalPrint").load('{{ URL::asset("saleOrders/print")}}/'+result+'/no', '', function(){
 							//$("#myModalPrint").modal();
+							$(".modal-content").css("width","80%");
 							w = window.open();
-							w.document.write($("#myModalPrint").html());
+							w.document.write("<div style='width:350px; font-size: 9px;'>"+$("#myModalPrint").html()+"</div>");
 							w.print(false);
 							w.close();
 							window.location = '{{ URL::asset("saleOrders/index") }}';
