@@ -85,7 +85,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				<th>បញ្ចុះតំលៃ ($)</th>
 				<th>តំលៃសរុប (៛)</th>
 				<th>តំលៃសរុប ($)</th>
-				<th>លុយនៅសល់ (៛)</th>
+				<th>ប្រាក់នៅខ្ងះ (៛)</th>
 				<th>សកម្មភាព</th>
 			</tr>
 		</thead>

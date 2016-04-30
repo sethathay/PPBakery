@@ -112,7 +112,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading" style="background:#449D44;">
 		<div class="col-sm-7">
-			<img src="{{ URL::asset('/img/book_b.png') }}" /> <label style="color:#fff;">កក់ទំនេញ</label>
+			<img src="{{ URL::asset('/img/book_b.png') }}" /> <label style="color:#fff;">លក់កក់</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 30px 10px; vertical-align: middle;">
@@ -215,55 +215,55 @@ function number_format_unlimited_precision($number,$decimal = '.')
 	
 	<!-- Modal Payment -->
 	<div id="myModalPayment" class="modal fade bs-example-modal-lg" role="dialog">
-	  <div class="modal-dialog modal-lg">
+	  <div class="modal-dialog modal-md">
 
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-body"><br/>
 				<div class="row">
-					<div class="col-md-4"><label>តំលៃសរុបត្រូវបង់ (៛) : </label></div>
-					<div class="col-md-7 amount-big"><label class="popup_total_amount_riel"></label> <label>៛</label></div>
+					<div class="col-md-5 align_right" style="color:red; font-size:20px;"><label>តំលៃសរុបត្រូវបង់ (៛) : </label></div>
+					<div class="col-md-5 amount-big" style="padding-right:0;"><label class="popup_total_amount_riel"></label> <label>៛</label></div>
 				</div>
 				<div class="row">
-					<div class="col-md-4"><label>តំលៃសរុបត្រូវបង់ ($) : </label></div>
-					<div class="col-md-7 amount-big"><label class="popup_total_amount_us"></label> <label>$</label></div>
+					<div class="col-md-5 align_right" style="color:red; font-size:20px;"><label>តំលៃសរុបត្រូវបង់ ($) : </label></div>
+					<div class="col-md-5 amount-big" style="padding-right:0;"><label class="popup_total_amount_us"></label> <label>$</label></div>
 				</div>
-				<div class="row">
+				<div class="row" style="margin-top: 20px">
 					<div style="margin-bottom: 50px">
-						<div class="col-md-4"><label>បញ្ចុះតំលៃ (៛) : </label></div>
-						<div class="col-md-7 amount-big"><input id="custom-discount-riel" type="text" class="form-control custom-discount-riel numberInput" name="custom-discount-riel" value="0" placeholder=""></div>
+						<div class="col-md-4 align_right" style="font-size:20px;"><label>បញ្ចុះតំលៃ (៛) : </label></div>
+						<div class="col-md-5 amount-big"><input id="custom-discount-riel" type="text" class="form-control custom-discount-riel numberInput" name="custom-discount-riel" value="0" placeholder=""></div>
 					</div>
 				</div>
 				<div class="row">
 					<div style="margin-bottom: 70px">
-						<div class="col-md-4"><label>បញ្ចុះតំលៃ ($) : </label></div>
-						<div class="col-md-7 amount-big"><input id="custom-discount-us" type="text" class="form-control custom-discount-us numberInput" name="custom-discount-us" value="0" placeholder=""></div>
+						<div class="col-md-4 align_right" style="font-size:20px;"><label>បញ្ចុះតំលៃ ($) : </label></div>
+						<div class="col-md-5 amount-big align_right"><input id="custom-discount-us" type="text" class="form-control custom-discount-us numberInput" name="custom-discount-us" value="0" placeholder=""></div>
 					</div>
 				</div>
 				<div class="row">
 					<div style="margin-bottom: 50px">
-						<div class="col-md-4"><label>បង់ប្រាក់ (៛) : </label></div>
-						<div class="col-md-7 amount-big"><input id="amount_riel" type="text" class="form-control custom-amount numberInput" name="amount_riel" value="0" placeholder=""></div>
+						<div class="col-md-4 align_right" style="font-size:20px;"><label>ប្រាក់កក់ (៛) : </label></div>
+						<div class="col-md-5 amount-big align_right"><input id="amount_riel" type="text" class="form-control custom-amount numberInput" name="amount_riel" value="0" placeholder=""></div>
 					</div>
 				</div>
 				<div class="row">
 					<div style="margin-bottom: 50px">
-						<div class="col-md-4"><label>បង់ប្រាក់ ($) : </label></div>
-						<div class="col-md-7 amount-big"><input id="amount_us" type="text" class="form-control custom-amount numberInput" name="amount_us" value="0" placeholder=""></div>
+						<div class="col-md-4 align_right" style="font-size:20px;"><label>ប្រាក់កក់ ($) : </label></div>
+						<div class="col-md-5 amount-big align_right"><input id="amount_us" type="text" class="form-control custom-amount numberInput" name="amount_us" value="0" placeholder=""></div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-4"><label>ប្រាក់អាប់ (៛) : </label></div>
-					<div class="col-md-7 amount-big" style="color:blue;"><label class="remain_total_amount_riel">0</label> <label>៛</label></div>
+				<div class="row" style="margin-top: 20px">
+					<div class="col-md-5 align_right" style="color:blue; font-size:26px;"><label>ប្រាក់នៅខ្វះ (៛) : </label></div>
+					<div class="col-md-5 amount-big" style="color:blue;padding-right:0;"><label class="remain_total_amount_riel">0</label> <label>៛</label></div>
 				</div>
 				<div class="row">
-					<div class="col-md-4"><label>ប្រាក់អាប់ ($) : </label></div>
-					<div class="col-md-7 amount-big" style="color:blue;"><label class="remain_total_amount_us">0</label> <label>$</label></div>
+					<div class="col-md-5 align_right" style="color:blue; font-size:26px;"><label>ប្រាក់នៅខ្វះ ($) : </label></div>
+					<div class="col-md-5 amount-big" style="color:blue;padding-right:0;"><label class="remain_total_amount_us">0</label> <label>$</label></div>
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-print btn-primary" id="btn-paid" data-dismiss="modal">គិតលុយ</button>				
-				<button type="button" class="btn btn-print btn-danger" data-dismiss="modal">ត្រឡប់ក្រោយ</button>
+				<button type="button" class="btn btn-print btn-danger" id="cancel" data-dismiss="modal">ត្រឡប់ក្រោយ</button>
 			</div>
 		</div>
 
@@ -380,31 +380,6 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			var key = e.keyCode || e.which;
 			if(key === 13){
 				if(record > 0){
-					if($(".phone").val() != ""){
-						$.ajax({
-							type : 'post',
-							url : '{{ URL::asset("bookers/storeBook") }}',
-							data : $("#adminForm").serialize(),
-							dataType : 'json',
-							success : function(result){
-								// return sales_order_id;		
-								window.location = '{{ URL::asset("bookers/index") }}';						
-								
-							}
-						});
-					}else{
-						alert('សូមបញ្ចូលលេខទូរស័ព្ទអតិថិជន មុននឹងគិតលុយកក់');
-						$("#myModalPayment").hide();					
-						$(".phone").focus();
-					}
-				}
-			}
-		});
-		
-		// when click button Paid
-		$("#btn-paid").click(function(){
-			if(record > 0){
-				if($(".phone").val() != ""){
 					$.ajax({
 						type : 'post',
 						url : '{{ URL::asset("bookers/storeBook") }}',
@@ -412,17 +387,54 @@ function number_format_unlimited_precision($number,$decimal = '.')
 						dataType : 'json',
 						success : function(result){
 							// return sales_order_id;		
-							window.location = '{{ URL::asset("bookers/index") }}';						
+							$("#myModalPayment").hide();
+							$("#myModalPrint").load('{{ URL::asset("bookers/print")}}/'+result+'/no', '', function(){
+								//$("#myModalPrint").modal();
+								w = window.open();
+								w.document.write("<div style='width:350px; font-size: 9px;'>"+$("#myModalPrint").html()+"</div>");
+								w.print(false);
+								w.close();
+								window.location = '{{ URL::asset("bookers/index") }}';
+							});
 							
 						}
 					});
-				}else{
-					alert('សូមបញ្ចូលលេខទូរស័ព្ទអតិថិជន មុននឹងគិតលុយកក់');
-					$("#myModalPayment").hide();					
-					$(".phone").focus();
 				}
 			}
 		});
+		
+		// when click button Paid
+		$("#btn-paid").click(function(){
+			if(record > 0){
+				$.ajax({
+					type : 'post',
+					url : '{{ URL::asset("bookers/storeBook") }}',
+					data : $("#adminForm").serialize(),
+					dataType : 'json',
+					success : function(result){
+						// return sales_order_id;		
+						$("#myModalPayment").hide();
+						$("#myModalPrint").load('{{ URL::asset("bookers/print")}}/'+result+'/no', '', function(){
+							//$("#myModalPrint").modal();
+							w = window.open();
+							w.document.write("<div style='width:350px; font-size: 9px;'>"+$("#myModalPrint").html()+"</div>");
+							w.print(false);
+							w.close();
+							window.location = '{{ URL::asset("bookers/index") }}';
+						});
+						
+					}
+				});
+			}
+		});
+		
+		// when click on button ត្រឡប់ក្រោយ in dialog payment
+		$("#cancel").click(function(){
+			$(".remain_total_amount_riel").text(0);
+			$(".remain_total_amount_us").text(0);
+			
+		});
+		
 		
 		$("#myModal").on('shown.bs.modal', function(){
 			$(this).find('input[type="text"]').focus();

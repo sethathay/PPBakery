@@ -460,28 +460,28 @@ body {
 						</div>
 						<div class="row">
 							<div style="margin-bottom: 50px">
-								<div class="col-md-4 align_right" style="font-size:20px;"><label>បង់លុយ (៛) : </label></div>
+								<div class="col-md-4 align_right" style="font-size:20px;"><label>ប្រាក់ទទួល (៛) : </label></div>
 								<div class="col-md-5 amount-big align_right"><input id="amount_riel" type="text" class="form-control custom-amount numberInput" name="amount_riel" value="0" placeholder=""></div>
 							</div>
 						</div>
 						<div class="row">
 							<div style="margin-bottom: 50px">
-								<div class="col-md-4 align_right" style="font-size:20px;"><label>បង់លុយ ($) : </label></div>
+								<div class="col-md-4 align_right" style="font-size:20px;"><label>ប្រាក់ទទួល ($) : </label></div>
 								<div class="col-md-5 amount-big align_right"><input id="amount_us" type="text" class="form-control custom-amount numberInput" name="amount_us" value="0" placeholder=""></div>
 							</div>
 						</div>
 						<div class="row" style="margin-top: 20px">
-							<div class="col-md-5 align_right" style="color:blue; font-size:26px;"><label>លុយអាប់ (៛) : </label></div>
+							<div class="col-md-5 align_right" style="color:blue; font-size:26px;"><label>ប្រាក់អាប់ (៛) : </label></div>
 							<div class="col-md-5 amount-big" style="color:blue;padding-right:0;"><label class="remain_total_amount_riel">0</label> <label>៛</label></div>
 						</div>
 						<div class="row">
-							<div class="col-md-5 align_right" style="color:blue; font-size:26px;"><label>លុយអាប់ ($) : </label></div>
+							<div class="col-md-5 align_right" style="color:blue; font-size:26px;"><label>ប្រាក់អាប់ ($) : </label></div>
 							<div class="col-md-5 amount-big" style="color:blue;padding-right:0;"><label class="remain_total_amount_us">0</label> <label>$</label></div>
 						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-print btn-primary" id="btn-paid" data-dismiss="modal">គិតលុយ</button>				
-						<button type="button" class="btn btn-print btn-danger" data-dismiss="modal">ត្រឡប់ក្រោយ</button>
+						<button type="button" class="btn btn-print btn-danger" id="cancel" data-dismiss="modal">ត្រឡប់ក្រោយ</button>
 					</div>
 				</div>
 
@@ -670,6 +670,14 @@ body {
 				}else{
 					alert("លុយបង់មិនគ្រប់មិនអាចលក់បានទេ!");
 				}
+			});
+			
+			
+			// when click on button ត្រឡប់ក្រោយ in dialog payment
+			$("#cancel").click(function(){
+				$(".remain_total_amount_riel").text(0);
+				$(".remain_total_amount_us").text(0);
+				
 			});
 			
 			$("#myModal").on('shown.bs.modal', function(){
