@@ -364,6 +364,13 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				}
 			}
 		);
+		
+		
+		String.prototype.replaceAll = function(search, replacement) {
+			var target = this;
+			return target.split(search).join(replacement);
+		}
+		
 		function navigate(origin, sens) {
 			var inputs = $('#myModalPayment').find('input:enabled');
 			var index = inputs.index(origin);

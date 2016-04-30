@@ -331,6 +331,11 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			inputs.eq(index).focus();
 			inputs.eq(index).select();
 		}
+		
+		String.prototype.replaceAll = function(search, replacement) {
+			var target = this;
+			return target.split(search).join(replacement);
+		}
 			
 		
 		$(".numberInput").keypress(function(event){	
@@ -590,8 +595,8 @@ function number_format_unlimited_precision($number,$decimal = '.')
 							
 			discount_riel = Number($("#custom-discount-riel").val());
 			discount_us = Number($("#custom-discount-us").val());
-			amount_us = Number($("#amount_us").val().replace(",",""));
-			amount_riel = Number($("#amount_riel").val().replace(",",""));
+			amount_us = Number($("#amount_us").val().replaceAll(",",""));
+			amount_riel = Number($("#amount_riel").val().replaceAll(",",""));
 			
 			var amountPaidRiel = amount_pay - ( Number(amount_riel) + Number(amount_us)*rate + discount_riel + discount_us*rate );
 			var amountPaidUs = amountPaidRiel/rate;
@@ -612,8 +617,8 @@ function number_format_unlimited_precision($number,$decimal = '.')
 										
 			discount_riel = Number($("#custom-discount-riel").val());
 			discount_us = Number($("#custom-discount-us").val());	
-			amount_us = Number($("#amount_us").val().replace(",",""));
-			amount_riel = Number($("#amount_riel").val().replace(",",""));
+			amount_us = Number($("#amount_us").val().replaceAll(",",""));
+			amount_riel = Number($("#amount_riel").val().replaceAll(",",""));
 			
 			var amountPaidRiel = amount_pay - ( Number(amount_riel) + Number(amount_us)*rate + discount_riel + discount_us*rate  );
 			var amountPaidUs = amountPaidRiel/rate;
@@ -634,8 +639,8 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			
 			discount_riel = Number($("#custom-discount-riel").val());
 			discount_us = Number($("#custom-discount-us").val());	
-			amount_us = Number($("#amount_us").val().replace(",",""));
-			amount_riel = Number($("#amount_riel").val().replace(",",""));
+			amount_us = Number($("#amount_us").val().replaceAll(",",""));
+			amount_riel = Number($("#amount_riel").val().replaceAll(",",""));
 			var amountPaidRiel = amount_pay - ( Number(amount_riel) + Number(amount_us)*rate + discount_riel + discount_us*rate  );
 			var amountPaidUs = amountPaidRiel/rate;
 			var remain_riel = addCommas(getMathRound100(amountPaidRiel));
@@ -655,8 +660,8 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			
 			discount_riel = Number($("#custom-discount-riel").val());
 			discount_us = Number($("#custom-discount-us").val());	
-			amount_us = Number($("#amount_us").val().replace(",",""));
-			amount_riel = Number($("#amount_riel").val().replace(",",""));
+			amount_us = Number($("#amount_us").val().replaceAll(",",""));
+			amount_riel = Number($("#amount_riel").val().replaceAll(",",""));
 			var amountPaidRiel = amount_pay - ( Number(amount_riel) + Number(amount_us)*rate + discount_riel + discount_us*rate  );
 			var amountPaidUs = amountPaidRiel/rate;
 			var remain_riel = addCommas(getMathRound100(amountPaidRiel));
@@ -786,8 +791,8 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				var getObj = $(this).parents("tr");
 				var newQty = Number(getObj.find(".txt_qty").val());
 				var unit_price = Number(getObj.find(".txt_unit_price").val());
-				var oldDiscount = Number(getObj.find(".lbl_discount").text().replace(",","")) / Number(getObj.find(".lbl_qty").text());
-				$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
+				var oldDiscount = Number(getObj.find(".lbl_discount").text().replaceAll(",","")) / Number(getObj.find(".lbl_qty").text());
+				$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replaceAll(",","")) );
 				
 				getObj.find(".lbl_qty").text(getObj.find(".txt_qty").val());
 				
@@ -809,8 +814,8 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				var getObj = $(this).parents("tr");
 				var newQty = Number(getObj.find(".txt_qty").val());
 				var unit_price = Number(getObj.find(".txt_unit_price").val());
-				var discount = Number(getObj.find(".lbl_discount").text().replace(",","")) / Number(getObj.find(".lbl_qty").text());
-				$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
+				var discount = Number(getObj.find(".lbl_discount").text().replaceAll(",","")) / Number(getObj.find(".lbl_qty").text());
+				$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replaceAll(",","")) );
 				
 				var total_by_item = unit_price*newQty - discount;
 				
@@ -831,7 +836,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				var newQty = Number(getObj.find(".txt_qty").val());
 				var unit_price = Number(getObj.find(".txt_unit_price").val());
 				var discount = Number($(this).val());
-				$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")) );
+				$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replaceAll(",","")) );
 				
 				var total_by_item = unit_price*newQty - discount;
 				
@@ -850,7 +855,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			$(this).toggle();
 			$(this).closest("tr").find(".btn_edit").toggle();
 			var getObj = $(this).parents("tr");
-			$(".txt_subtotal").val(Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replace(",","")));
+			$(".txt_subtotal").val(Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replaceAll(",","")));
 							
 			getObj.find(".lbl_qty").text(getObj.find(".txt_qty").val());
 			

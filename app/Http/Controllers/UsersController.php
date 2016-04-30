@@ -13,6 +13,7 @@ use DB;
 use Hash;
 use App\User;
 use App\UserGroup;
+use App\UserLocation;
 use Input;
 
 class UsersController extends Controller
@@ -48,7 +49,7 @@ class UsersController extends Controller
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(User $user, Request $request, UserGroup $user_groups)
+	public function store(User $user, Request $request, UserGroup $user_groups, UserLocation $user_locations)
 	{
 		/*
 		* $user = Input::all();
@@ -59,6 +60,11 @@ class UsersController extends Controller
 		$users['created_by']	= 1;
 		$user->fill($users)->save();
 		$userId = $user->id;
+		
+		$location = array();
+		$location['user_id'] = $userId;
+		$location['location_id'] = Session::get('location_id');
+		$user_locations->fill($location)->save();
 		
 		$group = array();
 		$group['user_id'] = $userId;
@@ -105,7 +111,7 @@ class UsersController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(User $users, Request $request, UserGroup $user_groups)
+	public function update(User $users, Request $request, UserGroup $user_groups, UserLocation $user_locations)
 	{
 		
 		$user = array();
@@ -122,6 +128,11 @@ class UsersController extends Controller
 		unset($user['group_id']);
 		unset($user['retype_password']);
 		$users->where('id','=',$request->get('id'))->update($user);
+		
+		$locations = array();
+		$locations['location_id'] = Session::get('location_id');
+		$userId = $request->get('user_id');
+		$user_locations->where('user_id',$userId)->update($locations);
 		
 		$group = array();
 		$group['group_id'] = $request->get('group_id');
