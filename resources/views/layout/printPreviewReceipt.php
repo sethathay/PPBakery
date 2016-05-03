@@ -37,7 +37,7 @@ td{
 			<div style="width:48%; float:left; text-align:center; margin-bottom:20px;">
 				<label>ហាងនំបុ័ង ភ្នំពេញ</label><br/>
 				<label>PHNOM PHNOM BAKERY</label>
-				<label>ទូរស័ព្ទ / Tel : 015 855 755</label>
+				<label>ទូរស័ព្ទ / Tel : 093 557 667</label>
 			</div>
 			<div style="text-align : center; float:left; width:100%;">
 				លេខវិក័យបត្រ / InvID : <label><?php echo $saleOrder->so_code; ?></label>
