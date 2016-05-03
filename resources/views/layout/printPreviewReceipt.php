@@ -53,7 +53,7 @@ td{
 						<th>ឈ្មោះទំនិញ<br/>Name</th>
 						<th>ចំនួន<br/>Qty</th>
 						<th>តំលៃ<br/>Price</th>
-						<th>ចុះតំលៃ<br/>Discount</th>
+						<!--<th>ចុះតំលៃ<br/>Discount</th>-->
 						<th>សរុប<br/>Total</th>
 					</tr>
 				<?php $sub_total = 0; ?>
@@ -64,7 +64,7 @@ td{
 						<td style="text-align:left;"><?php echo $saleorderdetail->name;?></td>
 						<td style="text-align:center;"><?php echo number_format($saleorderdetail->qty);?></td>
 						<td style="text-align:right;"><?php echo number_format($saleorderdetail->unit_price);?></td>
-						<td style="text-align:right;"><?php echo number_format($saleorderdetail->discount_price_riel);?></td>
+						<!--<td style="text-align:right;"><?php echo number_format($saleorderdetail->discount_price_riel);?></td>-->
 						<td style="text-align:right;"><?php echo number_format($saleorderdetail->total_price_riel);?></td>
 					</tr>
 					<?php $sub_total = $sub_total + $saleorderdetail->total_price_riel; ?>
