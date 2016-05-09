@@ -108,15 +108,16 @@
 		*/ ?>
 	</table>
 </div>
-
 <script type="text/javascript">
 
 	function redirectPage(url){
 		window.location = url;
 	}
+	var result = <?php echo $users ?>;
+	
 	var table = $('#tbl_expense').DataTable( {
 
-        "data": <?php echo $users ?>,
+        "data": result,
         "order": [[ 6, "desc" ]],
         "createdRow": function ( row, datas, index ) {
         	$('td', row).eq(7).addClass('last_td');

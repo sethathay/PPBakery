@@ -16,6 +16,7 @@ use App\SaleOrderReceipt;
 use App\Inventory;
 use App\InventoryTotal;
 use App\InventoryTotalDetail;
+use App\Datatable\SaleOrderAjax;
 
 class SaleOrdersController extends Controller
 {
@@ -26,10 +27,36 @@ class SaleOrdersController extends Controller
      */
     public function index()
     {
-        $saleOrders = json_encode(SaleOrder::where('sales_orders.is_active', 1)->where('sales_orders.is_book',0)->orderBy('sales_orders.created_at','desc')->get());
-		
-        return view('saleOrders.index',compact('saleOrders'));
+        //$saleOrders = json_encode(SaleOrder::where('sales_orders.is_active', 1)->where('sales_orders.is_book',0)->orderBy('sales_orders.created_at','desc')->get());
+		return view('saleOrders.index');
+        //return view('saleOrders.index',compact('saleOrders'));
     }
+	
+	public function ajax(SaleOrderAjax $saleOrder){
+		
+		$table     = "sales_orders";				
+		$columns   = array('id','created_at', 'so_code', 'discount_riel', 'discount_us', 'total_amount_riel', 'total_amount_us', 'balance');
+		
+		$condition = "";
+		$condition .= " sales_orders.is_active = 1 AND sales_orders.is_book = 0";
+		$condition .= " AND balance=0";
+		return $saleOrder->getResource($table, $columns, $condition);
+	}
+	
+	public function remain()
+    {
+		return view('saleOrders.remain');
+    }
+	public function ajaxRemain(SaleOrderAjax $saleOrder){
+		
+		$table     = "sales_orders";				
+		$columns   = array('id','created_at', 'so_code', 'discount_riel', 'discount_us', 'total_amount_riel', 'total_amount_us', 'balance');
+		
+		$condition = "";
+		$condition .= " sales_orders.is_active = 1 AND sales_orders.is_book = 0";
+		$condition .= " AND balance>0";
+		return $saleOrder->getResource($table, $columns, $condition);
+	}
 	
 	public function create()
 	{

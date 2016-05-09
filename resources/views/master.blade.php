@@ -8,6 +8,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/jquery-1.11.3.min.js') }}"></script>
 <script src="{{ URL::asset('js/jquery.validator.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/loading.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/jquery.dataTables.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/dataTables.bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/moment.js') }}"></script>
@@ -20,6 +21,149 @@
 <script type="text/javascript" src="{{ URL::asset('bootstrap_datepicker/locales/bootstrap-datepicker.en-GB.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('bootstrap_datepicker/locales/bootstrap-datepicker.kh.min.js') }}"></script>
 <!-- End DatePicker -->
+
+    
+<link href="{{ URL::asset('bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+<script type="text/javascript" src="{{ URL::asset('bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+
+
+<!-- DataTable Pipelining -->
+<script type="text/javascript" charset="utf-8">
+	var oCache = {
+		iCacheLower: -1
+	};
+	
+	function fnSetKey( aoData, sKey, mValue )
+	{
+		for ( var i=0, iLen=aoData.length ; i<iLen ; i++ )
+		{
+			if ( aoData[i].name == sKey )
+			{
+				aoData[i].value = mValue;
+			}
+		}
+	}
+	
+	function fnGetKey( aoData, sKey )
+	{
+		for ( var i=0, iLen=aoData.length ; i<iLen ; i++ )
+		{
+			if ( aoData[i].name == sKey )
+			{
+				return aoData[i].value;
+			}
+		}
+		return null;
+	}
+	
+	function fnDataTablesPipeline ( sSource, aoData, fnCallback ) {
+		var iPipe = 5; /* Ajust the pipe size */
+		
+		var bNeedServer = false;
+		var sEcho = fnGetKey(aoData, "sEcho");
+		var iRequestStart = fnGetKey(aoData, "iDisplayStart");
+		var iRequestLength = fnGetKey(aoData, "iDisplayLength");
+		var iRequestEnd = iRequestStart + iRequestLength;
+		oCache.iDisplayStart = iRequestStart;
+		
+		/* outside pipeline? */
+		if ( oCache.iCacheLower < 0 || iRequestStart < oCache.iCacheLower || iRequestEnd > oCache.iCacheUpper )
+		{
+			bNeedServer = true;
+		}
+		
+		/* sorting etc changed? */
+		if ( oCache.lastRequest && !bNeedServer )
+		{
+			for( var i=0, iLen=aoData.length ; i<iLen ; i++ )
+			{
+				if ( aoData[i].name != "iDisplayStart" && aoData[i].name != "iDisplayLength" && aoData[i].name != "sEcho" )
+				{
+					if ( aoData[i].value != oCache.lastRequest[i].value )
+					{
+						bNeedServer = true;
+						break;
+					}
+				}
+			}
+		}
+		
+		/* Store the request for checking next time around */
+		oCache.lastRequest = aoData.slice();
+		
+		if ( bNeedServer )
+		{
+			if ( iRequestStart < oCache.iCacheLower )
+			{
+				iRequestStart = iRequestStart - (iRequestLength*(iPipe-1));
+				if ( iRequestStart < 0 )
+				{
+					iRequestStart = 0;
+				}
+			}
+			
+			oCache.iCacheLower = iRequestStart;
+			oCache.iCacheUpper = iRequestStart + (iRequestLength * iPipe);
+			oCache.iDisplayLength = fnGetKey( aoData, "iDisplayLength" );
+			fnSetKey( aoData, "iDisplayStart", iRequestStart );
+			fnSetKey( aoData, "iDisplayLength", iRequestLength*iPipe );
+			
+			$.getJSON( sSource, aoData, function (json) { 
+				/* Callback processing */
+				oCache.lastJson = jQuery.extend(true, {}, json);
+				
+				if ( oCache.iCacheLower != oCache.iDisplayStart )
+				{
+					json.aaData.splice( 0, oCache.iDisplayStart-oCache.iCacheLower );
+				}
+				json.aaData.splice( oCache.iDisplayLength, json.aaData.length );
+				
+				fnCallback(json)
+			} );
+		}
+		else
+		{
+			json = jQuery.extend(true, {}, oCache.lastJson);
+			json.sEcho = sEcho; /* Update the echo for each response */
+			json.aaData.splice( 0, iRequestStart-oCache.iCacheLower );
+			json.aaData.splice( iRequestLength, json.aaData.length );
+			fnCallback(json);
+			return;
+		}
+	}
+	
+	
+	// add commas for number 120,000
+	function addCommas(nStr)
+	{
+		nStr += '';
+		x = nStr.split('.');
+		x1 = x[0];
+		x2 = x.length > 1 ? '.' + x[1] : '';
+		var rgx = /(\d+)(\d{3})/;
+		while (rgx.test(x1)) {
+			x1 = x1.replace(rgx, '$1' + "," + '$2');
+		}
+		return x1 + x2;
+	}
+	
+	// Round number 0.0
+	function getMathRound(amount){
+		return Math.round( (amount) * 10 ) / 10;
+	}
+	
+	// Round number 0.00
+	function getMathRound100(amount){
+		return Math.round( (amount) * 100 ) / 100;
+	}
+		
+	// Round number 0.000
+	function getMathRound1000(amount){
+		return Math.round( (amount) * 1000 ) / 1000;
+	}
+	
+	
+</script>
 
 <style>
 html, body {

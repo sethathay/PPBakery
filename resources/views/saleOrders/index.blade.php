@@ -63,6 +63,10 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
+			<button onclick="redirectPage('remain')" type="button"
+				class="btn btn-md btn-warning">
+				<span class="glyphicon glyphicon-user"></span> វិក័យប័ត្រ មិនទាន់បង់ប្រាក់
+			</button>
 			<button onclick="redirectPage('create')" type="button"
 				class="btn btn-md btn-primary">
 				<span class="glyphicon glyphicon-plus"></span> លក់ដុំ
@@ -79,6 +83,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		<thead>
 			<tr>
 				<!--<th><input type="checkbox" name="checkOptionAll" /></th>-->
+                <th>លេខរៀង</th>
 				<th>ថ្ងៃខែឆ្នាំទិញ</th>
 				<th>លេខកូដវិក័យប័ត្រ</th>
 				<th>បញ្ចុះតំលៃ (៛)</th>
@@ -89,40 +94,10 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				<th>សកម្មភាព</th>
 			</tr>
 		</thead>
-		<?php /*
 		<tbody>
-		<?php $i=1; ?>
-			@foreach($saleOrders as $saleOrder)
-			<tr>
-				<td style="text-align: center;"><input type="checkbox"
-					name="checkOption" /></td>
-				<td>{{ $saleOrder->order_date }}</td>
-				<td>{{ $saleOrder->so_code}}</td>
-				<td>{{ number_format_unlimited_precision($saleOrder->discount_riel)}}</td>
-				<td>{{ number_format($saleOrder->discount_us,2)}}</td>
-				<td>{{ number_format_unlimited_precision($saleOrder->total_amount_riel)}}</td>
-				<td>{{ number_format($saleOrder->total_amount_us,2)}}</td>
-				<td>{{ number_format_unlimited_precision($saleOrder->balance)}}</td>
-				<td class="last_td" style="text-align:right;">
-					@if($saleOrder->receipt_id > 0)						
-						<button type="button" id="{{ $saleOrder->id }}" class="btn btn-xs btn-warning">
-							<span class="fa fa-dollar"></span> &nbsp;Pay&nbsp;
-						</button>
-					@endif
-					<button type="button" id="{{ $saleOrder->id }}" class="btn btn-xs btn-info">
-						<span class="glyphicon glyphicon-user"></span> View
-					</button>
-					<button type="button" onclick="redirectPage('edit/{{ $saleOrder->id }}')" class="btn btn-xs btn-primary">
-						<span class="glyphicon glyphicon-edit"></span> Edit
-					</button>
-					<button type="button" onclick="if(confirm('Are you sure you want to delete this?')==true) redirectPage('destroy/{{ $saleOrder->id }}')" class="btn btn-xs btn-danger">
-						<span class="glyphicon glyphicon-trash"></span> Delete
-					</button>
-				</td>
-			</tr>
-			@endforeach
-		</tbody>
-		*/ ?>
+			<tr class="empty_data"><td colspan="9" style="text-align:center;">គ្នានទិន្ន័យនៅក្នុងតារាងទេ</td></tr>		
+        </tbody>
+        
 	</table>
 </div>
 	<!-- Modal Print Receipt -->
@@ -136,89 +111,49 @@ function number_format_unlimited_precision($number,$decimal = '.')
 	}
 	
 	
-	var table = $('#tbl_expense').DataTable( {
-
-        "data": <?php echo $saleOrders ?>,
-        "order": [[ 6, "desc" ]],
-        "createdRow": function ( row, datas, index ) {
-        	$('td', row).eq(7).addClass('last_td');
-        },
-        "columns": [
-           	{ "data": "order_date" },
-            { "data": "so_code" },
-            { "data": "discount_riel" },
-            { "data": "discount_us" },
-            { "data": "total_amount_riel" },
-            { "data": "total_amount_us" },
-            { "data": "balance" },
-            { "data": null }
-        ],
-        "columnDefs": [ {
-            "targets": -1,
-            "defaultContent":
-            '<button style="margin-right:5px" type="button" class="btnview btn btn-xs btn-info">'
-            + '<span class="glyphicon glyphicon-user"></span> View</button>'
-            +'<button style="margin-right:5px" type="button" class="btnedit btn btn-xs btn-primary">'
-			+'<span class="glyphicon glyphicon-edit"></span> Edit</button>'
-			+'<button type="button" class="btn btn-xs btn-danger btndelete">'
-			+'<span class="glyphicon glyphicon-trash"></span> Delete'
-			+'</button>'
-        },
-        {
-                "targets": 2,
-                "render": function ( data, type, row ) {
-                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> $ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(data) + '</span>';
-                },
+	// Ajax server request
+	$('#tbl_expense').dataTable( {
+		"bProcessing": true,
+		"bServerSide": true,
+		"sAjaxSource": "ajax",
+		"fnServerData": fnDataTablesPipeline,
+		"iDisplayLength": 10,
+		"aaSorting": [[ 2, "desc" ]],
+		"fnInfoCallback": function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {			
+			$("#tbl_expense tbody tr>td:nth-child(4)").css("text-align", "right");
+			$("#tbl_expense tbody tr>td:nth-child(5)").css("text-align", "right");
+			$("#tbl_expense tbody tr>td:nth-child(6)").css("text-align", "right");
+			$("#tbl_expense tbody tr>td:nth-child(7)").css("text-align", "right");
+			$("#tbl_expense tbody tr>td:nth-child(8)").css("text-align", "right");
+			$("#tbl_expense tbody tr>td:nth-child(9)").css("text-align", "center");
 		},
-        {
-                "targets": 3,
-                "render": function ( data, type, row ) {
-                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> $ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(getMathRound100(data)) + '</span>';
-                },
-        },
-        {
-                "targets": 4,
-                "render": function ( data, type, row ) {
-                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> ៛ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(data) + '</span>';
-                },
-		},
-        {
-                "targets": 5,
-                "render": function ( data, type, row ) {
-                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> $ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(getMathRound100(data)) + '</span>';
-                },
-		},
-        {
-                "targets": 6,
-                "render": function ( data, type, row ) {
-                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> ៛ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(data) + '</span>';
-                },
-		},
-	 ]
-    } );
+	} );
+	
+	
 
 	$('#tbl_expense tbody').on( 'click', '.btnview', function () {
-        var data = table.row( $(this).parents('tr') ).data();
-		$("#myModalPrint").load("{{ URL::asset('pos/print/') }}/"+data['id']+"/yes", '', function(){
+        var rowId = $(this).attr('id');
+		$("#myModalPrint").load("{{ URL::asset('pos/print/') }}/"+rowId+"/yes", '', function(){
 			$("#myModalPrint").modal();
 		});
     } );
 
     $('#tbl_expense tbody').on( 'click', '.btnedit', function () {
-        var data = table.row( $(this).parents('tr') ).data();
-        redirectPage('edit/' + data['id']);
+        var rowId = $(this).attr('id');
+        redirectPage('edit/' + rowId);
     } );
 
     $('#tbl_expense tbody').on( 'click', '.btndelete', function () {
-        var data = table.row( $(this).parents('tr') ).data();
+        var rowId = $(this).attr('id');
         var ts = $(this);
         if(confirm('តើអ្នកពិតជាចង់លុបវាពិតមែនទេ?')){
 			$.ajax({
-			    url: 'destroy/' + data['id'],
+			    url: 'destroy/' + rowId,
 			    type: 'GET',
 			    data:{"_token": "{{ csrf_token() }}"},
 			    success: function(result) {
-			    	table.row(ts.parents('tr')).remove().draw( false );
+			    	ts.parents('tr').remove();
+					alert("ទិន្នន័យត្រូវបានលុ​បរួចរាល់ហើយ!!");
 			    }
 			});
 		}

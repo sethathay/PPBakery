@@ -101,6 +101,9 @@ Route::post('saleOrders/sale', 'SaleOrdersController@sale');
 Route::get('saleOrders/print/{id}/{footer}', 'SaleOrdersController@printReceipt');
 Route::get('saleOrders/create', ['as' => 'saleOrders.create', 'uses' => 'SaleOrdersController@create']);
 Route::post('saleOrders/store', 'SaleOrdersController@store');
+Route::get('saleOrders/ajax', 'SaleOrdersController@ajax');
+Route::get('saleOrders/remain', 'SaleOrdersController@remain');
+Route::get('saleOrders/ajaxRemain', 'SaleOrdersController@ajaxRemain');
 
 
 Route::get('bookers/index', ['as' => 'bookers.index', 'uses' => 'BookersController@index']);
@@ -111,6 +114,10 @@ Route::post('bookers/sale', 'BookersController@sale');
 Route::post('bookers/pay', 'BookersController@pay');
 Route::get('bookers/print/{id}/{footer}', 'BookersController@printReceipt');
 Route::get('bookers/printPaid/{id}/{footer}', 'BookersController@printPreviewReceipt');
+
+
+Route::get('reports/reportInvoice', 'ReportsController@index');
+Route::post('reports/selectReport', 'ReportsController@selectReport');
 
 //Route of services for daily expense input by Thay Setha
 Route::resource('services','ServicesController');

@@ -4,6 +4,10 @@
 			$("#setting").click(function(){
 				$("#settinglist").toggle();
 			});
+			
+			$("#report").click(function(){
+				$("#reportlist").toggle();
+			});
 
 		});
 </script>
@@ -66,10 +70,17 @@
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">ស្តុកទំនិញ</label></a>
 			</li>
-			<li><a href="{{ URL::asset('#') }}"><img
+			<li><a id="report" href="{{ URL::asset('#') }}"><img
 				src="{{ URL::asset('img/report.png') }}" alt="Report" />
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">របាយការណ៍</label></a>
+			</li>
+			<li id="reportlist" style="display:none;">
+				<ol class="nav">
+					<li class="inner_link">
+						<a href="{{ URL::asset('reports/reportInvoice') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;របាយការណ៍ វិក័យប័ត្រ</a>
+					</li>
+				</ol>
 			</li>
 			<li><a href="{{ URL::asset('users/index') }}"><img
 				src="{{ URL::asset('img/users_2.png') }}" alt="Users" />
