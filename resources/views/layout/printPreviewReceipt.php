@@ -3,7 +3,7 @@
 <?php }?>
 <style>
 .receipt, .receipt table{
-	font-size: 11px !important;
+	font-size: 13px !important;
 }
 .modal-content{
 	width:100%;
@@ -137,7 +137,7 @@ td{
 						$(".modal-footer").hide();
 						$(".modal-content").css("width","99%");
 						w = window.open();
-						w.document.write("<div style='width:400px; font-size: 11px;'>"+$("#myModalPrint").html()+"</div>");
+						w.document.write("<div style='width:400px; font-size: 13px;'>"+$("#myModalPrint").html()+"</div>");
 						w.print(false);
 						w.close();
 						window.location = 'index';
