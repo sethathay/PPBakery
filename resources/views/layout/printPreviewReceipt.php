@@ -36,7 +36,7 @@ td{
 			<div style="width:35%; float:left;"><img src="<?php echo  URL::asset('img/ppbakery.png') ;?>" alt="Logo" /></div>
 			<div style="width:48%; float:left; text-align:center; margin-bottom:20px;">
 				<label>ហាងនំបុ័ង ភ្នំពេញ</label><br/>
-				<label>PHNOM PHNOM BAKERY</label><br/>
+				<label>PHNOM PENH BAKERY</label><br/>
 				<label>ទូរស័ព្ទ / Tel : 015 855 755/ 085 855 755</label>
 			</div>
 			<div style="text-align : center; float:left; width:100%;">
