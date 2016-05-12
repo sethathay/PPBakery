@@ -126,8 +126,8 @@ td{
 			//$(".receipt").css("width","65%");
 			w = window.open();
 			w.document.write("<div style='width:400px; font-size: 14px;'>"+$("#myModalPrint").html()+"</div>");
-			//w.print();
-			//w.close();
+			w.print();
+			w.close();
 			
 		});
 	});
