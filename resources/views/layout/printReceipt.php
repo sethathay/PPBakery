@@ -3,7 +3,7 @@
 <?php }?>
 <style>
 .receipt, .receipt table{
-	font-size: 13px !important;
+	font-size: 15px !important;
 }
 .modal-content{
 	width:100%;
