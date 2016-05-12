@@ -3,7 +3,7 @@
 <?php }?>
 <style>
 .receipt, .receipt table{
-	font-size: 15px !important;
+	font-size: 16px !important;
 }
 .modal-content{
 	width:100%;
@@ -48,7 +48,7 @@ td{
 				កាលបរិច្ឆេទ / DateTime : <label><?php echo $saleOrder->created_at; ?></label>
 			</div>-->
 
-			<div style="width:90%; margin: 0 auto;">
+			<div class="table-body" style="width:90%; margin: 0 auto;">
 				<table class="table-hover" style="width:100%">
 					<tr style="border-top:1px solid #ccc;">
 						<th>កូដ<br/>Code</th>
@@ -123,6 +123,7 @@ td{
 		$(".btn-print").click(function(){
 			$(".modal-footer").hide();
 			$(".modal-content").css("width","99%");
+			$(".table-body").css("width","100%");
 			//$(".receipt").css("width","65%");
 			w = window.open();
 			w.document.write("<div style='width:400px; font-size: 14px;'>"+$("#myModalPrint").html()+"</div>");
