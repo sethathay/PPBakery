@@ -37,14 +37,16 @@ td{
 			<div style="width:48%; float:left; text-align:center; margin-bottom:20px;">
 				<label>ហាងនំបុ័ង ភ្នំពេញ</label><br/>
 				<label>PHNOM PHNOM BAKERY</label>
-				<label>ទូរស័ព្ទ / Tel : 093 557 667</label>
+				<label>ទូរស័ព្ទ / Tel : 015 855 755/<br/> 085 855 755</label>
 			</div>
 			<div style="text-align : center; float:left; width:100%;">
-				លេខវិក័យបត្រ / InvID : <label><?php echo $saleOrder->so_code; ?></label>
-			</div>
-			<div style="text-align : center;">
+				លេខវិក័យបត្រ / InvID : <label><?php echo $saleOrder->so_code; ?></label><br/>
+                
 				កាលបរិច្ឆេទ / DateTime : <label><?php echo $saleOrder->created_at; ?></label>
 			</div>
+			<!--<div style="text-align : center;">
+				កាលបរិច្ឆេទ / DateTime : <label><?php echo $saleOrder->created_at; ?></label>
+			</div>-->
 
 			<div style="width:90%; margin: 0 auto;">
 				<table class="table-hover" style="width:100%">
@@ -120,10 +122,10 @@ td{
 	$(document).ready(function(){		
 		$(".btn-print").click(function(){
 			$(".modal-footer").hide();
-			$(".modal-content").css("width","80%");
+			$(".modal-content").css("width","85%");
 			//$(".receipt").css("width","65%");
 			w = window.open();
-			w.document.write("<div style='width:350px; font-size: 9px;'>"+$("#myModalPrint").html()+"</div>");
+			w.document.write("<div style='width:400px; font-size: 11px;'>"+$("#myModalPrint").html()+"</div>");
 			w.print();
 			w.close();
 			
