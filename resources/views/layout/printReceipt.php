@@ -36,8 +36,8 @@ td{
 			<div style="width:35%; float:left;"><img src="<?php echo  URL::asset('img/ppbakery.png') ;?>" alt="Logo" /></div>
 			<div style="width:48%; float:left; text-align:center; margin-bottom:20px;">
 				<label>ហាងនំបុ័ង ភ្នំពេញ</label><br/>
-				<label>PHNOM PHNOM BAKERY</label>
-				<label>ទូរស័ព្ទ / Tel : 015 855 755/<br/> 085 855 755</label>
+				<label>PHNOM PHNOM BAKERY</label><br/>
+				<label>ទូរស័ព្ទ / Tel : 015 855 755/ 085 855 755</label>
 			</div>
 			<div style="text-align : center; float:left; width:100%;">
 				លេខវិក័យបត្រ / InvID : <label><?php echo $saleOrder->so_code; ?></label><br/>
@@ -122,12 +122,12 @@ td{
 	$(document).ready(function(){		
 		$(".btn-print").click(function(){
 			$(".modal-footer").hide();
-			$(".modal-content").css("width","85%");
+			$(".modal-content").css("width","99%");
 			//$(".receipt").css("width","65%");
 			w = window.open();
 			w.document.write("<div style='width:400px; font-size: 11px;'>"+$("#myModalPrint").html()+"</div>");
-			w.print();
-			w.close();
+			//w.print();
+			//w.close();
 			
 		});
 	});
