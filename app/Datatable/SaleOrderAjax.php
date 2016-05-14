@@ -196,7 +196,8 @@ class SaleOrderAjax
 					$row[] = $aRow[ $aColumns[$i] ];
 				}
 			}
-			$row[] = '<button style="margin-right:5px" type="button" id="'. $aRow[0] .'" class="btnview btn btn-xs btn-info"><span class="glyphicon glyphicon-user"></span> View</button><button style="margin-right:5px" id="'. $aRow[0] .'" type="button" class="btnedit btn btn-xs btn-primary"><span class="glyphicon glyphicon-edit"></span> Edit</button><button type="button" id="'. $aRow[0] .'" class="btn btn-xs btn-danger btndelete"><span class="glyphicon glyphicon-trash"></span> Delete</button>';
+			//$row[] = '<button style="margin-right:5px" type="button" id="'. $aRow[0] .'" class="btnview btn btn-xs btn-info"><span class="glyphicon glyphicon-user"></span> View</button><button style="margin-right:5px" id="'. $aRow[0] .'" type="button" class="btnedit btn btn-xs btn-primary"><span class="glyphicon glyphicon-edit"></span> Edit</button><button type="button" id="'. $aRow[0] .'" class="btn btn-xs btn-danger btndelete"><span class="glyphicon glyphicon-trash"></span> Delete</button>';
+			$row[] = '<button style="margin-right:5px" type="button" id="'. $aRow[0] .'" class="btnview btn btn-xs btn-info"><span class="glyphicon glyphicon-user"></span> View</button>';
 			$output['aaData'][] = $row;
 		}
 		
