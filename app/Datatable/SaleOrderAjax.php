@@ -37,7 +37,6 @@ class SaleOrderAjax
 		/* REMOVE THIS LINE (it just includes my SQL connection user/pass) */
 		//include( $_SERVER['DOCUMENT_ROOT']."/datatables/mysql.php" );
 		
-		
 		/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 		 * If you just want to use the basic configuration for DataTables with PHP server-side, there is
 		 * no need to edit below this line
@@ -57,10 +56,10 @@ class SaleOrderAjax
 		 * Paging
 		 */
 		$sLimit = "";
-		if ( isset( $_GET['iDisplayStart'] ) && $_GET['iDisplayLength'] != '-1' )
+		if ( isset( $_REQUEST['iDisplayStart'] ) && $_REQUEST['iDisplayLength'] != '-1' )
 		{
-			$sLimit = "LIMIT ".mysql_real_escape_string( $_GET['iDisplayStart'] ).", ".
-				mysql_real_escape_string( $_GET['iDisplayLength'] );
+			$sLimit = "LIMIT ".mysql_real_escape_string( $_REQUEST['iDisplayStart'] ).", ".
+				mysql_real_escape_string( $_REQUEST['iDisplayLength'] );
 		}
 		
 		
@@ -68,15 +67,15 @@ class SaleOrderAjax
 		 * Ordering
 		 */
 		$sOrder = "";
-		if ( isset( $_GET['iSortCol_0'] ) )
+		if ( isset( $_REQUEST['iSortCol_0'] ) )
 		{
 			$sOrder = "ORDER BY  ";
-			for ( $i=0 ; $i<intval( $_GET['iSortingCols'] ) ; $i++ )
+			for ( $i=0 ; $i<intval( $_REQUEST['iSortingCols'] ) ; $i++ )
 			{
-				if ( $_GET[ 'bSortable_'.intval($_GET['iSortCol_'.$i]) ] == "true" )
+				if ( $_REQUEST[ 'bSortable_'.intval($_REQUEST['iSortCol_'.$i]) ] == "true" )
 				{
-					$sOrder .= $aColumns[ intval( $_GET['iSortCol_'.$i] ) ]."
-						".mysql_real_escape_string( $_GET['sSortDir_'.$i] ) .", ";
+					$sOrder .= $aColumns[ intval( $_REQUEST['iSortCol_'.$i] ) ]."
+						".mysql_real_escape_string( $_REQUEST['sSortDir_'.$i] ) .", ";
 				}
 			}
 			
@@ -95,12 +94,12 @@ class SaleOrderAjax
 		 * on very large tables, and MySQL's regex functionality is very limited
 		 */
 		$sWhere = "";
-		if ( isset($_GET['sSearch']) && $_GET['sSearch'] != "" )
+		if ( isset($_REQUEST['sSearch']) && $_REQUEST['sSearch'] != "" )
 		{
 			$sWhere = "WHERE (";
 			for ( $i=0 ; $i<count($aColumns) ; $i++ )
 			{
-				$sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string( $_GET['sSearch'] )."%' OR ";
+				$sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string( $_REQUEST['sSearch'] )."%' OR ";
 			}
 			$sWhere = substr_replace( $sWhere, "", -3 );
 			$sWhere .= ')';
@@ -109,7 +108,7 @@ class SaleOrderAjax
 		/* Individual column filtering */
 		for ( $i=0 ; $i<count($aColumns) ; $i++ )
 		{
-			if ( isset($_GET['bSearchable_'.$i]) && $_GET['bSearchable_'.$i] == "true" && $_GET['sSearch_'.$i] != '' )
+			if ( isset($_REQUEST['bSearchable_'.$i]) && $_REQUEST['bSearchable_'.$i] == "true" && $_REQUEST['sSearch_'.$i] != '' )
 			{
 				if ( $sWhere == "" )
 				{
@@ -119,7 +118,7 @@ class SaleOrderAjax
 				{
 					$sWhere .= " AND ";
 				}
-				$sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string($_GET['sSearch_'.$i])."%' ";
+				$sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string($_REQUEST['sSearch_'.$i])."%' ";
 			}
 		}
 		
@@ -166,14 +165,15 @@ class SaleOrderAjax
 		/*
 		 * Output
 		 */
+		 $sEcho = (isset($_REQUEST['sEcho']))?$_REQUEST['sEcho']: "1";
 		$output = array(
-			"sEcho" => intval($_GET['sEcho']),
+			"sEcho" => intval($sEcho),
 			"iTotalRecords" => $iTotal,
 			"iTotalDisplayRecords" => $iFilteredTotal,
 			"aaData" => array()
 		);
 		
-		$index = $_GET['iDisplayStart'];
+		$index = (isset($_REQUEST['iDisplayStart']))?$_REQUEST['iDisplayStart']: 0;
 		while ( $aRow = mysql_fetch_array( $rResult ) )
 		{
 			$row = array();

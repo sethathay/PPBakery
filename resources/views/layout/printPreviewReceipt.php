@@ -95,7 +95,7 @@ td{
 					</tr>
 					<?php if($saleOrder->balance != ""){?>
 					<tr>
-						<td colspan="4" style="text-align:right;">ប្រាក់អាប់  (៛)</td>
+						<td colspan="4" style="text-align:right;">ប្រាក់នៅខ្វះ  (៛)</td>
 						<td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrder->balance); ?></label></td>
 					</tr>
 					<?php }?>

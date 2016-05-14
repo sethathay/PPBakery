@@ -186,7 +186,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 						<div><label>សារខា :  {{ Session::get('location_name') }} </label></div>
 						<div><label>ឈ្មោះអ្នកប្រើប្រាស់ :  {{  Auth::user()->first_name." ".Auth::user()->last_name }} </label></div>
 						<div><label>ថ្ងៃ-ខែ-ឆ្នាំ:  &nbsp;&nbsp;&nbsp;&nbsp; <span id="fullDate" style="color:blue;"></span> </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label>ម៉ោង:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <label style="color:blue;" id="dateBox"></label></div>
-						<div style="font-size: 20px; border: 1px solid #aaa; padding: 15px 10px 10px; text-align: center;"><label>អត្រាប្តូរប្រាក់ :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:blue;">1$ = {{ number_format_unlimited_precision(Session::get('exchangerate')->riel) }}R</label>{!! Form::hidden('exchange_rate_id', Session::get('exchangerate')->id, array('class'=>'exchange_rate_id')) !!}</div>
+						<div style="font-size: 20px; border: 1px solid #aaa; padding: 15px 10px 10px; text-align: center;"><label>អត្រាប្តូរប្រាក់ :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:blue;">1$ = {{ number_format_unlimited_precision($exchangerate->riel) }}៛</label>{!! Form::hidden('exchange_rate_id', $exchangerate->id, array('class'=>'exchange_rate_id')) !!}</div>
 					</div>
 					<div class="col-md-6 block-amount">
 						<div class="row">
@@ -364,7 +364,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		   }
 		});
 		
-		var rate = "{{ Session::get('exchangerate')->riel }}";
+		var rate = "{{ $exchangerate->riel }}";
 		var index = 1;
 		var productItem = Array();
 		var record = 0;
@@ -389,10 +389,12 @@ function number_format_unlimited_precision($number,$decimal = '.')
 							// return sales_order_id;		
 							$("#myModalPayment").hide();
 							$("#myModalPrint").load('{{ URL::asset("bookers/print")}}/'+result+'/no', '', function(){
-								//$("#myModalPrint").modal();								
-								$(".modal-content").css("width","80%");
+								//$("#myModalPrint").modal();				
+								$(".modal-content").css("width","100%").css("padding","0").css("margin","0");
+								$(".modal-body").css("padding","0").css("margin","0");
+								$(".table-body").css("width","98%");
 								w = window.open();
-								w.document.write("<div style='width:350px; font-size: 9px;'>"+$("#myModalPrint").html()+"</div>");
+								w.document.write("<div style='width:400px; font-size: 16px;'>"+$("#myModalPrint").html()+"</div>");
 								w.print(false);
 								w.close();
 								window.location = '{{ URL::asset("bookers/index") }}';
@@ -416,10 +418,12 @@ function number_format_unlimited_precision($number,$decimal = '.')
 						// return sales_order_id;		
 						$("#myModalPayment").hide();
 						$("#myModalPrint").load('{{ URL::asset("bookers/print")}}/'+result+'/no', '', function(){
-							//$("#myModalPrint").modal();
-							$(".modal-content").css("width","80%");
+							//$("#myModalPrint").modal();	
+							$(".modal-content").css("width","100%").css("padding","0").css("margin","0");
+							$(".modal-body").css("padding","0").css("margin","0");
+							$(".table-body").css("width","98%");
 							w = window.open();
-							w.document.write("<div style='width:350px; font-size: 9px;'>"+$("#myModalPrint").html()+"</div>");
+							w.document.write("<div style='width:400px; font-size: 16px;'>"+$("#myModalPrint").html()+"</div>");
 							w.print(false);
 							w.close();
 							window.location = '{{ URL::asset("bookers/index") }}';

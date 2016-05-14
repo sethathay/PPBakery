@@ -33,9 +33,10 @@ class BookersController extends Controller
 		
 	public function book()
 	{
+		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
 		$codeGenerator = $this->generateAutoCode("sales_orders", "so_code", 6, "SO");
 		$customers = array_merge(array('0'=>'Please Select'), DB::table('customers')->lists('firstname', 'id'));
-		return view('bookers/book', compact('codeGenerator', 'customers'));
+		return view('bookers/book', compact('codeGenerator', 'customers', 'exchangerate'));
 	}
 	
 	
@@ -177,6 +178,7 @@ class BookersController extends Controller
 	public function edit($id)
 	{
 		
+		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
 		$saleOrders = SaleOrder::select("sales_orders.*","locations.name AS location_name",DB::raw('CONCAT(customers.firstname, " ", customers.lastname) AS customer_name'))->
 						leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')->
 						leftJoin('bookers', 'bookers.id', '=', 'sales_orders.booker_id')->
@@ -185,7 +187,7 @@ class BookersController extends Controller
 						
 		$saleOrderDetails = SaleOrderDetail::join('products', 'products.id', '=', 'sales_order_details.product_id')->where('sales_order_details.sales_order_id', $id)->get();
 		
-		return view('bookers/edit', compact('saleOrders','saleOrderDetails'));
+		return view('bookers/edit', compact('saleOrders','saleOrderDetails', 'exchangerate'));
 	}
 	
 	public function sale(SaleOrder $saleOrders, Request $request, SaleOrderDetail $saleOrderDetails, SaleOrderReceipt $saleOrderReceipts)
