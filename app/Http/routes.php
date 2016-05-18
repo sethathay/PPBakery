@@ -118,6 +118,9 @@ Route::get('bookers/printPaid/{id}/{footer}', 'BookersController@printPreviewRec
 
 Route::get('reports/reportInvoice', 'ReportsController@index');
 Route::post('reports/selectReport', 'ReportsController@selectReport');
+Route::get('reports/reportProduct', 'ReportsController@reportProduct');
+Route::post('reports/selectReportByProduct', 'ReportsController@selectReportByProduct');
+//Route::get('reports/reportByProductResult', 'ReportsController@reportByProductResult');
 
 //Route of services for daily expense input by Thay Setha
 Route::resource('services','ServicesController');

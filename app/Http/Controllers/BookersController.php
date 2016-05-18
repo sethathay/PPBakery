@@ -193,6 +193,8 @@ class BookersController extends Controller
 	public function sale(SaleOrder $saleOrders, Request $request, SaleOrderDetail $saleOrderDetails, SaleOrderReceipt $saleOrderReceipts)
 	{
 		
+		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
+		$rate = $exchangerate->riel;
     	$inputs = Input::all();
 		$inputs['amount_riel'] = str_replace(",","",$inputs['amount_riel']);
 		// To save sale order table

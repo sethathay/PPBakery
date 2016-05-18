@@ -137,27 +137,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			$("#myModalPrint").modal();
 		});
     } );
-
-    $('#tbl_expense tbody').on( 'click', '.btnedit', function () {
-        var rowId = $(this).attr('id');
-        redirectPage('edit/' + rowId);
-    } );
-
-    $('#tbl_expense tbody').on( 'click', '.btndelete', function () {
-        var rowId = $(this).attr('id');
-        var ts = $(this);
-        if(confirm('តើអ្នកពិតជាចង់លុបវាពិតមែនទេ?')){
-			$.ajax({
-			    url: 'destroy/' + rowId,
-			    type: 'GET',
-			    data:{"_token": "{{ csrf_token() }}"},
-			    success: function(result) {
-			    	ts.parents('tr').remove();
-					alert("ទិន្នន័យត្រូវបានលុ​បរួចរាល់ហើយ!!");
-			    }
-			});
-		}
-    } );
+	
 	// add commas for number 120,000
 	function addCommas(nStr)
 	{

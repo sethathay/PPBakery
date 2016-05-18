@@ -10,7 +10,7 @@ class SaleOrderAjax
      * @return \Illuminate\Http\Response
      */
 	
-	public function getResource($table, array $columns, $condition){
+	public function getResource($table, array $columns, $condition, $keyIndex){
 		
 		/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 		 * Easy set variables
@@ -23,7 +23,7 @@ class SaleOrderAjax
 		$aColumns = $columns;
 		
 		/* Indexed column (used for fast and accurate table cardinality) */
-		$sIndexColumn = "id";
+		$sIndexColumn = $keyIndex;
 		
 		/* DB table to use */
 		$sTable = $table;
@@ -142,6 +142,7 @@ class SaleOrderAjax
 			$sOrder
 			$sLimit
 		";
+		//echo $sQuery;exit;
 		$rResult = mysql_query( $sQuery, $gaSql['link'] ) or die(mysql_error());
 		
 		/* Data set length after filtering */
@@ -185,15 +186,16 @@ class SaleOrderAjax
 					/* Special output formatting for 'version' column */					
 		            $row[] = ++$index;
 					//$row[] = ($aRow[ $aColumns[$i] ]=="0") ? '-' : $aRow[ $aColumns[$i] ];
-				}else if($i == 3 || $i == 5){
+				}else if($i == 4 || $i == 6){
 					$row[] = number_format($aRow[$i]);
-				}else if( $i == 4 || $i == 6){
+				}else if( $i == 5 || $i == 7){
 					$row[] = number_format($aRow[$i],3);
 				}
 				else if ( $aColumns[$i] != ' ' )
 				{
 					/* General output */
-					$row[] = $aRow[ $aColumns[$i] ];
+					//$row[] = $aRow[ $aColumns[$i] ];
+            		$row[] = $aRow[$i];
 				}
 			}
 			//$row[] = '<button style="margin-right:5px" type="button" id="'. $aRow[0] .'" class="btnview btn btn-xs btn-info"><span class="glyphicon glyphicon-user"></span> View</button><button style="margin-right:5px" id="'. $aRow[0] .'" type="button" class="btnedit btn btn-xs btn-primary"><span class="glyphicon glyphicon-edit"></span> Edit</button><button type="button" id="'. $aRow[0] .'" class="btn btn-xs btn-danger btndelete"><span class="glyphicon glyphicon-trash"></span> Delete</button>';

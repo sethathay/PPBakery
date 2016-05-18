@@ -80,6 +80,9 @@
 					<li class="inner_link">
 						<a href="{{ URL::asset('reports/reportInvoice') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;របាយការណ៍ វិក័យប័ត្រ</a>
 					</li>
+					<li class="inner_link">
+						<a href="{{ URL::asset('reports/reportProduct') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;របាយការណ៍ តាមក្រុមទំនិញ</a>
+					</li>
 				</ol>
 			</li>
 			<li><a href="{{ URL::asset('users/index') }}"><img
