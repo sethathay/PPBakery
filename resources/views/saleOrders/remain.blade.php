@@ -59,17 +59,13 @@ function number_format_unlimited_precision($number,$decimal = '.')
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">
-			<img src="{{ URL::asset('/img/receipt_b.png') }}" /> <label>លក់ដុំ</label>
+			<img src="{{ URL::asset('/img/receipt_b.png') }}" /> <label>តារាងវិក័យប័ត្រ មិនទាន់បង់ប្រាក់</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
-			<button onclick="redirectPage('remain')" type="button"
-				class="btn btn-md btn-warning">
-				<span class="glyphicon glyphicon-user"></span> វិក័យប័ត្រ មិនទាន់បង់ប្រាក់
-			</button>
-			<button onclick="redirectPage('create')" type="button"
-				class="btn btn-md btn-primary">
-				<span class="glyphicon glyphicon-plus"></span> លក់ដុំ
+            <button onclick="redirectPage('{{ URL::asset('saleOrders/index') }}')" type="button"
+				class="btn btn-md btn-danger">
+				<span class="glyphicon glyphicon-back"></span> ត្រឡប់ទៅទំព័រមុន
 			</button>
 		</div>
 	</div>
@@ -115,10 +111,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 	$('#tbl_expense').dataTable( {
 		"bProcessing": true,
 		"bServerSide": true,
-		"sAjaxSource": "ajax",
-		"fnServerData": fnDataTablesPipeline,
-		"iDisplayLength": 10,
-		"aaSorting": [[ 2, "desc" ]],
+		"sAjaxSource": "ajaxRemain",
 		"fnInfoCallback": function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {			
 			$("#tbl_expense tbody tr>td:nth-child(4)").css("text-align", "right");
 			$("#tbl_expense tbody tr>td:nth-child(5)").css("text-align", "right");
@@ -127,17 +120,39 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			$("#tbl_expense tbody tr>td:nth-child(8)").css("text-align", "right");
 			$("#tbl_expense tbody tr>td:nth-child(9)").css("text-align", "center");
 		},
+		"fnServerData": fnDataTablesPipeline,
+		"iDisplayLength": 10,
+		"aaSorting": [[ 2, "desc" ]]
 	} );
 	
 	
 
 	$('#tbl_expense tbody').on( 'click', '.btnview', function () {
-        var rowId = $(this).attr('id');
-		$("#myModalPrint").load("{{ URL::asset('pos/print/') }}/"+rowId+"/yes", '', function(){
+        var data = table.row( $(this).parents('tr') ).data();
+		$("#myModalPrint").load("{{ URL::asset('pos/print/') }}/"+data['id']+"/yes", '', function(){
 			$("#myModalPrint").modal();
 		});
     } );
-	
+
+    $('#tbl_expense tbody').on( 'click', '.btnedit', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        redirectPage('edit/' + data['id']);
+    } );
+
+    $('#tbl_expense tbody').on( 'click', '.btndelete', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        var ts = $(this);
+        if(confirm('តើអ្នកពិតជាចង់លុបវាពិតមែនទេ?')){
+			$.ajax({
+			    url: 'destroy/' + data['id'],
+			    type: 'GET',
+			    data:{"_token": "{{ csrf_token() }}"},
+			    success: function(result) {
+			    	table.row(ts.parents('tr')).remove().draw( false );
+			    }
+			});
+		}
+    } );
 	// add commas for number 120,000
 	function addCommas(nStr)
 	{

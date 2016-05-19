@@ -40,7 +40,7 @@ class SaleOrdersController extends Controller
 		$condition = "";
 		$condition .= " sales_orders.is_active = 1 AND sales_orders.is_book = 0";
 		$condition .= " AND balance=0";
-		return $saleOrder->getResource($table, $columns, $condition);
+		return $saleOrder->getResource($table, $columns, $condition, 'sales_orders.id');
 	}
 	
 	public function remain()
@@ -68,6 +68,8 @@ class SaleOrdersController extends Controller
 	
 	public function store(SaleOrder $saleOrders, Request $request, SaleOrderDetail $saleOrderDetails, SaleOrderReceipt $saleOrderReceipts)
     {
+		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
+		$rate = $exchangerate->riel;
     	$inputs = Input::all();
 		$inputs['amount_riel'] = str_replace(",","",$inputs['amount_riel']);
 		// To save sale order table
@@ -80,7 +82,7 @@ class SaleOrdersController extends Controller
         $saleOrder['total_amount_us']    = $inputs['total_amount_us'];
         $saleOrder['discount_riel']    = $inputs['custom-discount-riel'];
         $saleOrder['discount_us']    = $inputs['custom-discount-us'];
-        $saleOrder['balance']    = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$inputs['exchange_rate_id'] + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$inputs['exchange_rate_id']);		
+        $saleOrder['balance']    = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$rate + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$rate);		
         $saleOrder['order_date']    = $inputs['date_order'];
 		$saleOrder['due_date']    = $inputs['date_due'];
         $saleOrder['is_active']    = 1;
@@ -93,12 +95,12 @@ class SaleOrdersController extends Controller
 		// To save sale order receipts table
 		$saleOrderReceipt = array();
 		$saleOrderReceipt['sales_order_id'] = $sale_order_id;
-		$saleOrderReceipt['exchange_rate_id'] = $inputs['exchange_rate_id'];
+		$saleOrderReceipt['exchange_rate_id'] = $exchangerate->id;
 		$saleOrderReceipt['receipt_code'] = $this->generateAutoCode("sales_order_receipts", "receipt_code", 6, "RE");
 		$saleOrderReceipt['amount_us'] = $inputs['total_amount_us'];
 		$saleOrderReceipt['amount_kh'] = $inputs['total_amount_riel'];
 		$saleOrderReceipt['total_amount'] = $inputs['total_amount_riel'];
-        $saleOrderReceipt['balance']    = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$inputs['exchange_rate_id'] + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$inputs['exchange_rate_id']);
+        $saleOrderReceipt['balance']    = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$rate + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$rate);
 		$saleOrderReceipt['pay_date']    = date('Y-m-d');
 		$saleOrderReceipt['due_date']    = date('Y-m-d');	
         $saleOrderReceipt['created_by']    = \Auth::user()->id;
@@ -207,6 +209,8 @@ class SaleOrdersController extends Controller
 	public function sale(SaleOrder $saleOrders, Request $request, SaleOrderDetail $saleOrderDetails, SaleOrderReceipt $saleOrderReceipts)
 	{
 		
+		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
+		$rate = $exchangerate->riel;
     	$inputs = Input::all();
 		$inputs['amount_riel'] = str_replace(",","",$inputs['amount_riel']);
 		// To save sale order table

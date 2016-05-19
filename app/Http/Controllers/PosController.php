@@ -27,6 +27,8 @@ class PosController extends Controller
 	
     public function sale(SaleOrder $saleOrders, Request $request, SaleOrderDetail $saleOrderDetails, SaleOrderReceipt $saleOrderReceipts)
     {
+		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
+		$rate = $exchangerate->riel;
     	$inputs = Input::all();
 		$inputs['amount_riel'] = str_replace(",","",$inputs['amount_riel']);
 		$user  = \Auth::user()->id;
@@ -40,7 +42,7 @@ class PosController extends Controller
         $saleOrder['total_amount_us']    = $inputs['total_amount_us'];
         $saleOrder['discount_riel']    = $inputs['custom-discount-riel'];
         $saleOrder['discount_us']    = $inputs['custom-discount-us'];
-        $saleOrder['balance']    = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$inputs['exchange_rate_id'] + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$inputs['exchange_rate_id']);		
+        $saleOrder['balance']    = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$rate + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$rate);		
         $saleOrder['order_date']    = date('Y-m-d');
 		$saleOrder['due_date']    = date('Y-m-d');
         $saleOrder['is_active']    = 1;
@@ -53,12 +55,12 @@ class PosController extends Controller
 		// To save sale order receipts table
 		$saleOrderReceipt = array();
 		$saleOrderReceipt['sales_order_id'] = $sale_order_id;
-		$saleOrderReceipt['exchange_rate_id'] = $inputs['exchange_rate_id'];
+		$saleOrderReceipt['exchange_rate_id'] = $exchangerate->id;
 		$saleOrderReceipt['receipt_code'] = $this->generateAutoCode("sales_order_receipts", "receipt_code", 6, "RE");
-		$saleOrderReceipt['amount_us'] = $inputs['total_amount_us'];
-		$saleOrderReceipt['amount_kh'] = $inputs['total_amount_riel'];
+		$saleOrderReceipt['amount_us'] = $inputs['amount_us'];
+		$saleOrderReceipt['amount_kh'] = $inputs['amount_riel'];
 		$saleOrderReceipt['total_amount'] = $inputs['total_amount_riel'];
-        $saleOrderReceipt['balance']    = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$inputs['exchange_rate_id'] + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$inputs['exchange_rate_id']);
+        $saleOrderReceipt['balance']    = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$rate + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$rate);
 		$saleOrderReceipt['pay_date']    = date('Y-m-d');
 		$saleOrderReceipt['due_date']    = date('Y-m-d');	
         $saleOrderReceipt['created_by']    = $user;
