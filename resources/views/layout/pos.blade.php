@@ -618,11 +618,13 @@ body {
 									$("#myModalPayment").hide();
 									$("#myModalPrint").load('pos/print/'+result+'/no', '', function(){
 										//$("#myModalPrint").modal();
-										$(".modal-content").css("width","100%").css("padding","0").css("margin","0");
+										//$(".modal-content").css("width","100%").css("padding","0").css("margin","0");
+										$(".modal-content").css("width","75%");
+										$(".table-body").css("width","89%");
 										$(".modal-body").css("padding","0").css("margin","0");
-										$(".table-body").css("width","98%");
+										//$(".table-body").css("width","98%");
 										w = window.open();
-										w.document.write("<div style='width:400px; font-size: 16px;'>"+$("#myModalPrint").html()+"</div>");
+										w.document.write("<div style='width:400px; font-size: 12px;'>"+$("#myModalPrint").html()+"</div>");
 										w.print(false);
 										w.close();
 										window.location.reload();
@@ -659,11 +661,13 @@ body {
 								$("#myModalPayment").hide();
 								$("#myModalPrint").load('pos/print/'+result+'/no', '', function(){
 									//$("#myModalPrint").modal();
-									$(".modal-content").css("width","100%").css("padding","0").css("margin","0");
+									//$(".modal-content").css("width","100%").css("padding","0").css("margin","0");
+									$(".modal-content").css("width","75%");
+									$(".table-body").css("width","89%");
 									$(".modal-body").css("padding","0").css("margin","0");
-									$(".table-body").css("width","98%");
+									//$(".table-body").css("width","98%");
 									w = window.open();
-									w.document.write("<div style='width:400px; font-size: 16px;'>"+$("#myModalPrint").html()+"</div>");
+									w.document.write("<div style='width:400px; font-size: 12px;'>"+$("#myModalPrint").html()+"</div>");
 									w.print(false);
 									w.close();
 									window.location.reload();
