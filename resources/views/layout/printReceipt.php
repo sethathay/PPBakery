@@ -3,7 +3,7 @@
 <?php }?>
 <style>
 .receipt, .receipt table{
-	font-size: 16px !important;
+	font-size: 12px !important;
 }
 .modal-content{
 	width:100%;
@@ -48,7 +48,7 @@ td{
 				កាលបរិច្ឆេទ / DateTime : <label><?php echo $saleOrder->created_at; ?></label>
 			</div>-->
 
-			<div class="table-body" style="width:90%; margin: 0 auto;">
+			<div class="table-body" style="width:89%; margin: 0px;">
 				<table class="table-hover" style="width:100%">
 					<tr style="border-top:1px solid #ccc;">
 						<th>កូដ<br/>Code</th>
@@ -95,7 +95,7 @@ td{
 					</tr>
 					<?php if($saleOrder->balance != ""){?>
 					<tr>
-						<td colspan="4" style="text-align:right;">ប្រាក់នៅខ្វះ  (៛)</td>
+						<td colspan="4" style="text-align:right;">ប្រាក់អាប់  (៛)</td>
 						<td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrder->balance); ?></label></td>
 					</tr>
 					<?php }?>
@@ -122,11 +122,11 @@ td{
 	$(document).ready(function(){		
 		$(".btn-print").click(function(){
 			$(".modal-footer").hide();
-			$(".modal-content").css("width","99%");
-			$(".table-body").css("width","100%");
+			$(".modal-content").css("width","75%");
+			$(".table-body").css("width","89%");
 			//$(".receipt").css("width","65%");
 			w = window.open();
-			w.document.write("<div style='width:400px; font-size: 14px;'>"+$("#myModalPrint").html()+"</div>");
+			w.document.write("<div style='width:400px; font-size: 12px;'>"+$("#myModalPrint").html()+"</div>");
 			w.print();
 			w.close();
 			
