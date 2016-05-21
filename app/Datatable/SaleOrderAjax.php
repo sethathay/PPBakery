@@ -186,9 +186,9 @@ class SaleOrderAjax
 					/* Special output formatting for 'version' column */					
 		            $row[] = ++$index;
 					//$row[] = ($aRow[ $aColumns[$i] ]=="0") ? '-' : $aRow[ $aColumns[$i] ];
-				}else if($i == 4 || $i == 6){
+				}else if($i == 5 || $i == 7){
 					$row[] = number_format($aRow[$i]);
-				}else if( $i == 5 || $i == 7){
+				}else if( $i == 4 || $i == 6){
 					$row[] = number_format($aRow[$i],3);
 				}
 				else if ( $aColumns[$i] != ' ' )

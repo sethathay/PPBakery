@@ -91,5 +91,7 @@ class ReportsController extends Controller
 		return View::make('reports.reportProductResult')->with('saleOrderDetail', $saleOrderDetail);
 		
 	}
+	
+	
 
 }
