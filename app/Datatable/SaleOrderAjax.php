@@ -37,6 +37,7 @@ class SaleOrderAjax
 		/* REMOVE THIS LINE (it just includes my SQL connection user/pass) */
 		//include( $_SERVER['DOCUMENT_ROOT']."/datatables/mysql.php" );
 		
+		
 		/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 		 * If you just want to use the basic configuration for DataTables with PHP server-side, there is
 		 * no need to edit below this line
@@ -56,10 +57,10 @@ class SaleOrderAjax
 		 * Paging
 		 */
 		$sLimit = "";
-		if ( isset( $_REQUEST['iDisplayStart'] ) && $_REQUEST['iDisplayLength'] != '-1' )
+		if ( isset( $_GET['iDisplayStart'] ) && $_GET['iDisplayLength'] != '-1' )
 		{
-			$sLimit = "LIMIT ".mysql_real_escape_string( $_REQUEST['iDisplayStart'] ).", ".
-				mysql_real_escape_string( $_REQUEST['iDisplayLength'] );
+			$sLimit = "LIMIT ".mysql_real_escape_string( $_GET['iDisplayStart'] ).", ".
+				mysql_real_escape_string( $_GET['iDisplayLength'] );
 		}
 		
 		
@@ -67,15 +68,15 @@ class SaleOrderAjax
 		 * Ordering
 		 */
 		$sOrder = "";
-		if ( isset( $_REQUEST['iSortCol_0'] ) )
+		if ( isset( $_GET['iSortCol_0'] ) )
 		{
 			$sOrder = "ORDER BY  ";
-			for ( $i=0 ; $i<intval( $_REQUEST['iSortingCols'] ) ; $i++ )
+			for ( $i=0 ; $i<intval( $_GET['iSortingCols'] ) ; $i++ )
 			{
-				if ( $_REQUEST[ 'bSortable_'.intval($_REQUEST['iSortCol_'.$i]) ] == "true" )
+				if ( $_GET[ 'bSortable_'.intval($_GET['iSortCol_'.$i]) ] == "true" )
 				{
-					$sOrder .= $aColumns[ intval( $_REQUEST['iSortCol_'.$i] ) ]."
-						".mysql_real_escape_string( $_REQUEST['sSortDir_'.$i] ) .", ";
+					$sOrder .= $aColumns[ intval( $_GET['iSortCol_'.$i] ) ]."
+						".mysql_real_escape_string( $_GET['sSortDir_'.$i] ) .", ";
 				}
 			}
 			
@@ -94,12 +95,12 @@ class SaleOrderAjax
 		 * on very large tables, and MySQL's regex functionality is very limited
 		 */
 		$sWhere = "";
-		if ( isset($_REQUEST['sSearch']) && $_REQUEST['sSearch'] != "" )
+		if ( isset($_GET['sSearch']) && $_GET['sSearch'] != "" )
 		{
 			$sWhere = "WHERE (";
 			for ( $i=0 ; $i<count($aColumns) ; $i++ )
 			{
-				$sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string( $_REQUEST['sSearch'] )."%' OR ";
+				$sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string( $_GET['sSearch'] )."%' OR ";
 			}
 			$sWhere = substr_replace( $sWhere, "", -3 );
 			$sWhere .= ')';
@@ -108,7 +109,7 @@ class SaleOrderAjax
 		/* Individual column filtering */
 		for ( $i=0 ; $i<count($aColumns) ; $i++ )
 		{
-			if ( isset($_REQUEST['bSearchable_'.$i]) && $_REQUEST['bSearchable_'.$i] == "true" && $_REQUEST['sSearch_'.$i] != '' )
+			if ( isset($_GET['bSearchable_'.$i]) && $_GET['bSearchable_'.$i] == "true" && $_GET['sSearch_'.$i] != '' )
 			{
 				if ( $sWhere == "" )
 				{
@@ -118,7 +119,7 @@ class SaleOrderAjax
 				{
 					$sWhere .= " AND ";
 				}
-				$sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string($_REQUEST['sSearch_'.$i])."%' ";
+				$sWhere .= $aColumns[$i]." LIKE '%".mysql_real_escape_string($_GET['sSearch_'.$i])."%' ";
 			}
 		}
 		
@@ -166,15 +167,14 @@ class SaleOrderAjax
 		/*
 		 * Output
 		 */
-		 $sEcho = (isset($_REQUEST['sEcho']))?$_REQUEST['sEcho']: "1";
 		$output = array(
-			"sEcho" => intval($sEcho),
+			"sEcho" => intval($_GET['sEcho']),
 			"iTotalRecords" => $iTotal,
 			"iTotalDisplayRecords" => $iFilteredTotal,
 			"aaData" => array()
 		);
 		
-		$index = (isset($_REQUEST['iDisplayStart']))?$_REQUEST['iDisplayStart']: 0;
+		$index = $_GET['iDisplayStart'];
 		while ( $aRow = mysql_fetch_array( $rResult ) )
 		{
 			$row = array();
@@ -186,9 +186,14 @@ class SaleOrderAjax
 					/* Special output formatting for 'version' column */					
 		            $row[] = ++$index;
 					//$row[] = ($aRow[ $aColumns[$i] ]=="0") ? '-' : $aRow[ $aColumns[$i] ];
-				}else if($i == 4 || $i == 6){
-					$row[] = number_format($aRow[$i]);
-				}else if( $i == 5 || $i == 7){
+				}else if($i == 5 || $i == 7){
+					
+					if( $i == 7){
+						$row[] = number_format(abs($aRow[$i]));
+					}else{
+						$row[] = number_format($aRow[$i]);
+					}
+				}else if( $i == 4 || $i == 6){
 					$row[] = number_format($aRow[$i],3);
 				}
 				else if ( $aColumns[$i] != ' ' )

@@ -308,7 +308,7 @@ body {
 					</button>
 					<button onclick="redirectPage('bookers/book')" type="button"
 						class="btn btn-md btn-success">
-					<span class="glyphicon glyphicon-plus"></span> កក់ទំនេញ
+					<span class="glyphicon glyphicon-plus"></span> កក់ទំនិញ
 				</button>
 				</div>
 			</div>

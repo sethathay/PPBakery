@@ -11,7 +11,48 @@
 .info div label{
 	color:#337ab7;
 }
-
+.photo_product{
+	margin: 8px 14px;
+	padding: 0;
+}
+.photo_product li{
+	width: 100px; 
+	height: 100px;
+	list-style: none;
+	display: inline;
+	margin: 10px 5px 0;
+	padding: 65px 0 70px;
+	border: 1px #F84D36 solid; 
+	border-radius: 5px;
+	position: relative;
+}
+.product_name { 
+   position: absolute; 
+   top: 102px; 
+   left: 0; 
+   width: 100%; 
+   font-size: 11px;
+   background: rgba(0,0,255,0.4);
+   color: #fff;
+   text-align: center;
+   padding: 17px 0;   
+   border-bottom-right-radius:5px;
+   border-bottom-left-radius:5px;
+   
+}
+.photo_product li:hover{
+	border: 1px #3E5C9A solid; 
+	box-shadow: 3px 3px 2px #ccc;
+	opacity: 0.5;
+}
+.photo_product li img{
+	width: 150px; 
+	height: 150px; 
+	border-radius: 5px;
+}
+.photo_product li img:hover{
+	cursor: pointer;
+}
 
 .header-fixed {
     width: 100%;
@@ -111,36 +152,42 @@ function number_format_unlimited_precision($number,$decimal = '.')
 {!! Form::open(array('url' => 'saleOrders/store', 'method' => 'post', 'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading" style="background:#286090;">
-		<div class="col-sm-7">
+		<div class="col-sm-3">
 			<img src="{{ URL::asset('/img/receipt_b.png') }}" /> <label style="color:#fff;">លក់ដុំ</label>
 		</div>
-		<div class="col-sm-5"
-			style="text-align: right; padding: 30px 10px; vertical-align: middle;">
+		<div class="col-sm-9" style="text-align: right; padding: 30px 10px; vertical-align: middle; color:#FFF;">
+        
+            <div class="col-sm-5">ថ្ងៃកូម៉ង់ទំនេញ :  {!! Form::text('date_order', date('Y-m-d'), array('class'=>'form-control date_order')) !!} </div>
+            <div class="col-sm-5">ថ្ងៃទទួលទំនេញ :  {!! Form::text('date_due', date('Y-m-d'), array('class'=>'form-control date_due')) !!}</div>
+            <div class="col-sm-2">
 			<button onclick="redirectPage('{{ URL::asset('saleOrders/index') }}')" type="button"
 				class="btn btn-md btn-danger">
 				<span class="glyphicon"></span> ត្រឡប់ក្រោយ
 			</button>
+            </div>
 		</div>
 	</div>
 	
-	<div class="col-sm-12 form">
+	<div class="col-sm-12">
 		<div class="row">
 			<div class="col-sm-12 info">
-				<div class="col-sm-3">លេខវិក័យប័ត្រ: <label>{{ $codeGenerator }}</label></div>
-				<div class="col-sm-3">ថ្ងៃកូម៉ង់ទំនេញ :  {!! Form::text('date_order', date('Y-m-d'), array('class'=>'form-control date_order')) !!} </div>
-				<div class="col-sm-3">ថ្ងៃទទួលទំនេញ :  {!! Form::text('date_due', date('Y-m-d'), array('class'=>'form-control date_due')) !!}</div>
-			</div>
-			<div class="col-sm-12 info">
-				<div class="col-sm-3">អតិថិជន :  {!! Form::select('customer_id', $customers, 1, ['class'=>'form-control', 'id'=>'customer_id']) !!}</div>
-			</div>
-			<div class="col-sm-12">
-				<div class="form-group col-md-6">
-					<input id="code" type="text" class="form-control" name="code" style="width:60%;" value="" placeholder="លេខកូដ">
+				<div class="col-sm-4">
+					<input id="code" type="text" class="form-control" name="code" style="width:90%;" value="" placeholder="លេខកូដ">
 				</div>
+				<div class="col-sm-3" style="padding: 10px 0;">លេខវិក័យប័ត្រ: <label>{{ $codeGenerator }}</label></div>
+				<div class="col-sm-3">អតិថិជន :  {!! Form::select('customer_id', $customers, 1, ['class'=>'form-control', 'id'=>'customer_id']) !!}</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-12" style="padding:10px 0;">
+	<div class="col-sm-12" style="padding:10px 0;">    	
+        <div class="row">
+            <div
+                style="background: #F5F5F5; height: 170px; width: 100%; border: 2px #fff solid;">
+                <ul class="photo_product">
+                    
+                </ul>
+            </div>
+        </div>
 		<div class="table-responsive">
 		  <table class="table table-hover header-fixed table-striped">
 			<thead>
@@ -181,24 +228,24 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				</td>
 				</tr>
 				
-				<div class="row block-total" style="background: #DBEAF9; height: 200px; font-size: 16px; padding-top: 10px; width:83%;">
+				<div class="row block-total" style="background: #DBEAF9; height: 160px; font-size: 16px; padding-top: 10px; width:83%;">
 					<div class="col-md-6">
 						<div><label>សារខា :  {{ Session::get('location_name') }} </label></div>
 						<div><label>ឈ្មោះអ្នកប្រើប្រាស់ :  {{  Auth::user()->first_name." ".Auth::user()->last_name }} </label></div>
 						<div><label>ថ្ងៃ-ខែ-ឆ្នាំ:  &nbsp;&nbsp;&nbsp;&nbsp; <span id="fullDate" style="color:blue;"></span> </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label>ម៉ោង:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> <label style="color:blue;" id="dateBox"></label></div>
-						<div style="font-size: 20px; border: 1px solid #aaa; padding: 15px 10px 10px; text-align: center;"><label>អត្រាប្តូរប្រាក់ :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:blue;">1$ = {{ number_format_unlimited_precision($exchangerate->riel) }}R</label>{!! Form::hidden('exchange_rate_id', $exchangerate->id, array('class'=>'exchange_rate_id')) !!}</div>
+						<div style="font-size: 20px; border: 1px solid #aaa; padding: 15px 10px 10px; text-align: center;"><label>អត្រាប្តូរប្រាក់ :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:blue;">1$ = {{ number_format_unlimited_precision(Session::get('exchangerate')->riel) }}R</label>{!! Form::hidden('exchange_rate_id', Session::get('exchangerate')->id, array('class'=>'exchange_rate_id')) !!}</div>
 					</div>
 					<div class="col-md-6 block-amount">
-						<div class="row">
+						<!--<div class="row">
 							<div class="col-md-6"><label>តំលៃសរុប : </label></div>
 							<div class="col-md-6 amount"><label class="subtotal">0</label> <label>៛</label>{!! Form::hidden('subtotal', 0, array('class'=>'txt_subtotal')) !!}</div>
 						</div>
-						<!--<div class="row">
+						<div class="row">
 							<div class="col-md-6"><label>បញ្ចុះតំលៃ : </label></div>
 							<div class="col-md-6  amount"><label class="discount">0</label> <label>៛</label>{!! Form::hidden('txt_total_discount', 0, array('class'=>'txt_total_discount')) !!}</div>
 						</div>-->
 						<div class="row" style="padding-top:30px;">
-							<div class="col-md-6" style="color:red;"><label>តំលៃសរុបត្រូវបង់ (៛) : </label></div>
+							<div class="col-md-6" style="color:red;"><label>តំលៃសរុបត្រូវបង់ (៛) : </label>{!! Form::hidden('subtotal', 0, array('class'=>'txt_subtotal')) !!}</div>
 							<div class="col-md-6  amount-big"><label class="total_amount_riel">0</label> <label>៛</label>{!! Form::hidden('total_amount_riel', 0, array('class'=>'txt_total_amount_riel')) !!}</div>
 						</div>
 						<div class="row">
@@ -356,7 +403,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		   }
 		});
 		
-		var rate = "{{ $exchangerate->riel }}";
+		var rate = "{{ Session::get('exchangerate')->riel }}";
 		var index = 1;
 		var productItem = Array();
 		var record = 0;
@@ -382,7 +429,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 							$("#myModalPayment").hide();
 							$("#myModalPrint").load('{{ URL::asset("saleOrders/print")}}/'+result+'/no', '', function(){
 								//$("#myModalPrint").modal();
-									
+								
 								$(".modal-content").css("width","100%").css("padding","0").css("margin","0");
 								$(".modal-body").css("padding","0").css("margin","0");
 								$(".table-body").css("width","98%");
@@ -694,7 +741,17 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			
 			
 			if(productItem.indexOf(Number(result.id)) == -1){
-				
+									
+				// Display product picture
+				if(index > 10){
+					$(".photo_product").find('li:eq('+(index-11)+')').hide();
+				}
+				if(index > 1){						
+					$(".photo_product li:eq(0)").before('<li><img src="{{ URL::asset("img/product/") }}/'+picture+'" alt="" /><span class="product_name">'+result.name+'<span class="spacer"></span></li>');
+				}else{
+					$(".photo_product").append('<li><img src="{{ URL::asset("img/product/") }}/'+picture+'" alt="" /><span class="product_name">'+result.name+'<span class="spacer"></span></li>');
+				}
+				index++;
 				
 				var obj = $(".header-fixed tbody").find('tr:first');
 				// Add product id into array

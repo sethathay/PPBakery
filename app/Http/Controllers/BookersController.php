@@ -33,10 +33,9 @@ class BookersController extends Controller
 		
 	public function book()
 	{
-		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
 		$codeGenerator = $this->generateAutoCode("sales_orders", "so_code", 6, "SO");
 		$customers = array_merge(array('0'=>'Please Select'), DB::table('customers')->lists('firstname', 'id'));
-		return view('bookers/book', compact('codeGenerator', 'customers', 'exchangerate'));
+		return view('bookers/book', compact('codeGenerator', 'customers'));
 	}
 	
 	
@@ -81,7 +80,7 @@ class BookersController extends Controller
 		$saleOrderReceipt['sales_order_id'] = $sale_order_id;
 		$saleOrderReceipt['exchange_rate_id'] = $exchangerate->id;
 		$saleOrderReceipt['receipt_code'] = $this->generateAutoCode("sales_order_receipts", "receipt_code", 6, "RE");
-		$saleOrderReceipt['amount_us'] = $inputs['amount_us']*$inputs['exchange_rate_id'];
+		$saleOrderReceipt['amount_us'] = $inputs['amount_us'];
 		$saleOrderReceipt['amount_kh'] = $inputs['amount_riel'];
 		$saleOrderReceipt['total_amount'] = $inputs['total_amount_riel'];
 		$saleOrderReceipt['balance'] = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$rate + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$rate);		
@@ -178,7 +177,6 @@ class BookersController extends Controller
 	public function edit($id)
 	{
 		
-		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
 		$saleOrders = SaleOrder::select("sales_orders.*","locations.name AS location_name",DB::raw('CONCAT(customers.firstname, " ", customers.lastname) AS customer_name'))->
 						leftJoin('customers', 'customers.id', '=', 'sales_orders.customer_id')->
 						leftJoin('bookers', 'bookers.id', '=', 'sales_orders.booker_id')->
@@ -187,7 +185,7 @@ class BookersController extends Controller
 						
 		$saleOrderDetails = SaleOrderDetail::join('products', 'products.id', '=', 'sales_order_details.product_id')->where('sales_order_details.sales_order_id', $id)->get();
 		
-		return view('bookers/edit', compact('saleOrders','saleOrderDetails', 'exchangerate'));
+		return view('bookers/edit', compact('saleOrders','saleOrderDetails'));
 	}
 	
 	public function sale(SaleOrder $saleOrders, Request $request, SaleOrderDetail $saleOrderDetails, SaleOrderReceipt $saleOrderReceipts)
@@ -219,7 +217,7 @@ class BookersController extends Controller
 		$saleOrderReceipt['sales_order_id'] = $sale_order_id;
 		$saleOrderReceipt['exchange_rate_id'] = $exchangerate->id;
 		$saleOrderReceipt['receipt_code'] = $this->generateAutoCode("sales_order_receipts", "receipt_code", 6, "RE");
-		$saleOrderReceipt['amount_us'] = $inputs['amount_us']*$rate;
+		$saleOrderReceipt['amount_us'] = $inputs['amount_us'];
 		$saleOrderReceipt['amount_kh'] = $inputs['amount_riel'];
 		$saleOrderReceipt['total_amount'] = $inputs['total_amount_riel'];
 		$saleOrderReceipt['balance'] = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$rate + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$rate);		
@@ -348,9 +346,10 @@ class BookersController extends Controller
 		$saleOrderReceipt['sales_order_id'] = $saleOrders->id;
 		$saleOrderReceipt['exchange_rate_id'] = $exchangerate->id;
 		$saleOrderReceipt['receipt_code'] = $this->generateAutoCode("sales_order_receipts", "receipt_code", 6, "RE");
-		$saleOrderReceipt['amount_us'] = $saleOrders->total_amount_us;
-		$saleOrderReceipt['amount_kh'] = $saleOrders->total_amount_riel;
+		$saleOrderReceipt['amount_us'] = 0;
+		$saleOrderReceipt['amount_kh'] = $saleOrders->balance;
 		$saleOrderReceipt['total_amount'] = $saleOrders->total_amount_riel;
+		$saleOrderReceipt['balance'] = 0;
 		$saleOrderReceipt['pay_date']    = date('Y-m-d');
 		$saleOrderReceipt['due_date']    = date('Y-m-d');	
         $saleOrderReceipt['created_by']    = \Auth::user()->id;
@@ -368,15 +367,17 @@ class BookersController extends Controller
 	
 	// print receipt pos
 	public function printReceipt($sales_order_id, $footer){
-		$saleOrder = SaleOrder::whereId($sales_order_id)->first();
+		$saleOrder = SaleOrder::where('sales_orders.id', $sales_order_id)->first();
+		$saleOrderReceipts = SaleOrderReceipt::where('sales_order_id', $sales_order_id)->get();
 		$saleOrderDetail = SaleOrderDetail::join('products', 'products.id', '=', 'sales_order_details.product_id')->whereSales_order_id($sales_order_id)->get();
-		return view('/layout/printReceipt', compact('saleOrderDetail', 'saleOrder', 'footer'));
+		return view('/layout/printReceipt', compact('saleOrderDetail', 'saleOrder', 'footer', 'saleOrderReceipts'));
 	}
 	// print preview before paid
 	public function printPreviewReceipt($sales_order_id, $footer){
-		$saleOrder = SaleOrder::whereId($sales_order_id)->first();
+		$saleOrder = SaleOrder::where('sales_orders.id', $sales_order_id)->first();
+		$saleOrderReceipts = SaleOrderReceipt::where('sales_order_id', $sales_order_id)->get();
 		$saleOrderDetail = SaleOrderDetail::join('products', 'products.id', '=', 'sales_order_details.product_id')->whereSales_order_id($sales_order_id)->get();
-		return view('/layout/printPreviewReceipt', compact('saleOrderDetail', 'saleOrder', 'footer'));
+		return view('/layout/printPreviewReceipt', compact('saleOrderDetail', 'saleOrder', 'footer', 'saleOrderReceipts'));
 	}
 
     /**

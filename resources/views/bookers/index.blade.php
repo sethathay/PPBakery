@@ -233,7 +233,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 
 	$('#tbl_expense tbody').on( 'click', '.btnview', function () {
         var data = table.row( $(this).parents('tr') ).data();
-		$("#myModalPrint").load("{{ URL::asset('pos/print/') }}/"+data['id']+"/yes", '', function(){
+		$("#myModalPrint").load("{{ URL::asset('bookers/print/') }}/"+data['id']+"/yes", '', function(){
 			$("#myModalPrint").modal();
 		});
     } );

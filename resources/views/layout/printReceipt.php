@@ -37,7 +37,7 @@ td{
 			<div style="width:48%; float:left; text-align:center; margin-bottom:20px;">
 				<label>ហាងនំបុ័ង ភ្នំពេញ</label><br/>
 				<label>PHNOM PENH BAKERY</label><br/>
-				<label>ទូរស័ព្ទ / Tel : 015 855 755/ 085 855 755</label>
+				<label>ទូរស័ព្ទ / Tel : 093 557 667</label>
 			</div>
 			<div style="text-align : center; float:left; width:100%;">
 				លេខវិក័យបត្រ / InvID : <label><?php echo $saleOrder->so_code; ?></label><br/>
@@ -73,9 +73,9 @@ td{
 					<?php $total_discount = $total_discount + $saleorderdetail->discount_price_riel; ?>
 				<?php }?>
 				
-					<tr>
-						<td colspan="4" style="text-align:right;">សរុប / Total (៛)</td>
-						<td colspan="2" style="text-align:right;"><label><?php echo number_format($sub_total); ?></label></td>
+					<tr style="height: 20px;">
+						<td colspan="4" style="text-align:right; vertical-align:top;">សរុប / Total (៛)</td>
+						<td colspan="2" style="text-align:right; vertical-align:top;"><label><?php echo number_format($sub_total); ?></label></td>
 					</tr>
 					<?php if($saleOrder->discount_riel != ""){?>
 					<tr>
@@ -88,17 +88,54 @@ td{
 						<td colspan="4" style="text-align:right;">ចុះតំលៃ / Discount ($)</td>
 						<td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrder->discount_us); ?></label></td>
 					</tr>
-					<?php }?>
-					<tr>
-						<td colspan="4" style="text-align:right;">ប្រាក់បានបង់ / Amount Paid (៛)</td>
-						<td colspan="2" style="text-align:right;"><label><?php echo number_format($sub_total-$saleOrder->balance); ?></label></td>
-					</tr>
+					<?php }?>			
+                    <?php foreach($saleOrderReceipts as $saleOrderReceipt){?>		
+						<?php if($saleOrderReceipt->amount_kh != ""){?>
+                        <tr>
+                            <td colspan="4" style="text-align:right;">ប្រាក់បានបង់ / Amount Paid (៛)</td>
+                            <td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrderReceipt->amount_kh); ?></label></td>
+                        </tr>
+                        <?php }else if(count($saleOrderReceipts)==1){?>
+                        <tr>
+                            <td colspan="4" style="text-align:right;">ប្រាក់បានបង់ / Amount Paid (៛)</td>
+                            <td colspan="2" style="text-align:right;"><label><?php echo number_format(0); ?></label></td>
+                        </tr>
+                        <?php }?>
+                        <?php if($saleOrderReceipt->amount_us != ""){?>
+                        <tr>
+                            <td colspan="4" style="text-align:right;">ប្រាក់បានបង់ / Amount Paid ($)</td>
+                            <td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrderReceipt->amount_us,3); ?></label></td>
+                        </tr>
+                        <?php }else if(count($saleOrderReceipts)==1){?>
+                        <tr>
+                            <td colspan="4" style="text-align:right;">ប្រាក់បានបង់ / Amount Paid ($)</td>
+                            <td colspan="2" style="text-align:right;"><label><?php echo number_format(0); ?></label></td>
+                        </tr>
+                        <?php }?>
+                    <?php }?>
 					<?php if($saleOrder->balance != ""){?>
-					<tr>
-						<td colspan="4" style="text-align:right;">ប្រាក់នៅខ្វះ  (៛)</td>
-						<td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrder->balance); ?></label></td>
-					</tr>
-					<?php }?>
+                    	<?php if($saleOrder->balance > 0){?>
+                        <tr>
+                            <td colspan="4" style="text-align:right;">ប្រាក់នៅខ្វះ  (៛)</td>
+                            <td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrder->balance); ?></label></td>
+                        </tr>
+                    	<?php }else if($saleOrder->balance < 0){?>
+                        <tr>
+                            <td colspan="4" style="text-align:right;">ប្រាក់អាប់  (៛)</td>
+                            <td colspan="2" style="text-align:right;"><label><?php echo number_format(abs($saleOrder->balance)); ?></label></td>
+                        </tr>
+						<?php }else{?>
+                        <tr>
+                            <td colspan="4" style="text-align:right;">ប្រាក់អាប់  (៛)</td>
+                            <td colspan="2" style="text-align:right;"><label><?php echo number_format(0); ?></label></td>
+                        </tr>
+                        <?php }?>
+					<?php }else{?>
+                        <tr>
+                            <td colspan="4" style="text-align:right;">ប្រាក់អាប់  (៛)</td>
+                            <td colspan="2" style="text-align:right;"><label><?php echo number_format(0); ?></label></td>
+                        </tr>
+                    <?php }?>
 				</table>
 			</div>
 			<div style="width:90%; margin: 10px auto 30px; text-align:center;">

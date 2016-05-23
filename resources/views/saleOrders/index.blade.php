@@ -90,7 +90,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				<th>បញ្ចុះតំលៃ ($)</th>
 				<th>តំលៃសរុប (៛)</th>
 				<th>តំលៃសរុប ($)</th>
-				<th>ប្រាក់នៅខ្ងះ (៛)</th>
+				<th>ប្រាក់អាប់ (៛)</th>
 				<th>សកម្មភាព</th>
 			</tr>
 		</thead>
@@ -133,7 +133,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 
 	$('#tbl_expense tbody').on( 'click', '.btnview', function () {
         var rowId = $(this).attr('id');
-		$("#myModalPrint").load("{{ URL::asset('pos/print/') }}/"+rowId+"/yes", '', function(){
+		$("#myModalPrint").load("{{ URL::asset('saleOrders/print/') }}/"+rowId+"/yes", '', function(){
 			$("#myModalPrint").modal();
 		});
     } );
