@@ -11,6 +11,48 @@
 	color:#337ab7;
 }
 
+.photo_product{
+	margin: 8px 14px;
+	padding: 0;
+}
+.photo_product li{
+	width: 100px; 
+	height: 100px;
+	list-style: none;
+	display: inline;
+	margin: 10px 5px 0;
+	padding: 65px 0 70px;
+	border: 1px #F84D36 solid; 
+	border-radius: 5px;
+	position: relative;
+}
+.product_name { 
+   position: absolute; 
+   top: 102px; 
+   left: 0; 
+   width: 100%; 
+   font-size: 11px;
+   background: rgba(0,0,255,0.4);
+   color: #fff;
+   text-align: center;
+   padding: 17px 0;   
+   border-bottom-right-radius:5px;
+   border-bottom-left-radius:5px;
+   
+}
+.photo_product li:hover{
+	border: 1px #3E5C9A solid; 
+	box-shadow: 3px 3px 2px #ccc;
+	opacity: 0.5;
+}
+.photo_product li img{
+	width: 150px; 
+	height: 150px; 
+	border-radius: 5px;
+}
+.photo_product li img:hover{
+	cursor: pointer;
+}
 
 .header-fixed {
     width: 100%;
@@ -115,8 +157,10 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		<div class="col-sm-7">
 			<img src="{{ URL::asset('/img/book_b.png') }}" /> <label style="color:#fff;">លក់កក់</label>
 		</div>
-		<div class="col-sm-5"
-			style="text-align: right; padding: 30px 10px; vertical-align: middle;">
+		<div class="col-sm-9" style="text-align: right; padding: 30px 10px; vertical-align: middle; color:#FFF;">
+            <div class="col-sm-5">ថ្ងៃកូម៉ង់ទំនេញ : <label>{{ date("d-m-Y",strtotime($saleOrders->order_date)) }}</label></div>
+            <div class="col-sm-5">ថ្ងៃទទួលទំនេញ : <label>{{ date("d-m-Y",strtotime($saleOrders->due_date)) }}</label></div>
+            <div class="col-sm-2">
 			<button onclick="redirectPage('{{ URL::asset('bookers/index') }}')" type="button"
 				class="btn btn-md btn-danger">
 				<span class="glyphicon"></span> ត្រឡប់ក្រោយ
@@ -124,21 +168,14 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		</div>
 	</div>
 	
-	<div class="col-sm-12 form">
+	<div class="col-sm-12">
 		<div class="row">
 			<div class="col-sm-12 info">
-				<div class="col-sm-3">លេខវិក័យប័ត្រ: <label>{{ $saleOrders->so_code }}</label></div>
-				<div class="col-sm-3">ថ្ងៃកូម៉ង់ទំនេញ : <label>{{ date("d-m-Y",strtotime($saleOrders->order_date)) }}</label></div>
-				<div class="col-sm-3">ថ្ងៃទទួលទំនេញ : <label>{{ date("d-m-Y",strtotime($saleOrders->due_date)) }}</label></div>
-			</div>
-			<div class="col-sm-12 info">
-				<div class="col-sm-3">ទីតាំង : <label>{{ $saleOrders->location_name }}</label></div>
-				<div class="col-sm-3">អតិថិជន : <label>{{ $saleOrders->customer_name }}</label></div>
-			</div>
-			<div class="col-sm-12">
-				<div class="form-group col-md-6">
-					<input id="code" type="text" class="form-control" name="code" style="width:60%;" value="" placeholder="លេខកូដ">
+				<div class="col-sm-4">
+					<input id="code" type="text" class="form-control" name="code" style="width:90%;" value="" placeholder="លេខកូដ">
 				</div>
+				<div class="col-sm-3" style="padding: 10px 0;">លេខវិក័យប័ត្រ: <label>{{ $codeGenerator }}</label></div>
+				<div class="col-sm-4">លេខទូរស័ព្ទ :  {!! Form::text('phone', '', array('class'=>'form-control phone')) !!}</div>
 			</div>
 		</div>
 	</div>
@@ -209,7 +246,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					</td>
 				</tr>
 				
-				<div class="row block-total" style="background: #DBEAF9; height: 220px; font-size: 16px; padding-top: 10px; width:83%;">
+				<div class="row block-total" style="background: #DBEAF9; height: 180px; font-size: 16px; padding-top: 10px; width:83%;">
 					<div class="col-md-6">
 						<div><label>សារខា :  {{  Session::get('location_id') }} </label></div>
 						<div><label>ឈ្មោះអ្នកប្រើប្រាស់ :  {{  Auth::user()->first_name." ".Auth::user()->last_name }} </label></div>
@@ -217,10 +254,10 @@ function number_format_unlimited_precision($number,$decimal = '.')
 						<div style="font-size: 20px; border: 1px solid #aaa; padding: 15px 10px 10px; text-align: center;"><label>អត្រាប្តូរប្រាក់ :</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label style="color:blue;">1$ = {{ number_format_unlimited_precision(Session::get('exchangerate')->riel) }}R</label>{!! Form::hidden('exchange_rate_id', Session::get('exchangerate')->id, array('class'=>'exchange_rate_id')) !!}</div>
 					</div>
 					<div class="col-md-6 block-amount">
-						<div class="row">
+						<!--<div class="row">
 							<div class="col-md-6"><label>តំលៃសរុប : </label></div>
 							<div class="col-md-6 amount"><label class="subtotal">{{ number_format_unlimited_precision($subtotal) }}</label> <label>៛</label>{!! Form::hidden('subtotal', $subtotal, array('class'=>'txt_subtotal')) !!}</div>
-						</div>
+						</div>-->
 						<div class="row">
 							<div class="col-md-6"><label>បញ្ចុះតំលៃ (៛) : </label></div>
 							<div class="col-md-6  amount"><label class="lbl_total_discount_riel">{{ number_format_unlimited_precision($saleOrders->discount_riel) }}</label> <label>៛</label>{!! Form::hidden('txt_total_discount_riel', $saleOrders->discount_riel, array('class'=>'txt_total_discount_riel')) !!}</div>
@@ -231,7 +268,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 						</div>
 						
 						<div class="row">
-							<div class="col-md-6" style="color:blue;"><label>ប្រាក់បង់រួច (៛) : </label></div>
+							<div class="col-md-6" style="color:blue;"><label>ប្រាក់បង់រួច (៛) : </label>{!! Form::hidden('subtotal', $subtotal, array('class'=>'txt_subtotal')) !!}</div>
 							<div class="col-md-6  amount-big" style="color:blue;"><label class="total_amount_riel">{{ number_format_unlimited_precision($saleOrders->total_amount_riel - $saleOrders->balance) }}</label> <label>៛</label>{!! Form::hidden('paid-amount', ($saleOrders->total_amount_riel-$saleOrders->balance), array('class'=>'paid-amount')) !!}</div>
 						</div>
 						
@@ -421,9 +458,11 @@ function number_format_unlimited_precision($number,$decimal = '.')
 							$("#myModalPayment").hide();
 							$("#myModalPrint").load('{{ URL::asset("bookers/print")}}/'+result+'/no', '', function(){
 								//$("#myModalPrint").modal();
-								$(".modal-content").css("width","80%");
+								$(".modal-content").css("width","100%").css("padding","0").css("margin","0");
+								$(".modal-body").css("padding","0").css("margin","0");
+								$(".table-body").css("width","98%");
 								w = window.open();
-								w.document.write("<div style='width:350px; font-size: 9px;'>"+$("#myModalPrint").html()+"</div>");
+								w.document.write("<div style='width:400px; font-size: 16px;'>"+$("#myModalPrint").html()+"</div>");
 								w.print(false);
 								w.close();
 								window.location = '{{ URL::asset("bookers/index") }}';
@@ -448,9 +487,11 @@ function number_format_unlimited_precision($number,$decimal = '.')
 						$("#myModalPayment").hide();
 						$("#myModalPrint").load('{{ URL::asset("bookers/print")}}/'+result+'/no', '', function(){
 							//$("#myModalPrint").modal();
-							$(".modal-content").css("width","80%");
+							$(".modal-content").css("width","100%").css("padding","0").css("margin","0");
+							$(".modal-body").css("padding","0").css("margin","0");
+							$(".table-body").css("width","98%");
 							w = window.open();
-							w.document.write("<div style='width:350px; font-size: 9px;'>"+$("#myModalPrint").html()+"</div>");
+							w.document.write("<div style='width:400px; font-size: 16px;'>"+$("#myModalPrint").html()+"</div>");
 							w.print(false);
 							w.close();
 							window.location = '{{ URL::asset("bookers/index") }}';
@@ -727,6 +768,17 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			
 			
 			if(productItem.indexOf(Number(result.id)) == -1){
+									
+				// Display product picture
+				if(index > 10){
+					$(".photo_product").find('li:eq('+(index-11)+')').hide();
+				}
+				if(index > 1){						
+					$(".photo_product li:eq(0)").before('<li><img src="{{ URL::asset("img/product/") }}/'+picture+'" alt="" /><span class="product_name">'+result.name+'<span class="spacer"></span></li>');
+				}else{
+					$(".photo_product").append('<li><img src="{{ URL::asset("img/product/") }}/'+picture+'" alt="" /><span class="product_name">'+result.name+'<span class="spacer"></span></li>');
+				}
+				index++;
 				
 				
 				var obj = $(".header-fixed tbody").find('tr:first');

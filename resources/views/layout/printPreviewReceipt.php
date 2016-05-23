@@ -3,7 +3,7 @@
 <?php }?>
 <style>
 .receipt, .receipt table{
-	font-size: 12px !important;
+	font-size: 16px !important;
 }
 .modal-content{
 	width:100%;
@@ -48,7 +48,7 @@ td{
 				កាលបរិច្ឆេទ / DateTime : <label><?php echo $saleOrder->created_at; ?></label>
 			</div>-->
 
-			<div class="table-body" style="width:89%; margin: 0px;">
+			<div style="width:90%; margin: 0 auto;">
 				<table class="table-hover" style="width:100%">
 					<tr style="border-top:1px solid #ccc;">
 						<th>កូដ<br/>Code</th>
@@ -88,16 +88,48 @@ td{
 						<td colspan="4" style="text-align:right;">ចុះតំលៃ / Discount ($)</td>
 						<td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrder->discount_us); ?></label></td>
 					</tr>
-					<?php }?>
-					<tr>
-						<td colspan="4" style="text-align:right;">ប្រាក់បានបង់ / Amount Paid (៛)</td>
-						<td colspan="2" style="text-align:right;"><label><?php echo number_format($sub_total-$saleOrder->balance); ?></label></td>
-					</tr>
+					<?php }?>		
+                    <?php foreach($saleOrderReceipts as $saleOrderReceipt){?>		
+						<?php if($saleOrderReceipt->amount_kh != ""){?>
+                        <tr>
+                            <td colspan="4" style="text-align:right;">ប្រាក់បានបង់ / Amount Paid (៛)</td>
+                            <td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrderReceipt->amount_kh); ?></label></td>
+                        </tr>
+                        <?php }else if(count($saleOrderReceipts)==1){?>
+                        <tr>
+                            <td colspan="4" style="text-align:right;">ប្រាក់បានបង់ / Amount Paid (៛)</td>
+                            <td colspan="2" style="text-align:right;"><label><?php echo number_format(0); ?></label></td>
+                        </tr>
+                        <?php }?>
+                        <?php if($saleOrderReceipt->amount_us != ""){?>
+                        <tr>
+                            <td colspan="4" style="text-align:right;">ប្រាក់បានបង់ / Amount Paid ($)</td>
+                            <td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrderReceipt->amount_us,3); ?></label></td>
+                        </tr>
+                        <?php }else if(count($saleOrderReceipts)==1){?>
+                        <tr>
+                            <td colspan="4" style="text-align:right;">ប្រាក់បានបង់ / Amount Paid ($)</td>
+                            <td colspan="2" style="text-align:right;"><label><?php echo number_format(0); ?></label></td>
+                        </tr>
+                        <?php }?>
+                    <?php }?>
 					<?php if($saleOrder->balance != ""){?>
-					<tr>
-						<td colspan="4" style="text-align:right;">ប្រាក់អាប់  (៛)</td>
-						<td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrder->balance); ?></label></td>
-					</tr>
+                    	<?php if($saleOrder->balance > 0){?>
+                        <tr>
+                            <td colspan="4" style="text-align:right;">ប្រាក់នៅខ្វះ  (៛)</td>
+                            <td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrder->balance); ?></label></td>
+                        </tr>
+                    	<?php }else if($saleOrder->balance < 0){?>
+                        <tr>
+                            <td colspan="4" style="text-align:right;">ប្រាក់អាប់  (៛)</td>
+                            <td colspan="2" style="text-align:right;"><label><?php echo number_format(abs($saleOrder->balance)); ?></label></td>
+                        </tr>
+						<?php }else{?>
+                        <tr>
+                            <td colspan="4" style="text-align:right;">ប្រាក់អាប់  (៛)</td>
+                            <td colspan="2" style="text-align:right;"><label><?php echo number_format(0); ?></label></td>
+                        </tr>
+                        <?php }?>
 					<?php }?>
 				</table>
 			</div>
@@ -114,7 +146,10 @@ td{
 		
 	</div>
 </div>
+<!-- Modal Print Receipt -->
+<div id="myModalPrintPaid" class="modal fade col-md-4" role="dialog">
 
+</div>
 <?php if($footer == "yes"){?>
 <script>
 
@@ -129,16 +164,16 @@ td{
 				data : {sales_order_id:sales_order_id, _token:token},
 				dataType : 'json',
 				success : function(result){
-					// return sales_order_id;								
+					// return sales_order_id;	
 					
 					$("#myModalPayment").hide();
-					$("#myModalPrint").load('{{ URL::asset("bookers/print")}}/'+result+'/no', '', function(){
-						//$("#myModalPrint").modal();
+					$("#myModalPrintPaid").load('print/'+result+'/no', '', function(){
+						//$("#myModalPrintPaid").modal();
 						$(".modal-footer").hide();
-						$(".modal-content").css("width","75%");
-						$(".table-body").css("width","89%");
+						$(".modal-content").css("width","99%");
+						$(".table-body").css("width","100%");
 						w = window.open();
-						w.document.write("<div style='width:400px; font-size: 12px;'>"+$("#myModalPrint").html()+"</div>");
+						w.document.write("<div style='width:400px; font-size: 13px;'>"+$("#myModalPrintPaid").html()+"</div>");
 						w.print(false);
 						w.close();
 						window.location = 'index';

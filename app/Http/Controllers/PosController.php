@@ -153,9 +153,10 @@ class PosController extends Controller
 	
 	// print receipt pos
 	public function printReceipt($sales_order_id, $footer){
-		$saleOrder = SaleOrder::whereId($sales_order_id)->first();
+		$saleOrder = SaleOrder::where('sales_orders.id', $sales_order_id)->first();
+		$saleOrderReceipts = SaleOrderReceipt::where('sales_order_id', $sales_order_id)->get();
 		$saleOrderDetail = SaleOrderDetail::join('products', 'products.id', '=', 'sales_order_details.product_id')->whereSales_order_id($sales_order_id)->get();
-		return view('/layout/printReceipt', compact('saleOrderDetail', 'saleOrder', 'footer'));
+		return view('/layout/printReceipt', compact('saleOrderDetail', 'saleOrder', 'footer', 'saleOrderReceipts'));
 	}
 	
 	function generateAutoCode($table, $field, $len, $char) {

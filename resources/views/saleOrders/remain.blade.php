@@ -128,31 +128,13 @@ function number_format_unlimited_precision($number,$decimal = '.')
 	
 
 	$('#tbl_expense tbody').on( 'click', '.btnview', function () {
-        var data = table.row( $(this).parents('tr') ).data();
-		$("#myModalPrint").load("{{ URL::asset('pos/print/') }}/"+data['id']+"/yes", '', function(){
+        var rowId = $(this).attr('id');
+		$("#myModalPrint").load("{{ URL::asset('pos/print/') }}/"+rowId+"/yes", '', function(){
 			$("#myModalPrint").modal();
 		});
     } );
 
-    $('#tbl_expense tbody').on( 'click', '.btnedit', function () {
-        var data = table.row( $(this).parents('tr') ).data();
-        redirectPage('edit/' + data['id']);
-    } );
-
-    $('#tbl_expense tbody').on( 'click', '.btndelete', function () {
-        var data = table.row( $(this).parents('tr') ).data();
-        var ts = $(this);
-        if(confirm('តើអ្នកពិតជាចង់លុបវាពិតមែនទេ?')){
-			$.ajax({
-			    url: 'destroy/' + data['id'],
-			    type: 'GET',
-			    data:{"_token": "{{ csrf_token() }}"},
-			    success: function(result) {
-			    	table.row(ts.parents('tr')).remove().draw( false );
-			    }
-			});
-		}
-    } );
+	
 	// add commas for number 120,000
 	function addCommas(nStr)
 	{
