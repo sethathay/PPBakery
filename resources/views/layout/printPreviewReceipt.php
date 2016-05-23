@@ -3,7 +3,7 @@
 <?php }?>
 <style>
 .receipt, .receipt table{
-	font-size: 16px !important;
+	font-size: 12px !important;
 }
 .modal-content{
 	width:100%;
@@ -48,7 +48,7 @@ td{
 				កាលបរិច្ឆេទ / DateTime : <label><?php echo $saleOrder->created_at; ?></label>
 			</div>-->
 
-			<div style="width:90%; margin: 0 auto;">
+			<div class="table-body" style="width:89%; margin: 0px;">
 				<table class="table-hover" style="width:100%">
 					<tr style="border-top:1px solid #ccc;">
 						<th>កូដ<br/>Code</th>
@@ -88,7 +88,7 @@ td{
 						<td colspan="4" style="text-align:right;">ចុះតំលៃ / Discount ($)</td>
 						<td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrder->discount_us); ?></label></td>
 					</tr>
-					<?php }?>		
+					<?php }?>	
                     <?php foreach($saleOrderReceipts as $saleOrderReceipt){?>		
 						<?php if($saleOrderReceipt->amount_kh != ""){?>
                         <tr>
@@ -146,6 +146,7 @@ td{
 		
 	</div>
 </div>
+
 <!-- Modal Print Receipt -->
 <div id="myModalPrintPaid" class="modal fade col-md-4" role="dialog">
 
@@ -164,14 +165,14 @@ td{
 				data : {sales_order_id:sales_order_id, _token:token},
 				dataType : 'json',
 				success : function(result){
-					// return sales_order_id;	
+					// return sales_order_id;								
 					
 					$("#myModalPayment").hide();
 					$("#myModalPrintPaid").load('print/'+result+'/no', '', function(){
-						//$("#myModalPrintPaid").modal();
+						//$("#myModalPrint").modal();
 						$(".modal-footer").hide();
-						$(".modal-content").css("width","99%");
-						$(".table-body").css("width","100%");
+						$(".modal-content").css("width","75%");
+						$(".table-body").css("width","89%");
 						w = window.open();
 						w.document.write("<div style='width:400px; font-size: 13px;'>"+$("#myModalPrintPaid").html()+"</div>");
 						w.print(false);
