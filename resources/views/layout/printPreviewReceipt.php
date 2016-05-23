@@ -3,7 +3,7 @@
 <?php }?>
 <style>
 .receipt, .receipt table{
-	font-size: 12px !important;
+	font-size: 16px !important;
 }
 .modal-content{
 	width:100%;
@@ -37,7 +37,7 @@ td{
 			<div style="width:48%; float:left; text-align:center; margin-bottom:20px;">
 				<label>ហាងនំបុ័ង ភ្នំពេញ</label><br/>
 				<label>PHNOM PENH BAKERY</label><br/>
-				<label>ទូរស័ព្ទ / Tel : 093 557 667</label>
+				<label>ទូរស័ព្ទ / Tel : 015 855 755/ 085 855 755</label>
 			</div>
 			<div style="text-align : center; float:left; width:100%;">
 				លេខវិក័យបត្រ / InvID : <label><?php echo $saleOrder->so_code; ?></label><br/>
@@ -48,7 +48,7 @@ td{
 				កាលបរិច្ឆេទ / DateTime : <label><?php echo $saleOrder->created_at; ?></label>
 			</div>-->
 
-			<div class="table-body" style="width:89%; margin: 0px;">
+			<div style="width:90%; margin: 0 auto;">
 				<table class="table-hover" style="width:100%">
 					<tr style="border-top:1px solid #ccc;">
 						<th>កូដ<br/>Code</th>
@@ -88,11 +88,11 @@ td{
 						<td colspan="4" style="text-align:right;">ចុះតំលៃ / Discount ($)</td>
 						<td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrder->discount_us); ?></label></td>
 					</tr>
-					<?php }?>	
-                    <?php foreach($saleOrderReceipts as $saleOrderReceipt){?>		
+					<?php }?>			
+                    <?php $i=1; $option=false; foreach($saleOrderReceipts as $saleOrderReceipt){?>		
 						<?php if($saleOrderReceipt->amount_kh != ""){?>
                         <tr>
-                            <td colspan="4" style="text-align:right;">ប្រាក់បានបង់ / Amount Paid (៛)</td>
+                            <td colspan="4" style="text-align:right;"><?php if(count($saleOrderReceipts)>1 && $i==1){echo "ប្រាក់បង់មុខ";$option=true;}else if($i==2){echo "ប្រាក់បង់បន្ថែម";}else{echo "ប្រាក់បានបង់";}?> / Amount Paid (៛)</td>
                             <td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrderReceipt->amount_kh); ?></label></td>
                         </tr>
                         <?php }else if(count($saleOrderReceipts)==1){?>
@@ -103,7 +103,7 @@ td{
                         <?php }?>
                         <?php if($saleOrderReceipt->amount_us != ""){?>
                         <tr>
-                            <td colspan="4" style="text-align:right;">ប្រាក់បានបង់ / Amount Paid ($)</td>
+                            <td colspan="4" style="text-align:right;"><?php if(count($saleOrderReceipts)>1 && $option=false){echo "ប្រាក់បង់មុខ";}else if($i==2){echo "ប្រាក់បង់បន្ថែម";}else{echo "ប្រាក់បានបង់";}?> / Amount Paid ($)</td>
                             <td colspan="2" style="text-align:right;"><label><?php echo number_format($saleOrderReceipt->amount_us,3); ?></label></td>
                         </tr>
                         <?php }else if(count($saleOrderReceipts)==1){?>
@@ -112,7 +112,7 @@ td{
                             <td colspan="2" style="text-align:right;"><label><?php echo number_format(0); ?></label></td>
                         </tr>
                         <?php }?>
-                    <?php }?>
+                    <?php $i++;}?>
 					<?php if($saleOrder->balance != ""){?>
                     	<?php if($saleOrder->balance > 0){?>
                         <tr>
@@ -146,7 +146,6 @@ td{
 		
 	</div>
 </div>
-
 <!-- Modal Print Receipt -->
 <div id="myModalPrintPaid" class="modal fade col-md-4" role="dialog">
 
@@ -165,14 +164,14 @@ td{
 				data : {sales_order_id:sales_order_id, _token:token},
 				dataType : 'json',
 				success : function(result){
-					// return sales_order_id;								
+					// return sales_order_id;	
 					
 					$("#myModalPayment").hide();
 					$("#myModalPrintPaid").load('print/'+result+'/no', '', function(){
-						//$("#myModalPrint").modal();
+						//$("#myModalPrintPaid").modal();
 						$(".modal-footer").hide();
-						$(".modal-content").css("width","75%");
-						$(".table-body").css("width","89%");
+						$(".modal-content").css("width","99%");
+						$(".table-body").css("width","100%");
 						w = window.open();
 						w.document.write("<div style='width:400px; font-size: 13px;'>"+$("#myModalPrintPaid").html()+"</div>");
 						w.print(false);
