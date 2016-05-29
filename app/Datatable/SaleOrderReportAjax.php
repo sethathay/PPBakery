@@ -2,7 +2,7 @@
 
 namespace App\Datatable;
 
-class SaleOrderAjax
+class SaleOrderReportAjax
 {
     /**
      * Display a listing of the resource.
@@ -10,7 +10,7 @@ class SaleOrderAjax
      * @return \Illuminate\Http\Response
      */
 	
-	public function getResource($table, array $columns, $condition, $keyIndex){
+	public function getResourceReport($table, array $columns, $condition, $keyIndex){
 		
 		/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 		 * Easy set variables
@@ -187,15 +187,14 @@ class SaleOrderAjax
 					/* Special output formatting for 'version' column */					
 		            $row[] = ++$index;
 					//$row[] = ($aRow[ $aColumns[$i] ]=="0") ? '-' : $aRow[ $aColumns[$i] ];
-				}else if($i == 3 || $i == 5 || $i == 7){
-					
-					if( $i == 7){
+				}else if($i == 4 || $i == 6 || $i == 8){					
+					if( $i == 8){
 						$row[] = number_format(abs($aRow[$i]));
 					}else{
 						$row[] = number_format($aRow[$i]);
 					}
-				}else if( $i == 4 || $i == 6){
-					$row[] = number_format($aRow[$i],3);
+				}else if( $i == 5 || $i == 7){
+					$row[] = ($aRow[$i]>0)?number_format($aRow[$i],3):0;
 				}
 				else if ( $aColumns[$i] != ' ' )
 				{

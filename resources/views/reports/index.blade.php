@@ -74,7 +74,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
         	<div class="col-sm-3">
             	<div class="form-group">
                     <div class='input-group date' id='datetimepicker6'>
-                        <input type='text' class="form-control" id="date_from" placeholder="ថ្ងៃចាប់ផ្តើម (YYYY-MM-DD)" />
+                        <input type='text' class="form-control" id="date_from" value="<?php echo date('Y-m-d');?>" placeholder="ថ្ងៃចាប់ផ្តើម (YYYY-MM-DD)" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -84,7 +84,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
             <div class="col-sm-3">
             	<div class="form-group">
                     <div class='input-group date' id='datetimepicker7'>
-                        <input type='text' class="form-control" id="date_to" placeholder="ថ្ងៃបញ្ចប់ (YYYY-MM-DD)" />
+                        <input type='text' class="form-control" value="<?php echo date('Y-m-d');?>" id="date_to" placeholder="ថ្ងៃបញ្ចប់ (YYYY-MM-DD)" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>

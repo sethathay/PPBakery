@@ -17,6 +17,7 @@ use App\SaleOrderDetail;
 use App\Product;
 use App\Pgroup;
 use App\Datatable\SaleOrderAjax;
+use App\Datatable\SaleOrderReportAjax;
 
 class ReportsController extends Controller
 {
@@ -32,22 +33,23 @@ class ReportsController extends Controller
         return view('reports.index',compact('users'));
     }
 	
-	public function selectReport(Request $request, SaleOrderAjax $saleOrder){
+	public function selectReport(Request $request, SaleOrderReportAjax $saleOrder){
 		
 		$input = $request->all();
-		$table     = "sales_orders INNER JOIN users ON users.id=sales_orders.created_by";				
-		$columns   = array('sales_orders.id','sales_orders.created_at', 'first_name', 'so_code', 'discount_riel', 'discount_us', 'total_amount_riel', 'total_amount_us', 'IF(balance>0,balance,0)');
+		$table     = "sales_order_receipts INNER JOIN users ON users.id=sales_order_receipts.created_by";	
+		$table    .= " LEFT JOIN sales_orders ON sales_orders.id=sales_order_receipts.sales_order_id";				
+		$columns   = array('sales_order_receipts.id','sales_order_receipts.created_at', 'first_name', 'receipt_code', 'discount_riel', 'discount_us', 'amount_kh', 'amount_us', 'IF(sales_order_receipts.balance>0,sales_order_receipts.balance,0)');
 		
 		$condition = "";
-		$condition .= " sales_orders.is_active = 1 AND sales_orders.is_book = 0";
+		$condition .= " sales_orders.is_active = 1";
 		
 		if(isset($input['users']) && $input['users'] != ""){
-			$condition .= " AND sales_orders.created_by =". $input['users'];
+			$condition .= " AND sales_order_receipts.created_by =". $input['users'];
 		}
-		$condition .= " AND SUBSTRING(sales_orders.created_at,1,10) BETWEEN '". $input['dateFrom']."' AND '". $input['dateTo']."'";
+		$condition .= " AND SUBSTRING(sales_order_receipts.created_at,1,10) BETWEEN '". $input['dateFrom']."' AND '". $input['dateTo']."'";
 				
 		//$condition .= " ORDER BY users.first_name";
-		return $saleOrder->getResource($table, $columns, $condition, 'sales_orders.id');
+		return $saleOrder->getResourceReport($table, $columns, $condition, 'sales_order_receipts.id');
 			
 	}
 	
