@@ -38,7 +38,7 @@ class ReportsController extends Controller
 		$input = $request->all();
 		$table     = "sales_order_receipts INNER JOIN users ON users.id=sales_order_receipts.created_by";	
 		$table    .= " LEFT JOIN sales_orders ON sales_orders.id=sales_order_receipts.sales_order_id";				
-		$columns   = array('sales_order_receipts.id','sales_order_receipts.created_at', 'first_name', 'receipt_code', 'discount_riel', 'discount_us', 'amount_kh', 'amount_us', 'IF(sales_order_receipts.balance>0,sales_order_receipts.balance,0)');
+		$columns   = array('sales_order_receipts.id','sales_order_receipts.created_at', 'first_name', 'receipt_code', 'discount_riel', 'discount_us', 'amount_kh', 'amount_us', 'IF(sales_orders.balance>0,sales_orders.balance,0)');
 		
 		$condition = "";
 		$condition .= " sales_orders.is_active = 1";
