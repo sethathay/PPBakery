@@ -222,7 +222,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 						aoData.push( { "name": "dateFrom", "value": dateFrom }, {"name": "dateTo", "value": dateTo} , {"name": "users", "value": users} , {"name": "_token", "value": "{!! csrf_token() !!}"});
 					},
 					"sEcho" : true,
-            		"iDisplayLength": 500,
+            		"iDisplayLength": 5000,
 					"aaSorting": [[ 2, "desc" ]],
 					"lengthMenu": [[10, 25, 50, 100, 500, 1000, 5000, 10000, 9999999999], [10, 25, 50, 100, 500, 1000, 5000, 10000, "All"]],
 					"fnInfoCallback": function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {	
