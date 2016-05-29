@@ -29,7 +29,7 @@
                 <?php $total = $total + $data[2]; ?>
                 <?php $totalDiscount = $totalDiscount + $data[1]; ?>
             <?php }?>
-        		<tr>
+        		<tr class="total_record">
                 	<td style="text-align:right; font-size:20px; font-weight:bold;" colspan="4">សរុប​ :</td>
                     <td style="text-align:right; font-size:20px; font-weight:bold; color:#F00;"><?php echo number_format($totalDiscount)." ៛";?></td>
                     <td style="text-align:right; font-size:20px; font-weight:bold; color:#F00;"><?php echo number_format($total)." ៛";?></td>

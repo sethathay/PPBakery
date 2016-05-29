@@ -188,6 +188,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					data: { dateFrom : dateFrom, dateTo : dateTo, users : users, _token : "{!! csrf_token() !!}"},
 					success: function(htmls){
 						$(".table_result").append(htmls);	
+						$("#tbl_expense").find(".total_record").clone().insertAfter("tr:eq(0)");
 						waitingDialog.hide();				
 					}
 				});		

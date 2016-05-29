@@ -156,14 +156,14 @@ function number_format_unlimited_precision($number,$decimal = '.')
         "columnDefs": [ {
             "targets": -1,
             "defaultContent":
-			'<button style="margin-right:5px" type="button" class="btn btn-xs btn-warning view_paid"><span class="fa fa-dollar"></span> &nbsp;Pay&nbsp;</button>'
+			'<button style="margin-right:5px" type="button" class="btn btn-xs btn-warning view_paid"><span class="fa fa-dollar"></span> &nbsp;បង់ប្រាក់បង់គ្រប់ <br/>និងយកទំនិញ&nbsp;</button>'
             +'<button style="margin-right:5px" type="button" class="btnview btn btn-xs btn-info">'
             + '<span class="glyphicon glyphicon-user"></span> View</button>'
-            +'<button style="margin-right:5px" type="button" class="btnedit btn btn-xs btn-primary">'
+            /*+'<button style="margin-right:5px" type="button" class="btnedit btn btn-xs btn-primary">'
 			+'<span class="glyphicon glyphicon-edit"></span> Edit</button>'
 			+'<button type="button" class="btn btn-xs btn-danger btndelete">'
 			+'<span class="glyphicon glyphicon-trash"></span> Delete'
-			+'</button>'
+			+'</button>'*/
         },
         {
                 "targets": 3,

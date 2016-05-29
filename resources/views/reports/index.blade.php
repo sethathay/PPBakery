@@ -246,7 +246,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 							totalBalance += Number($(this).find("td:eq(8)").text().replace(/,/g, ""));
 						});
 						$('#tbl_expense > tbody:last').append('<tr style="color:red;font-size:20px;"><td colspan="4" style="text-align:right">សរុប:</td><td style="text-align: right;font-weight: bold;">' + (addCommas(totalDiscountRiel)) + '</td><td style="text-align: right;font-weight: bold;">' + (addCommas(getMathRound1000(totalDiscountDollar))) + '</td><td style="text-align: right;font-weight: bold;">' + (addCommas(totalRiel)) + '</td><td style="text-align: right;font-weight: bold;">' + (addCommas(getMathRound1000(totalDollar))) + '</td><td style="text-align: right;font-weight: bold;">' + (addCommas(totalBalance)) + '</td><td></td></tr>');
-						
+						$('#tbl_expense').find("tr:last").clone().insertAfter('tr:eq(0)');
 						waitingDialog.hide();
 						
 						$('.btnview').click(function (event) {
