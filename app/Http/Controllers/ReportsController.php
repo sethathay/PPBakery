@@ -36,9 +36,10 @@ class ReportsController extends Controller
 	public function selectReport(Request $request, SaleOrderReportAjax $saleOrder){
 		
 		$input = $request->all();
-		$table     = "sales_order_receipts INNER JOIN users ON users.id=sales_order_receipts.created_by";	
+		$table     = "sales_order_receipts INNER JOIN users ON users.id=sales_order_receipts.created_by";
+		$table    .= " INNER JOIN exchange_rates ON exchange_rates.id=sales_order_receipts.exchange_rate_id";		
 		$table    .= " LEFT JOIN sales_orders ON sales_orders.id=sales_order_receipts.sales_order_id";				
-		$columns   = array('sales_orders.id','sales_order_receipts.created_at', 'first_name', 'so_code', 'discount_riel', 'discount_us', 'amount_kh', 'amount_us', 'IF(sales_orders.balance>0,sales_orders.balance,0)');
+		$columns   = array('sales_orders.id','sales_order_receipts.created_at', 'first_name', 'so_code', 'discount_riel', 'discount_us', 'IF(sales_orders.balance<0 AND amount_kh,amount_kh+sales_orders.balance,amount_kh)', 'IF(sales_orders.balance<0 AND amount_us>0,amount_us+sales_orders.balance/riel,amount_us)', 'IF(sales_orders.balance>0,sales_orders.balance,0)');
 		
 		$condition = "";
 		$condition .= " sales_orders.is_active = 1";
