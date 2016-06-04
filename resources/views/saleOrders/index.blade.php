@@ -117,8 +117,9 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		"bServerSide": true,
 		"sAjaxSource": "ajax",
 		"fnServerData": fnDataTablesPipeline,
-		"iDisplayLength": 10,
+        "iDisplayLength": 1000,
 		"aaSorting": [[ 2, "desc" ]],
+		"lengthMenu": [[10, 25, 50, 100, 500, 1000, 5000, 10000], [10, 25, 50, 100, 500, 1000, 5000, 10000]],
 		"fnInfoCallback": function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {			
 			$("#tbl_expense tbody tr>td:nth-child(4)").css("text-align", "right");
 			$("#tbl_expense tbody tr>td:nth-child(5)").css("text-align", "right");

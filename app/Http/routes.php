@@ -104,6 +104,8 @@ Route::post('saleOrders/store', 'SaleOrdersController@store');
 Route::get('saleOrders/ajax', 'SaleOrdersController@ajax');
 Route::get('saleOrders/remain', 'SaleOrdersController@remain');
 Route::get('saleOrders/ajaxRemain', 'SaleOrdersController@ajaxRemain');
+Route::get('saleOrders/remainPay/{id}', 'SaleOrdersController@remainPay');
+Route::post('saleOrders/paidRemain/', 'SaleOrdersController@paidRemain');
 
 
 Route::get('bookers/index', ['as' => 'bookers.index', 'uses' => 'BookersController@index']);

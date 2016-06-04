@@ -47,8 +47,8 @@ class ReportsController extends Controller
 		if(isset($input['users']) && $input['users'] != ""){
 			$condition .= " AND sales_order_receipts.created_by =". $input['users'];
 		}
-		$condition .= " AND SUBSTRING(sales_order_receipts.created_at,1,10) BETWEEN '". $input['dateFrom']."' AND '". $input['dateTo']."'";
-				
+		//$condition .= " AND sales_order_receipts.created_at BETWEEN '". $input['dateFrom']."' AND '". $input['dateTo']."'";
+		$condition .= " AND SUBSTRING(sales_order_receipts.created_at,1,10) BETWEEN '". $input['dateFrom']."' AND '". $input['dateTo']."'";		
 		//$condition .= " ORDER BY users.first_name";
 		return $saleOrder->getResourceReport($table, $columns, $condition, 'sales_order_receipts.id');
 			

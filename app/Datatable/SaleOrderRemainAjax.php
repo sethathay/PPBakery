@@ -2,7 +2,7 @@
 
 namespace App\Datatable;
 
-class SaleOrderAjax
+class SaleOrderRemainAjax
 {
     /**
      * Display a listing of the resource.
@@ -187,14 +187,14 @@ class SaleOrderAjax
 					/* Special output formatting for 'version' column */					
 		            $row[] = ++$index;
 					//$row[] = ($aRow[ $aColumns[$i] ]=="0") ? '-' : $aRow[ $aColumns[$i] ];
-				}else if($i == 3 || $i == 5 || $i == 7){
+				}else if($i == 4 || $i == 6 || $i == 8){
 					
 					if( $i == 7){
 						$row[] = number_format(abs($aRow[$i]));
 					}else{
 						$row[] = number_format($aRow[$i]);
 					}
-				}else if( $i == 4 || $i == 6){
+				}else if( $i == 5 || $i == 7){
 					$row[] = number_format($aRow[$i]);
 				}
 				else if ( $aColumns[$i] != ' ' )
@@ -204,8 +204,8 @@ class SaleOrderAjax
             		$row[] = $aRow[$i];
 				}
 			}
-			//$row[] = '<button style="margin-right:5px" type="button" id="'. $aRow[0] .'" class="btnview btn btn-xs btn-info"><span class="glyphicon glyphicon-user"></span> View</button><button style="margin-right:5px" id="'. $aRow[0] .'" type="button" class="btnedit btn btn-xs btn-primary"><span class="glyphicon glyphicon-edit"></span> Edit</button><button type="button" id="'. $aRow[0] .'" class="btn btn-xs btn-danger btndelete"><span class="glyphicon glyphicon-trash"></span> Delete</button>';
-			$row[] = '<button style="margin-right:5px" type="button" id="'. $aRow[0] .'" class="btnview btn btn-xs btn-info"><span class="glyphicon glyphicon-user"></span> View</button>';
+			$row[] = '<button style="margin-right:5px" id="'. $aRow[0] .'" type="button" class="btnPay btn btn-xs btn-warning"><span class="glyphicon glyphicon-edit"></span> បង់ប្រាក់</button>';
+			//$row[] = '<button style="margin-right:5px" type="button" id="'. $aRow[0] .'" class="btnPay btn btn-xs btn-warning"><span class="glyphicon glyphicon-user"></span> បង់ប្រាក់</button><button style="margin-right:5px" type="button" id="'. $aRow[0] .'" class="btnview btn btn-xs btn-info"><span class="glyphicon glyphicon-search"></span> View</button>';
 			$output['aaData'][] = $row;
 		}
 		

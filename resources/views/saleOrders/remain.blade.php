@@ -81,6 +81,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				<!--<th><input type="checkbox" name="checkOptionAll" /></th>-->
                 <th>លេខរៀង</th>
 				<th>ថ្ងៃខែឆ្នាំទិញ</th>
+				<th>អតិថិជន</th>
 				<th>លេខកូដវិក័យប័ត្រ</th>
 				<th>បញ្ចុះតំលៃ (៛)</th>
 				<th>បញ្ចុះតំលៃ ($)</th>
@@ -91,7 +92,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="empty_data"><td colspan="9" style="text-align:center;">គ្នានទិន្ន័យនៅក្នុងតារាងទេ</td></tr>		
+			<tr class="empty_data"><td colspan="10" style="text-align:center;">គ្នានទិន្ន័យនៅក្នុងតារាងទេ</td></tr>		
         </tbody>
         
 	</table>
@@ -113,7 +114,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		"bServerSide": true,
 		"sAjaxSource": "ajaxRemain",
 		"fnInfoCallback": function( oSettings, iStart, iEnd, iMax, iTotal, sPre ) {			
-			$("#tbl_expense tbody tr>td:nth-child(4)").css("text-align", "right");
+			$("#tbl_expense tbody tr>td:nth-child(4)").css("text-align", "center");
 			$("#tbl_expense tbody tr>td:nth-child(5)").css("text-align", "right");
 			$("#tbl_expense tbody tr>td:nth-child(6)").css("text-align", "right");
 			$("#tbl_expense tbody tr>td:nth-child(7)").css("text-align", "right");
@@ -134,6 +135,11 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		});
     } );
 
+
+	$('#tbl_expense tbody').on( 'click', '.btnPay', function () {
+        var rowId = $(this).attr('id');
+		 redirectPage('remainPay/' + rowId);
+    } );
 	
 	// add commas for number 120,000
 	function addCommas(nStr)

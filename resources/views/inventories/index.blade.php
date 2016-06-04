@@ -166,6 +166,7 @@
 								$(".table tbody").append(records);
 							});
 							$('.btn-save').show();
+							alert("ទិន្ន័យត្រូវបានរក្សាទុក!!!");
 						}
 					}
 				});

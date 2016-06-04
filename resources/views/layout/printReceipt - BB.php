@@ -2,6 +2,9 @@
 <link href="<?php echo  URL::asset('css/bootstrap-3.3.2.css') ;?>" rel="stylesheet">
 <?php }?>
 <style>
+.modal{
+	overflow: auto !important;
+}
 .receipt, .receipt table{
 	font-size: 12px !important;
 }

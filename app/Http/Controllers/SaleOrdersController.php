@@ -17,6 +17,9 @@ use App\Inventory;
 use App\InventoryTotal;
 use App\InventoryTotalDetail;
 use App\Datatable\SaleOrderAjax;
+use App\Datatable\SaleOrderRemainAjax;
+use App\Customer;
+use Response;
 
 class SaleOrdersController extends Controller
 {
@@ -35,7 +38,7 @@ class SaleOrdersController extends Controller
 	public function ajax(SaleOrderAjax $saleOrder){
 		
 		$table     = "sales_orders";				
-		$columns   = array('id','created_at', 'so_code', 'discount_riel', 'discount_us', 'total_amount_riel', 'total_amount_us', 'balance');
+		$columns   = array('sales_orders.id','sales_orders.created_at', 'so_code', 'discount_riel', 'discount_us', 'total_amount_riel', 'total_amount_us', 'balance');
 		
 		$condition = "";
 		$condition .= " sales_orders.is_active = 1 AND sales_orders.is_book = 0";
@@ -47,15 +50,58 @@ class SaleOrdersController extends Controller
     {
 		return view('saleOrders.remain');
     }
-	public function ajaxRemain(SaleOrderAjax $saleOrder){
+	public function ajaxRemain(SaleOrderRemainAjax $saleOrder){
 		
-		$table     = "sales_orders";				
-		$columns   = array('id','created_at', 'so_code', 'discount_riel', 'discount_us', 'total_amount_riel', 'total_amount_us', 'balance');
+		$table     = "sales_orders INNER JOIN customers ON customers.id=sales_orders.customer_id";				
+		$columns   = array('sales_orders.customer_id','sales_orders.created_at', 'firstname', 'so_code', 'discount_riel', 'discount_us', 'total_amount_riel', 'total_amount_us', 'balance');
 		
 		$condition = "";
 		$condition .= " sales_orders.is_active = 1 AND sales_orders.is_book = 0";
 		$condition .= " AND balance>0";
 		return $saleOrder->getResource($table, $columns, $condition, 'sales_orders.id');
+	}
+	
+	public function remainPay($id ,SaleOrder $saleOrders, Request $request){
+		
+		$customer  = Customer::whereId($id)->first();
+		$saleOrder = SaleOrder::where('sales_orders.customer_id', $id)->where("sales_orders.balance", ">", 0)->get();
+					
+		return view('saleOrders/remainPay', compact('saleOrder', 'customer'));
+		
+	}
+	
+	public function paidRemain(SaleOrderReceipt $saleOrderReceipts){		
+    	$inputs = Input::all();
+		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
+		
+		for($i=0; $i < count($inputs['id']); $i++){
+			if($inputs['amount'][$i] > 0 && $inputs['amount'][$i] != ""){
+				$saleOrders = SaleOrder::where('id',$inputs['id'][$i])->first();
+				$inputs['amount'][$i] = $inputs['amount'][$i] > $saleOrders->balance? $saleOrders->balance : $inputs['amount'][$i];
+				
+				// To save sale order receipts table
+				$saleOrderReceipt = array();
+				$saleOrderReceipt['sales_order_id'] = $saleOrders->id;
+				$saleOrderReceipt['exchange_rate_id'] = $exchangerate->id;
+				$saleOrderReceipt['receipt_code'] = $this->generateAutoCode("sales_order_receipts", "receipt_code", 6, "RE");
+				$saleOrderReceipt['amount_us'] = 0;
+				$saleOrderReceipt['amount_kh'] = $inputs['amount'][$i];
+				$saleOrderReceipt['total_amount'] = $saleOrders->total_amount_riel;
+				$saleOrderReceipt['balance'] = $saleOrders->balance - $inputs['amount'][$i];
+				$saleOrderReceipt['pay_date']    = date('Y-m-d');
+				$saleOrderReceipt['due_date']    = date('Y-m-d');	
+				$saleOrderReceipt['created_by']    = \Auth::user()->id;
+				$saleOrderReceipt['updated_by']    = \Auth::user()->id;	
+				$saleOrderReceipt['is_active']    = 1;
+				$saleOrderReceipts->fill($saleOrderReceipt)->save();
+				
+				$saleOrder = array();
+				$saleOrder['balance']    = $saleOrders->balance - $inputs['amount'][$i];
+				$saleOrders->whereId($saleOrders->id)->update($saleOrder);
+			}			
+		}
+		
+        return Response::json('result');
 	}
 	
 	public function create()
@@ -168,8 +214,8 @@ class SaleOrdersController extends Controller
 				$inventoryTotal['product_id'] = $inputs['id'][$k];
 				$inventoryTotal['location_id'] = Session::get('location_id');
 				$inventoryTotal['total_qty'] = (-1)*$inputs['txt_qty'][$k];
-				$inventoryTotal['created_by']    = $user;
-				$inventoryTotal['updated_by']    = $user;	
+				$inventoryTotal['created_by']    = \Auth::user()->id;
+				$inventoryTotal['updated_by']    = \Auth::user()->id;	
 				$inventoryTotal->save();
 				
 				// Save to inventory_total_details table

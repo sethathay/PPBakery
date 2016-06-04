@@ -194,7 +194,7 @@ class SaleOrderReportAjax
 						$row[] = number_format($aRow[$i]);
 					}
 				}else if( $i == 5 || $i == 7){
-					$row[] = ($aRow[$i]>0)?number_format($aRow[$i],3):0;
+					$row[] = ($aRow[$i]>0)?number_format($aRow[$i]):0;
 				}
 				else if ( $aColumns[$i] != ' ' )
 				{
