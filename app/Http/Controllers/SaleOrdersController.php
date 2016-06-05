@@ -70,17 +70,17 @@ class SaleOrdersController extends Controller
 		
 	}
 	
-	public function paidRemain(SaleOrderReceipt $saleOrderReceipts){		
+	public function paidRemain(){		
     	$inputs = Input::all();
 		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
 		
 		for($i=0; $i < count($inputs['id']); $i++){
 			if($inputs['amount'][$i] > 0 && $inputs['amount'][$i] != ""){
-				$saleOrders = SaleOrder::where('id',$inputs['id'][$i])->first();
+				$saleOrders = SaleOrder::where('id', $inputs['id'][$i])->first();
 				$inputs['amount'][$i] = $inputs['amount'][$i] > $saleOrders->balance? $saleOrders->balance : $inputs['amount'][$i];
 				
 				// To save sale order receipts table
-				$saleOrderReceipt = array();
+				$saleOrderReceipt = new SaleOrderReceipt;
 				$saleOrderReceipt['sales_order_id'] = $saleOrders->id;
 				$saleOrderReceipt['exchange_rate_id'] = $exchangerate->id;
 				$saleOrderReceipt['receipt_code'] = $this->generateAutoCode("sales_order_receipts", "receipt_code", 6, "RE");
@@ -93,7 +93,7 @@ class SaleOrdersController extends Controller
 				$saleOrderReceipt['created_by']    = \Auth::user()->id;
 				$saleOrderReceipt['updated_by']    = \Auth::user()->id;	
 				$saleOrderReceipt['is_active']    = 1;
-				$saleOrderReceipts->fill($saleOrderReceipt)->save();
+				$saleOrderReceipt->save();
 				
 				$saleOrder = array();
 				$saleOrder['balance']    = $saleOrders->balance - $inputs['amount'][$i];
@@ -107,7 +107,7 @@ class SaleOrdersController extends Controller
 	public function create()
 	{
 		$codeGenerator = $this->generateAutoCode("sales_orders", "so_code", 6, "SO");
-		$customers = array_merge(array('0'=>'Please Select'), DB::table('customers')->lists('firstname', 'id'));
+		$customers = array_merge(array('0'=>'សូមជ្រើសរើស'), DB::table('customers')->lists('firstname', 'id'));
 		return view('saleOrders/create', compact('codeGenerator', 'customers'));
 	}
 	

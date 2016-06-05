@@ -175,7 +175,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					<input id="code" type="text" class="form-control" name="code" style="width:90%;" value="" placeholder="លេខកូដ">
 				</div>
 				<div class="col-sm-3" style="padding: 10px 0;">លេខវិក័យប័ត្រ: <label>{{ $codeGenerator }}</label></div>
-				<div class="col-sm-3">អតិថិជន :  {!! Form::select('customer_id', $customers, 1, ['class'=>'form-control', 'id'=>'customer_id']) !!}</div>
+				<div class="col-sm-3">អតិថិជន<span class="star"> * </span> :  {!! Form::select('customer_id', $customers, null, ['class'=>'form-control', 'id'=>'customer_id']) !!}</div>
 			</div>
 		</div>
 	</div>
@@ -391,6 +391,12 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					
 		$("#code").val('');
 		$("#code").focus();
+		
+		$("#customer_id").change(function(){
+			if($(this).val() > 0){				
+				$("#code").focus();
+			}
+		});
 			
 			
 		$(".numberInput").keypress(function(event){	
@@ -543,56 +549,63 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		});
 		// when fill product code
 		$("#code").keydown(function(e) {
-			var code = e.keyCode || e.which;
-			
-			// F7	
-			if(code == 118){
-				e.preventDefault(); //Disable shortcut browser
-				var codeNumber = $("#code").val();
-				if(codeNumber != ""){	
-					$('.myModal').modal({ keyboard: true, backdrop: 'static' });
+			var client = $("#customer_id").val();
+			if(client > 0){
+				
+				var code = e.keyCode || e.which;
+				
+				// F7	
+				if(code == 118){
+					e.preventDefault(); //Disable shortcut browser
+					var codeNumber = $("#code").val();
+					if(codeNumber != ""){	
+						$('.myModal').modal({ keyboard: true, backdrop: 'static' });
+					}
 				}
-			}
-			
-			// F8	
-			if(code == 119){
-				var codeNumber = $("#code").val();
-				if(codeNumber != ""){	
-					$('#myModal').modal({ keyboard: true, backdrop: 'static' });		
+				
+				// F8	
+				if(code == 119){
+					var codeNumber = $("#code").val();
+					if(codeNumber != ""){	
+						$('#myModal').modal({ keyboard: true, backdrop: 'static' });		
+					}
 				}
-			}
+				
+				// F9	
+				if(code == 120){
+					//cloneRecord(5);
+					var codeNumber = $("#code").val();
+					getProduct(5, codeNumber, token);
+				}
+				// F10
+				if(code == 121){
+					e.preventDefault(); //Disable shortcut browser
+					//cloneRecord(10);
+					var codeNumber = $("#code").val();
+					getProduct(10, codeNumber, token);
+				}
+				// F11
+				if(code == 122){
+					e.preventDefault(); //Disable shortcut browser
+					//cloneRecord(20);
+					var codeNumber = $("#code").val();
+					getProduct(20, codeNumber, token);
+				}
+				// F12
+				if(code == 123){
+					e.preventDefault(); //Disable shortcut browser
+					//cloneRecord(50);
+					var codeNumber = $("#code").val();
+					getProduct(50, codeNumber, token);
+				}
+	
+				if(code == 13) { 
+					var codeNumber = $("#code").val();
+					getProduct(1, codeNumber, token);
+				}
 			
-			// F9	
-			if(code == 120){
-				//cloneRecord(5);
-				var codeNumber = $("#code").val();
-				getProduct(5, codeNumber, token);
-			}
-			// F10
-			if(code == 121){
-				e.preventDefault(); //Disable shortcut browser
-				//cloneRecord(10);
-				var codeNumber = $("#code").val();
-				getProduct(10, codeNumber, token);
-			}
-			// F11
-			if(code == 122){
-				e.preventDefault(); //Disable shortcut browser
-				//cloneRecord(20);
-				var codeNumber = $("#code").val();
-				getProduct(20, codeNumber, token);
-			}
-			// F12
-			if(code == 123){
-				e.preventDefault(); //Disable shortcut browser
-				//cloneRecord(50);
-				var codeNumber = $("#code").val();
-				getProduct(50, codeNumber, token);
-			}
-
-			if(code == 13) { 
-				var codeNumber = $("#code").val();
-				getProduct(1, codeNumber, token);
+			}else{
+				alert("សូមជ្រើសរើស ឈ្មោះអតិថិជន មុននឹងបញ្ចូលលេខកូដ!!");
 			}
 		});
 		

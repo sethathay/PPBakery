@@ -78,10 +78,10 @@ function number_format_unlimited_precision($number,$decimal = '.')
                 <tr>
                 	<td>{{ $saleOrders->created_at }}</td>
                 	<td>{{ $saleOrders->so_code }}</td>
-                	<td>{{ number_format($saleOrders->discount_rield) }}</td>
-                	<td>{{ number_format($saleOrders->discount_us) }}</td>
-                	<td>{{ number_format($saleOrders->total_amount_rial) }}</td>
-                	<td>{{ number_format($saleOrders->total_amount_us) }}</td>
+                	<td>{{ number_format($saleOrders->discount_riel) }}</td>
+                	<td>{{ number_format($saleOrders->discount_us,2) }}</td>
+                	<td>{{ number_format($saleOrders->total_amount_riel) }}</td>
+                	<td>{{ number_format($saleOrders->total_amount_us,2) }}</td>
                 	<td>{{ number_format($saleOrders->balance) }}{!! Form::hidden('id[]', $saleOrders->id, array('class'=>'amount', 'style'=>'text-align:center')) !!}</td>
                     <td>{!! Form::text('amount[]', null, array('class'=>'amount', 'style'=>'text-align:center')) !!}</td>
                 </tr>
