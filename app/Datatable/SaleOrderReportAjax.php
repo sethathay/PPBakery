@@ -47,6 +47,10 @@ class SaleOrderReportAjax
 		 */
 		$gaSql['link'] =  @mysql_pconnect( $gaSql['server'], $gaSql['user'], $gaSql['password']  ) or
 			die( 'Could not open connection to server' );
+				
+        mysql_query("SET character_set_client=utf8", $gaSql['link']);
+        mysql_query("SET character_set_connection=utf8", $gaSql['link']);
+        mysql_query("SET NAMES 'utf8'", $gaSql['link']);
 		
 		mysql_select_db( $gaSql['db'], $gaSql['link'] ) or 
 			die( 'Could not select database '. $gaSql['db'] );
@@ -187,7 +191,8 @@ class SaleOrderReportAjax
 					/* Special output formatting for 'version' column */					
 		            $row[] = ++$index;
 					//$row[] = ($aRow[ $aColumns[$i] ]=="0") ? '-' : $aRow[ $aColumns[$i] ];
-				}else if($i == 4 || $i == 6 || $i == 8){					
+				}
+				else if($i == 4 || $i == 6 || $i == 8){					
 					if( $i == 8){
 						$row[] = number_format(abs($aRow[$i]));
 					}else{
@@ -211,5 +216,5 @@ class SaleOrderReportAjax
 		echo json_encode( $output );
 		
 	}
-	
+		
 }

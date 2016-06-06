@@ -47,6 +47,11 @@ class SaleOrderAjax
 		 */
 		$gaSql['link'] =  @mysql_pconnect( $gaSql['server'], $gaSql['user'], $gaSql['password']  ) or
 			die( 'Could not open connection to server' );
+			
+		
+        mysql_query("SET character_set_client=utf8", $gaSql['link']);
+        mysql_query("SET character_set_connection=utf8", $gaSql['link']);
+        mysql_query("SET NAMES 'utf8'", $gaSql['link']);
 		
 		mysql_select_db( $gaSql['db'], $gaSql['link'] ) or 
 			die( 'Could not select database '. $gaSql['db'] );

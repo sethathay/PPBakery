@@ -52,6 +52,10 @@ class SaleOrderRemainAjax
 			die( 'Could not select database '. $gaSql['db'] );
 		
 		
+        mysql_query("SET character_set_client=utf8", $gaSql['link']);
+        mysql_query("SET character_set_connection=utf8", $gaSql['link']);
+        mysql_query("SET NAMES 'utf8'", $gaSql['link']);
+		
 		/* 
 		 * Paging
 		 */
