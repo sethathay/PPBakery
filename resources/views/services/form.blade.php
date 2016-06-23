@@ -35,6 +35,16 @@ select{
 					<label for="country_id">ឈ្មោះនៃការចំនាយ<span class="star"> * </span>:</label>
 					{!! Form::select('section_id', $sections, Input::old('sections'), ['class'=>'form-control', 'id'=>'section_id']) !!}
 				</div>
+				<div class="form-group has-feedback col-md-12">
+					<label for="country_id">ខ្នាតនៃក្រុមចំនាយ<span class="star"> * </span>:</label>
+					{!! Form::select('uom_expense_id', $uom, Input::old('uom_expense_id'), ['class'=>'form-control', 'id'=>'section_id']) !!}
+				</div>
+				<div class="form-group col-md-12">
+					<label for="first_name">ចំនួន<span class="star"> * </span>:</label>
+					<div class="input-group" style="width:55%">
+						{!! Form::text('qty', null, array('class' => 'form-control', 'placeholder' => 'ចំនួន', 'id'=>'qty')) !!}
+					</div>
+				</div>
 				<div class="form-group col-md-12">
 					<label for="first_name">តម្លៃ($)<span class="star"> * </span>:</label>
 					<div class="input-group" style="width:55%">
@@ -53,7 +63,7 @@ select{
 			<div class="row-form col-sm-6">
 				<div class="form-group col-md-12">
 					<label for="dob">កាលបរិច្ឆេទ</label>
-					{!! Form::text('expense_date', null, array('class' => 'form-control', 'placeholder' => 'កាលបរិច្ឆេទ', 'id'=>'expense_date')) !!}						
+					{!! Form::text('expense_date', date("Y-m-d"), array('class' => 'form-control', 'placeholder' => 'កាលបរិច្ឆេទ', 'id'=>'expense_date')) !!}						
 				</div>
 				<div class="form-group col-md-12">
 					<label for="first_name">បរិយាយផ្សេងៗ<span class="star"></span>:</label>
@@ -68,7 +78,7 @@ select{
 	jQuery(document).ready(function($) {
 
        $('#expense_date').datepicker({
-			format: 'yyyy/mm/dd'
+			format: 'yyyy-mm-dd'
        });
 	});
 

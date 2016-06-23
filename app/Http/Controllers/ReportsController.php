@@ -18,6 +18,9 @@ use App\Product;
 use App\Pgroup;
 use App\Datatable\SaleOrderAjax;
 use App\Datatable\SaleOrderReportAjax;
+use App\Datatable\ExpenseAjax;
+use App\Section;
+use App\Service;
 
 class ReportsController extends Controller
 {
@@ -95,6 +98,19 @@ class ReportsController extends Controller
 		
 	}
 	
+	function reportExpense(){
+		
+        return view('reports.reportExpense');
+	}
 	
+	
+	public function selectReportByExpense(Request $request, ExpenseAjax $expense){
+		$services = Service::select('sections.name AS section_name', 'uom_expenses.name AS expense_uom_name', 'services.*')->
+												leftJoin('sections', 'sections.id','=','services.section_id')->
+												leftJoin('uom_expenses', 'uom_expenses.id','=','services.uom_expense_id')->
+												where('sections.is_active',1)->
+												orderBy('services.expense_date')->get();
+		return View::make('reports.reportExpenseResult')->with('services', $services);
+	}
 
 }

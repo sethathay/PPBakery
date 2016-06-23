@@ -10,15 +10,17 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class Service extends Model implements AuthenticatableContract,
+class PricingRule extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
                                     CanResetPasswordContract
 {
-    //
     use Authenticatable, Authorizable, CanResetPassword;
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'pricing_rules';
 
-    protected $table = 'services';
-
-    protected $fillable = ['section_id','uom_expense_id','expense_date','company_id', 'name', 'qty', 'dollar_price','riel_price',
-    'exchange_rate_id','description','created_by','updated_by','is_active'];
+    protected $fillable = ['customer_id', 'product_id', 'amount', 'created_by', 'updated_by','is_active'];
 }

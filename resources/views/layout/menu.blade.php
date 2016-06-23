@@ -83,6 +83,9 @@
 					<li class="inner_link">
 						<a href="{{ URL::asset('reports/reportProduct') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;របាយការណ៍ តាមក្រុមទំនិញ</a>
 					</li>
+					<li class="inner_link">
+						<a href="{{ URL::asset('reports/reportExpense') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;របាយការណ៍ ចំនាយ</a>
+					</li>
 				</ol>
 			</li>
 			<li><a href="{{ URL::asset('users/index') }}"><img
@@ -104,7 +107,13 @@
 						<a href="{{ URL::asset('customers') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;អតិថិជន</a>
 					</li>
 					<li class="inner_link">
+						<a href="{{ URL::asset('pricingRules/index') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;បញ្ចុះតំលៃ សម្រាប់អតិថិជន</a>
+					</li>
+					<li class="inner_link">
 						<a href="{{ URL::asset('sections/index') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;ក្រុមចំនាយ</a>
+					</li>
+					<li class="inner_link">
+						<a href="{{ URL::asset('uomexpenses/index') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;ខ្នាតនៃក្រុមចំនាយ</a>
 					</li>
 					<li class="inner_link">
 						<a href="{{ URL::asset('pgroups') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;ក្រុមទំនិញ</a>

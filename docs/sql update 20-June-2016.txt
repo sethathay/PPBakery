@@ -1,0 +1,6 @@
+ALTER TABLE `services`
+	ADD COLUMN `uom_expense_id` INT(11) NULL DEFAULT NULL AFTER `section_id`;
+
+ALTER TABLE `services`
+	ADD COLUMN `qty` INT NULL DEFAULT NULL AFTER `name`;
+

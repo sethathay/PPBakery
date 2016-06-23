@@ -21,10 +21,11 @@ class ServicesController extends Controller
     public function index()
     {
         //
-        $sv = Service::select('services.*','sections.name AS section_name')->join('sections','sections.id','=','section_id')->where('services.is_active', 1)->get();
+        $sv = Service::select('services.*','sections.name AS section_name', 'uom_expenses.name AS uom_expense_name')->join('sections','sections.id','=','section_id')->leftJoin('uom_expenses','uom_expenses.id','=','uom_expense_id')->where('services.is_active', 1)->get();
         $services = json_encode($sv);
         $sections = DB::table('sections')->lists('name', 'id');
-        return view('services/index',compact('services','sections'));
+        $uom = DB::table('uom_expenses')->lists('name', 'id');
+        return view('services/index',compact('services','sections', 'uom'));
     }
 
     /**
@@ -36,7 +37,8 @@ class ServicesController extends Controller
     {
         //
 		$sections = DB::table('sections')->where('is_active',1)->orderBy('id', 'desc')->lists('name','id');
-        return view('services/create',compact('sections'));
+		$uom = DB::table('uom_expenses')->where('is_active',1)->orderBy('id', 'desc')->lists('name','id');
+        return view('services/create',compact('sections', 'uom'));
     }
 
     /**
@@ -68,7 +70,8 @@ class ServicesController extends Controller
         //
         $service = Service::whereId($id)->first();
         $sections = DB::table('sections')->lists('name', 'id');
-        return view('services/show', compact('sections','service'));
+        $uom = DB::table('uom_expenses')->lists('name', 'id');
+        return view('services/show', compact('sections','service', 'uom'));
     }
 
     /**
@@ -82,7 +85,8 @@ class ServicesController extends Controller
         //
         $service = Service::find($id);
 		$sections = DB::table('sections')->where('is_active',1)->orderBy('id', 'desc')->lists('name','id');
-        return view('services/edit', compact('service','sections'));
+		$uom = DB::table('uom_expenses')->where('is_active',1)->orderBy('id', 'desc')->lists('name','id');
+        return view('services/edit', compact('service','sections','uom'));
     }
 
     /**

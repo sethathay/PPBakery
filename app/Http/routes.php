@@ -84,6 +84,15 @@ Route::get('sections/edit/{id}', ['as' => 'sections.edit', 'uses' => 'SectionsCo
 Route::post('sections/update', ['as' => 'sections.update', 'uses' => 'SectionsController@update']);
 Route::get('sections/destroy/{id}', ['as' => 'sections.destroy', 'uses' => 'SectionsController@destroy']);
 
+
+Route::get('uomexpenses/index', ['as' => 'uomexpenses.index', 'uses' => 'UomExpensesController@index']);
+Route::get('uomexpenses/create', ['as' => 'uomexpenses.create', 'uses' => 'UomExpensesController@create']);
+Route::post('uomexpenses/store', ['as' => 'uomexpenses.store', 'uses' => 'UomExpensesController@store']);
+Route::get('uomexpenses/show/{id}', 'UomExpensesController@show');
+Route::get('uomexpenses/edit/{id}', ['as' => 'uomexpenses.edit', 'uses' => 'UomExpensesController@edit']);
+Route::post('uomexpenses/update', ['as' => 'uomexpenses.update', 'uses' => 'UomExpensesController@update']);
+Route::get('uomexpenses/destroy/{id}', ['as' => 'uomexpenses.destroy', 'uses' => 'UomExpensesController@destroy']);
+
 // Route for pos
 Route::post('pos/sale', 'PosController@sale');
 Route::get('pos/print/{id}/{footer}', 'PosController@printReceipt');
@@ -122,7 +131,10 @@ Route::get('reports/reportInvoice', 'ReportsController@index');
 Route::post('reports/selectReport', 'ReportsController@selectReport');
 Route::get('reports/reportProduct', 'ReportsController@reportProduct');
 Route::post('reports/selectReportByProduct', 'ReportsController@selectReportByProduct');
-//Route::get('reports/reportByProductResult', 'ReportsController@reportByProductResult');
+Route::get('reports/reportExpense', 'ReportsController@reportExpense');
+Route::post('reports/selectReportByExpense', 'ReportsController@selectReportByExpense');
+
+Route::get('pricingRules/index', 'PricingRulesController@index');
 
 //Route of services for daily expense input by Thay Setha
 Route::resource('services','ServicesController');

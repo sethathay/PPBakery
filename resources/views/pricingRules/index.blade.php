@@ -47,11 +47,11 @@
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">
-			<img src="{{ URL::asset('/img/dollars_b.png') }}" /> <label>ការចំនាយ</label>
+			<img src="{{ URL::asset('/img/settings_b.png') }}" /> <label>ក្រុមទំនិញ</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
-			<button onclick="redirectPage('services/create')" type="button"
+			<button onclick="redirectPage('pgroups/create')" type="button"
 				class="btn btn-md btn-success">
 				<span class="glyphicon glyphicon-plus"></span> បង្កើតថ្មី
 			</button>
@@ -63,17 +63,12 @@
 			<div id="flash_notice">{{ Session::get('flash_notice') }}</div>
 		</div>
 	@endif
-	<table class="table table-hover table-bordered table-striped" id="tbl_expense">
+	<table class="table table-hover table-bordered table-striped" id="tbl_pgroup">
 		<thead>
-			<tr>				
-				<th>ក្រុមចំនាយ</th>
-				<th>ខ្នាតនៃក្រុមចំនាយ</th>
-				<th>ចំនួន</th>
-				<th>កាលបរិច្ឆេទ</th>
-				<th>តម្លៃ($)</th>
-				<th>តម្លៃ(​​៛)</th>
-				<th>បរិយាយផ្សេងៗ</th>
-				<th>ថ្ងៃនៃការកែប្រែ</th>
+			<tr>
+				<th>ឈ្មោះអតិថិជន</th>
+				<th>ឈ្មោះទំនិញ</th>
+				<th>តំលៃលក់</th>
 				<th>សកម្មភាព</th>
 			</tr>
 		</thead>
@@ -86,21 +81,15 @@
 		window.location = url;
 	}
 
-	var table = $('#tbl_expense').DataTable( {
+	var table = $('#tbl_pgroup').DataTable( {
 
-        "data": <?php echo $services ?>,
-        "order": [[ 6, "desc" ]],
-        "createdRow": function ( row, datas, index ) {
-        	$('td', row).eq(9).addClass('last_td');
+        "data": <?php echo $prices ?>,
+        "order": [[ 1, "desc" ]],
+        "createdRow": function ( row, data, index ) {
+        	$('td', row).eq(2).addClass('last_td');
         },
         "columns": [
-           	{ "data": "section_name" },
-           	{ "data": "uom_expense_name" },
-           	{ "data": "qty" },
-            { "data": "expense_date" },
-            { "data": "dollar_price" },
-            { "data": "riel_price" },
-            { "data": "description" },
+           	{ "data": "name" },
             { "data": "updated_at" },
             { "data": null }
         ],
@@ -114,38 +103,25 @@
 			+'<button type="button" class="btn btn-xs btn-danger btndelete">'
 			+'<span class="glyphicon glyphicon-trash"></span> Delete'
 			+'</button>'
-        },
-        {
-                "targets": 4,
-                "render": function ( data, type, row ) {
-                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> $ </span> <span class="label label-danger" style="font-size:14px;">' + data + '</span>';
-                },
-        },
-        {
-                "targets": 5,
-                "render": function ( data, type, row ) {
-                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> ៛ </span> <span class="label label-danger" style="font-size:14px;">' + data + '</span>';
-                },
-            },
-         ]
+        } ]
     } );
 
-	$('#tbl_expense tbody').on( 'click', '.btnview', function () {
+	$('#tbl_pgroup tbody').on( 'click', '.btnview', function () {
         var data = table.row( $(this).parents('tr') ).data();
-        redirectPage('services/' + data['id']);
+        redirectPage('pgroups/' + data['id']);
     } );
 
-    $('#tbl_expense tbody').on( 'click', '.btnedit', function () {
+    $('#tbl_pgroup tbody').on( 'click', '.btnedit', function () {
         var data = table.row( $(this).parents('tr') ).data();
-        redirectPage('services/' + data['id'] + '/edit');
+        redirectPage('pgroups/' + data['id'] + '/edit');
     } );
 
-    $('#tbl_expense tbody').on( 'click', '.btndelete', function () {
+    $('#tbl_pgroup tbody').on( 'click', '.btndelete', function () {
         var data = table.row( $(this).parents('tr') ).data();
         var ts = $(this);
         if(confirm('តើអ្នកពិតជាចង់លុបវាពិតមែនទេ?')){
 			$.ajax({
-			    url: 'services/' + data['id'],
+			    url: 'pgroups/' + data['id'],
 			    type: 'DELETE',
 			    data:{"_token": "{{ csrf_token() }}"},
 			    success: function(result) {
