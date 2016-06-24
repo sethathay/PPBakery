@@ -4,3 +4,5 @@ ALTER TABLE `services`
 ALTER TABLE `services`
 	ADD COLUMN `qty` INT NULL DEFAULT NULL AFTER `name`;
 
+ 
+
