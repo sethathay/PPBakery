@@ -175,7 +175,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					<input id="code" type="text" class="form-control" name="code" style="width:90%;" value="" placeholder="លេខកូដ">
 				</div>
 				<div class="col-sm-3" style="padding: 10px 0;">លេខវិក័យប័ត្រ: <label>{{ $codeGenerator }}</label></div>
-				<div class="col-sm-3">អតិថិជន<span class="star"> * </span> :  {!! Form::select('customer_id', $customers, null, ['class'=>'form-control', 'id'=>'customer_id']) !!}</div>
+				<div class="col-sm-3">អតិថិជន<span class="star"> * </span> :  {!! Form::select('customer_id', [null=>'សូមជ្រើសរើស'] +$customers, null, ['class'=>'form-control', 'id'=>'customer_id']) !!}</div>
 			</div>
 		</div>
 	</div>
@@ -393,7 +393,10 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		$("#code").focus();
 		
 		$("#customer_id").change(function(){
-			if($(this).val() > 0){				
+			if($(this).val() > 0){	
+				
+				window.location.reload();
+				
 				$("#code").focus();
 			}
 		});
@@ -614,8 +617,8 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			if(codeNumber != ""){
 				$.ajax({
 					type : 'post',
-					url : '{{ route("products.searchProdctByCode") }}',
-					data : { _token : token, "codeNumber":codeNumber},
+					url : '{{ route("products.searchProdctByCodeWidthDiscount") }}',
+					data : { _token : token, "codeNumber":codeNumber, "customer_id":$("#customer_id").val()},
 					dataType : 'json',
 					beforeSend: function(){
 						//waitingDialog.show();
@@ -748,6 +751,10 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		function cloneRecord(qty, result){
 			
 			var unit_price = Number(result.price);
+			
+			if(result.amount_kh > 0){
+				unit_price = Number(result.amount_kh);
+			}
 			var discount = (Number(result.discount_amount) + Number(result.discount_percent))*Number(qty);
 			var total_by_item = getMathRound((unit_price * Number(qty) - discount));
 			var picture = result.photo;

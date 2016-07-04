@@ -48,7 +48,7 @@
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">ការបញ្ចុះតំលៃ</label></a>
 			</li>
-			<li><a href="{{ URL::asset('services') }}"><img
+			<li><a href="{{ URL::asset('services/index') }}"><img
 				src="{{ URL::asset('img/dollars.png') }}" alt="Table" />
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">ការចំនាយ</label></a>

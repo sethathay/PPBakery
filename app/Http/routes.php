@@ -66,6 +66,8 @@ Route::post('products/searchProdctByCode', ['as' => 'products.searchProdctByCode
 // Route of products by Phou Lin
 Route::post('products/checkProductExist', ['as' => 'products.checkProductExist', 'uses' => 'ProductsController@checkProductExist']);
 
+Route::post('products/searchProdctByCodeWidthDiscount', ['as' => 'products.searchProdctByCodeWidthDiscount', 'uses' => 'ProductsController@searchProdctByCodeWidthDiscount']);
+
 //Route of products by Thay Setha
 Route::resource('products','ProductsController');
 
@@ -134,10 +136,20 @@ Route::post('reports/selectReportByProduct', 'ReportsController@selectReportByPr
 Route::get('reports/reportExpense', 'ReportsController@reportExpense');
 Route::post('reports/selectReportByExpense', 'ReportsController@selectReportByExpense');
 
-Route::get('pricingRules/index', 'PricingRulesController@index');
+Route::get('pricingRules/index', ['as' => 'pricingRules.index', 'uses' => 'PricingRulesController@index']);
+Route::get('pricingRules/create', 'PricingRulesController@create');
+Route::post('pricingRules/getProductPrice', 'PricingRulesController@getProductPrice');
+Route::post('pricingRules/store', 'PricingRulesController@store');
+Route::get('pricingRules/show/{id}', 'PricingRulesController@show');
+Route::get('pricingRules/edit/{id}', ['as' => 'pricingRules.edit', 'uses' => 'PricingRulesController@edit']);
+Route::post('pricingRules/update', ['as' => 'pricingRules.update', 'uses' => 'PricingRulesController@update']);
+Route::get('pricingRules/destroy/{id}', ['as' => 'pricingRules.destroy', 'uses' => 'PricingRulesController@destroy']);
 
 //Route of services for daily expense input by Thay Setha
-Route::resource('services','ServicesController');
+//Route::resource('services','ServicesController');
+Route::get('services/index', 'ServicesController@index');
+Route::get('services/expense', 'ServicesController@expense');
+Route::get('services/create', 'ServicesController@create');
 
 //Route of exchange rate by Thay Setha
 Route::resource('exchangerates','ExchangeRatesController');

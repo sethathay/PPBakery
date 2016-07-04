@@ -47,11 +47,11 @@
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">
-			<img src="{{ URL::asset('/img/settings_b.png') }}" /> <label>ក្រុមទំនិញ</label>
+			<img src="{{ URL::asset('/img/discount_b.png') }}" /> <label>បញ្ចុះតំលៃ សម្រាប់អតិថិជន</label>
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
-			<button onclick="redirectPage('pgroups/create')" type="button"
+			<button onclick="redirectPage('create')" type="button"
 				class="btn btn-md btn-success">
 				<span class="glyphicon glyphicon-plus"></span> បង្កើតថ្មី
 			</button>
@@ -67,8 +67,9 @@
 		<thead>
 			<tr>
 				<th>ឈ្មោះអតិថិជន</th>
+				<th>លេខកូដទំនិញ</th>
 				<th>ឈ្មោះទំនិញ</th>
-				<th>តំលៃលក់</th>
+				<th>តំលៃលក់ (៛)</th>
 				<th>សកម្មភាព</th>
 			</tr>
 		</thead>
@@ -86,11 +87,15 @@
         "data": <?php echo $prices ?>,
         "order": [[ 1, "desc" ]],
         "createdRow": function ( row, data, index ) {
-        	$('td', row).eq(2).addClass('last_td');
+        	$('td', row).eq(1).css('text-align','center');
+        	$('td', row).eq(3).css('text-align','center');
+        	$('td', row).eq(4).addClass('last_td');
         },
         "columns": [
-           	{ "data": "name" },
-            { "data": "updated_at" },
+           	{ "data": "cus_name" },
+            { "data": "pro_code" },
+            { "data": "pro_name" },
+            { "data": "amount_kh" },
             { "data": null }
         ],
         "columnDefs": [ {
@@ -108,12 +113,12 @@
 
 	$('#tbl_pgroup tbody').on( 'click', '.btnview', function () {
         var data = table.row( $(this).parents('tr') ).data();
-        redirectPage('pgroups/' + data['id']);
+        redirectPage("{{ URL::asset('pricingRules/show') }}/" + data['id']);
     } );
 
     $('#tbl_pgroup tbody').on( 'click', '.btnedit', function () {
         var data = table.row( $(this).parents('tr') ).data();
-        redirectPage('pgroups/' + data['id'] + '/edit');
+        redirectPage('edit/' + data['id']);
     } );
 
     $('#tbl_pgroup tbody').on( 'click', '.btndelete', function () {
@@ -121,8 +126,8 @@
         var ts = $(this);
         if(confirm('តើអ្នកពិតជាចង់លុបវាពិតមែនទេ?')){
 			$.ajax({
-			    url: 'pgroups/' + data['id'],
-			    type: 'DELETE',
+			    url: "{{ URL::asset('pricingRules/destroy') }}/" + data['id'],
+			    type: 'get',
 			    data:{"_token": "{{ csrf_token() }}"},
 			    success: function(result) {
 			    	table.row(ts.parents('tr')).remove().draw( false );

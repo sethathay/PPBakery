@@ -51,7 +51,7 @@
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
-			<button onclick="redirectPage('services/create')" type="button"
+			<button onclick="redirectPage('expense')" type="button"
 				class="btn btn-md btn-success">
 				<span class="glyphicon glyphicon-plus"></span> បង្កើតថ្មី
 			</button>

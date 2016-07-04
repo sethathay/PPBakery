@@ -22,5 +22,5 @@ class PricingRule extends Model implements AuthenticatableContract,
      */
     protected $table = 'pricing_rules';
 
-    protected $fillable = ['customer_id', 'product_id', 'amount', 'created_by', 'updated_by','is_active'];
+    protected $fillable = ['customer_id', 'product_id', 'amount_kh', 'amount_us', 'created_by', 'updated_by','is_active'];
 }

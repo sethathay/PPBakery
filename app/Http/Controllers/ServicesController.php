@@ -123,4 +123,12 @@ class ServicesController extends Controller
         $service->where('id', $id)->update(['is_active' => 0]);
         //return Redirect::route('services.index')->with('flash_notice', 'You are successfully delete!');
     }
+	
+	public function expense()
+    {
+        //
+		$sections = DB::table('sections')->where('is_active',1)->orderBy('id', 'desc')->lists('name','id');
+		$uom = DB::table('uom_expenses')->where('is_active',1)->orderBy('id', 'desc')->lists('name','id');
+        return view('services/expense',compact('sections', 'uom'));
+    }
 }

@@ -107,7 +107,7 @@ class SaleOrdersController extends Controller
 	public function create()
 	{
 		$codeGenerator = $this->generateAutoCode("sales_orders", "so_code", 6, "SO");
-		$customers = array_merge(array('0'=>'សូមជ្រើសរើស'), DB::table('customers')->lists('firstname', 'id'));
+		$customers = DB::table('customers')->lists('firstname', 'id');
 		return view('saleOrders/create', compact('codeGenerator', 'customers'));
 	}
 	

@@ -1,0 +1,2 @@
+ALTER TABLE `customers`
+	ADD COLUMN `is_discount` TINYINT(4) NULL DEFAULT '0' AFTER `fax`;

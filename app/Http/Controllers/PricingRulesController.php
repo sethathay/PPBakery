@@ -8,7 +8,10 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use App\PricingRule;
+use App\Product;
+use App\Customer;
 use Input;
+use DB;
 
 class PricingRulesController extends Controller
 {
@@ -20,7 +23,8 @@ class PricingRulesController extends Controller
     public function index()
     {
         //Index of sections refer as expense group
-        $price = PricingRule::where('is_active', 1)->get();
+        $price = PricingRule::select('pricing_rules.*', 'products.code AS pro_code', 'products.name AS pro_name', 'customers.firstname AS cus_name')->join('customers', 'customers.id','=','pricing_rules.customer_id')->
+							  join('products', 'products.id','=','pricing_rules.product_id')->where('pricing_rules.is_active', 1)->get();
         $prices = json_encode($price);
         return view('pricingRules/index',compact('prices'));
     }
@@ -33,8 +37,17 @@ class PricingRulesController extends Controller
     public function create()
     {
         //New Group Expenses
-        return view('sections/create');
+		$customers = DB::table('customers')->where('is_active','1')->lists('firstname','id');
+		$products = DB::table('products')->where('is_active','1')->orderBy(DB::raw('CONVERT(SUBSTRING(code, LOCATE("-", code) + 1), SIGNED INTEGER)'),'asc')->lists(DB::raw('CONCAT(products.code, " -- ", products.name) AS name'),'products.id');
+		
+        return view('pricingRules/create',compact('customers', 'products'));
     }
+	
+	public function getProductPrice(Request $request){
+		$product_id = $request->get('product_id');
+		$price = Product::select("price")->whereId($product_id)->first();		
+		echo $price->price;exit;
+	}
 
     /**
      * Store a newly created resource in storage.
@@ -42,15 +55,18 @@ class PricingRulesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Section $section, Request $request)
+    public function store(PricingRule $pric, Request $request)
     {
         //
-        $sections = $request->all();
-        $sections['created_by']    = \Auth::user()->id;
-        $sections['updated_by']    = \Auth::user()->id;
-        $sections['is_active']    = 1;
-        $section->fill($sections)->save();
-        return Redirect::route('sections.index');
+        $pricing = $request->all();
+		//dd($pricing);
+        $pricing['created_by']    = \Auth::user()->id;
+        $pricing['updated_by']    = \Auth::user()->id;
+        $pricing['is_active']    = 1;
+        $pric->fill($pricing)->save();
+				
+        return Redirect::route('pricingRules.index');
+        //return view('pricingRules/index');
     }
 
     /**
@@ -62,9 +78,12 @@ class PricingRulesController extends Controller
     public function show($id)
     {
         //
-        $section = Section::whereId($id)->first();
-        $section->updated_at = $section->updated_at->timezone('Asia/Phnom_Penh');
-        return view('sections/show', compact('section'));
+        $pric = PricingRule::whereId($id)->first();
+		$customers = DB::table('customers')->where('is_active','1')->lists('firstname','id');
+		$products = DB::table('products')->where('is_active','1')->orderBy(DB::raw('CONVERT(SUBSTRING(code, LOCATE("-", code) + 1), SIGNED INTEGER)'),'asc')->lists(DB::raw('CONCAT(products.code, " -- ", products.name) AS name'),'products.id');
+		
+        $pric->updated_at = $pric->updated_at->timezone('Asia/Phnom_Penh');
+        return view('pricingRules/show', compact('pric','customers', 'products'));
     }
 
     /**
@@ -76,8 +95,11 @@ class PricingRulesController extends Controller
     public function edit($id)
     {
         //
-        $section = Section::find($id);
-        return view('sections/edit', compact('section'));
+        $pricing = PricingRule::find($id);
+		$customers = DB::table('customers')->where('is_active','1')->lists('firstname','id');
+		$products = DB::table('products')->where('is_active','1')->orderBy(DB::raw('CONVERT(SUBSTRING(code, LOCATE("-", code) + 1), SIGNED INTEGER)'),'asc')->lists(DB::raw('CONCAT(products.code, " -- ", products.name) AS name'),'products.id');
+		
+        return view('pricingRules/edit', compact('pricing','customers', 'products'));
     }
 
     /**
@@ -87,16 +109,16 @@ class PricingRulesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Section $sections, Request $request)
+    public function update(PricingRule $pric, Request $request)
     {
         //
-        $section = $request->all();
-        unset($section['_token']);
-        $sections['created_by']    = \Auth::user()->id;
-        $sections['updated_by']    = \Auth::user()->id;
-        $sections['is_active']    = 1;
-        $sections->whereId(Input::get('id'))->update($section);
-        return Redirect::route('sections.index');
+        $pricing = $request->all();
+        unset($pricing['_token']);
+        $pric['created_by']    = \Auth::user()->id;
+        $pric['updated_by']    = \Auth::user()->id;
+        $pric['is_active']    = 1;
+        $pric->whereId(Input::get('id'))->update($pricing);
+        return Redirect::route('pricingRules.index');
     }
 
     /**
@@ -108,8 +130,8 @@ class PricingRulesController extends Controller
     public function destroy($id)
     {
         //
-        $section = new Section;
-        $section->where('id', $id)->update(['is_active' => 0]);
-        //return Redirect::route('sections.index')->with('flash_notice', 'You are successfully delete!');
+        $pric = new PricingRule;
+        $pric->where('id', $id)->update(['is_active' => 0]);
+        //return Redirect::route('pricingRules.index')->with('flash_notice', 'You are successfully delete!');
     }
 }
