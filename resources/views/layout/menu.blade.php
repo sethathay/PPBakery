@@ -22,7 +22,7 @@
 	<div class="navbar-inner">
 		<ul class="nav">
 		
-			@if ( Session::get('group_id') == 1)
+			@if ( Session::get('group_id') == 1 ||  Session::get('group_id') == 3)
 			<li><a href="{{ URL::asset('/dashboard') }}"><img
 				src="{{ URL::asset('img/control_panel.png') }}" alt="order" />
 				&nbsp;&nbsp;<label style="vertical-align: middle; font-weight: normal;">ទំព័រមុខ</label></a>
@@ -32,7 +32,7 @@
 				src="{{ URL::asset('img/house_sale.png') }}" alt="order" />
 				&nbsp;&nbsp;<label style="vertical-align: middle; font-weight: normal;">ការលក់</label></a>
 			</li>
-			@if ( Session::get('group_id') == 1)
+			@if ( Session::get('group_id') == 1 ||  Session::get('group_id') == 3)
 			<li><a href="{{ URL::asset('products') }}"><img
 				src="{{ URL::asset('img/product.png') }}" alt="Product" />
 				&nbsp;&nbsp;<label
@@ -88,6 +88,9 @@
 					</li>
 				</ol>
 			</li>
+			@endif
+			
+			@if ( Session::get('group_id') == 1 ||  Session::get('group_id') == 3)
 			<li><a href="{{ URL::asset('users/index') }}"><img
 				src="{{ URL::asset('img/users_2.png') }}" alt="Users" />
 				&nbsp;&nbsp;<label
