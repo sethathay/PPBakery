@@ -92,7 +92,7 @@
     text-align: center !important;
 }
 .first-column{
-    width: 26% !important;
+    width: 18% !important;
     text-align: left !important;
     padding-left: 20px !important;
 }
@@ -160,6 +160,10 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		</div>
 		<div class="col-sm-9"​​ style="text-align: right; padding: 30px 10px; vertical-align: middle;">
             <div class="col-sm-12">
+			<button type="button"
+				class="btn btn-md btn-primary btn-save">
+				<span class="glyphicon glyphicon-save"></span> រក្សាទុក
+			</button>
 			<button onclick="redirectPage('{{ URL::asset('bookers/index') }}')" type="button"
 				class="btn btn-md btn-danger">
 				<span class="glyphicon"></span> ត្រឡប់ក្រោយ
@@ -172,8 +176,9 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		  <table class="table table-hover header-fixed table-striped">
 			<thead>
 				<tr>
+					<th style="width:12%;">ម៉ោង</th>
 					<th class="first-column">ឈ្មោះទំនិញ</th>
-					<th style="width:22%;">ខ្នាតនៃក្រុមចំនាយ</th>
+					<th style="width:18%;">ខ្នាតនៃក្រុមចំនាយ</th>
 					<th>ចំនួន</th>
 					<th>តំ.រាយ</th>
 					<th>សរុប</th>
@@ -182,18 +187,47 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			</thead>
 			<tbody>
 				<tr>
-					<td class="first-column">{!! Form::select('section_id[]', [null=>'សូមជ្រើសរើស']+$sections, Input::old('sections'), ['class'=>'form-control section_id']) !!}</td>
-					<td style="width:22%;">{!! Form::select('uom_expense_id[]', [null=>'សូមជ្រើសរើស']+$uom, Input::old('uom_expense_id'), ['class'=>'form-control uom_expense_id']) !!}</td>
+					<td style="width:12%;">
+						<select name="times[]" style="width:100px !important;">
+							  <option value="0">12:00 am</option>
+							  <option value="1">1:00 am</option>
+							  <option value="2">2:00 am</option>
+							  <option value="3">3:00 am</option>
+							  <option value="4">4:00 am</option>
+							  <option value="5">5:00 am</option>
+							  <option value="6">6:00 am</option>
+							  <option value="7">7:00 am</option>
+							  <option value="8">8:00 am</option>
+							  <option value="9">9:00 am</option>
+							  <option value="10">10:00 am</option>
+							  <option value="11">11:00 am</option>
+							  <option value="12">12:00 pm</option>
+							  <option value="13">1:00 pm</option>
+							  <option value="14">2:00 pm</option>
+							  <option value="15">3:00 pm</option>
+							  <option value="16">4:00 pm</option>
+							  <option value="17">5:00 pm</option>
+							  <option value="18">6:00 pm</option>
+							  <option value="19">7:00 pm</option>
+							  <option value="20">8:00 pm</option>
+							  <option value="21">9:00 pm</option>
+							  <option value="22">10:00 pm</option>
+							  <option value="23">11:00 pm</option>
+						</select>
+					</td>
+					<td class="first-column">
+						{!! Form::select('section_id[]', [null=>'សូមជ្រើសរើស']+$sections, Input::old('sections'), ['class'=>'form-control section_id']) !!}</td>
+					<td style="width:18%;">{!! Form::select('uom_expense_id[]', [null=>'សូមជ្រើសរើស']+$uom, Input::old('uom_expense_id'), ['class'=>'form-control uom_expense_id']) !!}</td>
 					<td class="qty-column">{!! Form::text('txt_qty[]', null, array('class'=>'txt_qty numberInput')) !!}</td>
 					<td>{!! Form::text('txt_unit_price[]', null, array('class'=>'txt_unit_price numberInput')) !!}</td>
-					<td>{!! Form::text('txt_total_by_item[]', null, array('class'=>'txt_total_by_item numberInput')) !!}</td>
+					<td>{!! Form::text('txt_total_by_item[]', null, array('class'=>'txt_total_by_item numberInput', 'readonly'=>'readonly')) !!}</td>
 					<td style="text-align:center;">
 						{!! Form::hidden('id[]', null, array('class'=>'row_input id')) !!}
 						
 						<button type="button" class="btn_plus btn btn-xs btn-success">
 							<span class="glyphicon glyphicon-plus"></span> 
 						</button>
-						<button type="button" class="btn btn-xs btn-danger btn_delete">
+						<button type="button" class="btn btn-xs btn-danger btn_delete" style="display:none;">
 							<span class="glyphicon glyphicon-trash"></span> 
 						</button>
 					</td>
@@ -247,51 +281,43 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			$(".txt_total_amount_riel").val(0);
 			$(".txt_total_amount_us").val(0);
 			
+			
+			$(".section_id").val('');
+			$(".uom_expense_id").val('');
+			$(".txt_qty").val('');
+			$(".txt_unit_price").val('');
+			$(".txt_total_by_item").val('');
+			
 						
 			//click on button delete
 			$(".btn_delete").click(function(){
-				if(confirm("តើអ្នកពិតជាចង់លុបទំនេញ "+($(this).parents("tr").find("td:eq(0)").text())+" មែនទេ?")){
+				if(confirm("តើអ្នកពិតជាចង់លុបទំនេញនេះ មែនទេ?")){
 					
 					// Calculate total block
 					calculateTotalBlock(- Number($(this).parents("tr").find(".txt_total_by_item").val()));
-					
-					// Remove product id from array in table list
-					productItem.splice(productItem.indexOf(Number($(this).parents("tr").find(".id").val()) ), 1);
-					
 					//Remove html record from table list
 					$(this).closest("tr").remove();
 					
-					// Remove product picture
-					$(".product_name:contains('"+$(this).parents("tr").find("td:eq(0)").text()+"')").parents("li").remove();
-				}
-				
-				$("#code").focus();				
+					$(".table>tbody>tr:last").find(".btn_plus").css("display","");	
+					
+				}		
 			});
 			
 				
 			// when click on increase button
-			$(".btn_increase").click(function(){				
-				var getObj = $(this).parents("tr");
-				var newQty = Number(getObj.find(".txt_qty").val())+1;
-				getObj.find(".txt_qty").val( newQty );
+			$(".btn_plus").click(function(){				
+				$(".table > tbody > tr:last").clone(true).appendTo(".table");
 				
-				var unit_price = Number(getObj.find(".txt_unit_price").val());
-				var oldDiscount = Number(getObj.find(".lbl_discount").text().replaceAll(",","")) / Number(getObj.find(".lbl_qty").text());
-				$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replaceAll(",","")) );
+				// button
+				$(".table > tbody > tr").find(".btn_plus").css("display", "none");
+				$(".table > tbody > tr:last").find(".btn_plus").css("display", "");
+				$(".table > tbody > tr:last").find(".btn_delete").css("display", "");
 				
-				getObj.find(".lbl_qty").text(Number(getObj.find(".txt_qty").val()));
+				//record
+				$(".table > tbody > tr:last").find(".txt_qty").val('');
+				$(".table > tbody > tr:last").find(".txt_unit_price").val('');
+				$(".table > tbody > tr:last").find(".txt_total_by_item").val('');
 				
-				getObj.find(".lbl_discount").text(addCommas( oldDiscount * newQty ));
-				getObj.find(".txt_discount").val(oldDiscount * newQty);
-				var newDiscount = oldDiscount * newQty;
-				
-				var total_by_item = unit_price*newQty - newDiscount;				
-				getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
-				getObj.find(".txt_total_by_item").val(total_by_item);
-				
-				calculateTotalBlock(total_by_item);
-				
-				$("#code").focus();
 			});
 			
 			// when qty is change
@@ -299,18 +325,11 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				if(Number($(this).val()) > 0){			
 					var getObj = $(this).parents("tr");
 					var newQty = Number(getObj.find(".txt_qty").val());
-					var unit_price = Number(getObj.find(".txt_unit_price").val());
-					var oldDiscount = Number(getObj.find(".lbl_discount").text().replaceAll(",","")) / Number(getObj.find(".lbl_qty").text());
-					$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replaceAll(",","")) );
-					
-					getObj.find(".lbl_qty").text(getObj.find(".txt_qty").val());
-					
-					getObj.find(".lbl_discount").text(addCommas( oldDiscount * newQty ));
-					getObj.find(".txt_discount").val(oldDiscount * newQty);
-					var newDiscount = oldDiscount * newQty;
-					
-					var total_by_item = unit_price*newQty - newDiscount;				
-					getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
+					var unit_price = (Number(getObj.find(".txt_unit_price").val()) > 0)? Number(getObj.find(".txt_unit_price").val()) : 0;
+					$(".txt_subtotal").val(Number($(".txt_subtotal").val()) - Number(getObj.find(".txt_total_by_item").val()));
+					//$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(newQty * unit_price) );
+										
+					var total_by_item = unit_price*newQty ;				
 					getObj.find(".txt_total_by_item").val(total_by_item);
 					
 					calculateTotalBlock(total_by_item);
@@ -322,48 +341,27 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				if(Number($(this).val()) > 0){	
 					var getObj = $(this).parents("tr");
 					var newQty = Number(getObj.find(".txt_qty").val());
-					var unit_price = Number(getObj.find(".txt_unit_price").val());
-					var discount = Number(getObj.find(".lbl_discount").text().replaceAll(",","")) / Number(getObj.find(".lbl_qty").text());
-					$(".txt_subtotal").val( Number($(".txt_subtotal").val()) - Number(getObj.find(".lbl_total_by_item").text().replaceAll(",","")) );
+					var unit_price = (Number(getObj.find(".txt_unit_price").val()) > 0)? Number(getObj.find(".txt_unit_price").val()) : 0;
+					$(".txt_subtotal").val(Number($(".txt_subtotal").val()) - Number(getObj.find(".txt_total_by_item").val()));
 					
-					var total_by_item = unit_price*newQty - discount;
-					
-					getObj.find(".lbl_unit_price").text(addCommas(unit_price));
-					getObj.find(".txt_unit_price").val(unit_price);
-					
-					getObj.find(".lbl_total_by_item").text(addCommas(total_by_item));
+					var total_by_item = unit_price*newQty;
+										
 					getObj.find(".txt_total_by_item").val(total_by_item);
 					
 					calculateTotalBlock(total_by_item);
 				}
 			});
-			
-			
-			// datepicker
-			$('.date_due, .date_order').datepicker({
-				format: 'yyyy-mm-dd',
-				autoclose: true
-			});
-			
+						
 			// Calculate total block
-			function calculateTotalBlock(total_by_item){			
-								
-				// Sum total discount
-				var txt_total_discount_riel = Number($(".txt_total_discount_riel").val());	
-				var txt_total_discount_us = Number($(".txt_total_discount_us").val());	
-				$(".lbl_total_discount_riel").text(addCommas(txt_total_discount_riel));
-				$(".lbl_total_discount_us").text(addCommas(txt_total_discount_us));
-				$(".txt_total_discount_riel").val(txt_total_discount_riel);
-				$(".txt_total_discount_us").val(txt_total_discount_us);
-				
+			function calculateTotalBlock(total_by_item){	
+			
 				// Sum subtotal
 				var txt_subtotal = Number($(".txt_subtotal").val());
 				var subtotal     = txt_subtotal + total_by_item;	
-				$(".subtotal").text(addCommas(getMathRound(subtotal)));
 				$(".txt_subtotal").val(subtotal);
-																
+				
 				// Sum total amount in riel
-				var total_amount_riel     = (subtotal);				
+				var total_amount_riel     = (subtotal);					
 				$(".total_amount_riel").text(addCommas(getMathRound(total_amount_riel)));
 				$(".txt_total_amount_riel").val(total_amount_riel);
 				

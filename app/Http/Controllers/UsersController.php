@@ -131,12 +131,12 @@ class UsersController extends Controller
 		
 		$locations = array();
 		$locations['location_id'] = Session::get('location_id');
-		$userId = $request->get('user_id');
+		$userId = $user['id'];
 		$user_locations->where('user_id',$userId)->update($locations);
 		
 		$group = array();
 		$group['group_id'] = $request->get('group_id');
-		$userId = $request->get('user_id');
+		//$userId = $request->get('user_id');
 		$user_groups->where('user_id',$userId)->update($group);
 		return Redirect::route('users.index');
 	}
@@ -172,6 +172,7 @@ class UsersController extends Controller
 				
 				$getUserLocation = DB::table('user_locations')->join('locations', 'locations.id', '=', 'location_id')->where('user_id', Auth::user()->id)->first();
 				$userGroup = DB::table('user_groups')->where('user_id',Auth::user()->id)->first();
+				
 				$request->session()->put('location_id', $getUserLocation->location_id);
 				$request->session()->put('location_name', $getUserLocation->name);
 				$request->session()->put('group_id', $userGroup->group_id);

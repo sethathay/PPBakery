@@ -21,9 +21,13 @@ Route::get('/', function(){
 	});
 	*/
 	
-	if ( Auth::check() ) // use Auth::check instead of Auth::user
+	if ( Auth::check()) // use Auth::check instead of Auth::user
 	{
-		return View::make('/layout/dashboard')->with('flash_notice', 'You are already logged in!');
+		if(Session::get('group_id') == 1){
+			return View::make('/layout/dashboard')->with('flash_notice', 'You are already logged in!');
+		}else{
+			return View::make('/layout/pos');
+		}
 	} else{
 		return View::make('/layout/index');
 	}
