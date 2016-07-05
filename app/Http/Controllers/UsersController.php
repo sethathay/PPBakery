@@ -161,7 +161,8 @@ class UsersController extends Controller
 		// Applying validation rules.
 		$userdata = array(
 		    'username' => Input::get('username'),
-		    'password' => Input::get('password')
+		    'password' => Input::get('password'),
+			'is_active' => 1
 		);
 		// doing login.
 		if (Auth::validate($userdata)) {
