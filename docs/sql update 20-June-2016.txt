@@ -4,6 +4,13 @@ ALTER TABLE `services`
 ALTER TABLE `services`
 	ADD COLUMN `qty` INT NULL DEFAULT NULL AFTER `name`;
 
+ALTER TABLE `customers`
+	ADD COLUMN `is_discount` TINYINT(4) NULL DEFAULT '0' AFTER `fax`;
+
+ALTER TABLE `services`
+	ADD COLUMN `expense_time` INT NULL DEFAULT NULL AFTER `expense_date`;
+
+
 CREATE TABLE `uom_expenses` (
 	`id` INT(10) NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',

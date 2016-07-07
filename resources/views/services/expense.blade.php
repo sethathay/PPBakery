@@ -152,7 +152,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
    }
 }
 ?>
-{!! Form::open(array('url' => 'bookers/store', 'method' => 'post', 'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
+{!! Form::open(array('url' => 'services/addExpense', 'method' => 'post', 'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-3">
@@ -164,7 +164,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				class="btn btn-md btn-primary btn-save">
 				<span class="glyphicon glyphicon-save"></span> រក្សាទុក
 			</button>
-			<button onclick="redirectPage('{{ URL::asset('bookers/index') }}')" type="button"
+			<button onclick="redirectPage('{{ URL::asset('services/index') }}')" type="button"
 				class="btn btn-md btn-danger">
 				<span class="glyphicon"></span> ត្រឡប់ក្រោយ
 			</button>
@@ -180,7 +180,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					<th class="first-column">ឈ្មោះទំនិញ</th>
 					<th style="width:18%;">ខ្នាតនៃក្រុមចំនាយ</th>
 					<th>ចំនួន</th>
-					<th>តំ.រាយ</th>
+					<th>តំ.រាយ (៛)</th>
 					<th>សរុប</th>
 					<th>ប៊ូតុង</th>
 				</tr>
@@ -351,6 +351,32 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					calculateTotalBlock(total_by_item);
 				}
 			});
+			
+			$(".btn-save").click(function(){
+				var options = false;
+				$.each($('.txt_total_by_item'),function(key, value){
+					if(value.value != ""){
+						options = true;
+					}
+				});
+				
+				if(options){
+					$.ajax({
+						type : 'post',
+						url : '{{ URL::asset("services/addExpense") }}',
+						data : $("#adminForm").serialize(),
+						dataType : 'json',
+						success : function(objResult){	
+							if(objResult === "success"){
+								alert("ទិន្ន័យត្រូវបានរក្សាទុក!!!");
+								window.location.reload();
+							}
+						}
+					});
+				}else{
+					alert("សូមបញ្ចូលចំនាយ មុនចុចរក្សាទុក!!!");
+				}
+			});
 						
 			// Calculate total block
 			function calculateTotalBlock(total_by_item){	
@@ -373,19 +399,6 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		});
 	
 
-	// add commas for number 120,000
-	function addCommas(nStr)
-	{
-		nStr += '';
-		x = nStr.split('.');
-		x1 = x[0];
-		x2 = x.length > 1 ? '.' + x[1] : '';
-		var rgx = /(\d+)(\d{3})/;
-		while (rgx.test(x1)) {
-			x1 = x1.replace(rgx, '$1' + "," + '$2');
-		}
-		return x1 + x2;
-	}
 	
 	// Round number 0.0
 	function getMathRound(amount){

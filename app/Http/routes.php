@@ -153,6 +153,7 @@ Route::get('pricingRules/destroy/{id}', ['as' => 'pricingRules.destroy', 'uses' 
 //Route::resource('services','ServicesController');
 Route::get('services/index', 'ServicesController@index');
 Route::get('services/expense', 'ServicesController@expense');
+Route::post('services/addExpense', 'ServicesController@addExpense');
 Route::get('services/create', 'ServicesController@create');
 
 //Route of exchange rate by Thay Setha

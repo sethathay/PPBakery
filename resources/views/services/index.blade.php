@@ -69,11 +69,10 @@
 				<th>ក្រុមចំនាយ</th>
 				<th>ខ្នាតនៃក្រុមចំនាយ</th>
 				<th>ចំនួន</th>
-				<th>កាលបរិច្ឆេទ</th>
-				<th>តម្លៃ($)</th>
 				<th>តម្លៃ(​​៛)</th>
-				<th>បរិយាយផ្សេងៗ</th>
-				<th>ថ្ងៃនៃការកែប្រែ</th>
+				<th>តម្លៃសរុប(​​៛)</th>
+				<th>កាលបរិច្ឆេទ</th>
+				<th>ម៉ោង</th>
 				<th>សកម្មភាព</th>
 			</tr>
 		</thead>
@@ -97,36 +96,31 @@
            	{ "data": "section_name" },
            	{ "data": "uom_expense_name" },
            	{ "data": "qty" },
-            { "data": "expense_date" },
-            { "data": "dollar_price" },
             { "data": "riel_price" },
-            { "data": "description" },
-            { "data": "updated_at" },
+            { "data": "total_price" },
+            { "data": "expense_date" },
+            { "data": "expense_time" },
             { "data": null }
         ],
         "columnDefs": [ {
             "targets": -1,
             "defaultContent":
-            '<button style="margin-right:5px" type="button" class="btnview btn btn-xs btn-info">'
-            + '<span class="glyphicon glyphicon-user"></span> View</button>'
-            +'<button style="margin-right:5px" type="button" class="btnedit btn btn-xs btn-primary">'
-			+'<span class="glyphicon glyphicon-edit"></span> Edit</button>'
-			+'<button type="button" class="btn btn-xs btn-danger btndelete">'
+            '<button type="button" class="btn btn-xs btn-danger btndelete">'
 			+'<span class="glyphicon glyphicon-trash"></span> Delete'
 			+'</button>'
         },
         {
-                "targets": 4,
+                "targets": 3,
                 "render": function ( data, type, row ) {
-                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> $ </span> <span class="label label-danger" style="font-size:14px;">' + data + '</span>';
+                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> ៛ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(data) + '</span>';
                 },
         },
         {
-                "targets": 5,
-                "render": function ( data, type, row ) {
-                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> ៛ </span> <span class="label label-danger" style="font-size:14px;">' + data + '</span>';
+                "targets": 4,
+                "mRender": function ( data, type, row ) {
+                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> ៛ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(row.qty*row.riel_price)  + '</span>';
                 },
-            },
+        },
          ]
     } );
 

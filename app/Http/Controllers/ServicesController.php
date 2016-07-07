@@ -131,4 +131,27 @@ class ServicesController extends Controller
 		$uom = DB::table('uom_expenses')->where('is_active',1)->orderBy('id', 'desc')->lists('name','id');
         return view('services/expense',compact('sections', 'uom'));
     }
+	
+	public function addExpense(Request $request, Service $services){
+		
+        $inputs = $request->all();
+		
+		for($i=0; $i<count($inputs['txt_total_by_item']); $i++){
+			$service = new Service;
+			$service['created_by']    	= \Auth::user()->id;
+			$service['updated_by']   	= \Auth::user()->id;
+			$service['is_active']    	= 1;
+			$service['company_id']    	= 1;
+			$service['section_id']    	= $inputs['section_id'][$i];
+			$service['uom_expense_id']  = $inputs['uom_expense_id'][$i];
+			$service['qty']    			= $inputs['txt_qty'][$i];
+			$service['expense_date']    = date("Y-m-d");
+			$service['expense_time']    = $inputs['times'][$i];
+			$service['exchange_rate_id']    = $inputs['exchange_rate_id'];
+			$service['riel_price']    = $inputs['txt_unit_price'][$i];
+			$service->save();		
+		}
+		
+		echo "success";exit;
+	}
 }
