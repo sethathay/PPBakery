@@ -152,6 +152,6 @@ class ServicesController extends Controller
 			$service->save();		
 		}
 		
-		echo "success";exit;
+		return "success";
 	}
 }

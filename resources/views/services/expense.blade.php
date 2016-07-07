@@ -366,13 +366,14 @@ function number_format_unlimited_precision($number,$decimal = '.')
 						url : '{{ URL::asset("services/addExpense") }}',
 						data : $("#adminForm").serialize(),
 						dataType : 'json',
-						success : function(objResult){	
-							if(objResult === "success"){
-								alert("ទិន្ន័យត្រូវបានរក្សាទុក!!!");
-								window.location.reload();
-							}
+						success : function(objResult){
+							
 						}
 					});
+					if(options){
+						alert("ទិន្ន័យត្រូវបានរក្សាទុក!!!");
+						window.location = "index";
+					}
 				}else{
 					alert("សូមបញ្ចូលចំនាយ មុនចុចរក្សាទុក!!!");
 				}

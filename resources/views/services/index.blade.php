@@ -139,8 +139,8 @@
         var ts = $(this);
         if(confirm('តើអ្នកពិតជាចង់លុបវាពិតមែនទេ?')){
 			$.ajax({
-			    url: 'services/' + data['id'],
-			    type: 'DELETE',
+			    url: 'destroy/' + data['id'],
+			    type: 'get',
 			    data:{"_token": "{{ csrf_token() }}"},
 			    success: function(result) {
 			    	table.row(ts.parents('tr')).remove().draw( false );

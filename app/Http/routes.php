@@ -152,6 +152,7 @@ Route::get('pricingRules/destroy/{id}', ['as' => 'pricingRules.destroy', 'uses' 
 //Route of services for daily expense input by Thay Setha
 //Route::resource('services','ServicesController');
 Route::get('services/index', 'ServicesController@index');
+Route::get('services/destroy/{id}', 'ServicesController@destroy');
 Route::get('services/expense', 'ServicesController@expense');
 Route::post('services/addExpense', 'ServicesController@addExpense');
 Route::get('services/create', 'ServicesController@create');
