@@ -72,25 +72,6 @@ while( $deadline>time() AND ($line=fgets($fp, 1024000)) ){
     }
 }
 
-if( feof($fp) ){
-    echo 'dump successfully restored!';
-	//$source = ("http://192.168.0.122/PPbakery/public/remove_file.php");
-	
-	$file = dirname(__FILE__).'/db_backup/1-db-backup-'.date('Y-m-d').'.sql';
-	if (!unlink($file))
-	{
-		echo ("Error deleting $file");
-	}
-	else
-	{
-		array_map('unlink', glob($dir."/*"));
-		rmdir($dir);
-		echo ("Deleted $file");
-	}
-	
-}else{
-    echo ftell($fp).'/'.filesize($filename).' '.(round(ftell($fp)/filesize($filename), 2)*100).'%'."\n";
-    echo $queryCount.' queries processed! please reload or wait for automatic browser refresh!';
-}
+unlink($saveFile);
 
 ?>
