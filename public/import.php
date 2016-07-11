@@ -5,22 +5,23 @@
 $dbHost = 'localhost';
 $dbUser = 'root';
 $dbPass = '';
-$dbName = 'test';
+$dbName = 'ppbakery';
 
 $dir = dirname(__FILE__)."/db_backup/";
-fopen($dir."db-backup-".date('Y-m-d').".sql", 'w') or die("Can't create file");
+//fopen($dir."db-backup-".date('Y-m-d').".sql", 'w') or die("Can't create file");
 
-mysql_connect($dbHost, $dbUser, $dbPass) OR die('connecting to host: '.$dbHost.' failed: '.mysql_error());
-mysql_select_db($dbName) OR die('select db: '.$dbName.' failed: '.mysql_error());
+$source = ("http://192.168.10.58/db_backup/1-db-backup-".date('Y-m-d').".sql");
 
-$source = ("http://192.168.0.10/db_backup/db-backup-".date('Y-m-d').".sql");
 //$source = ("http://192.168.0.10/db_backup/text.sql");
-$saveFile = $dir."db-backup-".date('Y-m-d').".sql";
+$saveFile = $dir."1-db-backup-".date('Y-m-d').".sql";
 $data = file_get_contents($source);
 
 $handle = fopen($saveFile,"w");
 fwrite($handle, $data);
 fclose($handle);
+
+mysql_connect($dbHost, $dbUser, $dbPass) OR die('connecting to host: '.$dbHost.' failed: '.mysql_error());
+mysql_select_db($dbName) OR die('select db: '.$dbName.' failed: '.mysql_error());
 
 // Open a directory, and read its contents
 $images = scandir($dir, 1);
@@ -73,6 +74,7 @@ while( $deadline>time() AND ($line=fgets($fp, 1024000)) ){
 
 if( feof($fp) ){
     echo 'dump successfully restored!';
+	$source = ("http://192.168.10.58/remove_file.php");
 }else{
     echo ftell($fp).'/'.filesize($filename).' '.(round(ftell($fp)/filesize($filename), 2)*100).'%'."\n";
     echo $queryCount.' queries processed! please reload or wait for automatic browser refresh!';
