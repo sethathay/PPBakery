@@ -72,6 +72,12 @@ while( $deadline>time() AND ($line=fgets($fp, 1024000)) ){
         $queryCount++;
     }
 }
-unlink($saveFile);
+
+
+foreach(glob($dir.'*.*') as $v){
+    unlink($v);
+}
+
+
 
 ?>
