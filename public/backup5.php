@@ -31,8 +31,8 @@ function backup_tables($host,$user,$pass,$name,$tables = '*')
 		$tables = is_array($tables) ? $tables : explode(',',$tables);
 	}
 	$return1 = "";
-	$return = "";
 	//cycle through
+	
 	foreach($tables as $table)
 	{
 		if($table == "inventory_totals" || $table == "inventory_total_details"){
@@ -59,9 +59,9 @@ function backup_tables($host,$user,$pass,$name,$tables = '*')
 			}
 			$return1.="\n\n\n";
 		}else{
-			$result = mysql_query('SELECT * FROM '.$table.' WHERE created_at BETWEEN "'.date("Y-m-d").' 00:00:00" AND "'.date("Y-m-d").'  05:59:59"');
-			$num_fields = mysql_num_fields($result);
+			$result = mysql_query('SELECT * FROM '.$table.' WHERE created_at BETWEEN "'.date("Y-m-d").' 15:00:00" AND "'.date("Y-m-d").'   17:59:59"');
 			
+			$num_fields = mysql_num_fields($result);
 			$store = array();
 			$num =  mysql_num_rows($result);
 			if($num>0){
@@ -97,7 +97,7 @@ function backup_tables($host,$user,$pass,$name,$tables = '*')
 	
 	
 	//save file
-	$handle = fopen(dirname(__FILE__).'/db_backup/db-backup-'.date('Y-m-d').'-1.sql','w+');
+	$handle = fopen(dirname(__FILE__).'/db_backup/db-backup-'.date('Y-m-d').'-5.sql','w+');
 	fwrite($handle,$return1);
 	fclose($handle);
 }
