@@ -64,6 +64,11 @@
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">លក់កក់</label></a>
 			</li>
+			<li><a href="{{ URL::asset('user_sale_logs/index') }}"><img
+				src="{{ URL::asset('img/saleReport.png') }}" alt="SaleReport" />
+				&nbsp;&nbsp;<label
+				style="vertical-align: middle; font-weight: normal;">បញ្ចូលប្រាក់សរុបពីការលក់</label></a>
+			</li>
 			@if ( Session::get('group_id') == 1)
 			<li><a href="{{ URL::asset('inventories/index') }}"><img
 				src="{{ URL::asset('img/stock.png') }}" alt="Inventory" />

@@ -14,6 +14,7 @@ use Hash;
 use App\User;
 use App\UserGroup;
 use App\UserLocation;
+use App\UserSaleLog;
 use Input;
 
 class UsersController extends Controller
@@ -177,6 +178,15 @@ class UsersController extends Controller
 				$request->session()->put('location_id', $getUserLocation->location_id);
 				$request->session()->put('location_name', $getUserLocation->name);
 				$request->session()->put('group_id', $userGroup->group_id);
+				
+				// Add to user sale log
+				$userSaleLog 				= new UserSaleLog();
+				$userSaleLog->user_id		= Auth::user()->id;
+				$userSaleLog->dates			= date('Y-m-d');
+				$userSaleLog->time_in		= date('H:i:s');
+				$userSaleLog->save();
+				
+				
 				$direction = '/dashboard';
 				if($userGroup->group_id != 1){
 					$direction = '/saleOrders/index';
@@ -191,7 +201,7 @@ class UsersController extends Controller
 		}
 	}
 	
-	public function logout() {
+	public function logout() {		
 		Auth::logout();
 		return Redirect::intended('/');
 	}
