@@ -6,7 +6,7 @@ backup_tables('localhost','root','','ppbakery',
 		  'groups', 'users', 'user_groups', 'pricing_rules', 
 		  'products', 'pgroups', 'product_pgroups', 'discounts',
 		  'sales_orders', 'sales_order_details', 'sales_order_receipts',
-		  'services', 'sections', 'uom_expenses'
+		  'services', 'sections', 'uom_expenses', 'user_sale_logs'
 		  ));
 
 /* backup the db OR just a table */
@@ -59,7 +59,7 @@ function backup_tables($host,$user,$pass,$name,$tables = '*')
 			}
 			$return1.="\n\n\n";
 		}else{
-			$result = mysql_query('SELECT * FROM '.$table.' WHERE created_at BETWEEN "'.date("Y-m-d").' 13:00:00" AND "'.date("Y-m-d").'   23:59:59"');
+			$result = mysql_query('SELECT * FROM '.$table.' WHERE created_at BETWEEN "'.date("Y-m-d").' 06:00:00" AND "'.date("Y-m-d").'   08:59:59"');
 			
 			$num_fields = mysql_num_fields($result);
 			$store = array();
