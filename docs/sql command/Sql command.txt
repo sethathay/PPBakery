@@ -1,0 +1,20 @@
+/**
+*  Date 	: 23-Jul-2016
+*  Table	: user_sale_logs
+*  Field	: user_id, total_kh, total_us, dates, time_in, time_out
+*  Description	: This table use for record all datas from user sale day by day
+*/
+CREATE TABLE `user_sale_logs` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`user_id` INT(11) NOT NULL,
+	`total_kh` DOUBLE NOT NULL,
+	`total_us` DOUBLE NOT NULL,
+	`dates` DATE NOT NULL,
+	`time_in` TIME NOT NULL,
+	`time_out` TIME NOT NULL,
+	`status` INT(11) NOT NULL,
+	PRIMARY KEY (`id`)
+)
+COLLATE='utf8_unicode_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=1

@@ -64,6 +64,10 @@ Route::get('users/login', array('as' => 'users.login', function () { }));
 Route::get('users/logout', 'UsersController@logout');
 
 //Route::resource('users', 'UsersController');
+Route::get('user_sale_logs/index', ['as' => 'user_sale_logs.index', 'uses' => 'UserSaleLogsController@index']);
+Route::get('user_sale_logs/create', 'UserSaleLogsController@create');
+Route::get('user_sale_logs/edit/{id}', 'UserSaleLogsController@edit');
+Route::post('user_sale_logs/update', 'UserSaleLogsController@update');
 
 // Route of products by Thay Setha
 Route::post('products/searchProdctByCode', ['as' => 'products.searchProdctByCode', 'uses' => 'ProductsController@searchProdctByCode']);
@@ -139,6 +143,7 @@ Route::get('reports/reportProduct', 'ReportsController@reportProduct');
 Route::post('reports/selectReportByProduct', 'ReportsController@selectReportByProduct');
 Route::get('reports/reportExpense', 'ReportsController@reportExpense');
 Route::post('reports/selectReportByExpense', 'ReportsController@selectReportByExpense');
+Route::post('reports/reportSaleLog', 'ReportsController@selectReportSaleLog');
 
 Route::get('pricingRules/index', ['as' => 'pricingRules.index', 'uses' => 'PricingRulesController@index']);
 Route::get('pricingRules/create', 'PricingRulesController@create');
