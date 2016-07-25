@@ -143,6 +143,7 @@ Route::get('reports/reportProduct', 'ReportsController@reportProduct');
 Route::post('reports/selectReportByProduct', 'ReportsController@selectReportByProduct');
 Route::get('reports/reportExpense', 'ReportsController@reportExpense');
 Route::post('reports/selectReportByExpense', 'ReportsController@selectReportByExpense');
+Route::post('reports/reportSaleLog', 'ReportsController@selectReportSaleLog');
 
 Route::get('pricingRules/index', ['as' => 'pricingRules.index', 'uses' => 'PricingRulesController@index']);
 Route::get('pricingRules/create', 'PricingRulesController@create');

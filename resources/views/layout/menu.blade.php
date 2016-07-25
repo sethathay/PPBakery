@@ -91,6 +91,9 @@
 					<li class="inner_link">
 						<a href="{{ URL::asset('reports/reportExpense') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;របាយការណ៍ ចំនាយ</a>
 					</li>
+					<li class="inner_link">
+						<a href="{{ URL::asset('reports/reportSaleLog') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;របាយការណ៍ លក់សរុបតាម User</a>
+					</li>
 				</ol>
 			</li>
 			@endif
