@@ -63,38 +63,21 @@ function number_format_unlimited_precision($number,$decimal = '.')
 ?>
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
-		<div class="col-sm-5">
+		<div class="col-sm-7">
         	<div class="form-group">
                 <div class='input-group'>
-					<img src="{{ URL::asset('/img/receipt_b.png') }}" /> <label>របាយការណ៍ តាមក្រុមទំនិញ</label>
+					<img src="{{ URL::asset('/img/saleReport.png') }}" /> <label>របាយការណ៍ បញ្ចីរប្រាក់សរុបពីការលក់</label>
                 </div>
             </div>
 		</div>
-		<div class="col-sm-7" style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
-        	<div class="col-sm-3">
+		<div class="col-sm-5" style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
+        	<div class="col-sm-8">
             	<div class="form-group">
                     <div class='input-group date' id='datetimepicker6'>
-                        <input type='text' class="form-control" id="date_from" placeholder="ថ្ងៃចាប់ផ្តើម (YYYY-MM-DD)" />
+                        <input type='text' class="form-control" id="dates" placeholder="ថ្ងៃចាប់ផ្តើម (YYYY-MM-DD)" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-            	<div class="form-group">
-                    <div class='input-group date' id='datetimepicker7'>
-                        <input type='text' class="form-control" id="date_to" placeholder="ថ្ងៃបញ្ចប់ (YYYY-MM-DD)" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-            	<div class="form-group">
-                    <div class='input-group'>
-                        {!! Form::select('user_id', [null=>'សូមជ្រើសរើស'] + $users->toArray(), '', array('class'=>'form-control', 'id'=>'user_id')) !!}
                     </div>
                 </div>
             </div>
@@ -120,16 +103,17 @@ function number_format_unlimited_precision($number,$decimal = '.')
 	<table class="table table-hover table-bordered table-striped" id="tbl_expense">
 		<thead>
 			<tr>
-				<th>ឈ្មោះក្រុមទំនិញ</th>
-				<th>ឈ្មោះទំនិញ</th>
-				<th>ចំនួន</th>
-				<th>តំលៃលក់រាយ (៛)</th>
-				<th>បញ្ចុះតំលៃ (៛)</th>
-				<th>សរុប (៛)</th>
+				<th>អ្នកប្រើប្រាស់</th>
+				<th>ថ្ងៃខែឆ្នាំ</th>
+				<th>ម់ោងចូល</th>
+				<th>ម់ោងចេញ</th>
+				<th>ចំនួនបញ្ចូលសរុប (៛)</th>
+				<th>ចំនួនបញ្ចូលសរុប ($)</th>
+				<th>ចំនួនសរុប System ($)</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="empty_data"><td colspan="6" style="text-align:center;">គ្នានទិន្ន័យនៅក្នុងតារាងទេ</td></tr>		
+			<tr class="empty_data"><td colspan="7" style="text-align:center;">គ្នានទិន្ន័យនៅក្នុងតារាងទេ</td></tr>		
         </tbody>
 	</table>
     </div>
@@ -140,22 +124,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 	</div>
 <script type="text/javascript">
     $(function () {
-		/*
-        $('#datetimepicker6').datetimepicker({
-			format: 'YYYY-MM-DD HH:mm:ss',
-		});
-        $('#datetimepicker7').datetimepicker({
-			format: 'YYYY-MM-DD HH:mm:ss',
-            useCurrent: false //Important! See issue #1075
-        });
-        $("#datetimepicker6").on("dp.change", function (e) {
-            $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-        });
-        $("#datetimepicker7").on("dp.change", function (e) {
-            $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-        });
-		*/
-		$('#datetimepicker6,#datetimepicker7').datepicker({
+		$('#dates').datepicker({
     		autoclose: true,
 			format: 'yyyy-mm-dd'
        });
@@ -172,20 +141,18 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		
 		
 		$(".btn-success").click(function(){						
-			if($('#date_from').val() == "" || $("#date_to").val() == ""){
-				alert("សូមបញ្ចូល ថ្ងៃខែឆ្នាំ ចាប់ផ្ដើម និងបញ្ចប់ !!");
+			if($('#dates').val() == ""){
+				alert("សូមបញ្ចូល ថ្ងៃខែឆ្នាំ !!");
 			}else{
 				$(".table_result").html('');
 				waitingDialog.show('កំពុងដំណើរការ សូមមេត្តារង់ចាំ!');	
 				
-				var dateFrom = $('#date_from').val();
-				var dateTo   = $('#date_to').val();
-				var users    = $('#user_id').val();
+				var dates = $('#dates').val();
 				
 				$.ajax({
-					url : 'selectReportByProduct',
+					url : 'selectReportSaleLog',
 					type: 'POST',
-					data: { dateFrom : dateFrom, dateTo : dateTo, users : users, _token : "{!! csrf_token() !!}"},
+					data: { dates : dates, _token : "{!! csrf_token() !!}"},
 					success: function(htmls){
 						$(".table_result").append(htmls);	
 						$("#tbl_expense").find(".total_record").clone().insertAfter("tr:eq(0)");

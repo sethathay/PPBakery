@@ -14,6 +14,7 @@ use Response;
 use App\User;
 use App\SaleOrder;
 use App\SaleOrderDetail;
+use App\UserSaleLog;
 use App\Product;
 use App\Pgroup;
 use App\Datatable\SaleOrderAjax;
@@ -111,6 +112,24 @@ class ReportsController extends Controller
 												where('sections.is_active',1)->
 												orderBy('services.expense_date')->get();
 		return View::make('reports.reportExpenseResult')->with('services', $services);
+	}
+	
+	
+	
+    public function reportSaleLog()
+    {
+		return view('reports.reportSaleLog');
+    }
+	
+	public function selectReportSaleLog(Request $request){
+		$input = $request->all();
+		$userSaleLog = UserSaleLog::select('users.username AS u_name', 'user_sale_logs.dates','user_sale_logs.time_in', 'user_sale_logs.time_out', 'user_sale_logs.total_kh', 'user_sale_logs.total_us', DB::raw("(SELECT SUM(total_amount_riel) FROM sales_orders WHERE DATE(created_at) = dates AND TIME(created_at) BETWEEN time_in AND time_out) AS sy_total"))->
+									join('users', 'users.id','=','user_sale_logs.user_id')->
+									where(DB::raw("DATE(dates)"), '=', $input['dates'])->
+									where('user_sale_logs.total_kh', '>', 0)->orWhere('user_sale_logs.total_us', '>', 0)->
+									orderBy('u_name')->get();
+		return View::make('reports.reportSaleLogResult')->with('userSaleLog', $userSaleLog);
+		
 	}
 
 }
