@@ -8,11 +8,13 @@
 			<th>ចំនួនបញ្ចូលសរុប (៛)</th>
 			<th>ចំនួនបញ្ចូលសរុប ($)</th>
 			<th>ចំនួនសរុប System (៛)</th>
+			<th>Cashier Vs System (៛)</th>
 		</tr>
     </thead>
     <tbody>
     	<?php if(count($userSaleLog) > 0){?>
 			<?php foreach($userSaleLog as $detail){?>
+			<?php $balance = ($detail->total_kh+($detail->total_us*$exchangerate->riel))-$detail->sy_total;?>
         	<tr>
 				<td><?php echo $detail->u_name; ?></td>
 				<td style="text-align:center"><?php echo $detail->dates; ?></td>
@@ -21,6 +23,7 @@
 				<td style="text-align:right"><?php echo number_format($detail->total_kh); ?></td>
 				<td style="text-align:right"><?php echo number_format($detail->total_us); ?></td>
 				<td style="text-align:right"><?php echo number_format($detail->sy_total); ?></td>
+				<td style="text-align:right; color:<?php echo ($balance>0)?'blue':'red';?>"><?php echo number_format($balance); ?></td>
 			</tr>
 			<?php }?>
         <?php }else{?>

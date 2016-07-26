@@ -74,7 +74,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
         	<div class="col-sm-8">
             	<div class="form-group">
                     <div class='input-group date' id='datetimepicker6'>
-                        <input type='text' class="form-control" id="dates" placeholder="ថ្ងៃចាប់ផ្តើម (YYYY-MM-DD)" />
+                        <input type='text' value="<?php echo date('Y-m-d');?>" class="form-control" id="dates" placeholder="ថ្ងៃចាប់ផ្តើម (YYYY-MM-DD)" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
