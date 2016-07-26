@@ -18,3 +18,11 @@ CREATE TABLE `user_sale_logs` (
 COLLATE='utf8_unicode_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1
+
+/**
+* Date		: 26-July-2016
+* Table		: services
+* Field		: expense_time 
+* Description	: Update field expense_time from int to varchar to store hour:minute
+*/
+ALTER TABLE `services` CHANGE COLUMN `expense_time` `expense_time` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci' AFTER `expense_date`;

@@ -27,7 +27,7 @@ class UsersController extends Controller
 
 	public function index()
 	{
-		$users = json_encode(User::where('is_active', 1)->where('id','>', 1)->get());
+		$users = json_encode(User::where('is_active', 1)->get());
 		return view('users/index', compact('users'));
 	}
 
