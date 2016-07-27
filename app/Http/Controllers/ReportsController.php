@@ -84,14 +84,14 @@ class ReportsController extends Controller
 												groupBy('product_id')->get();
 		}else{
 			
-			$saleOrderDetail = SaleOrderDetail::select('pgroups.name AS pgroup_name','products.name AS pro_name', 'unit_price', 'products.code', DB::raw("(SELECT CONCAT(SUM(qty),'|',SUM(discount_price_riel),'|',SUM(total_price_riel)) FROM sales_order_details WHERE product_id=products.id AND SUBSTRING(sales_orders.created_at,1,10) BETWEEN '".$input['dateFrom']."' AND '".$input['dateTo']."') AS group_amount"))->
+			$saleOrderDetail = SaleOrderDetail::select('pgroups.name AS pgroup_name','products.name AS pro_name', 'unit_price', 'products.code', DB::raw("(SELECT CONCAT(SUM(qty),'|',SUM(discount_price_riel),'|',SUM(total_price_riel)) FROM sales_order_details WHERE product_id=products.id AND DATE(sales_orders.created_at) BETWEEN '".$input['dateFrom']."' AND '".$input['dateTo']."') AS group_amount"))->
 												join('sales_orders', 'sales_orders.id','=','sales_order_details.sales_order_id')->
 												join('users', 'users.id','=','sales_orders.created_by')->
 												join('products', 'products.id','=','sales_order_details.product_id')->
 												join('pgroups', 'pgroups.id','=','products.pgroup_id')->
 												where('sales_orders.is_active',1)->
 												where('sales_orders.is_book',0)->
-												whereBetween('sales_orders.created_at', array($input['dateFrom'],$input['dateTo']))->
+												whereBetween(DB::raw('DATE(sales_orders.created_at)'), array($input['dateFrom'],$input['dateTo']))->
 												orderBy('pgroup_name')->
 												groupBy('product_id')->get();
 		}
@@ -106,10 +106,12 @@ class ReportsController extends Controller
 	
 	
 	public function selectReportByExpense(Request $request, ExpenseAjax $expense){
+		$input = $request->all();
 		$services = Service::select('sections.name AS section_name', 'uom_expenses.name AS expense_uom_name', 'services.*')->
 												leftJoin('sections', 'sections.id','=','services.section_id')->
 												leftJoin('uom_expenses', 'uom_expenses.id','=','services.uom_expense_id')->
 												where('sections.is_active',1)->
+												whereBetween('services.expense_date', array($input['dateFrom'],$input['dateTo']))->
 												orderBy('services.expense_date')->get();
 		return View::make('reports.reportExpenseResult')->with('services', $services);
 	}
@@ -127,7 +129,10 @@ class ReportsController extends Controller
 		$userSaleLog = UserSaleLog::select('users.username AS u_name', 'user_sale_logs.dates','user_sale_logs.time_in', 'user_sale_logs.time_out', 'user_sale_logs.total_kh', 'user_sale_logs.total_us', DB::raw("(SELECT SUM(total_amount_riel) FROM sales_orders WHERE DATE(created_at) = dates AND TIME(created_at) BETWEEN time_in AND time_out) AS sy_total"))->
 									join('users', 'users.id','=','user_sale_logs.user_id')->
 									where(DB::raw("DATE(dates)"), '=', $input['dates'])->
-									where('user_sale_logs.total_kh', '>', 0)->orWhere('user_sale_logs.total_us', '>', 0)->
+									where(function ($query) {
+										$query->where('user_sale_logs.total_kh', '>', 0)
+											  ->orWhere('user_sale_logs.total_us', '>', 0);
+									})->
 									orderBy('u_name')->get();
 		return View::make('reports.reportSaleLogResult')->with('userSaleLog', $userSaleLog)->with('exchangerate', $exchangerate);
 		

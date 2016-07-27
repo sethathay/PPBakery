@@ -18,8 +18,8 @@
                     <td><?php echo $service->expense_uom_name; ?></td>
                     <td><?php echo $service->expense_date; ?></td>
                     <td style="text-align:center"><?php echo $service->qty; ?></td>
-                    <td style="text-align:center"><?php echo $service->riel_price; ?></td>
-                    <td style="text-align:center"><?php echo $service->dollar_price; ?></td>
+                    <td style="text-align:right"><?php echo number_format($service->riel_price); ?></td>
+                    <td style="text-align:right"><?php echo number_format($service->dollar_price); ?></td>
                 </tr>
                 <?php $totalReil = $totalReil + $service->riel_price; ?>
                 <?php $totalDollar = $totalDollar + $service->dollar_price; ?>
