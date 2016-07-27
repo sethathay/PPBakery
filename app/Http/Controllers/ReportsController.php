@@ -71,7 +71,7 @@ class ReportsController extends Controller
 		
 		if(isset($input['users']) && $input['users'] != ""){
 			
-			$saleOrderDetail = SaleOrderDetail::select('pgroups.name AS pgroup_name','products.name AS pro_name', 'unit_price', 'products.code',DB::raw("(SELECT CONCAT(SUM(qty),'|',SUM(discount_price_riel),'|',SUM(total_price_riel)) FROM sales_order_details INNER JOIN sales_orders ON sales_orders.id=sales_order_details.sales_order_id WHERE product_id=products.id AND sales_orders.created_by = ".$input['users']." AND SUBSTRING(sales_orders.created_at,1,10) BETWEEN '".$input['dateFrom']."' AND '".$input['dateTo']."') AS group_amount"))->
+			$saleOrderDetail = SaleOrderDetail::select('pgroups.name AS pgroup_name','products.name AS pro_name', 'unit_price', 'products.code',DB::raw("(SELECT CONCAT(SUM(qty),'|',SUM(discount_price_riel),'|',SUM(total_price_riel)) FROM sales_order_details INNER JOIN sales_orders ON sales_orders.id=sales_order_details.sales_order_id WHERE product_id=products.id AND sales_orders.created_by = ".$input['users']." AND DATE(sales_order_details.created_at) BETWEEN '".$input['dateFrom']."' AND '".$input['dateTo']."') AS group_amount"))->
 												join('sales_orders', 'sales_orders.id','=','sales_order_details.sales_order_id')->
 												join('users', 'users.id','=','sales_orders.created_by')->
 												join('products', 'products.id','=','sales_order_details.product_id')->
@@ -79,12 +79,12 @@ class ReportsController extends Controller
 												where('sales_orders.is_active',1)->
 												where('sales_orders.is_book',0)->
 												where('sales_orders.created_by',$input['users'])->
-												whereBetween('sales_orders.created_at', array($input['dateFrom'], $input['dateTo']))->
+												whereBetween(DB::raw('DATE(sales_orders.created_at)'), array($input['dateFrom'], $input['dateTo']))->
 												orderBy('pgroup_name')->
 												groupBy('product_id')->get();
 		}else{
 			
-			$saleOrderDetail = SaleOrderDetail::select('pgroups.name AS pgroup_name','products.name AS pro_name', 'unit_price', 'products.code', DB::raw("(SELECT CONCAT(SUM(qty),'|',SUM(discount_price_riel),'|',SUM(total_price_riel)) FROM sales_order_details WHERE product_id=products.id AND DATE(sales_orders.created_at) BETWEEN '".$input['dateFrom']."' AND '".$input['dateTo']."') AS group_amount"))->
+			$saleOrderDetail = SaleOrderDetail::select('pgroups.name AS pgroup_name','products.name AS pro_name', 'unit_price', 'products.code', DB::raw("(SELECT CONCAT(SUM(qty),'|',SUM(discount_price_riel),'|',SUM(total_price_riel)) FROM sales_order_details WHERE product_id=products.id AND DATE(sales_order_details.created_at) BETWEEN '".$input['dateFrom']."' AND '".$input['dateTo']."') AS group_amount"))->
 												join('sales_orders', 'sales_orders.id','=','sales_order_details.sales_order_id')->
 												join('users', 'users.id','=','sales_orders.created_by')->
 												join('products', 'products.id','=','sales_order_details.product_id')->
