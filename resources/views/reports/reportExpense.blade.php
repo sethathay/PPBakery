@@ -66,7 +66,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		<div class="col-sm-5">
         	<div class="form-group">
                 <div class='input-group'>
-					<img src="{{ URL::asset('/img/receipt_b.png') }}" /> <label>របាយការណ៍ តាមក្រុមទំនិញ</label>
+					<img src="{{ URL::asset('/img/receipt_b.png') }}" /> <label> របាយការណ៍ ចំនាយ</label>
                 </div>
             </div>
 		</div>
