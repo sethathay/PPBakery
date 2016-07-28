@@ -42,7 +42,7 @@
 		<div class="row" style="width:99%; margin: 0 auto;">
 			<div class="col-md-2 board" onclick="redirectPage('pos','_blank')"><img src="{{ URL::asset('img/house_sale_b.png') }}" /><br/>ការលក់</div>
 			<div class="col-md-2 board" onclick="redirectPage('products')"><img src="{{ URL::asset('img/product_b.png') }}" /><br/>មុខទំនិញ</div>
-			<div class="col-md-2 board" onclick="redirectPage('services')"><img src="{{ URL::asset('img/dollars_b.png') }}" /><br/>ការចំនាយ</div>
+			<div class="col-md-2 board" onclick="redirectPage('services/index')"><img src="{{ URL::asset('img/dollars_b.png') }}" /><br/>ការចំនាយ</div>
 			<div class="col-md-2 board" onclick="redirectPage('exchangerates')"><img src="{{ URL::asset('img/emblem_money_b.png') }}" /><br/>អត្រា​ប្តូ​រ​ប្រាក់</div>
 			<div class="col-md-2 board" onclick="redirectPage('#')"><img src="{{ URL::asset('img/discount_b.png') }}" /><br/>ការបញ្ចុះតំលៃ</div>
 			<div class="col-md-2 board" onclick="redirectPage('saleOrders/index')"><img src="{{ URL::asset('img/receipt_b.png') }}" /><br/>វិក័យប័ត្រ</div>

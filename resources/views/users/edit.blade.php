@@ -3,7 +3,7 @@
 @section('content')
 <link href="{{ URL::asset('css/general.css') }}" rel="stylesheet">
 {!! Form::model($user, array('route' => ['users.update'], 'method' => 'post', 'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
-{!! Form::hidden('id', null, array('id'=>'first_name')) !!}
+{!! Form::hidden('id', null, array('id'=>'id')) !!}
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">

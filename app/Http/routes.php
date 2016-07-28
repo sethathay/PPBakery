@@ -21,9 +21,13 @@ Route::get('/', function(){
 	});
 	*/
 	
-	if ( Auth::check() ) // use Auth::check instead of Auth::user
+	if ( Auth::check()) // use Auth::check instead of Auth::user
 	{
-		return View::make('/layout/dashboard')->with('flash_notice', 'You are already logged in!');
+		if(Session::get('group_id') == 1){
+			return View::make('/layout/dashboard')->with('flash_notice', 'You are already logged in!');
+		}else{
+			return View::make('/layout/pos');
+		}
 	} else{
 		return View::make('/layout/index');
 	}
@@ -60,11 +64,17 @@ Route::get('users/login', array('as' => 'users.login', function () { }));
 Route::get('users/logout', 'UsersController@logout');
 
 //Route::resource('users', 'UsersController');
+Route::get('user_sale_logs/index', ['as' => 'user_sale_logs.index', 'uses' => 'UserSaleLogsController@index']);
+Route::get('user_sale_logs/create', 'UserSaleLogsController@create');
+Route::get('user_sale_logs/edit/{id}', 'UserSaleLogsController@edit');
+Route::post('user_sale_logs/update', 'UserSaleLogsController@update');
 
 // Route of products by Thay Setha
 Route::post('products/searchProdctByCode', ['as' => 'products.searchProdctByCode', 'uses' => 'ProductsController@searchProdctByCode']);
 // Route of products by Phou Lin
 Route::post('products/checkProductExist', ['as' => 'products.checkProductExist', 'uses' => 'ProductsController@checkProductExist']);
+
+Route::post('products/searchProdctByCodeWidthDiscount', ['as' => 'products.searchProdctByCodeWidthDiscount', 'uses' => 'ProductsController@searchProdctByCodeWidthDiscount']);
 
 //Route of products by Thay Setha
 Route::resource('products','ProductsController');
@@ -83,6 +93,15 @@ Route::get('sections/show/{id}', 'SectionsController@show');
 Route::get('sections/edit/{id}', ['as' => 'sections.edit', 'uses' => 'SectionsController@edit']);
 Route::post('sections/update', ['as' => 'sections.update', 'uses' => 'SectionsController@update']);
 Route::get('sections/destroy/{id}', ['as' => 'sections.destroy', 'uses' => 'SectionsController@destroy']);
+
+
+Route::get('uomexpenses/index', ['as' => 'uomexpenses.index', 'uses' => 'UomExpensesController@index']);
+Route::get('uomexpenses/create', ['as' => 'uomexpenses.create', 'uses' => 'UomExpensesController@create']);
+Route::post('uomexpenses/store', ['as' => 'uomexpenses.store', 'uses' => 'UomExpensesController@store']);
+Route::get('uomexpenses/show/{id}', 'UomExpensesController@show');
+Route::get('uomexpenses/edit/{id}', ['as' => 'uomexpenses.edit', 'uses' => 'UomExpensesController@edit']);
+Route::post('uomexpenses/update', ['as' => 'uomexpenses.update', 'uses' => 'UomExpensesController@update']);
+Route::get('uomexpenses/destroy/{id}', ['as' => 'uomexpenses.destroy', 'uses' => 'UomExpensesController@destroy']);
 
 // Route for pos
 Route::post('pos/sale', 'PosController@sale');
@@ -122,10 +141,27 @@ Route::get('reports/reportInvoice', 'ReportsController@index');
 Route::post('reports/selectReport', 'ReportsController@selectReport');
 Route::get('reports/reportProduct', 'ReportsController@reportProduct');
 Route::post('reports/selectReportByProduct', 'ReportsController@selectReportByProduct');
-//Route::get('reports/reportByProductResult', 'ReportsController@reportByProductResult');
+Route::get('reports/reportExpense', 'ReportsController@reportExpense');
+Route::post('reports/selectReportByExpense', 'ReportsController@selectReportByExpense');
+Route::get('reports/reportSaleLog', 'ReportsController@reportSaleLog');
+Route::post('reports/selectReportSaleLog', 'ReportsController@selectReportSaleLog');
+
+Route::get('pricingRules/index', ['as' => 'pricingRules.index', 'uses' => 'PricingRulesController@index']);
+Route::get('pricingRules/create', 'PricingRulesController@create');
+Route::post('pricingRules/getProductPrice', 'PricingRulesController@getProductPrice');
+Route::post('pricingRules/store', 'PricingRulesController@store');
+Route::get('pricingRules/show/{id}', 'PricingRulesController@show');
+Route::get('pricingRules/edit/{id}', ['as' => 'pricingRules.edit', 'uses' => 'PricingRulesController@edit']);
+Route::post('pricingRules/update', ['as' => 'pricingRules.update', 'uses' => 'PricingRulesController@update']);
+Route::get('pricingRules/destroy/{id}', ['as' => 'pricingRules.destroy', 'uses' => 'PricingRulesController@destroy']);
 
 //Route of services for daily expense input by Thay Setha
-Route::resource('services','ServicesController');
+//Route::resource('services','ServicesController');
+Route::get('services/index', 'ServicesController@index');
+Route::get('services/destroy/{id}', 'ServicesController@destroy');
+Route::get('services/expense', 'ServicesController@expense');
+Route::post('services/addExpense', 'ServicesController@addExpense');
+Route::get('services/create', 'ServicesController@create');
 
 //Route of exchange rate by Thay Setha
 Route::resource('exchangerates','ExchangeRatesController');

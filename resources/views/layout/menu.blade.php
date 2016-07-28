@@ -22,7 +22,7 @@
 	<div class="navbar-inner">
 		<ul class="nav">
 		
-			@if ( Session::get('group_id') == 1)
+			@if ( Session::get('group_id') == 1 ||  Session::get('group_id') == 3)
 			<li><a href="{{ URL::asset('/dashboard') }}"><img
 				src="{{ URL::asset('img/control_panel.png') }}" alt="order" />
 				&nbsp;&nbsp;<label style="vertical-align: middle; font-weight: normal;">ទំព័រមុខ</label></a>
@@ -32,7 +32,7 @@
 				src="{{ URL::asset('img/house_sale.png') }}" alt="order" />
 				&nbsp;&nbsp;<label style="vertical-align: middle; font-weight: normal;">ការលក់</label></a>
 			</li>
-			@if ( Session::get('group_id') == 1)
+			@if ( Session::get('group_id') == 1 ||  Session::get('group_id') == 3)
 			<li><a href="{{ URL::asset('products') }}"><img
 				src="{{ URL::asset('img/product.png') }}" alt="Product" />
 				&nbsp;&nbsp;<label
@@ -48,7 +48,7 @@
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">ការបញ្ចុះតំលៃ</label></a>
 			</li>
-			<li><a href="{{ URL::asset('services') }}"><img
+			<li><a href="{{ URL::asset('services/index') }}"><img
 				src="{{ URL::asset('img/dollars.png') }}" alt="Table" />
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">ការចំនាយ</label></a>
@@ -63,6 +63,11 @@
 				src="{{ URL::asset('img/books.png') }}" alt="Booking" />
 				&nbsp;&nbsp;<label
 				style="vertical-align: middle; font-weight: normal;">លក់កក់</label></a>
+			</li>
+			<li><a href="{{ URL::asset('user_sale_logs/index') }}"><img
+				src="{{ URL::asset('img/saleReport.png') }}" alt="SaleReport" />
+				&nbsp;&nbsp;<label
+				style="vertical-align: middle; font-weight: normal;">បញ្ចូលប្រាក់សរុបពីការលក់</label></a>
 			</li>
 			@if ( Session::get('group_id') == 1)
 			<li><a href="{{ URL::asset('inventories/index') }}"><img
@@ -83,8 +88,17 @@
 					<li class="inner_link">
 						<a href="{{ URL::asset('reports/reportProduct') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;របាយការណ៍ តាមក្រុមទំនិញ</a>
 					</li>
+					<li class="inner_link">
+						<a href="{{ URL::asset('reports/reportExpense') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;របាយការណ៍ ចំនាយ</a>
+					</li>
+					<li class="inner_link">
+						<a href="{{ URL::asset('reports/reportSaleLog') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;របាយការណ៍ លក់សរុបតាម User</a>
+					</li>
 				</ol>
 			</li>
+			@endif
+			
+			@if ( Session::get('group_id') == 1 ||  Session::get('group_id') == 3)
 			<li><a href="{{ URL::asset('users/index') }}"><img
 				src="{{ URL::asset('img/users_2.png') }}" alt="Users" />
 				&nbsp;&nbsp;<label
@@ -104,7 +118,13 @@
 						<a href="{{ URL::asset('customers') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;អតិថិជន</a>
 					</li>
 					<li class="inner_link">
+						<a href="{{ URL::asset('pricingRules/index') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;បញ្ចុះតំលៃ សម្រាប់អតិថិជន</a>
+					</li>
+					<li class="inner_link">
 						<a href="{{ URL::asset('sections/index') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;ក្រុមចំនាយ</a>
+					</li>
+					<li class="inner_link">
+						<a href="{{ URL::asset('uomexpenses/index') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;ខ្នាតនៃក្រុមចំនាយ</a>
 					</li>
 					<li class="inner_link">
 						<a href="{{ URL::asset('pgroups') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;ក្រុមទំនិញ</a>

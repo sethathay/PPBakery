@@ -51,7 +51,7 @@
 		</div>
 		<div class="col-sm-5"
 			style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
-			<button onclick="redirectPage('services/create')" type="button"
+			<button onclick="redirectPage('expense')" type="button"
 				class="btn btn-md btn-success">
 				<span class="glyphicon glyphicon-plus"></span> បង្កើតថ្មី
 			</button>
@@ -67,11 +67,12 @@
 		<thead>
 			<tr>				
 				<th>ក្រុមចំនាយ</th>
-				<th>កាលបរិច្ឆេទ</th>
-				<th>តម្លៃ($)</th>
+				<th>ខ្នាតនៃក្រុមចំនាយ</th>
+				<th>ចំនួន</th>
 				<th>តម្លៃ(​​៛)</th>
-				<th>បរិយាយផ្សេងៗ</th>
-				<th>ថ្ងៃនៃការកែប្រែ</th>
+				<th>តម្លៃសរុប(​​៛)</th>
+				<th>កាលបរិច្ឆេទ</th>
+				<th>ម៉ោង</th>
 				<th>សកម្មភាព</th>
 			</tr>
 		</thead>
@@ -89,40 +90,37 @@
         "data": <?php echo $services ?>,
         "order": [[ 6, "desc" ]],
         "createdRow": function ( row, datas, index ) {
-        	$('td', row).eq(7).addClass('last_td');
+        	$('td', row).eq(9).addClass('last_td');
         },
         "columns": [
            	{ "data": "section_name" },
-            { "data": "expense_date" },
-            { "data": "dollar_price" },
+           	{ "data": "uom_expense_name" },
+           	{ "data": "qty" },
             { "data": "riel_price" },
-            { "data": "description" },
-            { "data": "updated_at" },
+            { "data": "total_price" },
+            { "data": "expense_date" },
+            { "data": "expense_time" },
             { "data": null }
         ],
         "columnDefs": [ {
             "targets": -1,
             "defaultContent":
-            '<button style="margin-right:5px" type="button" class="btnview btn btn-xs btn-info">'
-            + '<span class="glyphicon glyphicon-user"></span> View</button>'
-            +'<button style="margin-right:5px" type="button" class="btnedit btn btn-xs btn-primary">'
-			+'<span class="glyphicon glyphicon-edit"></span> Edit</button>'
-			+'<button type="button" class="btn btn-xs btn-danger btndelete">'
+            '<button type="button" class="btn btn-xs btn-danger btndelete">'
 			+'<span class="glyphicon glyphicon-trash"></span> Delete'
 			+'</button>'
         },
         {
-                "targets": 2,
+                "targets": 3,
                 "render": function ( data, type, row ) {
-                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> $ </span> <span class="label label-danger" style="font-size:14px;">' + data + '</span>';
+                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> ៛ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(data) + '</span>';
                 },
         },
         {
-                "targets": 3,
-                "render": function ( data, type, row ) {
-                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> ៛ </span> <span class="label label-danger" style="font-size:14px;">' + data + '</span>';
+                "targets": 4,
+                "mRender": function ( data, type, row ) {
+                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> ៛ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(row.qty*row.riel_price)  + '</span>';
                 },
-            },
+        },
          ]
     } );
 
@@ -141,8 +139,8 @@
         var ts = $(this);
         if(confirm('តើអ្នកពិតជាចង់លុបវាពិតមែនទេ?')){
 			$.ajax({
-			    url: 'services/' + data['id'],
-			    type: 'DELETE',
+			    url: 'destroy/' + data['id'],
+			    type: 'get',
 			    data:{"_token": "{{ csrf_token() }}"},
 			    success: function(result) {
 			    	table.row(ts.parents('tr')).remove().draw( false );

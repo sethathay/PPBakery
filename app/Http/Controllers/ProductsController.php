@@ -152,6 +152,20 @@ class ProductsController extends Controller
     	$products = Product::where('is_active', 1)->where('code', $code)->first();
     	return Response::json($products);
     }
+    
+    /**
+     * Search product from POS
+     * @param string $code
+     */
+    public function searchProdctByCodeWidthDiscount(){
+    	$code = Input::get('codeNumber');
+    	$customer_id = Input::get('customer_id');
+		
+    	$products = Product::leftJoin('pricing_rules', function($join) use($customer_id){ 
+															$join->on('pricing_rules.product_id', '=', 'products.id')->where('pricing_rules.customer_id', "=", $customer_id);
+														})->where('products.is_active', 1)->where('code', $code)->first();
+    	return Response::json($products);
+    }
 	
 	public function checkProductExist(){
     	$code = Input::get('code');

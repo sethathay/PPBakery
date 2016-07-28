@@ -19,6 +19,6 @@ class Service extends Model implements AuthenticatableContract,
 
     protected $table = 'services';
 
-    protected $fillable = ['section_id','expense_date','company_id', 'name', 'dollar_price','riel_price',
+    protected $fillable = ['section_id','uom_expense_id','expense_date','company_id', 'name', 'qty', 'dollar_price','riel_price',
     'exchange_rate_id','description','created_by','updated_by','is_active'];
 }
