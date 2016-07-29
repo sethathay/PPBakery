@@ -27,7 +27,7 @@
         		<tr class="total_record">
                 	<td style="text-align:right; font-size:20px; font-weight:bold;" colspan="4">សរុប​ :</td>
                     <td style="text-align:right; font-size:20px; font-weight:bold; color:#F00;"><?php echo number_format($totalReil)." ៛";?></td>
-                    <td style="text-align:right; font-size:20px; font-weight:bold; color:#F00;"><?php echo number_format($totalDollar)." $";?></td>
+                    <td style="text-align:right; font-size:20px; font-weight:bold; color:#F00;"><?php echo number_format($totalDollar)." ៛";?></td>
                 </tr>
         <?php }else{?>
         
