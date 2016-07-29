@@ -6,7 +6,7 @@
             <th>កាលបរិច្ឆេទ</th>
             <th>ចំនួន</th>
             <th>តំលៃ (៛)</th>
-            <th>តំលៃ ($)</th>
+            <th>សរុប​ (៛)</th>
         </tr>
     </thead>
     <tbody>
@@ -19,10 +19,10 @@
                     <td><?php echo $service->expense_date; ?></td>
                     <td style="text-align:center"><?php echo $service->qty; ?></td>
                     <td style="text-align:right"><?php echo number_format($service->riel_price); ?></td>
-                    <td style="text-align:right"><?php echo number_format($service->dollar_price); ?></td>
+                    <td style="text-align:right"><?php echo number_format($service->qty * $service->riel_price); ?></td>
                 </tr>
                 <?php $totalReil = $totalReil + $service->riel_price; ?>
-                <?php $totalDollar = $totalDollar + $service->dollar_price; ?>
+                <?php $totalDollar = $totalDollar + ($service->qty * $service->riel_price); ?>
             <?php }?>
         		<tr class="total_record">
                 	<td style="text-align:right; font-size:20px; font-weight:bold;" colspan="4">សរុប​ :</td>
