@@ -127,7 +127,7 @@ class ReportsController extends Controller
 		$input = $request->all();
 		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
 		$userSaleLog = UserSaleLog::select('users.username AS u_name', 'user_sale_logs.dates','user_sale_logs.time_in', 'user_sale_logs.time_out', 'user_sale_logs.total_kh', 'user_sale_logs.total_us', 
-									DB::raw("(SELECT SUM(total_amount_riel) FROM sales_orders WHERE DATE(created_at) = dates AND sales_orders.created_by=users.id AND TIME(created_at) BETWEEN time_in AND time_out) AS sy_total"))->
+									DB::raw("(SELECT SUM(total_amount_riel-balance) FROM sales_orders WHERE DATE(created_at) = dates AND sales_orders.created_by=users.id AND TIME(created_at) BETWEEN time_in AND time_out) AS sy_total"))->
 									join('users', 'users.id','=','user_sale_logs.user_id')->
 									where(DB::raw("DATE(dates)"), '=', $input['dates'])->
 									where(function ($query) {
