@@ -102,7 +102,7 @@
 .row_input{
 	display : none;
 }
-.txt_discount,.txt_unit_price, .txt_total_by_item{
+.txt_discount,.txt_unit_price,.txt_unit_price_us, .txt_total_by_item{
 	text-align : right;
 	width: 120px;
 }
@@ -181,6 +181,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					<th style="width:18%;">ខ្នាតនៃក្រុមចំនាយ</th>
 					<th>ចំនួន</th>
 					<th>តំ.រាយ (៛)</th>
+					<th>តំ.រាយ ($)</th>
 					<th>សរុប</th>
 					<th>ប៊ូតុង</th>
 				</tr>
@@ -189,37 +190,43 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				<tr>
 					<td style="width:12%;">
 						<select name="times[]" style="width:100px !important;">
-							  <option value="0">12:00 am</option>
-							  <option value="1">1:00 am</option>
-							  <option value="2">2:00 am</option>
-							  <option value="3">3:00 am</option>
-							  <option value="4">4:00 am</option>
-							  <option value="5">5:00 am</option>
-							  <option value="6">6:00 am</option>
-							  <option value="7">7:00 am</option>
-							  <option value="8">8:00 am</option>
-							  <option value="9">9:00 am</option>
-							  <option value="10">10:00 am</option>
-							  <option value="11">11:00 am</option>
-							  <option value="12">12:00 pm</option>
-							  <option value="13">1:00 pm</option>
-							  <option value="14">2:00 pm</option>
-							  <option value="15">3:00 pm</option>
-							  <option value="16">4:00 pm</option>
-							  <option value="17">5:00 pm</option>
-							  <option value="18">6:00 pm</option>
-							  <option value="19">7:00 pm</option>
-							  <option value="20">8:00 pm</option>
-							  <option value="21">9:00 pm</option>
-							  <option value="22">10:00 pm</option>
-							  <option value="23">11:00 pm</option>
+							  <option value="0">12 am</option>
+							  <option value="1">1 am</option>
+							  <option value="2">2 am</option>
+							  <option value="3">3 am</option>
+							  <option value="4">4 am</option>
+							  <option value="5">5 am</option>
+							  <option value="6">6 am</option>
+							  <option value="7">7 am</option>
+							  <option value="8">8 am</option>
+							  <option value="9">9 am</option>
+							  <option value="10">10 am</option>
+							  <option value="11">11 am</option>
+							  <option value="12">12 pm</option>
+							  <option value="13">1 pm</option>
+							  <option value="14">2 pm</option>
+							  <option value="15">3 pm</option>
+							  <option value="16">4 pm</option>
+							  <option value="17">5 pm</option>
+							  <option value="18">6 pm</option>
+							  <option value="19">7 pm</option>
+							  <option value="20">8 pm</option>
+							  <option value="21">9 pm</option>
+							  <option value="22">10 pm</option>
+							  <option value="23">11 pm</option>
 						</select>
+						<select name="minutes[]" style="width:60px !important;">
+						<?php for($i=0; $i<60; $i++){?>
+						  <option value="<?php echo $i;?>"><?php echo ($i<10)?"0".$i:$i;?></option>
+						<?php }?>
+					</select>
 					</td>
 					<td class="first-column">
 						{!! Form::select('section_id[]', [null=>'សូមជ្រើសរើស']+$sections, Input::old('sections'), ['class'=>'form-control section_id']) !!}</td>
 					<td style="width:18%;">{!! Form::select('uom_expense_id[]', [null=>'សូមជ្រើសរើស']+$uom, Input::old('uom_expense_id'), ['class'=>'form-control uom_expense_id']) !!}</td>
 					<td class="qty-column">{!! Form::text('txt_qty[]', null, array('class'=>'txt_qty numberInput')) !!}</td>
 					<td>{!! Form::text('txt_unit_price[]', null, array('class'=>'txt_unit_price numberInput')) !!}</td>
+					<td>{!! Form::text('txt_unit_price_us[]', null, array('class'=>'txt_unit_price_us numberInput')) !!}</td>
 					<td>{!! Form::text('txt_total_by_item[]', null, array('class'=>'txt_total_by_item numberInput', 'readonly'=>'readonly')) !!}</td>
 					<td style="text-align:center;">
 						{!! Form::hidden('id[]', null, array('class'=>'row_input id')) !!}
@@ -255,7 +262,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		  </table>
 		</div>
 	</div>
-	
+	{!! Form::hidden('rate', $exchangerate->riel, array('class'=>'riel')) !!}
 	{!! Form::close() !!}
 </div>
 <script type="text/javascript">
@@ -316,6 +323,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				//record
 				$(".table > tbody > tr:last").find(".txt_qty").val('');
 				$(".table > tbody > tr:last").find(".txt_unit_price").val('');
+				$(".table > tbody > tr:last").find(".txt_unit_price_us").val('');
 				$(".table > tbody > tr:last").find(".txt_total_by_item").val('');
 				
 			});
@@ -345,6 +353,22 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					$(".txt_subtotal").val(Number($(".txt_subtotal").val()) - Number(getObj.find(".txt_total_by_item").val()));
 					
 					var total_by_item = unit_price*newQty;
+										
+					getObj.find(".txt_total_by_item").val(total_by_item);
+					
+					calculateTotalBlock(total_by_item);
+				}
+			});
+			
+			// when unit price is change
+			$(".txt_unit_price_us").keyup(function(){	
+				if(Number($(this).val()) > 0){	
+					var getObj = $(this).parents("tr");
+					var newQty = Number(getObj.find(".txt_qty").val());
+					var unit_price_us = ((Number(getObj.find(".txt_unit_price_us").val()) > 0)? Number(getObj.find(".txt_unit_price_us").val()) : 0) * Number($(".riel").val());
+					$(".txt_subtotal").val(Number($(".txt_subtotal").val()) - Number(getObj.find(".txt_total_by_item").val()));
+					alert(unit_price_us);
+					var total_by_item = unit_price_us*newQty;
 										
 					getObj.find(".txt_total_by_item").val(total_by_item);
 					

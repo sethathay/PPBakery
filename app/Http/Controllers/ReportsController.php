@@ -14,6 +14,7 @@ use Response;
 use App\User;
 use App\SaleOrder;
 use App\SaleOrderDetail;
+use App\UserSaleLog;
 use App\Product;
 use App\Pgroup;
 use App\Datatable\SaleOrderAjax;
@@ -70,7 +71,7 @@ class ReportsController extends Controller
 		
 		if(isset($input['users']) && $input['users'] != ""){
 			
-			$saleOrderDetail = SaleOrderDetail::select('pgroups.name AS pgroup_name','products.name AS pro_name', 'unit_price', 'products.code',DB::raw("(SELECT CONCAT(SUM(qty),'|',SUM(discount_price_riel),'|',SUM(total_price_riel)) FROM sales_order_details INNER JOIN sales_orders ON sales_orders.id=sales_order_details.sales_order_id WHERE product_id=products.id AND sales_orders.created_by = ".$input['users']." AND SUBSTRING(sales_orders.created_at,1,10) BETWEEN '".$input['dateFrom']."' AND '".$input['dateTo']."') AS group_amount"))->
+			$saleOrderDetail = SaleOrderDetail::select('pgroups.name AS pgroup_name','products.name AS pro_name', 'unit_price', 'products.code',DB::raw("(SELECT CONCAT(SUM(qty),'|',SUM(discount_price_riel),'|',SUM(total_price_riel)) FROM sales_order_details INNER JOIN sales_orders ON sales_orders.id=sales_order_details.sales_order_id WHERE product_id=products.id AND sales_orders.created_by = ".$input['users']." AND DATE(sales_order_details.created_at) BETWEEN '".$input['dateFrom']."' AND '".$input['dateTo']."') AS group_amount"))->
 												join('sales_orders', 'sales_orders.id','=','sales_order_details.sales_order_id')->
 												join('users', 'users.id','=','sales_orders.created_by')->
 												join('products', 'products.id','=','sales_order_details.product_id')->
@@ -78,19 +79,19 @@ class ReportsController extends Controller
 												where('sales_orders.is_active',1)->
 												where('sales_orders.is_book',0)->
 												where('sales_orders.created_by',$input['users'])->
-												whereBetween('sales_orders.created_at', array($input['dateFrom'], $input['dateTo']))->
+												whereBetween(DB::raw('DATE(sales_orders.created_at)'), array($input['dateFrom'], $input['dateTo']))->
 												orderBy('pgroup_name')->
 												groupBy('product_id')->get();
 		}else{
 			
-			$saleOrderDetail = SaleOrderDetail::select('pgroups.name AS pgroup_name','products.name AS pro_name', 'unit_price', 'products.code', DB::raw("(SELECT CONCAT(SUM(qty),'|',SUM(discount_price_riel),'|',SUM(total_price_riel)) FROM sales_order_details WHERE product_id=products.id AND SUBSTRING(sales_orders.created_at,1,10) BETWEEN '".$input['dateFrom']."' AND '".$input['dateTo']."') AS group_amount"))->
+			$saleOrderDetail = SaleOrderDetail::select('pgroups.name AS pgroup_name','products.name AS pro_name', 'unit_price', 'products.code', DB::raw("(SELECT CONCAT(SUM(qty),'|',SUM(discount_price_riel),'|',SUM(total_price_riel)) FROM sales_order_details WHERE product_id=products.id AND DATE(sales_order_details.created_at) BETWEEN '".$input['dateFrom']."' AND '".$input['dateTo']."') AS group_amount"))->
 												join('sales_orders', 'sales_orders.id','=','sales_order_details.sales_order_id')->
 												join('users', 'users.id','=','sales_orders.created_by')->
 												join('products', 'products.id','=','sales_order_details.product_id')->
 												join('pgroups', 'pgroups.id','=','products.pgroup_id')->
 												where('sales_orders.is_active',1)->
 												where('sales_orders.is_book',0)->
-												whereBetween('sales_orders.created_at', array($input['dateFrom'],$input['dateTo']))->
+												whereBetween(DB::raw('DATE(sales_orders.created_at)'), array($input['dateFrom'],$input['dateTo']))->
 												orderBy('pgroup_name')->
 												groupBy('product_id')->get();
 		}
@@ -105,12 +106,40 @@ class ReportsController extends Controller
 	
 	
 	public function selectReportByExpense(Request $request, ExpenseAjax $expense){
+		$input = $request->all();
+		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
 		$services = Service::select('sections.name AS section_name', 'uom_expenses.name AS expense_uom_name', 'services.*')->
 												leftJoin('sections', 'sections.id','=','services.section_id')->
 												leftJoin('uom_expenses', 'uom_expenses.id','=','services.uom_expense_id')->
 												where('sections.is_active',1)->
+												whereBetween('services.expense_date', array($input['dateFrom'],$input['dateTo']))->
 												orderBy('services.expense_date')->get();
-		return View::make('reports.reportExpenseResult')->with('services', $services);
+		return View::make('reports.reportExpenseResult')->with('services', $services)->with('exchangerate', $exchangerate);
+	}
+	
+	
+	
+    public function reportSaleLog()
+    {
+		return view('reports.reportSaleLog');
+    }
+	
+	public function selectReportSaleLog(Request $request){
+		$input = $request->all();
+		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
+		$userSaleLog = UserSaleLog::select('users.username AS u_name', 'user_sale_logs.dates','user_sale_logs.time_in', 'user_sale_logs.time_out', 'user_sale_logs.total_kh', 'user_sale_logs.total_us', 
+									DB::raw("(SELECT SUM(IF(sales_orders.balance<0 AND amount_kh,amount_kh+sales_orders.balance,amount_kh)+IF(sales_orders.balance<0 AND amount_us>0,amount_us+sales_orders.balance/riel,amount_us)) FROM sales_order_receipts 
+											  INNER JOIN exchange_rates ON exchange_rates.id=sales_order_receipts.exchange_rate_id
+											  LEFT JOIN sales_orders ON sales_orders.id=sales_order_receipts.sales_order_id WHERE DATE(sales_order_receipts.created_at) = dates AND sales_order_receipts.created_by=users.id AND TIME(sales_order_receipts.created_at) BETWEEN time_in AND time_out) AS sy_total"))->
+									join('users', 'users.id','=','user_sale_logs.user_id')->
+									where(DB::raw("DATE(dates)"), '=', $input['dates'])->
+									where(function ($query) {
+										$query->where('user_sale_logs.total_kh', '>', 0)
+											  ->orWhere('user_sale_logs.total_us', '>', 0);
+									})->
+									orderBy('u_name')->get();
+		return View::make('reports.reportSaleLogResult')->with('userSaleLog', $userSaleLog)->with('exchangerate', $exchangerate);
+		
 	}
 
 }

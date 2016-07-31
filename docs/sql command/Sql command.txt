@@ -18,3 +18,34 @@ CREATE TABLE `user_sale_logs` (
 COLLATE='utf8_unicode_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1
+
+/**
+* Date		: 26-July-2016
+* Table		: services
+* Field		: expense_time 
+* Description	: Update field expense_time from int to varchar to store hour:minute
+*/
+ALTER TABLE `services` CHANGE COLUMN `expense_time` `expense_time` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci' AFTER `expense_date`;
+
+/**
+* Date		: 27-July-2016
+* Table		: pricing_rules
+* Description	: Check this table if exist because this table is change some fields
+*/
+CREATE TABLE `pricing_rules` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`customer_id` BIGINT(11) NULL DEFAULT NULL,
+	`product_id` BIGINT(10) NULL DEFAULT NULL,
+	`amount_kh` DOUBLE NULL DEFAULT NULL,
+	`amount_us` DOUBLE NULL DEFAULT NULL,
+	`created_at` DATETIME NULL DEFAULT NULL,
+	`created_by` BIGINT(10) NULL DEFAULT NULL,
+	`updated_at` DATETIME NULL DEFAULT NULL,
+	`updated_by` BIGINT(10) NULL DEFAULT NULL,
+	`is_active` TINYINT(4) NULL DEFAULT '1',
+	PRIMARY KEY (`id`)
+)
+COLLATE='utf8_unicode_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=1
+;

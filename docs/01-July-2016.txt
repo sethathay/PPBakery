@@ -1,5 +1,0 @@
-ALTER TABLE `customers`
-	ADD COLUMN `is_discount` TINYINT(4) NULL DEFAULT '0' AFTER `fax`;
-
-ALTER TABLE `services`
-	ADD COLUMN `expense_time` INT NULL DEFAULT NULL AFTER `expense_date`;
