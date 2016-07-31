@@ -102,7 +102,7 @@
 .row_input{
 	display : none;
 }
-.txt_discount,.txt_unit_price, .txt_total_by_item{
+.txt_discount,.txt_unit_price,.txt_unit_price_us, .txt_total_by_item{
 	text-align : right;
 	width: 120px;
 }
@@ -181,6 +181,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					<th style="width:18%;">ខ្នាតនៃក្រុមចំនាយ</th>
 					<th>ចំនួន</th>
 					<th>តំ.រាយ (៛)</th>
+					<th>តំ.រាយ ($)</th>
 					<th>សរុប</th>
 					<th>ប៊ូតុង</th>
 				</tr>
@@ -225,6 +226,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					<td style="width:18%;">{!! Form::select('uom_expense_id[]', [null=>'សូមជ្រើសរើស']+$uom, Input::old('uom_expense_id'), ['class'=>'form-control uom_expense_id']) !!}</td>
 					<td class="qty-column">{!! Form::text('txt_qty[]', null, array('class'=>'txt_qty numberInput')) !!}</td>
 					<td>{!! Form::text('txt_unit_price[]', null, array('class'=>'txt_unit_price numberInput')) !!}</td>
+					<td>{!! Form::text('txt_unit_price_us[]', null, array('class'=>'txt_unit_price_us numberInput')) !!}</td>
 					<td>{!! Form::text('txt_total_by_item[]', null, array('class'=>'txt_total_by_item numberInput', 'readonly'=>'readonly')) !!}</td>
 					<td style="text-align:center;">
 						{!! Form::hidden('id[]', null, array('class'=>'row_input id')) !!}
@@ -260,7 +262,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		  </table>
 		</div>
 	</div>
-	
+	{!! Form::hidden('rate', $exchangerate->riel, array('class'=>'riel')) !!}
 	{!! Form::close() !!}
 </div>
 <script type="text/javascript">
@@ -321,6 +323,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				//record
 				$(".table > tbody > tr:last").find(".txt_qty").val('');
 				$(".table > tbody > tr:last").find(".txt_unit_price").val('');
+				$(".table > tbody > tr:last").find(".txt_unit_price_us").val('');
 				$(".table > tbody > tr:last").find(".txt_total_by_item").val('');
 				
 			});
@@ -350,6 +353,22 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					$(".txt_subtotal").val(Number($(".txt_subtotal").val()) - Number(getObj.find(".txt_total_by_item").val()));
 					
 					var total_by_item = unit_price*newQty;
+										
+					getObj.find(".txt_total_by_item").val(total_by_item);
+					
+					calculateTotalBlock(total_by_item);
+				}
+			});
+			
+			// when unit price is change
+			$(".txt_unit_price_us").keyup(function(){	
+				if(Number($(this).val()) > 0){	
+					var getObj = $(this).parents("tr");
+					var newQty = Number(getObj.find(".txt_qty").val());
+					var unit_price_us = ((Number(getObj.find(".txt_unit_price_us").val()) > 0)? Number(getObj.find(".txt_unit_price_us").val()) : 0) * Number($(".riel").val());
+					$(".txt_subtotal").val(Number($(".txt_subtotal").val()) - Number(getObj.find(".txt_total_by_item").val()));
+					alert(unit_price_us);
+					var total_by_item = unit_price_us*newQty;
 										
 					getObj.find(".txt_total_by_item").val(total_by_item);
 					

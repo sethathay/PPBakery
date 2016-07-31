@@ -70,6 +70,7 @@
 				<th>ខ្នាតនៃក្រុមចំនាយ</th>
 				<th>ចំនួន</th>
 				<th>តម្លៃ(​​៛)</th>
+				<th>តម្លៃ(​​$)</th>
 				<th>តម្លៃសរុប(​​៛)</th>
 				<th>កាលបរិច្ឆេទ</th>
 				<th>ម៉ោង</th>
@@ -81,10 +82,10 @@
 
 <script type="text/javascript">
 
+	var rate = '<?php echo $exchangerate->riel; ?>';
 	function redirectPage(url){
 		window.location = url;
 	}
-
 	var table = $('#tbl_expense').DataTable( {
 
         "data": <?php echo $services ?>,
@@ -97,6 +98,7 @@
            	{ "data": "uom_expense_name" },
            	{ "data": "qty" },
             { "data": "riel_price" },
+            { "data": "dollar_price" },
             { "data": "total_price" },
             { "data": "expense_date" },
             { "data": "expense_time" },
@@ -117,8 +119,14 @@
         },
         {
                 "targets": 4,
+                "render": function ( data, type, row ) {
+                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> ៛ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(data) + '</span>';
+                },
+        },
+        {
+                "targets": 5,
                 "mRender": function ( data, type, row ) {
-                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> ៛ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(row.qty*row.riel_price)  + '</span>';
+                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> ៛ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(Number(row.qty*row.riel_price)+Number(row.qty*row.dollar_price*Number(rate)))  + '</span>';
                 },
         },
          ]

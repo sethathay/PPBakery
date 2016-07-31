@@ -25,7 +25,8 @@ class ServicesController extends Controller
         $services = json_encode($sv);
         $sections = DB::table('sections')->lists('name', 'id');
         $uom = DB::table('uom_expenses')->lists('name', 'id');
-        return view('services/index',compact('services','sections', 'uom'));
+		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
+        return view('services/index',compact('services','sections', 'uom', 'exchangerate'));
     }
 
     /**
@@ -127,9 +128,10 @@ class ServicesController extends Controller
 	public function expense()
     {
         //
+		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
 		$sections = DB::table('sections')->where('is_active',1)->orderBy('id', 'desc')->lists('name','id');
 		$uom = DB::table('uom_expenses')->where('is_active',1)->orderBy('id', 'desc')->lists('name','id');
-        return view('services/expense',compact('sections', 'uom'));
+        return view('services/expense',compact('sections', 'uom','exchangerate'));
     }
 	
 	public function addExpense(Request $request, Service $services){
@@ -149,6 +151,7 @@ class ServicesController extends Controller
 			$service['expense_time']    = $inputs['times'][$i].":".$inputs['minutes'][$i];
 			$service['exchange_rate_id']    = $inputs['exchange_rate_id'];
 			$service['riel_price']    = $inputs['txt_unit_price'][$i];
+			$service['dollar_price']    = $inputs['txt_unit_price_us'][$i];
 			$service->save();		
 		}
 		
