@@ -38,7 +38,7 @@
 				<td style="text-align:right; font-weight:bold;"><?php echo number_format($total_kh);?></td>
 				<td style="text-align:right; font-weight:bold;"><?php echo number_format($total_us);?></td>
 				<td style="text-align:right; font-weight:bold;"><?php echo number_format($sy_total);?></td>
-				<td style="text-align:right; font-weight:bold;"><?php echo number_format($balances);?></td>
+				<td style="text-align:right; font-weight:bold;"><?php echo number_format($totalSale->totalSale);?></td>
 			</tr>
         <?php }else{?>
         
