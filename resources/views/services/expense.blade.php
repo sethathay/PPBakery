@@ -367,7 +367,6 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					var newQty = Number(getObj.find(".txt_qty").val());
 					var unit_price_us = ((Number(getObj.find(".txt_unit_price_us").val()) > 0)? Number(getObj.find(".txt_unit_price_us").val()) : 0) * Number($(".riel").val());
 					$(".txt_subtotal").val(Number($(".txt_subtotal").val()) - Number(getObj.find(".txt_total_by_item").val()));
-					alert(unit_price_us);
 					var total_by_item = unit_price_us*newQty;
 										
 					getObj.find(".txt_total_by_item").val(total_by_item);
