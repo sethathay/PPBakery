@@ -190,30 +190,30 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				<tr>
 					<td style="width:12%;">
 						<select name="times[]" style="width:100px !important;">
-							  <option value="0">12 am</option>
-							  <option value="1">1 am</option>
-							  <option value="2">2 am</option>
-							  <option value="3">3 am</option>
-							  <option value="4">4 am</option>
-							  <option value="5">5 am</option>
-							  <option value="6">6 am</option>
-							  <option value="7">7 am</option>
-							  <option value="8">8 am</option>
-							  <option value="9">9 am</option>
-							  <option value="10">10 am</option>
-							  <option value="11">11 am</option>
-							  <option value="12">12 pm</option>
-							  <option value="13">1 pm</option>
-							  <option value="14">2 pm</option>
-							  <option value="15">3 pm</option>
-							  <option value="16">4 pm</option>
-							  <option value="17">5 pm</option>
-							  <option value="18">6 pm</option>
-							  <option value="19">7 pm</option>
-							  <option value="20">8 pm</option>
-							  <option value="21">9 pm</option>
-							  <option value="22">10 pm</option>
-							  <option value="23">11 pm</option>
+							  <option value="0">12 ព្រឹក</option>
+							  <option value="1">1 ព្រឹក</option>
+							  <option value="2">2 ព្រឹក</option>
+							  <option value="3">3 ព្រឹក</option>
+							  <option value="4">4 ព្រឹក</option>
+							  <option value="5">5 ព្រឹក</option>
+							  <option value="6">6 ព្រឹក</option>
+							  <option value="7">7 ព្រឹក</option>
+							  <option value="8">8 ព្រឹក</option>
+							  <option value="9">9 ព្រឹក</option>
+							  <option value="10">10 ព្រឹក</option>
+							  <option value="11">11 ព្រឹក</option>
+							  <option value="12">12 ថ្វៃ</option>
+							  <option value="13">1 ថ្វៃ</option>
+							  <option value="14">2 ថ្វៃ</option>
+							  <option value="15">3 ថ្វៃ</option>
+							  <option value="16">4 ថ្វៃ</option>
+							  <option value="17">5 ថ្វៃ</option>
+							  <option value="18">6 ថ្វៃ</option>
+							  <option value="19">7 ថ្វៃ</option>
+							  <option value="20">8 ថ្វៃ</option>
+							  <option value="21">9 ថ្វៃ</option>
+							  <option value="22">10 ថ្វៃ</option>
+							  <option value="23">11 ថ្វៃ</option>
 						</select>
 						<select name="minutes[]" style="width:60px !important;">
 						<?php for($i=0; $i<60; $i++){?>
@@ -367,7 +367,6 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					var newQty = Number(getObj.find(".txt_qty").val());
 					var unit_price_us = ((Number(getObj.find(".txt_unit_price_us").val()) > 0)? Number(getObj.find(".txt_unit_price_us").val()) : 0) * Number($(".riel").val());
 					$(".txt_subtotal").val(Number($(".txt_subtotal").val()) - Number(getObj.find(".txt_total_by_item").val()));
-					alert(unit_price_us);
 					var total_by_item = unit_price_us*newQty;
 										
 					getObj.find(".txt_total_by_item").val(total_by_item);

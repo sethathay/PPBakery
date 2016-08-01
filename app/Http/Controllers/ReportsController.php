@@ -14,6 +14,7 @@ use Response;
 use App\User;
 use App\SaleOrder;
 use App\SaleOrderDetail;
+use App\SaleOrderReceipt;
 use App\UserSaleLog;
 use App\Product;
 use App\Pgroup;
@@ -138,7 +139,13 @@ class ReportsController extends Controller
 											  ->orWhere('user_sale_logs.total_us', '>', 0);
 									})->
 									orderBy('u_name')->get();
-		return View::make('reports.reportSaleLogResult')->with('userSaleLog', $userSaleLog)->with('exchangerate', $exchangerate);
+									
+		$totalSale = 	SaleOrderReceipt::select(DB::raw("SUM(IF(sales_orders.balance<0 AND amount_kh,amount_kh+sales_orders.balance,amount_kh)+IF(sales_orders.balance<0 AND amount_us>0,amount_us+sales_orders.balance/riel,amount_us)) as totalSale"))
+						->join('exchange_rates', 'exchange_rates.id', '=', 'sales_order_receipts.exchange_rate_id')
+						->leftJoin('sales_orders', 'sales_orders.id', '=', 'sales_order_receipts.sales_order_id')
+						->where(DB::raw("DATE(sales_order_receipts.created_at)"), '=', $input['dates'])->first();
+						
+		return View::make('reports.reportSaleLogResult')->with('userSaleLog', $userSaleLog)->with('exchangerate', $exchangerate)->with('totalSale', $totalSale);
 		
 	}
 
