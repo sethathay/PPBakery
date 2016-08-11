@@ -445,11 +445,12 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		var record = {{ $record }};
 		var token = "{!! csrf_token() !!}";
 		
+		var paid = true;
 		// when press enter button and amount paid < amount to be pay
 		$("#myModalPayment").find("input").keyup(function(e){
 			var key = e.keyCode || e.which;
 			if(key === 13){
-				if(record > 0){
+				if(record > 0 && paid == true){
 					$.ajax({
 						type : 'post',
 						url : '{{ URL::asset("saleOrders/sale") }}',
@@ -471,6 +472,8 @@ function number_format_unlimited_precision($number,$decimal = '.')
 							});
 						}
 					});
+					
+					paid = false;
 				}
 			}
 		});
@@ -478,7 +481,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		
 		// when click button Paid
 		$("#btn-paid").click(function(){
-			if(record > 0){
+			if(record > 0 && paid == true){
 				$.ajax({
 					type : 'post',
 					url : '{{ URL::asset("saleOrders/sale") }}',
@@ -500,6 +503,8 @@ function number_format_unlimited_precision($number,$decimal = '.')
 						});
 					}
 				});
+				
+				paid = false;
 			}
 		});
 		
