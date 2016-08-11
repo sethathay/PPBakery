@@ -595,6 +595,7 @@ body {
 			/*$("#myModalPrint").on('shown.bs.modal', function(){
 			});*/
 			
+			var paid = true;
 			// when press enter button and amount paid < amount to be pay
 			$("#myModalPayment").find("input").keyup(function(e){
 				var key = e.keyCode || e.which;
@@ -607,7 +608,7 @@ body {
 					var total_amount_tobe_paid = amount_riel+(amount_us*rate)+custom_discount_riel+(custom_discount_us*rate);
 					
 					if(total_amount <= total_amount_tobe_paid){
-						if(record > 0){
+						if(record > 0 && paid == true){
 							$.ajax({
 								type : 'post',
 								url : '{{ URL::asset("pos/sale") }}',
@@ -629,6 +630,7 @@ body {
 									});
 								}
 							});
+							paid = false;
 						}
 					}else{
 						alert("លុយបង់មិនគ្រប់មិនអាចលក់បានទេ!");
@@ -648,7 +650,7 @@ body {
 				var total_amount_tobe_paid = amount_riel+(amount_us*rate)+custom_discount_riel+(custom_discount_us*rate);
 				
 				if(total_amount <= total_amount_tobe_paid){
-					if(record > 0){
+					if(record > 0 && paid == true){
 						$.ajax({
 							type : 'post',
 							url : '{{ URL::asset("pos/sale") }}',
@@ -670,6 +672,7 @@ body {
 								});
 							}
 						});
+						paid = false;
 					}
 				}else{
 					alert("លុយបង់មិនគ្រប់មិនអាចលក់បានទេ!");
