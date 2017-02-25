@@ -24,6 +24,7 @@
 				<div class="form-group col-md-6">
 					<label for="first_name">ប្រាក់សរុបពីការលក់ (៛)<span class="star"> * </span>:</label>
 					{!! Form::text('total_kh', null, array('class' => 'form-control', 'placeholder' => 'ប្រាក់សរុប (៛)', 'id'=>'total_kh','style'=>'width:55%')) !!}
+					{!! Form::hidden('dates', $userSaleLogs->dates, array('class' => 'form-control')) !!}
 				</div>
 				<div class="form-group col-md-6">
 					<label for="first_name">ប្រាក់សរុបពីការលក់ ($)<span class="star"> * </span>:</label>

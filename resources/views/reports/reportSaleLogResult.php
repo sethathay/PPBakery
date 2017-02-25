@@ -37,8 +37,8 @@
 				<td style="text-align:right; font-weight:bold;" colspan="4">សរុប</td>
 				<td style="text-align:right; font-weight:bold;"><?php echo number_format($total_kh);?></td>
 				<td style="text-align:right; font-weight:bold;"><?php echo number_format($total_us);?></td>
-				<td style="text-align:right; font-weight:bold;"><?php echo number_format($sy_total);?></td>
-				<td style="text-align:right; font-weight:bold;"><?php echo number_format($balances);?></td>
+				<td style="text-align:right; font-weight:bold;"><?php echo number_format($totalSale->totalSale);?></td>
+				<td style="text-align:right; font-weight:bold; color:<?php echo ((($total_us*$exchangerate->riel) + $total_kh) - $totalSale->totalSale)>0?"":"red"?>"><?php echo number_format((($total_us*$exchangerate->riel) + $total_kh) - $totalSale->totalSale);?></td>
 			</tr>
         <?php }else{?>
         

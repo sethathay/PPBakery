@@ -20,7 +20,8 @@ class SectionsController extends Controller
     public function index()
     {
         //Index of sections refer as expense group
-        $sec = Section::where('is_active', 1)->get();
+        $sec = Section::select('sections.*', 'section_groups.name AS section_name')->leftJoin('section_groups','sections.section_group_id','=','section_groups.id')->where('sections.is_active', 1)->get();
+		
         $sections = json_encode($sec);
         return view('sections/index',compact('sections'));
     }

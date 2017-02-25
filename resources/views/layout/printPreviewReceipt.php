@@ -45,7 +45,9 @@ td{
 			<div style="text-align : center; float:left; width:100%;">
 				លេខវិក័យបត្រ / InvID : <label><?php echo $saleOrder->so_code; ?></label><br/>
                 
-				កាលបរិច្ឆេទ / DateTime : <label><?php echo $saleOrder->created_at; ?></label>
+				កាលបរិច្ឆេទ / DateTime : <label><?php echo $saleOrder->created_at; ?></label><br/>
+                
+				ឈ្មោះអ្នកលក់ : <label><?php echo $saleOrder->u_name; ?></label>
 			</div>
 			<!--<div style="text-align : center;">
 				កាលបរិច្ឆេទ / DateTime : <label><?php echo $saleOrder->created_at; ?></label>

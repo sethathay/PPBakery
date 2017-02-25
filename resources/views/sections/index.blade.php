@@ -67,6 +67,7 @@
 		<thead>
 			<tr>
 				<th>ឈ្មោះរបស់ក្រុមចំនាយ</th>
+				<th>ប្រភេទ ក្រុមចំនាយ</th>
 				<th>បរិយាយផ្សេងៗ</th>
 				<th>ថ្ងៃនៃការកែប្រែ</th>
 				<th>សកម្មភាព</th>
@@ -84,12 +85,13 @@
 	var table = $('#tbl_sections').DataTable( {
 
         "data": <?php echo $sections ?>,
-        "order": [[ 2, "desc" ]],
+        "order": [[ 1, "desc" ]],
         "createdRow": function ( row, data, index ) {
-        	$('td', row).eq(3).addClass('last_td');
+        	$('td', row).eq(4).addClass('last_td');
         },
         "columns": [
            	{ "data": "name" },
+           	{ "data": "section_name" },
             { "data": "description" },
             { "data": "updated_at" },
             { "data": null }

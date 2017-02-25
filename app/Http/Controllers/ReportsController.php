@@ -33,7 +33,7 @@ class ReportsController extends Controller
      */
     public function index()
     {
-		$users = User::select(DB::raw('CONCAT(first_name, " ", last_name) AS name'),'users.id')->join('user_groups', 'user_id','=','users.id')->orderBy('first_name', 'asc')->lists('name','users.id');
+		$users = User::select(DB::raw('CONCAT(first_name, " ", last_name) AS name'),'users.id')->join('user_groups', 'user_id','=','users.id')->where('users.is_active', 1)->orderBy('first_name', 'asc')->lists('name','users.id');
 		
         return view('reports.index',compact('users'));
     }
@@ -62,7 +62,7 @@ class ReportsController extends Controller
 	
     public function reportProduct()
     {
-		$users = User::select(DB::raw('CONCAT(first_name, " ", last_name) AS name'),'users.id')->join('user_groups', 'user_id','=','users.id')->orderBy('first_name', 'asc')->lists('name','users.id');
+		$users = User::select(DB::raw('CONCAT(first_name, " ", last_name) AS name'),'users.id')->join('user_groups', 'user_id','=','users.id')->where('users.is_active', 1)->orderBy('first_name', 'asc')->lists('name','users.id');
 		
         return view('reports.reportProduct',compact('users'));
     }

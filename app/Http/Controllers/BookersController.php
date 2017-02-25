@@ -26,7 +26,7 @@ class BookersController extends Controller
      */
     public function index()
     {
-        $saleOrders = json_encode(SaleOrder::select('sales_orders.*','bookers.phone')->leftJoin('bookers', 'sales_orders.booker_id','=','bookers.id')->where('sales_orders.is_active', 1)->where('sales_orders.is_book', 1)->orderBy('sales_orders.created_at','desc')->get());
+        $saleOrders = json_encode(SaleOrder::select('sales_orders.*','bookers.phone',DB::raw('CONCAT(users.first_name, " ", users.last_name) AS u_name'))->join('users', 'sales_orders.created_by','=','users.id')->leftJoin('bookers', 'sales_orders.booker_id','=','bookers.id')->where('sales_orders.is_active', 1)->where('sales_orders.is_book', 1)->orderBy('sales_orders.created_at','desc')->get());
 		
         return view('bookers.index',compact('saleOrders'));
     }
@@ -367,14 +367,14 @@ class BookersController extends Controller
 	
 	// print receipt pos
 	public function printReceipt($sales_order_id, $footer){
-		$saleOrder = SaleOrder::where('sales_orders.id', $sales_order_id)->first();
+		$saleOrder = SaleOrder::select('sales_orders.*',DB::raw('CONCAT(users.first_name, " ", users.last_name) AS u_name'))->join('users', 'sales_orders.created_by','=','users.id')->where('sales_orders.id', $sales_order_id)->first();
 		$saleOrderReceipts = SaleOrderReceipt::where('sales_order_id', $sales_order_id)->get();
 		$saleOrderDetail = SaleOrderDetail::join('products', 'products.id', '=', 'sales_order_details.product_id')->whereSales_order_id($sales_order_id)->get();
 		return view('/layout/printReceipt', compact('saleOrderDetail', 'saleOrder', 'footer', 'saleOrderReceipts'));
 	}
 	// print preview before paid
 	public function printPreviewReceipt($sales_order_id, $footer){
-		$saleOrder = SaleOrder::where('sales_orders.id', $sales_order_id)->first();
+		$saleOrder = SaleOrder::select('sales_orders.*',DB::raw('CONCAT(users.first_name, " ", users.last_name) AS u_name'))->join('users', 'sales_orders.created_by','=','users.id')->where('sales_orders.id', $sales_order_id)->first();
 		$saleOrderReceipts = SaleOrderReceipt::where('sales_order_id', $sales_order_id)->get();
 		$saleOrderDetail = SaleOrderDetail::join('products', 'products.id', '=', 'sales_order_details.product_id')->whereSales_order_id($sales_order_id)->get();
 		return view('/layout/printPreviewReceipt', compact('saleOrderDetail', 'saleOrder', 'footer', 'saleOrderReceipts'));

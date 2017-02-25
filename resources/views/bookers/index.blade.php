@@ -79,6 +79,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			<tr>
 				<!--<th><input type="checkbox" name="checkOptionAll" /></th>-->
 				<th>ថ្ងៃខែឆ្នាំកក់</th>
+				<th>ឈ្មោះអ្នកលក់</th>
 				<th>ទូរស័ព្ទ</th>
 				<th>លេខកូដវិក័យប័ត្រ</th>
 				<th>បញ្ចុះតំលៃ (៛)</th>
@@ -138,12 +139,13 @@ function number_format_unlimited_precision($number,$decimal = '.')
 	var table = $('#tbl_expense').DataTable( {
 
         "data": <?php echo $saleOrders ?>,
-        "order": [[ 6, "desc" ]],
+        "order": [[ 7, "desc" ]],
         "createdRow": function ( row, datas, index ) {
-        	$('td', row).eq(9).addClass('last_td');
+        	$('td', row).eq(10).addClass('last_td');
         },
         "columns": [
            	{ "data": "order_date" },
+           	{ "data": "u_name" },
            	{ "data": "phone" },
             { "data": "so_code" },
             { "data": "discount_riel" },
@@ -166,31 +168,31 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			+'</button>'*/
         },
         {
-                "targets": 3,
+                "targets": 4,
                 "render": function ( data, type, row ) {
                     return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> $ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(data) + '</span>';
                 },
 		},
         {
-                "targets": 4,
+                "targets": 5,
                 "render": function ( data, type, row ) {
                     return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> $ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(getMathRound100(data)) + '</span>';
                 },
         },
         {
-                "targets": 5,
+                "targets": 6,
                 "render": function ( data, type, row ) {
                     return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> ៛ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(data) + '</span>';
                 },
 		},
         {
-                "targets": 6,
+                "targets": 7,
                 "render": function ( data, type, row ) {
                     return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> $ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(getMathRound100(data)) + '</span>';
                 },
 		},
         {
-                "targets": 7,
+                "targets": 8,
                 "render": function ( data, type, row ) {
                     return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> $ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(data) + '</span>';
                 },

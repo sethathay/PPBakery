@@ -65,9 +65,11 @@ Route::get('users/logout', 'UsersController@logout');
 
 //Route::resource('users', 'UsersController');
 Route::get('user_sale_logs/index', ['as' => 'user_sale_logs.index', 'uses' => 'UserSaleLogsController@index']);
+Route::get('user_sale_logs/index/{dates}', 'UserSaleLogsController@index');
 Route::get('user_sale_logs/create', 'UserSaleLogsController@create');
 Route::get('user_sale_logs/edit/{id}', 'UserSaleLogsController@edit');
 Route::post('user_sale_logs/update', 'UserSaleLogsController@update');
+Route::post('user_sale_logs/getDataByDate', 'UserSaleLogsController@getDataByDate');
 
 // Route of products by Thay Setha
 Route::post('products/searchProdctByCode', ['as' => 'products.searchProdctByCode', 'uses' => 'ProductsController@searchProdctByCode']);
@@ -93,6 +95,15 @@ Route::get('sections/show/{id}', 'SectionsController@show');
 Route::get('sections/edit/{id}', ['as' => 'sections.edit', 'uses' => 'SectionsController@edit']);
 Route::post('sections/update', ['as' => 'sections.update', 'uses' => 'SectionsController@update']);
 Route::get('sections/destroy/{id}', ['as' => 'sections.destroy', 'uses' => 'SectionsController@destroy']);
+
+//Route of section_groups for expense group by PHOU LIN
+Route::get('sectionGroups/index', ['as' => 'sectionGroups.index', 'uses' => 'SectionGroupsController@index']);
+Route::get('sectionGroups/create', 'SectionGroupsController@create');
+Route::post('sectionGroups/store', ['as' => 'sectionGroups.store', 'uses' => 'SectionGroupsController@store']);
+Route::get('sectionGroups/show/{id}', 'sectionGroupsController@show');
+Route::get('sectionGroups/edit/{id}', ['as' => 'sectionGroups.edit', 'uses' => 'SectionGroupsController@edit']);
+Route::post('sectionGroups/update', ['as' => 'sectionGroups.update', 'uses' => 'SectionGroupsController@update']);
+Route::get('sectionGroups/destroy/{id}', ['as' => 'sectionGroups.destroy', 'uses' => 'SectionGroupsController@destroy']);
 
 
 Route::get('uomexpenses/index', ['as' => 'uomexpenses.index', 'uses' => 'UomExpensesController@index']);

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\UserSaleLog;
 use Input;
 use DB;
+use View;
 
 class UserSaleLogsController extends Controller
 {
@@ -20,13 +21,27 @@ class UserSaleLogsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $userSaleLogs = UserSaleLog::select('user_sale_logs.id','first_name','total_kh', 'total_us', 'dates', DB::raw("SUBSTRING(time_in,1,5) AS time_in"), DB::raw("SUBSTRING(time_out,1,5) AS time_out"))->join('users', 'users.id','=','user_id')->where('dates', date('Y-m-d'))->where('user_id',Auth::user()->id)->get();
+		$input = $request->all();
+		
+		if(isset($input['dates']) && $input['dates'] !=  ""){
+			$userSaleLogs = UserSaleLog::select('user_sale_logs.id','first_name','total_kh', 'total_us', 'dates', DB::raw("SUBSTRING(time_in,1,5) AS time_in"), DB::raw("SUBSTRING(time_out,1,5) AS time_out"))->join('users', 'users.id','=','user_id')->where('dates', $input['dates'])->where('user_id',Auth::user()->id)->get();
+		}else{
+			$userSaleLogs = UserSaleLog::select('user_sale_logs.id','first_name','total_kh', 'total_us', 'dates', DB::raw("SUBSTRING(time_in,1,5) AS time_in"), DB::raw("SUBSTRING(time_out,1,5) AS time_out"))->join('users', 'users.id','=','user_id')->where('dates', date('Y-m-d'))->where('user_id',Auth::user()->id)->get();
+		}
+        
         $userSaleLogs = json_encode($userSaleLogs);
         return view('userSaleLogs/index',compact('userSaleLogs'));
     }
+	
+	public function getDataByDate(Request $request){
+		$input = $request->all();
+												
+		$userSaleLogs = UserSaleLog::select('user_sale_logs.id','first_name','total_kh', 'total_us', 'dates', DB::raw("SUBSTRING(time_in,1,5) AS time_in"), DB::raw("SUBSTRING(time_out,1,5) AS time_out"))->join('users', 'users.id','=','user_id')->where('dates', $input['dates'])->where('user_id',Auth::user()->id)->get();
+		
+		return View::make('userSaleLogs.getDataByDate')->with('userSaleLogs', $userSaleLogs);
+	}
 	
     /**
      * Show the form for creating a new resource.
@@ -90,7 +105,9 @@ class UserSaleLogsController extends Controller
         unset($data['hours']);
         unset($data['minutes']);
         $userSaleLog->whereId(Input::get('id'))->update($data);
-		return Redirect::route('user_sale_logs.index');
+		
+		return Redirect::route('user_sale_logs.index', array('dates'=>$data['dates']));
+		//return Redirect::route('user_sale_logs/index/'.$data['dates']);
     }
 
     /**

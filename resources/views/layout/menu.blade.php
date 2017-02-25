@@ -121,6 +121,9 @@
 						<a href="{{ URL::asset('pricingRules/index') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;បញ្ចុះតំលៃ សម្រាប់អតិថិជន</a>
 					</li>
 					<li class="inner_link">
+						<a href="{{ URL::asset('sectionGroups/index') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;ប្រភេទ ក្រុមចំនាយ</a>
+					</li>
+					<li class="inner_link">
 						<a href="{{ URL::asset('sections/index') }}"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;ក្រុមចំនាយ</a>
 					</li>
 					<li class="inner_link">
