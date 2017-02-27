@@ -29,10 +29,10 @@
 		$(document).ready(function(){
 
 			$("#dsetting").click(function(){
-				$("#settinglist").toggle();
+				$("#dsettinglist").toggle();
 			});
                         $("#dreport").click(function(){
-				$("#reportlist").toggle();
+				$("#dreportlist").toggle();
 			});
 
 		});
@@ -53,8 +53,8 @@
                             foreach($menus as $menu){
                                 if($menu->target == null){
                         ?>
-                                    <div class="col-md-2 board" id="<?php echo $menu->menu_id ?>" onclick="redirectPage('<?php echo $menu->link ?>')">
-                                        <img src="<?php echo $menu->img_path?>" />
+                                    <div class="col-md-2 board" id="<?php echo $menu->menu_id ?>" onclick="redirectPage('{{URL::asset($menu->link == null ? "#" : $menu->link)}}')">
+                                        <img src="{{URL::asset($menu->img_path)}}" />
                                         <br/>
                                         <?php echo $menu->name?>
                                     </div>
@@ -62,8 +62,8 @@
                                 }else{
                         ?>
                                     <div class="col-md-2 board" id="<?php echo $menu->menu_id ?>" 
-                                         onclick="redirectPage('<?php echo $menu->link ?>','<?php echo $menu->target ?>')">
-                                        <img src="<?php echo $menu->img_path?>" />
+                                         onclick="redirectPage('{{URL::asset($menu->link == null ? "#" : $menu->link)}}','<?php echo $menu->target ?>')">
+                                        <img src="{{URL::asset($menu->img_path)}}" />
                                         <br/>
                                         <?php echo $menu->name?>
                                     </div>

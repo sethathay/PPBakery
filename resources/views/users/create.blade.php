@@ -85,7 +85,7 @@
 				</div>
 				<div class="form-group">
 					<label for="group_id">Group:</label>
-					{!! Form::select('group_id', $groups, 2, ['class'=>'form-control', 'id'=>'group_id']) !!}
+					{!! Form::select('group_id', $groups, 1, ['class'=>'form-control', 'id'=>'group_id']) !!}
 					
 				</div>
 			</div>

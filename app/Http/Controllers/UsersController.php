@@ -39,8 +39,8 @@ class UsersController extends Controller
 	public function create()
 	{
 		//
-		$groups = array_merge(array('0'=>'Please Select'), DB::table('groups')->lists('name', 'id'));
-		$countries = array_merge(array('0'=>'Please Select'), DB::table('countries')->lists('name', 'id'));
+		$groups = DB::table('groups')->lists('name', 'id');
+		$countries = DB::table('countries')->lists('name', 'id');
 		return view('users/create', compact('countries', 'groups'));
 	}
 
@@ -85,7 +85,7 @@ class UsersController extends Controller
 	{
 		//
 		$user = User::whereId($id)->first();
-		$countries = array_merge(array('0'=>'Please Select'), DB::table('countries')->lists('name', 'id'));
+		$countries = DB::table('countries')->lists('name', 'id');
 		return view('users/show', compact('countries', 'user'));
 	}
 
@@ -98,10 +98,10 @@ class UsersController extends Controller
 	public function edit($id)
 	{
 		//
-		$groups = array_merge(array('0'=>'Please Select'), DB::table('groups')->lists('name', 'id'));
+		$groups = DB::table('groups')->lists('name', 'id');
 		$user = User::select('users.*','user_groups.*')->leftJoin('user_groups','user_id','=', 'users.id')->where('users.id',$id)->first();//whereId($id)->first();
 		
-		$countries = array_merge(array('0'=>'Please Select'), DB::table('countries')->lists('name', 'id'));
+		$countries = DB::table('countries')->lists('name', 'id');
 		return view('users/edit', compact('countries', 'user', 'groups'));
 	}
 
@@ -188,9 +188,9 @@ class UsersController extends Controller
 				
 				
 				$direction = '/dashboard';
-				if($userGroup->group_id != 1){
-					$direction = '/saleOrders/index';
-				}
+//				if($userGroup->group_id != 1){
+//					$direction = '/saleOrders/index';
+//				}
 				return Redirect::intended($direction);
 			}
 		}
