@@ -27,6 +27,38 @@
 				</div>
 			</div>
 		</div>
+                <div class="row">
+			<div class="col-sm-12">
+				<h4>កំនត់មីនុយសំរាប់ក្រុមអ្នកប្រើប្រាស់</h4>
+			</div>
+			<div class="col-sm-6">
+                            <ul class="list-group">
+                                <?php
+                                    foreach($menus as $menu){
+                                        $check = "";
+                                        if(isset($permissions)){
+                                            foreach($permissions as $per){
+                                                if($per->module_id == $menu->id){
+                                                    $check = "checked";
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        if($menu->parents == null){
+                                            echo '<li class="list-group-item">';
+                                                echo '<input type="checkbox" '. $check .' style="float:right;" name="menu_id[]" value="'. $menu->id .'"></input>';
+                                                echo $menu->name;
+                                            echo '</li>';
+                                        }else{
+                                            echo '<li class="list-group-item" style="padding-left:150px;">';
+                                                echo '<input type="checkbox" '. $check .' style="float:right" name="menu_id[]" value="'. $menu->id .'"></input>';
+                                                echo $menu->name;
+                                            echo '</li>';
+                                        }
+                                    }
+                                ?>
+                            </ul>
+			</div>
+		</div>
 	</div>
-	
 </div>

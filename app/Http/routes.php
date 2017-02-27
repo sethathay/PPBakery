@@ -11,16 +11,6 @@
 |
 */
 Route::get('/', function(){
-	/*
-	$data = [
-		'title' => 'Test Send The Email',
-		'Content' => 'Body Email!!!'
-	];
-	Mail::send('/layout/index', $data, function($ms){
-		$ms->to('setha.thay@workevolve.com', 'Setha')->subject("Hello Phou Lin");
-	});
-	*/
-	
 	if ( Auth::check()) // use Auth::check instead of Auth::user
 	{
 		if(Session::get('group_id') == 1){
