@@ -107,6 +107,7 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				<th>ថ្ងៃខែឆ្នាំ</th>
 				<th>ម់ោងចូល</th>
 				<th>ម់ោងចេញ</th>
+				<th>ម៉ោងចេញក្នុង System</th>
 				<th>ចំនួនបញ្ចូលសរុប (៛)</th>
 				<th>ចំនួនបញ្ចូលសរុប ($)</th>
 				<th>ចំនួនសរុប System ($)</th>

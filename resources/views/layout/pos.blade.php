@@ -289,6 +289,11 @@ body {
 	font-size:20px;
 	font-weight: bold;
 }
+.notify{
+	border-radius : 50px;
+	display: none;
+	background : red;
+}
 </style>
 </head>
 <body>
@@ -308,8 +313,12 @@ body {
 					</button>
 					<button onclick="redirectPage('bookers/book')" type="button"
 						class="btn btn-md btn-success">
-					<span class="glyphicon glyphicon-plus"></span> កក់ទំនិញ
-				</button>
+						<span class="glyphicon glyphicon-plus"></span> កក់ទំនិញ
+					</button>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<button onclick="redirectPage('bookers/index/filter')" type="button"
+						class="btn btn-md btn-danger notify">
+					</button>
 				</div>
 			</div>
 		</div>
@@ -542,6 +551,23 @@ body {
 			window.open(url);
 		}
 		$(document).ready(function(){
+			
+			//Display notification for number of booking product.
+			$.ajax({
+				url 	: '{{ URL::asset("pos/getNotification") }}',
+				type	: "get",
+				success : function(result){
+					if(result > 0){
+						if(Number(result) >= 100){
+							result = "99+";
+						}
+						$(".notify").text(result);
+						$(".notify").show();
+					}else{
+						$(".notify").hide();
+					}
+				}				
+			});
 			
 			$("#myModalPayment").find("input").keydown(
 				function(e)

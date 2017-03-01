@@ -137,6 +137,15 @@
 	font-size:20px;
 	font-weight: bold;
 }
+.bootstrap-datetimepicker-widget{
+	color: #000;
+}
+.header-filter input[type=text]{
+	width: 120px;
+}
+.header-filter .pickup_time{
+	width: 80px !important;
+}
 </style>
 
 <?php
@@ -156,9 +165,10 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		<div class="col-sm-3">
 			<img src="{{ URL::asset('/img/book_b.png') }}" /> <label style="color:#fff;">លក់កក់</label>
 		</div>
-		<div class="col-sm-9"​​ style="text-align: right; padding: 30px 10px; vertical-align: middle; color:#FFF;">
-            <div class="col-sm-5">ថ្ងៃកូម៉ង់ទំនេញ :  {!! Form::text('date_order', date('Y-m-d'), array('class'=>'form-control date_order')) !!} </div>
-            <div class="col-sm-5">ថ្ងៃទទួលទំនេញ :  {!! Form::text('date_due', date('Y-m-d'), array('class'=>'form-control date_due')) !!}</div>
+		<div class="col-sm-9 header-filter"​​ style="text-align: right; padding: 30px 10px; vertical-align: middle; color:#FFF;">
+            <div class="col-sm-3">ថ្ងៃកូម៉ង់ :  {!! Form::text('date_order', date('Y-m-d'), array('class'=>'form-control date_order')) !!} </div>
+            <div class="col-sm-3">ថ្ងៃទទួល :  {!! Form::text('date_due', date('Y-m-d'), array('class'=>'form-control date_due')) !!}</div>
+            <div class="col-sm-3">ម៉ោងទទួល :  {!! Form::text('pickup_time', date('H:i'), array('class'=>'form-control pickup_time')) !!}</div>
             <div class="col-sm-2">
 			<button onclick="redirectPage('{{ URL::asset('bookers/index') }}')" type="button"
 				class="btn btn-md btn-danger">
@@ -1025,6 +1035,9 @@ function number_format_unlimited_precision($number,$decimal = '.')
 		$('.date_due, .date_order').datepicker({
 			format: 'yyyy-mm-dd',
 			autoclose: true
+		});
+		$('.pickup_time').datetimepicker({
+			format: 'hh:mm'
 		});
 		
 		// Calculate total block

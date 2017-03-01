@@ -1,0 +1,5 @@
+ALTER TABLE `user_sale_logs`
+	ADD COLUMN `auto_time_out` TIME NOT NULL AFTER `time_out`;
+
+ALTER TABLE `sales_orders`
+	ADD COLUMN `pickup_time` TIME NULL DEFAULT NULL AFTER `due_date`;

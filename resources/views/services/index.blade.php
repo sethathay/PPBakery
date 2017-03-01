@@ -120,7 +120,7 @@
         {
                 "targets": 4,
                 "render": function ( data, type, row ) {
-                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> ៛ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(data) + '</span>';
+                    return '<span class="badge" style="background-color:#5cb85c;font-size:14px;"> $ </span> <span class="label label-danger" style="font-size:14px;">' + addCommas(data) + '</span>';
                 },
         },
         {

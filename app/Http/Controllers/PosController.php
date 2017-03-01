@@ -160,6 +160,11 @@ class PosController extends Controller
 		return view('/layout/printReceipt', compact('saleOrderDetail', 'saleOrder', 'footer', 'saleOrderReceipts'));
 	}
 	
+	public function getNotification(){
+		$booking = SaleOrder::where('is_book', 1)->where('due_date', date('Y-m-d'))->where(DB::raw("SUBSTRING(pickup_time,1,2)"), '<=', date('H'))->count();
+		return $booking;
+	}
+	
 	function generateAutoCode($table, $field, $len, $char) {
         $sqlArr = array('Table' => $table, 'Fields' => array('id', $field));
         $code = $this->getCode($sqlArr, $sort = false);

@@ -26,9 +26,9 @@ class UserSaleLogsController extends Controller
 		$input = $request->all();
 		
 		if(isset($input['dates']) && $input['dates'] !=  ""){
-			$userSaleLogs = UserSaleLog::select('user_sale_logs.id','first_name','total_kh', 'total_us', 'dates', DB::raw("SUBSTRING(time_in,1,5) AS time_in"), DB::raw("SUBSTRING(time_out,1,5) AS time_out"))->join('users', 'users.id','=','user_id')->where('dates', $input['dates'])->where('user_id',Auth::user()->id)->get();
+			$userSaleLogs = UserSaleLog::select('user_sale_logs.id','first_name','total_kh', 'total_us', 'dates', DB::raw("SUBSTRING(time_in,1,5) AS time_in"), DB::raw("SUBSTRING(time_out,1,5) AS time_out"), DB::raw("SUBSTRING(auto_time_out,1,5) AS auto_time_out"))->join('users', 'users.id','=','user_id')->where('dates', $input['dates'])->where('user_id',Auth::user()->id)->get();
 		}else{
-			$userSaleLogs = UserSaleLog::select('user_sale_logs.id','first_name','total_kh', 'total_us', 'dates', DB::raw("SUBSTRING(time_in,1,5) AS time_in"), DB::raw("SUBSTRING(time_out,1,5) AS time_out"))->join('users', 'users.id','=','user_id')->where('dates', date('Y-m-d'))->where('user_id',Auth::user()->id)->get();
+			$userSaleLogs = UserSaleLog::select('user_sale_logs.id','first_name','total_kh', 'total_us', 'dates', DB::raw("SUBSTRING(time_in,1,5) AS time_in"), DB::raw("SUBSTRING(time_out,1,5) AS time_out"), DB::raw("SUBSTRING(auto_time_out,1,5) AS auto_time_out"))->join('users', 'users.id','=','user_id')->where('dates', date('Y-m-d'))->where('user_id',Auth::user()->id)->get();
 		}
         
         $userSaleLogs = json_encode($userSaleLogs);
@@ -38,7 +38,7 @@ class UserSaleLogsController extends Controller
 	public function getDataByDate(Request $request){
 		$input = $request->all();
 												
-		$userSaleLogs = UserSaleLog::select('user_sale_logs.id','first_name','total_kh', 'total_us', 'dates', DB::raw("SUBSTRING(time_in,1,5) AS time_in"), DB::raw("SUBSTRING(time_out,1,5) AS time_out"))->join('users', 'users.id','=','user_id')->where('dates', $input['dates'])->where('user_id',Auth::user()->id)->get();
+		$userSaleLogs = UserSaleLog::select('user_sale_logs.id','first_name','total_kh', 'total_us', 'dates', DB::raw("SUBSTRING(time_in,1,5) AS time_in"), DB::raw("SUBSTRING(time_out,1,5) AS time_out"), DB::raw("SUBSTRING(auto_time_out,1,5) AS auto_time_out"))->join('users', 'users.id','=','user_id')->where('dates', $input['dates'])->where('user_id',Auth::user()->id)->get();
 		
 		return View::make('userSaleLogs.getDataByDate')->with('userSaleLogs', $userSaleLogs);
 	}

@@ -159,7 +159,17 @@ function number_format_unlimited_precision($number,$decimal = '.')
 			<img src="{{ URL::asset('/img/dollars_b.png') }}" /> <label>ការចំនាយ</label>
 		</div>
 		<div class="col-sm-9"​​ style="text-align: right; padding: 30px 10px; vertical-align: middle;">
-            <div class="col-sm-12">
+            <div class="col-sm-12">			
+			<?php if(Session::get('group_id') == 1 || Session::get('group_id') == 2){ ?>			
+			<div class="form-group">
+				<div class='input-group date' id='datetimepicker7'>
+					<input type='text' class="form-control" value="<?php echo date('Y-m-d');?>" name="expense_date" id="dates" placeholder="ថ្ងៃបញ្ចប់ (YYYY-MM-DD)" />
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-calendar"></span>
+					</span>
+				</div>
+			</div>
+			<?php }?>
 			<button type="button"
 				class="btn btn-md btn-primary btn-save">
 				<span class="glyphicon glyphicon-save"></span> រក្សាទុក
@@ -401,6 +411,12 @@ function number_format_unlimited_precision($number,$decimal = '.')
 					alert("សូមបញ្ចូលចំនាយ មុនចុចរក្សាទុក!!!");
 				}
 			});
+			
+			
+			$('#datetimepicker7').datepicker({
+				autoclose: true,
+				format: 'yyyy-mm-dd'
+		   });
 						
 			// Calculate total block
 			function calculateTotalBlock(total_by_item){	

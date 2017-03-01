@@ -50,6 +50,9 @@
 		<div class="col-sm-6">
 			<img src="{{ URL::asset('/img/saleReport.png') }}" /> <label>បញ្ចីរប្រាក់សរុបពីការលក់</label>
 		</div>
+		<?php
+			if(Session::get('group_id') == 1){
+		?>
 		<div class="col-sm-6" style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
             <div class="col-sm-6">
             	<div class="form-group">
@@ -72,6 +75,7 @@
                 </div>
             </div>
 		</div>
+			<?php }?>
 	</div>
 	<!-- check for flash notification message -->
 	@if(Session::has('flash_notice'))

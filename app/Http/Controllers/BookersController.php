@@ -24,10 +24,17 @@ class BookersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($filter = null)
     {
-        $saleOrders = json_encode(SaleOrder::select('sales_orders.*','bookers.phone',DB::raw('CONCAT(users.first_name, " ", users.last_name) AS u_name'))->join('users', 'sales_orders.created_by','=','users.id')->leftJoin('bookers', 'sales_orders.booker_id','=','bookers.id')->where('sales_orders.is_active', 1)->where('sales_orders.is_book', 1)->orderBy('sales_orders.created_at','desc')->get());
-		
+		if($filter == null){
+			
+			$saleOrders = json_encode(SaleOrder::select('sales_orders.*','bookers.phone',DB::raw('CONCAT(users.first_name, " ", users.last_name) AS u_name'))->join('users', 'sales_orders.created_by','=','users.id')->leftJoin('bookers', 'sales_orders.booker_id','=','bookers.id')->where('sales_orders.is_active', 1)->where('sales_orders.is_book', 1)->orderBy('sales_orders.created_at','desc')->get());
+			
+		}else{
+			
+			$saleOrders = json_encode(SaleOrder::select('sales_orders.*','bookers.phone',DB::raw('CONCAT(users.first_name, " ", users.last_name) AS u_name'))->join('users', 'sales_orders.created_by','=','users.id')->leftJoin('bookers', 'sales_orders.booker_id','=','bookers.id')->where('sales_orders.is_active', 1)->where('sales_orders.is_book', 1)->where('due_date', date('Y-m-d'))->where(DB::raw("SUBSTRING(pickup_time,1,2)"), '<=', date('H'))->orderBy('sales_orders.created_at','desc')->get());
+			
+		}
         return view('bookers.index',compact('saleOrders'));
     }
 		
@@ -68,6 +75,7 @@ class BookersController extends Controller
         $saleOrder['balance']    = $inputs['total_amount_riel'] - ($inputs['amount_riel']+$inputs['amount_us']*$rate + $inputs['custom-discount-riel'] + $inputs['custom-discount-us']*$rate);		
         $saleOrder['order_date']    = $inputs['date_order'];
 		$saleOrder['due_date']    = $inputs['date_due'];
+		$saleOrder['pickup_time']    = $inputs['pickup_time'].":".date("s");
         $saleOrder['is_active']    = 1;
         $saleOrder['is_book']    = 1;
         $saleOrder['created_by']    = \Auth::user()->id;

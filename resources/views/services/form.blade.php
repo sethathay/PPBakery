@@ -6,11 +6,11 @@ select{
 </style>
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
-		<div class="col-sm-7">
+		<div class="col-sm-6">
 			<img src="{{ URL::asset('/img/dollars_b.png') }}" /> <label>ការចំនាយ</label>
 		</div>
-		<div class="col-sm-5"
-			style="text-align: right; padding: 30px 10px; vertical-align: middle;">
+		<div class="col-sm-6"
+			style="text-align: right; padding: 30px 10px; vertical-align: middle;">			
 			<button type="submit" class="btn btn-md btn-success btnsave">
 				<span class="glyphicon glyphicon-saved"></span> រក្សាទុក
 			</button>

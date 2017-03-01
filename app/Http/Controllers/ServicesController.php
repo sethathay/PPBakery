@@ -147,7 +147,7 @@ class ServicesController extends Controller
 			$service['section_id']    	= $inputs['section_id'][$i];
 			$service['uom_expense_id']  = $inputs['uom_expense_id'][$i];
 			$service['qty']    			= $inputs['txt_qty'][$i];
-			$service['expense_date']    = date("Y-m-d");
+			$service['expense_date']    = $inputs['expense_date'];
 			$service['expense_time']    = $inputs['times'][$i].":".$inputs['minutes'][$i];
 			$service['exchange_rate_id']    = $inputs['exchange_rate_id'];
 			$service['riel_price']    = $inputs['txt_unit_price'][$i];

@@ -185,6 +185,7 @@ class UsersController extends Controller
 				$userSaleLog->dates			= date('Y-m-d');
 				$userSaleLog->time_in		= date('H:i:s');
 				$userSaleLog->save();
+				$request->session()->put('userSaleLog_id', $userSaleLog->id);
 				
 				
 				$direction = '/dashboard';
@@ -201,7 +202,12 @@ class UsersController extends Controller
 		}
 	}
 	
-	public function logout() {		
+	public function logout() {	
+		// Add to user sale log
+		$userSaleLog 				= UserSaleLog::find(Session::get('userSaleLog_id'));
+		$userSaleLog->auto_time_out	= date('H:i:s');
+		$userSaleLog->save();
+		
 		Auth::logout();
 		return Redirect::intended('/');
 	}

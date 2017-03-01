@@ -7,6 +7,7 @@
 			<th>ថ្ងៃខែឆ្នាំ</th>
 			<th>ម៉ោងចូល</th>
 			<th>ម៉ោងចេញ</th>
+			<!--<th>ម៉ោងចេញក្នុង System</th>-->
 			<th>សកម្មភាព</th>
 		</tr>
     </thead>
@@ -20,6 +21,7 @@
                     <td><?php echo $userSaleLog->dates; ?></td>
                     <td><?php echo $userSaleLog->time_in; ?></td>
                     <td><?php echo $userSaleLog->time_out; ?></td>
+                    <!--<td><?php echo $userSaleLog->auto_time_out; ?></td>-->
 					<td><a href="edit/<?php echo $userSaleLog->id;?>" class="btnedit btn btn-xs btn-primary"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>
                 </tr>
             <?php }?>

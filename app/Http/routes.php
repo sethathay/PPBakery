@@ -116,6 +116,7 @@ Route::get('uomexpenses/destroy/{id}', ['as' => 'uomexpenses.destroy', 'uses' =>
 
 // Route for pos
 Route::post('pos/sale', 'PosController@sale');
+Route::get('pos/getNotification', 'PosController@getNotification');
 Route::get('pos/print/{id}/{footer}', 'PosController@printReceipt');
 /*
 Route::get('/printReceipt', array('as' => 'printReceipt', function () {
@@ -139,6 +140,7 @@ Route::post('saleOrders/paidRemain/', 'SaleOrdersController@paidRemain');
 
 
 Route::get('bookers/index', ['as' => 'bookers.index', 'uses' => 'BookersController@index']);
+Route::get('bookers/index/{filter}', ['as' => 'bookers.index', 'uses' => 'BookersController@index']);
 Route::get('bookers/book', ['as' => 'bookers.book', 'uses' => 'BookersController@book']);
 Route::post('bookers/storeBook', 'BookersController@storeBook');
 Route::get('bookers/edit/{id}', ['as' => 'bookers.edit', 'uses' => 'BookersController@edit']);

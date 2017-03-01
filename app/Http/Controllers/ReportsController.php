@@ -128,7 +128,7 @@ class ReportsController extends Controller
 	public function selectReportSaleLog(Request $request){
 		$input = $request->all();
 		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
-		$userSaleLog = UserSaleLog::select('users.username AS u_name', 'user_sale_logs.dates','user_sale_logs.time_in', 'user_sale_logs.time_out', 'user_sale_logs.total_kh', 'user_sale_logs.total_us', 
+		$userSaleLog = UserSaleLog::select('users.username AS u_name', 'user_sale_logs.dates','user_sale_logs.time_in', 'user_sale_logs.time_out', 'user_sale_logs.auto_time_out', 'user_sale_logs.total_kh', 'user_sale_logs.total_us', 
 									DB::raw("(SELECT SUM(IF(sales_orders.balance<0 AND amount_kh,amount_kh+sales_orders.balance,amount_kh)+IF(sales_orders.balance<0 AND amount_us>0,amount_us+sales_orders.balance/riel,amount_us)) FROM sales_order_receipts 
 											  INNER JOIN exchange_rates ON exchange_rates.id=sales_order_receipts.exchange_rate_id
 											  LEFT JOIN sales_orders ON sales_orders.id=sales_order_receipts.sales_order_id WHERE DATE(sales_order_receipts.created_at) = dates AND sales_order_receipts.created_by=users.id AND TIME(sales_order_receipts.created_at) BETWEEN time_in AND time_out) AS sy_total"))->

@@ -5,6 +5,7 @@
 			<th>ថ្ងៃខែឆ្នាំ</th>
 			<th>ម់ោងចូល</th>
 			<th>ម់ោងចេញ</th>
+			<th>ម៉ោងចេញក្នុង System</th>
 			<th>ចំនួនបញ្ចូលសរុប (៛)</th>
 			<th>ចំនួនបញ្ចូលសរុប ($)</th>
 			<th>ចំនួនសរុប System (៛)</th>
@@ -27,6 +28,7 @@
 				<td style="text-align:center"><?php echo $detail->dates; ?></td>
 				<td style="text-align:center"><?php echo substr($detail->time_in,0,5); ?></td>
 				<td style="text-align:center"><?php echo substr($detail->time_out,0,5); ?></td>
+				<td style="text-align:center"><?php echo substr($detail->auto_time_out,0,5); ?></td>
 				<td style="text-align:right"><?php echo number_format($detail->total_kh); ?></td>
 				<td style="text-align:right"><?php echo number_format($detail->total_us); ?></td>
 				<td style="text-align:right"><?php echo number_format($detail->sy_total); ?></td>
