@@ -3,3 +3,8 @@ ALTER TABLE `user_sale_logs`
 
 ALTER TABLE `sales_orders`
 	ADD COLUMN `pickup_time` TIME NULL DEFAULT NULL AFTER `due_date`;
+
+ALTER TABLE `permissions`
+	ADD COLUMN `created_at` DATETIME NULL DEFAULT NULL AFTER `module_id`,
+	ADD COLUMN `updated_at` DATETIME NULL DEFAULT NULL AFTER `created_at`;
+
