@@ -34,6 +34,11 @@
 					{!! Form::text('name', null, array('class' => 'form-control', 'placeholder' => 'ឈ្មោះ', 'id'=>'name','style'=>'width:55%')) !!}
 				</div>
 				<div class="form-group col-md-12">
+					<label for="first_name">ប្រភេទ ក្រុមចំនាយ<span class="star"> * </span>:</label>
+					
+					{!! Form::select('section_group_id', [null=>'សូមជ្រើសរើស']+$sectionGroups, Input::old('sections'), ['class'=>'form-control section_id']) !!}
+				</div>
+				<div class="form-group col-md-12">
 					<label for="first_name">បរិយាយផ្សេងៗ<span class="star"></span>:</label>
 					{!! Form::textarea('description', null, array('class' => 'form-control', 'placeholder' => 'បរិយាយផ្សេងៗ', 'id'=>'description', 'rows'=>'3')) !!}
 				</div>

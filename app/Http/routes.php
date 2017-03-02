@@ -142,6 +142,8 @@ Route::get('reports/reportProduct', 'ReportsController@reportProduct');
 Route::post('reports/selectReportByProduct', 'ReportsController@selectReportByProduct');
 Route::get('reports/reportExpense', 'ReportsController@reportExpense');
 Route::post('reports/selectReportByExpense', 'ReportsController@selectReportByExpense');
+Route::get('reports/reportGroupExpense', 'ReportsController@reportGroupExpense');
+Route::post('reports/selectReportByGroupExpense', 'ReportsController@selectReportByGroupExpense');
 Route::get('reports/reportSaleLog', 'ReportsController@reportSaleLog');
 Route::post('reports/selectReportSaleLog', 'ReportsController@selectReportSaleLog');
 

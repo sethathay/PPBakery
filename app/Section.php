@@ -22,5 +22,5 @@ class Section extends Model implements AuthenticatableContract,
      */
     protected $table = 'sections';
 
-    protected $fillable = ['name', 'description', 'created_by', 'updated_by','is_active'];
+    protected $fillable = ['name', 'section_group_id', 'description', 'created_by', 'updated_by','is_active'];
 }

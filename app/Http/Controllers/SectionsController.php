@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use App\Section;
 use Input;
+use DB;
 
 class SectionsController extends Controller
 {
@@ -33,8 +34,9 @@ class SectionsController extends Controller
      */
     public function create()
     {
-        //New Group Expenses
-        return view('sections/create');
+        $sectionGroups = DB::table('section_groups')->lists('name', 'id');
+        
+        return view('sections/create',compact('sectionGroups'));
     }
 
     /**
@@ -76,9 +78,10 @@ class SectionsController extends Controller
      */
     public function edit($id)
     {
+        $sectionGroups = DB::table('section_groups')->lists('name', 'id');
         //
         $section = Section::find($id);
-        return view('sections/edit', compact('section'));
+        return view('sections/edit', compact('section', 'sectionGroups'));
     }
 
     /**

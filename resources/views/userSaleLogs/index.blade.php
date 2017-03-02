@@ -51,7 +51,7 @@
 			<img src="{{ URL::asset('/img/saleReport.png') }}" /> <label>បញ្ចីរប្រាក់សរុបពីការលក់</label>
 		</div>
 		<?php
-			if(Session::get('group_id') == 1){
+			if(Session::get('group_id') == 1 || Session::get('group_id') == 3){
 		?>
 		<div class="col-sm-6" style="text-align: right; padding: 23px 10px 0 0; vertical-align: middle;">
             <div class="col-sm-6">

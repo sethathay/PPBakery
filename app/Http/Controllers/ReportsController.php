@@ -103,8 +103,7 @@ class ReportsController extends Controller
 	function reportExpense(){
 		
         return view('reports.reportExpense');
-	}
-	
+	}	
 	
 	public function selectReportByExpense(Request $request, ExpenseAjax $expense){
 		$input = $request->all();
@@ -117,9 +116,45 @@ class ReportsController extends Controller
 												orderBy('services.expense_date')->get();
 		return View::make('reports.reportExpenseResult')->with('services', $services)->with('exchangerate', $exchangerate);
 	}
+			
+	function reportGroupExpense(){
+		
+        $sectionGroups = DB::table('section_groups')->get();
+        return view('reports.reportGroupExpense', compact('sectionGroups'));
+	}	
 	
-	
-	
+	public function selectReportByGroupExpense(Request $request, ExpenseAjax $expense){
+		$sections = $services = null;
+		
+		$input = $request->all();
+		//Get last exchange rate
+		//$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
+		//Get all section grorups from view.
+		$sectionGroups = explode(",",$input['sectionGroup']);
+		
+		if(count($sectionGroups) > 0 ){
+			// Loop to find sections in each section group.
+			foreach($sectionGroups as $sectionGroup){
+				$sections[] = Section::select('id')->where('section_group_id', $sectionGroup)->get();
+			}
+			
+			for($i=0; $i<count($sections); $i++){
+				$services[] = Service::select(
+									DB::raw('(SELECT SUM(riel_price*qty)) as riel'),									
+									DB::raw('(SELECT SUM(dollar_price*qty)) as dollar')
+								)
+								->whereIn('section_id', $sections[$i])
+								->whereBetween('services.expense_date', array($input['dateFrom'],$input['dateTo']))->first();
+			}
+			if(!empty($services)){				
+				$sectionGroups = DB::table('section_groups')->get();
+			}
+		}
+		
+		//return View::make('reports.reportGroupExpenseResult')->with('services', $services)->with('exchangerate', $exchangerate)->with('sectionGroups', $sectionGroups);
+		return View::make('reports.reportGroupExpenseResult')->with('services', $services)->with('sectionGroups', $sectionGroups);
+	}
+		
     public function reportSaleLog()
     {
 		return view('reports.reportSaleLog');
