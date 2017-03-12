@@ -28,9 +28,9 @@
                 <?php $total 		= $total + ($service->qty * ($service->riel_price+$service->dollar_price*$exchangerate->riel)); ?>
             <?php }?>
         		<tr class="total_record">
-                	<td style="text-align:right; font-size:20px; font-weight:bold;" colspan="4">សរុប​ :</td>
-                    <td style="text-align:right; font-size:20px; font-weight:bold; color:#F00;"><?php echo number_format($totalReil)." ៛";?></td>
-                    <td style="text-align:right; font-size:20px; font-weight:bold; color:#F00;"><?php echo number_format($totalDollar)." $";?></td>
+                	<td style="text-align:right; font-size:20px; font-weight:bold;" colspan="6">សរុប​ :</td>
+                    <!--<td style="text-align:right; font-size:20px; font-weight:bold; color:#F00;"><?php echo number_format($totalReil)." ៛";?></td>
+                    <td style="text-align:right; font-size:20px; font-weight:bold; color:#F00;"><?php echo number_format($totalDollar)." $";?></td>-->
                     <td style="text-align:right; font-size:20px; font-weight:bold; color:#F00;"><?php echo number_format($total)." ៛";?></td>
                 </tr>
         <?php }else{?>

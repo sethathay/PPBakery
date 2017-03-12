@@ -25,6 +25,5 @@
 				<td><?php echo ($service->dollar != null && $service->dollar>0)?number_format($service->dollar,3):0;?></td>
 				<?php } ?>
 			</tr>
-			<tr class="empty_data"><td colspan="6" style="text-align:center;">គ្នានទិន្ន័យនៅក្នុងតារាងទេ</td></tr>
         </tbody>
 	</table>

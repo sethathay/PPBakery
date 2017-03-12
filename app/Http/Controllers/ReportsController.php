@@ -23,6 +23,7 @@ use App\Datatable\SaleOrderReportAjax;
 use App\Datatable\ExpenseAjax;
 use App\Section;
 use App\Service;
+use App\Customer;
 
 class ReportsController extends Controller
 {
@@ -112,9 +113,30 @@ class ReportsController extends Controller
 												leftJoin('sections', 'sections.id','=','services.section_id')->
 												leftJoin('uom_expenses', 'uom_expenses.id','=','services.uom_expense_id')->
 												where('sections.is_active',1)->
+												where('sections.id','!=', '141')->where('sections.id','!=', '142')->
 												whereBetween('services.expense_date', array($input['dateFrom'],$input['dateTo']))->
 												orderBy('services.expense_date')->get();
 		return View::make('reports.reportExpenseResult')->with('services', $services)->with('exchangerate', $exchangerate);
+	}
+	
+	function reportExpenseByItem(){
+		
+        return view('reports.reportExpenseByItem');
+	}
+	
+	public function selectReportByExpenseByItem(Request $request, ExpenseAjax $expense){
+		$input = $request->all();
+		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
+		$services = Service::select('sections.name AS section_name', 'services.*', 
+								DB::raw('(SELECT SUM(riel_price*qty)) as riel'),									
+								DB::raw('(SELECT SUM(dollar_price*qty)) as dollar'))->
+							leftJoin('sections', 'sections.id','=','services.section_id')->
+							where('sections.is_active',1)->
+							where('sections.id','!=', '141')->where('sections.id','!=', '142')->
+							whereBetween('services.expense_date', array($input['dateFrom'],$input['dateTo']))->
+							orderBy('services.expense_date')->
+							groupBy('sections.id')->get();
+		return View::make('reports.reportExpenseByItemResult')->with('services', $services)->with('exchangerate', $exchangerate);
 	}
 			
 	function reportGroupExpense(){
@@ -151,8 +173,42 @@ class ReportsController extends Controller
 			}
 		}
 		
-		//return View::make('reports.reportGroupExpenseResult')->with('services', $services)->with('exchangerate', $exchangerate)->with('sectionGroups', $sectionGroups);
 		return View::make('reports.reportGroupExpenseResult')->with('services', $services)->with('sectionGroups', $sectionGroups);
+	}
+	
+	function reportTotalCash(){
+		return view('reports.reportTotalCash');
+	}
+	
+	function selectTotalCash(Request $request){
+		$input = $request->all();
+		$services = Service::select(
+							DB::raw('(SELECT SUM(riel_price*qty)) as riel'),									
+							DB::raw('(SELECT SUM(dollar_price*qty)) as dollar')
+						)
+						->whereBetween('services.expense_date', array($input['dateFrom'],$input['dateTo']))->first();
+		$exchangerate = DB::table('exchange_rates')->orderBy('id', 'desc')->first();
+		$totalUserInput = UserSaleLog::select(DB::raw('SUM(total_kh) AS total_kh, SUM(total_us) AS total_us'))->whereBetween('user_sale_logs.dates', array($input['dateFrom'],$input['dateTo']))->first();
+        
+		return View::make('reports.reportTotalCashResult')->with('services', $services)->with('totalUserInput', $totalUserInput);
+	}
+	
+	function reportByCustomer(){
+		return view('reports.reportByCustomer');
+	}
+	
+	function selectByCustomer(Request $request){
+		$input = $request->all();
+		
+		$salsOrders = Customer::select(DB::raw('SUM(total_amount_riel) AS riel, SUM(total_amount_us) AS dollar'), 'customers.firstname')
+						->join('sales_orders', 'sales_orders.customer_id','=','customers.id')
+						->whereBetween(DB::raw('DATE(sales_orders.order_date)'), array($input['dateFrom'], $input['dateTo']))
+						->where('customers.is_active', 1)
+						->where('sales_orders.is_active', 1)
+						->groupBy('customers.id')
+						->get();
+		
+		return View::make('reports.reportByCustomerResult')->with('salsOrders', $salsOrders);
 	}
 		
     public function reportSaleLog()

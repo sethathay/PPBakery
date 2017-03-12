@@ -142,10 +142,16 @@ Route::get('reports/reportProduct', 'ReportsController@reportProduct');
 Route::post('reports/selectReportByProduct', 'ReportsController@selectReportByProduct');
 Route::get('reports/reportExpense', 'ReportsController@reportExpense');
 Route::post('reports/selectReportByExpense', 'ReportsController@selectReportByExpense');
+Route::get('reports/reportExpenseByItem', 'ReportsController@reportExpenseByItem');
+Route::post('reports/selectReportByExpenseByItem', 'ReportsController@selectReportByExpenseByItem');
 Route::get('reports/reportGroupExpense', 'ReportsController@reportGroupExpense');
 Route::post('reports/selectReportByGroupExpense', 'ReportsController@selectReportByGroupExpense');
 Route::get('reports/reportSaleLog', 'ReportsController@reportSaleLog');
 Route::post('reports/selectReportSaleLog', 'ReportsController@selectReportSaleLog');
+Route::get('reports/reportTotalCash', 'ReportsController@reportTotalCash');
+Route::post('reports/selectTotalCash', 'ReportsController@selectTotalCash');
+Route::get('reports/reportByCustomer', 'ReportsController@reportByCustomer');
+Route::post('reports/selectByCustomer', 'ReportsController@selectByCustomer');
 
 Route::get('pricingRules/index', ['as' => 'pricingRules.index', 'uses' => 'PricingRulesController@index']);
 Route::get('pricingRules/create', 'PricingRulesController@create');

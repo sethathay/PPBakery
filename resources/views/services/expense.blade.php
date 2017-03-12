@@ -200,30 +200,9 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				<tr>
 					<td style="width:12%;">
 						<select name="times[]" style="width:100px !important;">
-							  <option value="0">12 ព្រឹក</option>
-							  <option value="1">1 ព្រឹក</option>
-							  <option value="2">2 ព្រឹក</option>
-							  <option value="3">3 ព្រឹក</option>
-							  <option value="4">4 ព្រឹក</option>
-							  <option value="5">5 ព្រឹក</option>
-							  <option value="6">6 ព្រឹក</option>
-							  <option value="7">7 ព្រឹក</option>
-							  <option value="8">8 ព្រឹក</option>
-							  <option value="9">9 ព្រឹក</option>
-							  <option value="10">10 ព្រឹក</option>
-							  <option value="11">11 ព្រឹក</option>
-							  <option value="12">12 ថ្វៃ</option>
-							  <option value="13">1 ថ្វៃ</option>
-							  <option value="14">2 ថ្វៃ</option>
-							  <option value="15">3 ថ្វៃ</option>
-							  <option value="16">4 ថ្វៃ</option>
-							  <option value="17">5 ថ្វៃ</option>
-							  <option value="18">6 ថ្វៃ</option>
-							  <option value="19">7 ថ្វៃ</option>
-							  <option value="20">8 ថ្វៃ</option>
-							  <option value="21">9 ថ្វៃ</option>
-							  <option value="22">10 ថ្វៃ</option>
-							  <option value="23">11 ថ្វៃ</option>
+							<?php for($i=0; $i<24; $i++){ ?>
+							  <option value="<?php echo $i; ?>"><?php echo $i; ?></option>	
+							<?php }?>
 						</select>
 						<select name="minutes[]" style="width:60px !important;">
 						<?php for($i=0; $i<60; $i++){?>
