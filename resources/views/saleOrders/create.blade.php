@@ -608,7 +608,8 @@ function number_format_unlimited_precision($number,$decimal = '.')
 				}
 	
 				if(code == 13) { 
-					var codeNumber = $("#code").val();
+					var codeNumber = $("#code").val();					
+					$("#code").val('');
 					getProduct(1, codeNumber, token);
 				}
 			
