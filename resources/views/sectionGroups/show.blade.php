@@ -4,7 +4,7 @@
 
 <link href="{{ URL::asset('css/general.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('css/upload.css') }}" rel="stylesheet">
-{!! Form::model($section,array('url' => 'sections/store', 'method' => 'post', 'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
+{!! Form::model($sectionGroup,array('url' => 'sectionGroups/store', 'method' => 'post', 'class' => 'form-inline', 'role'=>'form', 'id'=>'adminForm', 'data-toggle'=>'validator')) !!}
 <div class="table-responsive table-list">
 	<div class="col-sm-12 panel-heading">
 		<div class="col-sm-7">

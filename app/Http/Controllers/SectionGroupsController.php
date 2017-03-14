@@ -62,7 +62,7 @@ class SectionGroupsController extends Controller
     public function show($id)
     {
         //
-        $sectionGroup = Section::whereId($id)->first();
+        $sectionGroup = SectionGroup::whereId($id)->first();
         $sectionGroup->updated_at = $sectionGroup->updated_at->timezone('Asia/Phnom_Penh');
         return view('sectionGroups/show', compact('sectionGroup'));
     }
